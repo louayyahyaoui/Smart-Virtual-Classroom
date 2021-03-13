@@ -13,5 +13,3 @@ mongoose.connect(
     }
   }
 );
-
-require("./seance.model");
