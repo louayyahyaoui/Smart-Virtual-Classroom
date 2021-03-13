@@ -14,4 +14,4 @@ mongoose.connect(
   }
 );
 
-require("./employee.model");
+require("./seance.model");
