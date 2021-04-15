@@ -26,13 +26,13 @@ const path = require("path");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
-}
+//   app.get("/*", function (req, res) {
+//     res.sendFile(path.join(__dirname, "../client/build/index.html"));
+//   });
+// }
 // Config dotev
 require("dotenv").config({
   path: ".env",
