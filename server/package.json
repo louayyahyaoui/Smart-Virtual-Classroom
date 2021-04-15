@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "this is a server API for closer Application smart virtual classroom",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "dev": "nodemon server"
