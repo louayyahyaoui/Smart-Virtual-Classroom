@@ -19,6 +19,7 @@ import ModalCoursesEdit from "./ModalCoursesEdit";
 import ModalConfirmDeleteCourses from "./ModalConfirmDeleteCour";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
+import { isAuth } from "../../helpers/auth";
 
 function ListCoursesBySeance() {
   const { id, titre } = useParams();
@@ -69,6 +70,7 @@ function ListCoursesBySeance() {
                 <Feed key={c._id}>
                   <Feed.Event>
                     <Feed.Label image={c.idOwner.picture} />
+
                     <Feed.Content>
                       <Accordion.Title
                         active={activeIndex === index}
@@ -88,34 +90,41 @@ function ListCoursesBySeance() {
                             </Feed.Summary>
                           </Grid.Column>
                           <Grid.Column width={5}>
-                            <div>
-                              <Feed.Meta>
-                                <Feed.Like>
-                                  <ModalCoursesEdit
-                                    headerTitle="Edit Courses"
-                                    buttonTriggerTitle="Edit"
-                                    buttonSubmitTitle="Save"
-                                    buttonColor="black"
-                                    icon="edit"
-                                    coursesId={c._id}
-                                  />
-                                </Feed.Like>
-                              </Feed.Meta>
-                              <Feed.Meta>
-                                <Feed.Like>
-                                  <ModalConfirmDeleteCourses
-                                    headerTitle="Delete Courses"
-                                    buttonTriggerTitle="Delete"
-                                    buttonColor="red"
-                                    icon="trash"
-                                    courses={c}
-                                  />
-                                </Feed.Like>
-                              </Feed.Meta>
-                            </div>
+                            <>
+                              {isAuth().role === "Teacher" ? (
+                                <>
+                                  <Feed.Meta>
+                                    <Feed.Like>
+                                      <ModalCoursesEdit
+                                        headerTitle="Edit Courses"
+                                        buttonTriggerTitle="Edit"
+                                        buttonSubmitTitle="Save"
+                                        buttonColor="black"
+                                        icon="edit"
+                                        coursesId={c._id}
+                                      />
+                                    </Feed.Like>
+                                  </Feed.Meta>
+                                  <Feed.Meta>
+                                    <Feed.Like>
+                                      <ModalConfirmDeleteCourses
+                                        headerTitle="Delete Courses"
+                                        buttonTriggerTitle="Delete"
+                                        buttonColor="red"
+                                        icon="trash"
+                                        courses={c}
+                                      />
+                                    </Feed.Like>
+                                  </Feed.Meta>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
                           </Grid.Column>
                         </Grid>
                       </Accordion.Title>
+
                       <Accordion.Content active={activeIndex === index}>
                         <Link to={"/detailCourses/" + c._id}>
                           <Header
@@ -130,12 +139,10 @@ function ListCoursesBySeance() {
                           <Grid>
                             <Grid.Row>
                               {c.multiple_resources.map((files, index) =>
-                                files.split(".").pop() === "pdf" ||
-                                files.split(".").pop() === "pptx" ||
-                                files.split(".").pop() === "docx" ? (
+                                files.type === "application/pdf" ? (
                                   <div key={index}>
                                     <a
-                                      href={files}
+                                      href={files.url}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                     >
@@ -145,11 +152,11 @@ function ListCoursesBySeance() {
                                             src={
                                               process.env.PUBLIC_URL +
                                               "/files-type/" +
-                                              files.split(".").pop() +
+                                              "pdf" +
                                               ".png"
                                             }
                                             style={{
-                                              margin: "2px",
+                                              margin: "10px",
                                               height: "100px",
                                               width: "100px",
                                             }}
@@ -159,47 +166,139 @@ function ListCoursesBySeance() {
                                         <Grid.Column width={3}>
                                           <Grid.Row>
                                             <Header as="h4" color="red">
-                                              {files
-                                                .split("-")
-                                                .pop()
-                                                .slice(0, 7) +
-                                                "." +
-                                                files.split(".").pop()}
+                                              {files.originalname}
                                             </Header>
                                           </Grid.Row>
                                           <Grid.Row>
                                             <Header as="h4" color="grey">
-                                              {files.split(".").pop()} File
+                                              {files.type.slice(0, 7)} File
                                             </Header>
                                           </Grid.Row>
                                         </Grid.Column>
                                       </div>
                                     </a>
                                   </div>
-                                ) : files.split(".").pop() === "mp3" ||
-                                  files.split(".").pop() === "mp4" ? (
-                                  <ReactPlayer
-                                    key={index}
-                                    width="300px"
-                                    height="230px"
-                                    controls={true}
-                                    url={files}
-                                  />
-                                ) : files.split(".").pop() === "png" ||
-                                  files.split(".").pop() === "jpg" ||
-                                  files.split(".").pop() === "jpeg" ||
-                                  files.split(".").pop() === "gif" ? (
+                                ) : files.type ===
+                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                                  <div key={index}>
+                                    <a
+                                      href={files.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <div>
+                                        <Grid.Column width={3}>
+                                          <img
+                                            src={
+                                              process.env.PUBLIC_URL +
+                                              "/files-type/" +
+                                              "pptx" +
+                                              ".png"
+                                            }
+                                            style={{
+                                              margin: "10px",
+                                              height: "100px",
+                                              width: "100px",
+                                            }}
+                                            alt=""
+                                          />
+                                        </Grid.Column>
+                                        <Grid.Column width={3}>
+                                          <Grid.Row>
+                                            <Header as="h4" color="red">
+                                              {files.originalname}
+                                            </Header>
+                                          </Grid.Row>
+                                          <Grid.Row>
+                                            <Header as="h4" color="grey">
+                                              {files.type.slice(0, 7)} File
+                                            </Header>
+                                          </Grid.Row>
+                                        </Grid.Column>
+                                      </div>
+                                    </a>
+                                  </div>
+                                ) : files.type ===
+                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+                                  <div key={index}>
+                                    <a
+                                      href={files.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <div>
+                                        <Grid.Column width={3}>
+                                          <img
+                                            src={
+                                              process.env.PUBLIC_URL +
+                                              "/files-type/" +
+                                              "docx" +
+                                              ".png"
+                                            }
+                                            style={{
+                                              margin: "10px",
+                                              height: "100px",
+                                              width: "100px",
+                                            }}
+                                            alt=""
+                                          />
+                                        </Grid.Column>
+                                        <Grid.Column width={3}>
+                                          <Grid.Row>
+                                            <Header as="h4" color="red">
+                                              {files.originalname}
+                                            </Header>
+                                          </Grid.Row>
+                                          <Grid.Row>
+                                            <Header as="h4" color="grey">
+                                              {files.type.slice(0, 7)} File
+                                            </Header>
+                                          </Grid.Row>
+                                        </Grid.Column>
+                                      </div>
+                                    </a>
+                                  </div>
+                                ) : files.type === "audio/mpeg" ||
+                                  files.type === "video/mp4" ? (
+                                  <div>
+                                    <Grid.Column width={3}>
+                                      <ReactPlayer
+                                        key={index}
+                                        width="250px"
+                                        height="100px"
+                                        controls={true}
+                                        url={files.url}
+                                      />
+                                    </Grid.Column>
+                                    <Grid.Column width={3}>
+                                      <Grid.Row>
+                                        <Header as="h4" color="red">
+                                          {files.originalname}
+                                        </Header>
+                                      </Grid.Row>
+                                      <Grid.Row>
+                                        <Header as="h4" color="grey">
+                                          {files.type.slice(0, 7)} File
+                                        </Header>
+                                      </Grid.Row>
+                                    </Grid.Column>
+                                  </div>
+                                ) : files.type === "image/png" ||
+                                  files.type === "image/jpg" ||
+                                  files.type === "image/jpeg" ||
+                                  files.type === "image/gif" ? (
                                   <div>
                                     <Grid.Column width={3}>
                                       <a
-                                        href={files}
+                                        href={files.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                       >
                                         <img
-                                          src={files}
-                                          alt={files.split("-").pop()}
+                                          src={files.url}
+                                          alt={files.type}
                                           style={{
+                                            margin: "10px",
                                             height: "100px",
                                             width: "100px",
                                           }}
@@ -209,14 +308,12 @@ function ListCoursesBySeance() {
                                     <Grid.Column width={3}>
                                       <Grid.Row>
                                         <Header as="h4" color="red">
-                                          {files.split("-").pop().slice(0, 7) +
-                                            "." +
-                                            files.split(".").pop()}
+                                          {files.originalname}
                                         </Header>
                                       </Grid.Row>
                                       <Grid.Row>
                                         <Header as="h4" color="grey">
-                                          {files.split(".").pop()} File
+                                          {files.type.slice(0, 7)} File
                                         </Header>
                                       </Grid.Row>
                                     </Grid.Column>
@@ -231,7 +328,7 @@ function ListCoursesBySeance() {
                                   //   />
                                   // </a>
                                   <a
-                                    href={files}
+                                    href={files.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
@@ -239,6 +336,7 @@ function ListCoursesBySeance() {
                                       <Grid.Column width={3}>
                                         <img
                                           style={{
+                                            margin: "10px",
                                             height: "100px",
                                             width: "100px",
                                           }}
@@ -247,23 +345,18 @@ function ListCoursesBySeance() {
                                             "/files-type/" +
                                             "noFile.png"
                                           }
-                                          alt={files.split("-").pop()}
+                                          alt={files.type}
                                         />
                                       </Grid.Column>
                                       <Grid.Column width={3}>
                                         <Grid.Row>
                                           <Header as="h4" color="red">
-                                            {files
-                                              .split("-")
-                                              .pop()
-                                              .slice(0, 7) +
-                                              "." +
-                                              files.split(".").pop()}
+                                            {files.originalname}
                                           </Header>
                                         </Grid.Row>
                                         <Grid.Row>
                                           <Header as="h4" color="grey">
-                                            {files.split(".").pop()} File
+                                            {files.type.slice(0, 7)} File
                                           </Header>
                                         </Grid.Row>
                                       </Grid.Column>

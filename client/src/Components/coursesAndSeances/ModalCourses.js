@@ -4,7 +4,7 @@ import FormCourses from "./FormCourses";
 
 function ModalCourses(props) {
   return (
-    <div>
+    <>
       <Modal
         trigger={<Dropdown.Item icon="file text" text="Add courses" />}
         dimmer="inverted"
@@ -24,7 +24,7 @@ function ModalCourses(props) {
           />
         </Modal.Content>
       </Modal>
-    </div>
+    </>
   );
 }
 

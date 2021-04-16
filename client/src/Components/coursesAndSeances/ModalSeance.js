@@ -4,12 +4,11 @@ import FormSeance from "./FormSeance";
 
 function ModalSeance(props) {
   return (
-    <div>
+    <>
       <Modal
         trigger={
           <Dropdown.Item icon={props.icon} text={props.buttonTriggerTitle} />
         }
-        
         dimmer="inverted"
         size="tiny"
         closeIcon="close"
@@ -27,7 +26,7 @@ function ModalSeance(props) {
           />
         </Modal.Content>
       </Modal>
-    </div>
+    </>
   );
 }
 

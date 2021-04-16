@@ -4,7 +4,9 @@ import axios from "axios";
 export const RetrieveCourses = createAsyncThunk(
   "Courses/RetrieveCourses",
   async () => {
-    const { data } = await axios.get("http://localhost:5000/courses");
+    const { data } = await axios.get(
+      "https://closer-server.herokuapp.com/courses"
+    );
 
     return data;
   }
@@ -14,7 +16,7 @@ export const RetrieveCoursesByIdSeance = createAsyncThunk(
   "Courses/RetrieveCoursesByIdSeance",
   async (idSeance) => {
     const { data } = await axios.get(
-      "http://localhost:5000/courses/findByIdSeance/" + idSeance
+      "https://closer-server.herokuapp.com/courses/findByIdSeance/" + idSeance
     );
 
     return data;
@@ -25,7 +27,7 @@ export const RetrieveCoursesByIdClass = createAsyncThunk(
   "Courses/RetrieveCoursesByIdClass",
   async (idClass) => {
     const { data } = await axios.get(
-      "http://localhost:5000/courses/findByIdClass/" + idClass
+      "https://closer-server.herokuapp.com/courses/findByIdClass/" + idClass
     );
 
     return data;
@@ -46,7 +48,7 @@ export const AddCourses = (
     multiple_resources: multiple_resources,
     idSeance: idSeance,
   };
-console.log(idClass);
+  console.log(idClass);
   var formData = new FormData();
   for (const key of Object.keys(multiple_resources)) {
     formData.append("multiple_resources", multiple_resources[key]);
@@ -58,13 +60,12 @@ console.log(idClass);
   formData.append("idOwner", idOwner);
   formData.append("idClass", idClass);
 
-
   const promise = await axios
-    .post("http://localhost:5000/courses/", formData)
+    .post("https://closer-server.herokuapp.com/courses/", formData)
     .then((response) => {
       const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-       console.log(CurrentClass._id);
-     dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
+      console.log(CurrentClass._id);
+      dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
       const data = response.data;
 
       // assign data
@@ -96,12 +97,12 @@ export const UpdateCourses = (
   console.log(cour);
 
   const promise = await axios
-    .put("http://localhost:5000/courses/" + coursesId, cour)
+    .put("https://closer-server.herokuapp.com/courses/" + coursesId, cour)
     .then((response) => {
       const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-       console.log(CurrentClass._id);
-     dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
-      
+      console.log(CurrentClass._id);
+      dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
+
       const data = response.data;
 
       // assign data
@@ -121,7 +122,7 @@ export const GetCoursesById = createAsyncThunk(
 
   async (coursesId) => {
     const promise = await axios
-      .get("http://localhost:5000/courses/" + coursesId)
+      .get("https://closer-server.herokuapp.com/courses/" + coursesId)
 
       .then((response) => {
         console.log("this is response");
@@ -155,7 +156,7 @@ export const DeleteCourses = createAsyncThunk(
 
   async (coursesId) => {
     const promise = await axios
-      .delete("http://localhost:5000/courses/" + coursesId)
+      .delete("https://closer-server.herokuapp.com/courses/" + coursesId)
 
       .then((response) => {
         console.log("this is response");
@@ -233,7 +234,7 @@ export const CoursesSlice = createSlice({
       let res = action.payload;
       let resources = state.Resources.slice();
       resources = resources.filter((u) => {
-        return u !== res;
+        return u.url !== res;
       });
       state.Resources = resources;
     },

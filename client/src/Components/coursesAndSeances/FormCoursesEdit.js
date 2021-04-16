@@ -115,7 +115,10 @@ function FormCoursesEdit(props) {
       var formData = new FormData();
       formData.append("multiple_resources", file);
       await axios
-        .post("http://localhost:5000/courses/upload", formData)
+        .post(
+          "https://closer-server.herokuapp.com/courses/api/upload",
+          formData
+        )
         .then((response) => {
           console.log(response.data.result.reqFiles[0]);
           dispatch(UpdateResources(response.data.result.reqFiles[0]));
@@ -207,27 +210,69 @@ function FormCoursesEdit(props) {
                         color="red"
                         icon="trash"
                         onClick={(e) => {
-                          handleRemoveUpload(e, files);
+                          handleRemoveUpload(e, files.url);
                         }}
                       ></Button>
                     </List.Content>
-                    {files.split(".").pop() === "png" ||
-                    files.split(".").pop() === "jpg" ||
-                    files.split(".").pop() === "jpeg" ||
-                    files.split(".").pop() === "gif" ? (
-                      <Image src={files} rounded size="mini" />
-                    ) : files.split(".").pop() === "pdf" ||
-                      files.split(".").pop() === "docx" ||
-                      files.split(".").pop() === "pptx" ||
-                      files.split(".").pop() === "mp4" ||
-                      files.split(".").pop() === "mp3" ? (
+                    {files.type === "image/png" ||
+                    files.type === "image/jpg" ||
+                    files.type === "image/jpeg" ||
+                    files.type === "image/gif" ? (
+                      <Image src={files.url} rounded size="mini" />
+                    ) : files.type === "application/pdf" ? (
                       <Image
                         rounded
                         size="mini"
                         src={
                           process.env.PUBLIC_URL +
                           "/files-type/" +
-                          files.split(".").pop() +
+                          "pdf" +
+                          ".png"
+                        }
+                      />
+                    ) : files.type ===
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+                      <Image
+                        rounded
+                        size="mini"
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/files-type/" +
+                          "docx" +
+                          ".png"
+                        }
+                      />
+                    ) : files.type ===
+                      "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                      <Image
+                        rounded
+                        size="mini"
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/files-type/" +
+                          "pptx" +
+                          ".png"
+                        }
+                      />
+                    ) : files.type === "video/mp4" ? (
+                      <Image
+                        rounded
+                        size="mini"
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/files-type/" +
+                          "mp4" +
+                          ".png"
+                        }
+                      />
+                    ) : files.type === "audio/mpeg" ? (
+                      <Image
+                        rounded
+                        size="mini"
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/files-type/" +
+                          "mp3" +
                           ".png"
                         }
                       />
@@ -243,10 +288,10 @@ function FormCoursesEdit(props) {
 
                     <List.Content>
                       <Header as="h4" color="red">
-                        {files.split(".").pop()}
+                        {files.originalname}
                       </Header>
                       <highlight>
-                        <strong>{files.split("-").pop()}</strong>
+                        <strong>{files.type.slice(0, 40)}</strong>
                       </highlight>
                     </List.Content>
                   </List.Item>

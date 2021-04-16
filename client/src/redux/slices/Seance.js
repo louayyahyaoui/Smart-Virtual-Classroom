@@ -3,7 +3,9 @@ import axios from "axios";
 import { getList, updateSeance, addSeance } from "../../api/SeanceApi";
 
 export const RetrieveSeances = createAsyncThunk("/Seance", async () => {
-  const { data } = await axios.get("http://localhost:5000/seance");
+  const { data } = await axios.get(
+    "https://closer-server.herokuapp.com/seance"
+  );
 
   return data;
 });
@@ -12,7 +14,7 @@ export const AddSeance = createAsyncThunk(
   "Seance/AddSeance",
   async (seance) => {
     const promise = await axios
-      .post("http://localhost:5000/seance/", seance)
+      .post("https://closer-server.herokuapp.com/seance/", seance)
 
       .then((response) => {
         console.log("this is response");
@@ -35,7 +37,7 @@ export const GetSeancesById = createAsyncThunk(
   "Seance/GetSeancesById",
   async (seanceId) => {
     const promise = await axios
-      .get("http://localhost:5000/seance/" + seanceId)
+      .get("https://closer-server.herokuapp.com/seance/" + seanceId)
 
       .then((response) => {
         console.log("this is response");
@@ -58,7 +60,9 @@ export const GetSeancesByIdClass = createAsyncThunk(
   "Seance/GetSeancesByIdClass",
   async (idClass) => {
     const promise = await axios
-      .get("http://localhost:5000/seance/findByIdClass/" + idClass)
+      .get(
+        "https://closer-server.herokuapp.com/seance/findByIdClass/" + idClass
+      )
 
       .then((response) => {
         console.log("this is response");
@@ -83,7 +87,7 @@ export const EditSeances = createAsyncThunk(
     //console.log(seanceId);
 
     const promise = await axios
-      .put("http://localhost:5000/seance/" + seance._id, seance)
+      .put("https://closer-server.herokuapp.com/seance/" + seance._id, seance)
 
       .then((response) => {
         console.log("this is response");
@@ -107,7 +111,7 @@ export const DeleteSeance = createAsyncThunk(
 
   async (seanceId) => {
     const promise = await axios
-      .delete("http://localhost:5000/seance/" + seanceId)
+      .delete("https://closer-server.herokuapp.com/seance/" + seanceId)
 
       .then((response) => {
         console.log("this is response");
@@ -133,7 +137,6 @@ export const SeanceSlice = createSlice({
     status: null,
     statusUpdate: null,
     seanceById: null,
-
   },
   extraReducers: {
     [RetrieveSeances.pending]: (state, action) => {

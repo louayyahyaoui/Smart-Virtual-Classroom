@@ -58,21 +58,24 @@ function DetailCourses() {
             <Container>
               <p>{description}</p>
             </Container>
+            <br />
             <Grid>
               <Grid.Row>
                 {resources.map((files, index) =>
-                  files.split(".").pop() === "pdf" ||
-                  files.split(".").pop() === "pptx" ||
-                  files.split(".").pop() === "docx" ? (
+                  files.type === "application/pdf" ? (
                     <div key={index}>
-                      <a href={files} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={files.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <div>
                           <Grid.Column width={3}>
                             <img
                               src={
                                 process.env.PUBLIC_URL +
                                 "/files-type/" +
-                                files.split(".").pop() +
+                                "pdf" +
                                 ".png"
                               }
                               style={{
@@ -86,43 +89,137 @@ function DetailCourses() {
                           <Grid.Column width={3}>
                             <Grid.Row>
                               <Header as="h4" color="red">
-                                {files.split("-").pop().slice(0, 7) +
-                                  "." +
-                                  files.split(".").pop()}
+                                {files.originalname.slice(0, 7)}
                               </Header>
                             </Grid.Row>
                             <Grid.Row>
                               <Header as="h4" color="grey">
-                                {files.split(".").pop()} File
+                                {files.type.slice(0, 7)} File
                               </Header>
                             </Grid.Row>
                           </Grid.Column>
                         </div>
                       </a>
                     </div>
-                  ) : files.split(".").pop() === "mp3" ||
-                    files.split(".").pop() === "mp4" ? (
-                    <ReactPlayer
-                      key={index}
-                      width="300px"
-                      height="230px"
-                      controls={true}
-                      url={files}
-                    />
-                  ) : files.split(".").pop() === "png" ||
-                    files.split(".").pop() === "jpg" ||
-                    files.split(".").pop() === "jpeg" ||
-                    files.split(".").pop() === "gif" ? (
+                  ) : files.type ===
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                    <div key={index}>
+                      <a
+                        href={files.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div>
+                          <Grid.Column width={3}>
+                            <img
+                              src={
+                                process.env.PUBLIC_URL +
+                                "/files-type/" +
+                                "pptx" +
+                                ".png"
+                              }
+                              style={{
+                                margin: "10px",
+                                height: "100px",
+                                width: "100px",
+                              }}
+                              alt=""
+                            />
+                          </Grid.Column>
+                          <Grid.Column width={3}>
+                            <Grid.Row>
+                              <Header as="h4" color="red">
+                                {files.originalname.slice(0, 7)}
+                              </Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                              <Header as="h4" color="grey">
+                                {files.type.slice(0, 7)} File
+                              </Header>
+                            </Grid.Row>
+                          </Grid.Column>
+                        </div>
+                      </a>
+                    </div>
+                  ) : files.type ===
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+                    <div key={index}>
+                      <a
+                        href={files.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div>
+                          <Grid.Column width={3}>
+                            <img
+                              src={
+                                process.env.PUBLIC_URL +
+                                "/files-type/" +
+                                "docx" +
+                                ".png"
+                              }
+                              style={{
+                                margin: "10px",
+                                height: "100px",
+                                width: "100px",
+                              }}
+                              alt=""
+                            />
+                          </Grid.Column>
+                          <Grid.Column width={3}>
+                            <Grid.Row>
+                              <Header as="h4" color="red">
+                                {files.originalname.slice(0, 7)}
+                              </Header>
+                            </Grid.Row>
+                            <Grid.Row>
+                              <Header as="h4" color="grey">
+                                {files.type.slice(0, 7)} File
+                              </Header>
+                            </Grid.Row>
+                          </Grid.Column>
+                        </div>
+                      </a>
+                    </div>
+                  ) : files.type === "audio/mpeg" ||
+                    files.type === "video/mp4" ? (
+                    <div>
+                      <Grid.Column width={3}>
+                        <ReactPlayer
+                          key={index}
+                          width="240px"
+                          height="100px"
+                          controls={true}
+                          url={files.url}
+                        />
+                      </Grid.Column>
+                      <Grid.Column width={3}>
+                        <Grid.Row>
+                          <Header as="h4" color="red">
+                            {files.originalname}
+                          </Header>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Header as="h4" color="grey">
+                            {files.type.slice(0, 7)} File
+                          </Header>
+                        </Grid.Row>
+                      </Grid.Column>
+                    </div>
+                  ) : files.type === "image/png" ||
+                    files.type === "image/jpg" ||
+                    files.type === "image/jpeg" ||
+                    files.type === "image/gif" ? (
                     <div>
                       <Grid.Column width={3}>
                         <a
-                          href={files}
+                          href={files.url}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <img
-                            src={files}
-                            alt={files.split("-").pop()}
+                            src={files.url}
+                            alt={files.originalname}
                             style={{
                               margin: "10px",
                               height: "100px",
@@ -134,20 +231,22 @@ function DetailCourses() {
                       <Grid.Column width={3}>
                         <Grid.Row>
                           <Header as="h4" color="red">
-                            {files.split("-").pop().slice(0, 7) +
-                              "." +
-                              files.split(".").pop()}
+                            {files.originalname.slice(0, 7)}
                           </Header>
                         </Grid.Row>
                         <Grid.Row>
                           <Header as="h4" color="grey">
-                            {files.split(".").pop()} File
+                            {files.type.slice(0, 7)} File
                           </Header>
                         </Grid.Row>
                       </Grid.Column>
                     </div>
                   ) : (
-                    <a href={files} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={files.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <div>
                         <Grid.Column width={3}>
                           <img
@@ -161,20 +260,18 @@ function DetailCourses() {
                               "/files-type/" +
                               "noFile.png"
                             }
-                            alt={files.split("-").pop()}
+                            alt={files.originalname}
                           />
                         </Grid.Column>
                         <Grid.Column width={3}>
                           <Grid.Row>
                             <Header as="h4" color="red">
-                              {files.split("-").pop().slice(0, 7) +
-                                "." +
-                                files.split(".").pop()}
+                              {files.originalname.slice(0, 7)}
                             </Header>
                           </Grid.Row>
                           <Grid.Row>
                             <Header as="h4" color="grey">
-                              {files.split(".").pop()} File
+                              {files.type.slice(0, 7)} File
                             </Header>
                           </Grid.Row>
                         </Grid.Column>
@@ -186,7 +283,7 @@ function DetailCourses() {
             </Grid>
             <br />
             <br />
-            <CommentComponent courseID={id}/>
+            <CommentComponent courseID={id} />
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>

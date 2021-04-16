@@ -7,7 +7,7 @@ export const UpdateProfilePicture = createAsyncThunk(
 
   async (resources) => {
     const promise = await axios.post(
-      "http://localhost:5000/courses/upload",
+      "https://closer-server.herokuapp.com/courses/upload",
       resources
     );
     console.log(promise.data.result.reqFiles);
@@ -17,7 +17,7 @@ export const UpdateProfilePicture = createAsyncThunk(
 
 export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
   const { data } = await axios.get(
-    "http://localhost:5000/api/getUserById/" + id
+    "https://closer-server.herokuapp.com/api/getUserById/" + id
   );
 
   return data;
@@ -27,7 +27,7 @@ export const ChangePassword = createAsyncThunk(
   "users/ChangePassword",
   async (object) => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/ChangePassword/",
+      "https://closer-server.herokuapp.com/api/ChangePassword/",
       object
     );
 

@@ -22,15 +22,15 @@ const cors = require("cors");
 const app = express();
 const http = require("http");
 const socketIo = require("socket.io");
-const path = require('path');
+const path = require("path");
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
   });
 }
 // Config dotev
@@ -79,12 +79,8 @@ app.use("/class", ClassRouter);
 app.use("/scheduler", SchedulerRouter);
 app.use("/invitationclass", InvitationClassRouter);
 
-
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    msg: "Page not founded",
-  });
+  res.sendFile(path.join(__dirname + "/index.html"));
 });
 let socketList = {};
 
@@ -92,7 +88,6 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", (socket) => {
-  
   //question
   socket.on("send_question", function (data) {
     io.emit("new-question", data);
@@ -101,12 +96,10 @@ io.on("connection", (socket) => {
   socket.on("send_answer", function (data) {
     io.emit("new-answer", data);
   });
-//test if user exist or not
+  //test if user exist or not
   socket.on("BE-check-user", ({ roomId, userName }) => {
     let error = false;
-    console.log(roomId)
-
-
+    console.log(roomId);
 
     io.sockets.in(roomId).clients((err, clients) => {
       clients.forEach((client) => {

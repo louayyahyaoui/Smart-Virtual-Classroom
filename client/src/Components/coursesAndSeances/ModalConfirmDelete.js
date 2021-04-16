@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Feed, Icon, Modal } from "semantic-ui-react";
+import { Button, Dropdown, Feed, Icon, Modal } from "semantic-ui-react";
 import { DeleteSeance } from "../../redux/slices/Seance";
 
 function ModalConfirmDelete(props) {
@@ -25,12 +25,10 @@ function ModalConfirmDelete(props) {
       });
   };
   return (
-    <div>
+    <>
       <Modal
         trigger={
-          <Feed.Like onClick={handleOpen}>
-            <Icon name="trash" /> Remove
-          </Feed.Like>
+          <Dropdown.Item onClick={handleOpen} icon="delete" text="Delete" />
         }
         open={modalOpen}
         onClose={handleClose}
@@ -57,7 +55,7 @@ function ModalConfirmDelete(props) {
           </Button>
         </Modal.Actions>
       </Modal>
-    </div>
+    </>
   );
 }
 

@@ -7,12 +7,16 @@ import {
   Dropdown,
   Form,
   Header,
+  Loader,
   Message,
   Select,
 } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddCourses, RetrieveCoursesByIdClass } from "../../redux/slices/Courses";
+import {
+  AddCourses,
+  RetrieveCoursesByIdClass,
+} from "../../redux/slices/Courses";
 import { useParams } from "react-router";
 import { isAuth, signout } from "../../helpers/auth";
 
@@ -27,9 +31,10 @@ function FormCourses(props) {
   const [formClassName, SetFormClassName] = useState("");
   const [formSuccessMessage, SetFormSuccessMessage] = useState("");
   const [formErrorMessage, SetFormErrorMessage] = useState("");
-  const [selectedItem, SetSelectedItem] = useState(seances[0]._id);
+  const [selectedItem, SetSelectedItem] = useState(0);
+  const [loader, SetLoader] = useState(false);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-  const idClass = CurrentClass._id
+  const idClass = CurrentClass._id;
 
   const SeanceOptions = [{ key: Number, text: "", value: "" }];
   const dispatch = useDispatch();
@@ -59,10 +64,19 @@ function FormCourses(props) {
     e.preventDefault();
     const idOwner = isAuth()._id;
 
-    dispatch(
-      AddCourses(selectedItem, titre, description, multiple_resources, idOwner,idClass)
+    const rep = dispatch(
+      AddCourses(
+        selectedItem,
+        titre,
+        description,
+        multiple_resources,
+        idOwner,
+        idClass
+      )
     )
       .then((response) => {
+        console.log(response);
+
         const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
         console.log(CurrentClass._id);
         dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
@@ -134,23 +148,27 @@ function FormCourses(props) {
 
         <Dropzone
           styles={{ dropzone: { minHeight: 120, maxHeight: 250 } }}
-          canCancel={true}
-          canRemove={true}
-          canRestart={true}
           onChangeStatus={handleChangeStatus}
         />
-        <Message
-          success
-          color="green"
-          header="Nice one! 📒 📕 📚 📖"
-          content={formSuccessMessage}
-        />
-        <Message
-          warning
-          color="yellow"
-          header="Woah! 😱 😨"
-          content={formErrorMessage}
-        />
+        {loader ? (
+          <Loader active inline="centered" />
+        ) : (
+          <>
+            <Message
+              success
+              color="green"
+              header="Nice one! 📒 📕 📚 📖"
+              content={formSuccessMessage}
+            />
+            <Message
+              warning
+              color="yellow"
+              header="Woah! 😱 😨"
+              content={formErrorMessage}
+            />
+          </>
+        )}
+
         <br />
         <Button color="black" floated="right">
           Add
