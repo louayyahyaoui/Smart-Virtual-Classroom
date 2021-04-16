@@ -11,6 +11,7 @@
   "author": "NoLimit-Team",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^5.8.3",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.25.0",
     "cors": "^2.8.5",
@@ -28,6 +29,7 @@
     "v-response": "^1.1.0",
     "@sendgrid/mail": "^7.4.2",
     "dotenv": "^8.2.0",
+    "execution-time": "^1.4.1",
     "express-jwt": "^6.0.0",
     "express-validator": "^6.9.2",
     "google-auth-library": "^7.0.2",

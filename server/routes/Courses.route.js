@@ -3,9 +3,150 @@ let express = require("express"),
   mongoose = require("mongoose"),
   { v4: uuidv4 } = require("uuid");
 const RateLimit = require("express-rate-limit");
+const { Storage } = require("@google-cloud/storage");
 
+const perf = require("execution-time")();
 router = express.Router();
 
+// Create new storage instance with Firebase project credentials
+const storages = new Storage({
+  projectId: "smart-closer",
+  keyFilename: "./smart-closer-firebase-adminsdk-75ops-25473d0d1e.json",
+});
+
+// Create a bucket associated to Firebase storage bucket
+const bucket = storages.bucket("gs://smart-closer.appspot.com");
+
+// Initiating a memory storage engine to store files as Buffer objects
+const uploader = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 300 * 1024 * 1024, // limiting files size to 5 MB
+  },
+});
+
+function UploadingArray(files) {
+  const reqFiles = [];
+  let wakt;
+  try {
+    for (let i = 0; i < files.length; i++) {
+      if (!files[i]) {
+        return;
+      }
+
+      // Create new blob in the bucket referencing the file
+      const blob = bucket.file(files[i].originalname);
+
+      // Create writable stream and specifying file mimetype
+      const blobWriter = blob.createWriteStream({
+        metadata: {
+          contentType: files[i].mimetype,
+        },
+      });
+
+      blobWriter.on("error", (err) => next(err));
+      {
+        perf.start();
+        blobWriter.on("finish", async () => {
+          // Assembling public URL for accessing the file via HTTP
+
+          await reqFiles.push({
+            type: files[i].mimetype,
+            originalname: files[i].originalname,
+
+            url: `https://firebasestorage.googleapis.com/v0/b/${
+              bucket.name
+            }/o/${encodeURI(blob.name)}?alt=media`,
+          });
+
+          // Return the file name and its public URL
+
+          const results = perf.stop();
+          console.log(results.time);
+          // console.log(results.time);
+        });
+      }
+
+      // When there is no more data to be consumed from the stream
+      blobWriter.end(files[i].buffer);
+    }
+  } catch (error) {
+    // res.status(400).send(`Error, could not upload file: ${error}`);
+    return;
+  }
+  console.log("time !!!!!!!!!!");
+  console.log(wakt);
+  const test = {
+    reqFiles: reqFiles,
+    timer: wakt,
+  };
+  return test;
+}
+
+// Upload endpoint to send file to Firebase storage bucket
+router.post(
+  "/api/upload",
+  uploader.array("multiple_resources", 6),
+  async (req, res, next) => {
+    const reqFiles = [];
+    try {
+      perf.start();
+      for (let i = 0; i < req.files.length; i++) {
+        if (!req.files[i]) {
+          return;
+        }
+
+        // Create new blob in the bucket referencing the file
+        const blob = bucket.file(req.files[i].originalname);
+
+        // Create writable stream and specifying file mimetype
+        const blobWriter = blob.createWriteStream({
+          metadata: {
+            contentType: req.files[i].mimetype,
+          },
+        });
+
+        blobWriter.on("error", (err) => next(err));
+        {
+          blobWriter.on("finish", async () => {
+            // Assembling public URL for accessing the file via HTTP
+
+            await reqFiles.push({
+              type: req.files[i].mimetype,
+              originalname: req.files[i].originalname,
+
+              url: `https://firebasestorage.googleapis.com/v0/b/${
+                bucket.name
+              }/o/${encodeURI(blob.name)}?alt=media`,
+            });
+
+            // Return the file name and its public URL
+
+            if (i + 1 === req.files.length) {
+              const results = perf.stop();
+              console.log(results.time);
+              setTimeout(() => {
+                res.status(200).send({
+                  result: {
+                    reqFiles,
+                  },
+                });
+              }, results.time);
+            }
+
+            // console.log(results.time);
+          });
+        }
+
+        // When there is no more data to be consumed from the stream
+        blobWriter.end(req.files[i].buffer);
+      }
+    } catch (error) {
+      // res.status(400).send(`Error, could not upload file: ${error}`);
+      return;
+    }
+  }
+);
 const DIR = "./uploads/file";
 
 const storage = multer.diskStorage({
@@ -100,56 +241,122 @@ router.post(
   }
 );
 // POST
-router.post("/", upload.array("multiple_resources", 6), (req, res, next) => {
-  const reqFiles = [];
-  const url = req.protocol + "://" + req.get("host");
-  if (req.files) {
-    for (var i = 0; i < req.files.length; i++) {
-      reqFiles.push(
-        "http://localhost:5000/uploads/file/" + req.files[i].filename
-      );
-    }
-  }
+router.post(
+  "/",
+  uploader.array("multiple_resources", 6),
+  async (req, res, next) => {
+    console.log(req.files);
+    const reqFiles = [];
+    try {
+      for (let i = 0; i < req.files.length; i++) {
+        if (!req.files[i]) {
+          // res.status(400).send("Error, could not upload file");
+          return;
+        }
 
-  console.log("this is idClass");
-  console.log(req.body.idClass);
+        // Create new blob in the bucket referencing the file
+        const blob = await bucket.file(req.files[i].originalname);
 
-  const course = new Courses({
-    //   _id: new mongoose.Types.ObjectId(),
-    idClass: req.body.idClass,
-    idSeance: req.body.idSeance,
-    titre: req.body.titre,
-    description: req.body.description,
-    dateCreation: Date.now(),
-    multiple_resources: reqFiles,
-    idOwner: req.body.idOwner,
-  });
-
-  course
-    .save()
-    .then((result) => {
-      res.status(201).json({
-        msg: "Successfully Added",
-        success: true,
-        result: {
-          idClass: result.idClass,
-          idSeance: result.idSeance,
-          titre: result.titre,
-          description: result.description,
-          dateCreation: result.dateCreation,
-          multiple_resources: result.multiple_resources,
-          idOwner: result.idOwner,
-        },
-      });
-    })
-    .catch((err) => {
-      console.log(err),
-        res.status(500).json({
-          success: false,
-          error: err,
+        // Create writable stream and specifying file mimetype
+        const blobWriter = await blob.createWriteStream({
+          metadata: {
+            contentType: req.files[i].mimetype,
+          },
         });
-    });
-});
+
+        blobWriter.on("error", (err) => next(err));
+        perf.start();
+        blobWriter.on("finish", async () => {
+          // Assembling public URL for accessing the file via HTTP
+          const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${
+            bucket.name
+          }/o/${encodeURI(blob.name)}?alt=media`;
+
+          // Return the file name and its public URL
+
+          await reqFiles.push({
+            type: req.files[i].mimetype,
+            originalname: req.files[i].originalname,
+
+            url: publicUrl,
+          });
+          const results = perf.stop();
+          console.log(results.time);
+          if (i + 1 === req.files.length) {
+            setTimeout(() => {
+              console.log("this is resources");
+              console.log(i + 1);
+              console.log(req.files.length);
+              console.log(reqFiles);
+              const course = new Courses({
+                //   _id: new mongoose.Types.ObjectId(),
+                idClass: req.body.idClass,
+                idSeance: req.body.idSeance,
+                titre: req.body.titre,
+                description: req.body.description,
+                dateCreation: Date.now(),
+                multiple_resources: reqFiles,
+                idOwner: req.body.idOwner,
+              });
+
+              course
+                .save()
+                .then((result) => {
+                  res.status(201).json({
+                    msg: "Successfully Added",
+                    success: true,
+                    result: {
+                      idClass: result.idClass,
+                      idSeance: result.idSeance,
+                      titre: result.titre,
+                      description: result.description,
+                      dateCreation: result.dateCreation,
+                      multiple_resources: result.multiple_resources,
+                      idOwner: result.idOwner,
+                    },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err),
+                    res.status(500).json({
+                      success: false,
+                      error: err,
+                    });
+                });
+            }, results.time);
+          }
+
+          //   res.status(200).send({
+          //     result: {
+          //       reqFiles,
+          //     },
+          //   });
+        });
+        // reqFiles.push({
+        //   type: req.files[i].mimetype,
+        //   originalname: req.files[i].originalname,
+        //   url: `https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${req.files[i].originalname}?alt=media`,
+        //   //url: publicUrl,
+        // });
+
+        // When there is no more data to be consumed from the stream
+        blobWriter.end(req.files[i].buffer);
+      }
+
+      // res.status(200).send({
+      //   result: {
+      //     reqFiles,
+      //   },
+      // });
+    } catch (error) {
+      // res.status(400).send(`Error, could not upload file: ${error}`);
+      return;
+    }
+
+    console.log("this is idClass");
+    console.log(req.body.idClass);
+  }
+);
 
 router.get("/", (req, res) => {
   Courses.find({})
@@ -178,7 +385,7 @@ router.get("/:id", (req, res) => {
 
 // READ (ONE BY ID CLASS)
 router.get("/findByIdClass/:id", (req, res) => {
-  Courses.find({idClass:req.params.id})
+  Courses.find({ idClass: req.params.id })
     .populate("idOwner")
     .then((result) => {
       success: true, res.json(result);
@@ -226,7 +433,6 @@ router.delete("/:id", (req, res) => {
 // UPDATE
 router.put("/:id", (req, res) => {
   let updatedCourses = {
-    
     titre: req.body.titre,
     description: req.body.description,
     dateCreation: Date.now(),
