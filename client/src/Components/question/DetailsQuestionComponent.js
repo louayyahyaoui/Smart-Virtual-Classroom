@@ -33,7 +33,7 @@ import EditQuestions from "./EditQuestionComponent";
 import EditAnswer from "../answer/EditAnswer";
 import io from "socket.io-client";
 import { selectedClasses } from "../../redux/slices/classsline";
-const ENDPOINT = "http://127.0.0.1:5000";
+const ENDPOINT = "https://closer-server.herokuapp.com/";
 function DetailsQuestion(props) {
   const socket = io(ENDPOINT);
   const [currentClass, err] = useSelector(selectedClasses);
@@ -151,133 +151,143 @@ function DetailsQuestion(props) {
                   <Feed.Content>
                     <Feed.Date>{question.Date}</Feed.Date>
                     <Feed.Summary>
-                      <a>{question.Writerq.name}</a> 
+                      <a>{question.Writerq.name}</a>
                     </Feed.Summary>
                   </Feed.Content>
                 </Feed.Event>
               </Feed>
               <Message>
-              <Message.Header>{question.Title}</Message.Header>
-              <p>{question.Body}</p>
-            </Message>{" "}
+                <Message.Header>{question.Title}</Message.Header>
+                <p>{question.Body}</p>
+              </Message>{" "}
               <Feed.Extra images>
-              <List horizontal>
-                {question.Filee.map((file, index) => (
-                  <List.Item  key={index}>
-                    {(() => {
-                      switch (file.split(".").pop()) {
-                        case "pdf":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              {" "}
-                              <Icon name="file pdf" color="red" size="huge" />
-                            </a>
-                          );
-                        case "docx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="file word" color="blue" size="huge" />
-                            </a>
-                          );
-                        case "pptx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon
-                                name="file powerpoint"
-                                color="red"
-                                size="huge"
+                <List horizontal>
+                  {question.Filee.map((file, index) => (
+                    <List.Item key={index}>
+                      {(() => {
+                        switch (file.split(".").pop()) {
+                          case "pdf":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                {" "}
+                                <Icon name="file pdf" color="red" size="huge" />
+                              </a>
+                            );
+                          case "docx":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon
+                                  name="file word"
+                                  color="blue"
+                                  size="huge"
+                                />
+                              </a>
+                            );
+                          case "pptx":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon
+                                  name="file powerpoint"
+                                  color="red"
+                                  size="huge"
+                                />
+                              </a>
+                            );
+                          case "xlsx":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon
+                                  name="file excel outline"
+                                  color="green"
+                                  size="huge"
+                                />
+                              </a>
+                            );
+                          case "zip":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon name="zip" size="huge" />
+                              </a>
+                            );
+                          case "js":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon name="js" color="yellow" size="huge" />
+                              </a>
+                            );
+                          case "php":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon name="zip" color="blue" size="huge" />
+                              </a>
+                            );
+                          case "txt":
+                            return (
+                              <a href={`http://localhost:5000/file/${file}`}>
+                                <Icon
+                                  name="file text"
+                                  size="huge"
+                                  color="blue"
+                                />
+                              </a>
+                            );
+
+                          case "jpg":
+                            return (
+                              <img
+                                style={{
+                                  minWidth: "50px",
+                                  width: "50px",
+                                  height: "50px",
+                                }}
+                                src={`http://localhost:5000/file/${file}`}
+                                alt={`scan`}
                               />
-                            </a>
-                          );
-                        case "xlsx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon
-                                name="file excel outline"
-                                color="green"
-                                size="huge"
+                            );
+                          case "jpeg":
+                            return (
+                              <img
+                                style={{
+                                  minWidth: "50px",
+                                  width: "50px",
+                                  height: "50px",
+                                }}
+                                src={`http://localhost:5000/file/${file}`}
+                                alt={`scan`}
                               />
-                            </a>
-                          );
-                        case "zip":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="zip" size="huge" />
-                            </a>
-                          );
-                        case "js":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="js" color="yellow" size="huge" />
-                            </a>
-                          );
-                        case "php":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="zip"  color="blue" size="huge" />
-                            </a>
-                          );
-                        case "txt":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="file text" size="huge" color="blue"/>
-                            </a>
-                          );
+                            );
+                          case "png":
+                            return (
+                              <img
+                                style={{
+                                  minWidth: "50px",
+                                  width: "50px",
+                                  height: "50px",
+                                }}
+                                src={`http://localhost:5000/file/${file}`}
+                                alt={`scan`}
+                              />
+                            );
 
-                        case "jpg":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
-                        case "jpeg":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
-                        case "png":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
+                          default:
+                            return (
+                              <Icon name="File" color="Black" size="huge" />
+                            );
+                        }
+                      })()}
 
-                        default:
-                          return <Icon name="File" color="Black"  size="huge"/>;
-                      }
-                    })()}
-
-                    <p>{file.split("_").pop()}</p>
-                  </List.Item>
-                ))}
-              </List>
+                      <p>{file.split("_").pop()}</p>
+                    </List.Item>
+                  ))}
+                </List>
               </Feed.Extra>
               <div style={{ marginTop: "3%", marginBottom: "3%" }}>
-              {question.Hashtags.map((hashtag, index) => (
-                <Label color="red" as="a" tag>
-                  #{hashtag}
-                </Label>
-              ))}
-            </div>
+                {question.Hashtags.map((hashtag, index) => (
+                  <Label color="red" as="a" tag>
+                    #{hashtag}
+                  </Label>
+                ))}
+              </div>
               <InputEmoji
                 onChange={setText}
                 cleanOnEnter
@@ -305,14 +315,10 @@ function DetailsQuestion(props) {
               <Header dividing as="h3" style={{ marginLeft: "2%" }}>
                 Comments ({questionAndanswer.length})
               </Header>
-
               {questionAndanswer.map((answer, index) => (
                 <Comment.Group style={{ marginLeft: "5%" }} key={index}>
                   <Comment>
-                    <Comment.Avatar
-                      as="a"
-                      src={answer.Writer.picture}
-                    />
+                    <Comment.Avatar as="a" src={answer.Writer.picture} />
                     <Comment.Content>
                       <Comment.Author>{answer.Writer.name}</Comment.Author>
                       <Comment.Metadata>
@@ -324,115 +330,157 @@ function DetailsQuestion(props) {
                       <Comment.Text as="p">{answer.Body}</Comment.Text>
 
                       <Feed.Extra images style={{ display: "flex" }}>
-                      <List horizontal>
-                {answer.Filee.map((file, index) => (
-                  <List.Item  key={index}>
-                    {(() => {
-                      switch (file.split(".").pop()) {
-                        case "pdf":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              {" "}
-                              <Icon name="file pdf" color="red" size="huge" />
-                            </a>
-                          );
-                        case "docx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="file word" color="blue" size="huge" />
-                            </a>
-                          );
-                        case "pptx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon
-                                name="file powerpoint"
-                                color="red"
-                                size="huge"
-                              />
-                            </a>
-                          );
-                        case "xlsx":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon
-                                name="file excel outline"
-                                color="green"
-                                size="huge"
-                              />
-                            </a>
-                          );
-                        case "zip":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="zip" size="huge" />
-                            </a>
-                          );
-                        case "js":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="js" color="yellow" size="huge" />
-                            </a>
-                          );
-                        case "php":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="zip"  color="blue" size="huge" />
-                            </a>
-                          );
-                        case "txt":
-                          return (
-                            <a href={`http://localhost:5000/file/${file}`}>
-                              <Icon name="file text" size="huge" color="blue"/>
-                            </a>
-                          );
+                        <List horizontal>
+                          {answer.Filee.map((file, index) => (
+                            <List.Item key={index}>
+                              {(() => {
+                                switch (file.split(".").pop()) {
+                                  case "pdf":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        {" "}
+                                        <Icon
+                                          name="file pdf"
+                                          color="red"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "docx":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="file word"
+                                          color="blue"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "pptx":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="file powerpoint"
+                                          color="red"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "xlsx":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="file excel outline"
+                                          color="green"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "zip":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon name="zip" size="huge" />
+                                      </a>
+                                    );
+                                  case "js":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="js"
+                                          color="yellow"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "php":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="zip"
+                                          color="blue"
+                                          size="huge"
+                                        />
+                                      </a>
+                                    );
+                                  case "txt":
+                                    return (
+                                      <a
+                                        href={`http://localhost:5000/file/${file}`}
+                                      >
+                                        <Icon
+                                          name="file text"
+                                          size="huge"
+                                          color="blue"
+                                        />
+                                      </a>
+                                    );
 
-                        case "jpg":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
-                        case "jpeg":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
-                        case "png":
-                          return (
-                            <img
-                              style={{
-                                minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
-                              }}
-                              src={`http://localhost:5000/file/${file}`}
-                              alt={`scan`}
-                            />
-                          );
+                                  case "jpg":
+                                    return (
+                                      <img
+                                        style={{
+                                          minWidth: "50px",
+                                          width: "50px",
+                                          height: "50px",
+                                        }}
+                                        src={`http://localhost:5000/file/${file}`}
+                                        alt={`scan`}
+                                      />
+                                    );
+                                  case "jpeg":
+                                    return (
+                                      <img
+                                        style={{
+                                          minWidth: "50px",
+                                          width: "50px",
+                                          height: "50px",
+                                        }}
+                                        src={`http://localhost:5000/file/${file}`}
+                                        alt={`scan`}
+                                      />
+                                    );
+                                  case "png":
+                                    return (
+                                      <img
+                                        style={{
+                                          minWidth: "50px",
+                                          width: "50px",
+                                          height: "50px",
+                                        }}
+                                        src={`http://localhost:5000/file/${file}`}
+                                        alt={`scan`}
+                                      />
+                                    );
 
-                        default:
-                          return <Icon name="File" color="Black"  size="huge"/>;
-                      }
-                    })()}
+                                  default:
+                                    return (
+                                      <Icon
+                                        name="File"
+                                        color="Black"
+                                        size="huge"
+                                      />
+                                    );
+                                }
+                              })()}
 
-                    <p>{file.split("_").pop()}</p>
-                  </List.Item>
-                ))}
-              </List>
+                              <p>{file.split("_").pop()}</p>
+                            </List.Item>
+                          ))}
+                        </List>
                       </Feed.Extra>
                       {answer.Writer._id === documentData._id && (
                         <Comment.Actions>

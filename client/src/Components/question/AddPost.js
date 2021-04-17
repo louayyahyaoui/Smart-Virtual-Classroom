@@ -8,11 +8,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addQuestion } from "../../redux/slices/questionslice";
 import FileUpload from "../../utlis/FileUpload";
-import TagsInput from 'react-tagsinput'
-import 'react-tagsinput/react-tagsinput.css' 
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
 import { useHistory } from "react-router";
 import io from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:5000";
+const ENDPOINT = "https://closer-server.herokuapp.com/";
 function AddPost() {
   const socket = io(ENDPOINT);
 
@@ -41,20 +41,19 @@ function AddPost() {
 
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
-        socket.emit("send_question", "message"); 
+        socket.emit("send_question", "message");
 
-        history.push('/FAQ/'+res._id)
-
+        history.push("/FAQ/" + res._id);
       } catch (error) {
         alert(error);
       }
     },
   });
   const [tags, setTags] = useState([]);
-  const handleChange=(tag) =>{
-    setTags(tag)
-    console.log(tags)
-  }
+  const handleChange = (tag) => {
+    setTags(tag);
+    console.log(tags);
+  };
   return (
     <div>
       <Segment raised color="red">
@@ -77,17 +76,17 @@ function AddPost() {
             error={formik.errors.Body}
           />
           <TagsInput value={tags} onChange={handleChange} />
-          <div style={{ float: "right", marginRight: "5%",marginTop:"1%" }}>
-
-          <Button type="submit" color="red">
-            Ask!
-          </Button>
+          <div style={{ float: "right", marginRight: "5%", marginTop: "1%" }}>
+            <Button type="submit" color="red">
+              Ask!
+            </Button>
           </div>
           <div style={{ display: "flex" }}>
-                <div style={{ marginLeft: "5%" }}>
-                  <FileUpload refreshFunction={updateImages} listfile={null} />
-                </div>
-              </div>        </Form>
+            <div style={{ marginLeft: "5%" }}>
+              <FileUpload refreshFunction={updateImages} listfile={null} />
+            </div>
+          </div>{" "}
+        </Form>
       </Segment>
     </div>
   );

@@ -18,12 +18,12 @@ function handleErrors(response) {
 const schedulerDataSource = {
   store: new CustomStore({
     load: () => {
-      return fetch("http://localhost:5000/scheduler/")
+      return fetch("https://closer-server.herokuapp.com//scheduler/")
         .then(handleErrors)
         .then((response) => response.json());
     },
     insert: (values) => {
-      return fetch("http://localhost:5000/scheduler/", {
+      return fetch("https://closer-server.herokuapp.com//scheduler/", {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -32,18 +32,24 @@ const schedulerDataSource = {
       }).then(handleErrors);
     },
     remove: (key) => {
-      return fetch(`http://localhost:5000/scheduler/${key._id}`, {
-        method: "DELETE",
-      }).then(handleErrors);
+      return fetch(
+        `https://closer-server.herokuapp.com//scheduler/${key._id}`,
+        {
+          method: "DELETE",
+        }
+      ).then(handleErrors);
     },
     update: (key, values) => {
-      return fetch(`http://localhost:5000/scheduler/${key._id}`, {
-        method: "PUT",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(handleErrors);
+      return fetch(
+        `https://closer-server.herokuapp.com//scheduler/${key._id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then(handleErrors);
     },
     paginate: false,
   }),

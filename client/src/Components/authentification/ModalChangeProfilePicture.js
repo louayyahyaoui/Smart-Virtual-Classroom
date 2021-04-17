@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Dropzone from "react-dropzone-uploader";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
-  Dropdown,
-  Feed,
+  Dimmer,
   Header,
-  Icon,
   Image,
+  Loader,
   Modal,
 } from "semantic-ui-react";
-import { isAuth } from "../../helpers/auth";
+
 import { UpdateProfilePicture } from "../../redux/slices/User";
 
 function ModalChangeProfilePicture(props) {
   const Resources = useSelector((state) => state.user.Resources);
+  const [loader, SetLoader] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const [picture, setPicture] = React.useState("");
@@ -22,11 +22,15 @@ function ModalChangeProfilePicture(props) {
 
   const updatePicture = () => {
     var formData = new FormData();
+    SetLoader(true);
     formData.append("multiple_resources", picture);
     console.log("this is pic");
     console.log(picture);
-    dispatch(UpdateProfilePicture(formData));
-    setOpen(false);
+    dispatch(UpdateProfilePicture(formData)).then((response) => {
+      console.log(response);
+      SetLoader(false);
+      setOpen(false);
+    });
   };
   const handleChangeStatus = ({ meta, file }, status) => {
     if (status === "done") {
@@ -63,6 +67,7 @@ function ModalChangeProfilePicture(props) {
         }
       >
         <Modal.Header>Select a Photo</Modal.Header>
+
         <Modal.Content>
           <Modal.Description>
             <Header>Default Profile Image</Header>
@@ -72,6 +77,8 @@ function ModalChangeProfilePicture(props) {
             </p>
             <p>Is it okay to use this photo?</p>
             <br />
+            <br />
+
             <br />
             <Dropzone
               styles={{ dropzone: { minHeight: 120, maxHeight: 250 } }}
@@ -91,8 +98,17 @@ function ModalChangeProfilePicture(props) {
                   extra.reject ? { color: "red" } : {},
               }}
             />
+            <br />
+            {loader ? (
+              <Dimmer active>
+                <Loader>Preparing Files ... please wait !</Loader>
+              </Dimmer>
+            ) : (
+              <></>
+            )}
           </Modal.Description>
         </Modal.Content>
+
         <Modal.Actions>
           <Button color="black" onClick={() => setOpen(false)}>
             Discard

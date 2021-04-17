@@ -4,11 +4,13 @@ import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import {
   Button,
+  Dimmer,
   Form,
   Grid,
   Header,
   Image,
   List,
+  Loader,
   Message,
   Table,
 } from "semantic-ui-react";
@@ -34,6 +36,7 @@ function FormCoursesEdit(props) {
   const [formSuccessMessage, SetFormSuccessMessage] = useState("");
   const [formErrorMessage, SetFormErrorMessage] = useState("");
   const [selectedItem, SetSelectedItem] = useState(seances[0]._id);
+  const [loader, SetLoader] = useState(false);
 
   const SeanceOptions = [{ key: Number, text: "", value: "" }];
 
@@ -112,6 +115,7 @@ function FormCoursesEdit(props) {
     console.log(status, meta, file);
 
     if (status === "done") {
+      SetLoader(true);
       var formData = new FormData();
       formData.append("multiple_resources", file);
       await axios
@@ -120,6 +124,7 @@ function FormCoursesEdit(props) {
           formData
         )
         .then((response) => {
+          SetLoader(false);
           console.log(response.data.result.reqFiles[0]);
           dispatch(UpdateResources(response.data.result.reqFiles[0]));
         });
@@ -288,7 +293,7 @@ function FormCoursesEdit(props) {
 
                     <List.Content>
                       <Header as="h4" color="red">
-                        {files.originalname}
+                        {files.originalname.slice(0, 20)}
                       </Header>
                       <highlight>
                         <strong>{files.type.slice(0, 40)}</strong>
@@ -301,6 +306,14 @@ function FormCoursesEdit(props) {
             <Grid.Column width={2}></Grid.Column>
           </Grid.Row>
         </Grid>
+
+        {loader ? (
+          <Dimmer active inverted>
+            <Loader inline="centered">Preparing Files ... please wait !</Loader>
+          </Dimmer>
+        ) : (
+          <></>
+        )}
 
         <Message
           success

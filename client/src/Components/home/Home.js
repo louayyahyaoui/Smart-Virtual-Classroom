@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Container, Grid, Menu, Segment } from "semantic-ui-react";
 import TableCourses from "../coursesAndSeances/TableCourses";
 
@@ -14,8 +14,8 @@ import DetailCourses from "../coursesAndSeances/DetailCourses";
 import DisplayTaskTeacher from "../Task/DisplayTaskTeacher";
 import DisplayTaskStudent from "../Task/DisplayTaskStudent";
 import StepsBar from "../Task/StepsBar";
-import TaskFileDetail  from "../Task/TaskFileDetail";
-import EndQuiz from  "../Quiz/EndQuiz";
+import TaskFileDetail from "../Task/TaskFileDetail";
+import EndQuiz from "../Quiz/EndQuiz";
 import DetailTask from "../Task/DetailTask";
 import QuestionComponent from "../question/QuestionComponent";
 import DetailsQuestion from "../question/DetailsQuestionComponent";
@@ -49,45 +49,46 @@ function Home() {
               <Grid.Column width={4}></Grid.Column>
             </Grid>
             <Route
-            path="/TaskList"
-            exact
-            render={(props) => <DisplayTaskTeacher {...props} />}
-          />
-              <Route
-            path="/TaskListStudent"
-            exact
-            render={(props) => <DisplayTaskStudent {...props} />}
-          />
-              <Route
-            path="/TaskQuiz/:id"
-            exact
-            render={(props) => <Quiz {...props} />}
-          />
-               <Route
-            path="/Result/:id"
-            exact
-            render={(props) => <EndQuiz {...props} />}
-          />
-          <Route
-            path="/AddTask"
-            exact
-            render={(props) => <StepsBar {...props} />}
-          />
-           <Route
-            path="/DetailTask/:id"
-            exact
-            render={(props) => <DetailTask {...props} />}
-          />
-             <Route
-            path="/TaskFileDetail/:id"
-            exact
-            render={(props) => <TaskFileDetail {...props} />}
-          />
+              path="/TaskList"
+              exact
+              render={(props) => <DisplayTaskTeacher {...props} />}
+            />
+            <Route
+              path="/TaskListStudent"
+              exact
+              render={(props) => <DisplayTaskStudent {...props} />}
+            />
+            <Route
+              path="/TaskQuiz/:id"
+              exact
+              render={(props) => <Quiz {...props} />}
+            />
+            <Route
+              path="/Result/:id"
+              exact
+              render={(props) => <EndQuiz {...props} />}
+            />
+            <Route
+              path="/AddTask"
+              exact
+              render={(props) => <StepsBar {...props} />}
+            />
+            <Route
+              path="/DetailTask/:id"
+              exact
+              render={(props) => <DetailTask {...props} />}
+            />
+            <Route
+              path="/TaskFileDetail/:id"
+              exact
+              render={(props) => <TaskFileDetail {...props} />}
+            />
             <Route
               path="/seance/:titre/:id"
               exact
               render={(props) => <ListCoursesBySeance {...props} />}
             />
+            <Suspense fallback={<h1>Loading data ...</h1>}></Suspense>
             <Route
               path="/updateProfile/:id"
               exact

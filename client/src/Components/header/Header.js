@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Dropdown, Menu } from "semantic-ui-react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
 import { isAuth } from "../../helpers/auth";
@@ -12,76 +12,79 @@ function Header() {
     <div>
       <Menu pointing secondary>
         <Link to="/stream">
-        <Menu.Item
-          name="Stream"
-          icon="comments"
-          active={activeItem === "Stream"}
-          onClick={handleItemClick}
-        />
+          <Menu.Item
+            name="Stream"
+            icon="comments"
+            active={activeItem === "Stream"}
+            onClick={handleItemClick}
+          />
         </Link>
-         <Link to="/FAQ">
+        <Link to="/FAQ">
           <Menu.Item
             name="FAQ"
             icon="comments"
             active={activeItem === "FAQ"}
             onClick={handleItemClick}
           />
-        
         </Link>
         <Link to="/members">
-        <Menu.Item
-          name="Members"
-          icon="users"
-          active={activeItem === "Members"}
-          onClick={handleItemClick}
-        />
+          <Menu.Item
+            name="Members"
+            icon="users"
+            active={activeItem === "Members"}
+            onClick={handleItemClick}
+          />
         </Link>
-          <Link to={isAuth().role ==="Student" ? "/TaskListStudent" : "/TaskList"}>
-        <Menu.Item
-          name="Tasks"
-          icon="tasks"
-          active={activeItem === "Tasks"}
-          onClick={handleItemClick}
-        />
-</Link>
+        <Link
+          to={isAuth().role === "Student" ? "/TaskListStudent" : "/TaskList"}
+        >
+          <Menu.Item
+            name="Tasks"
+            icon="tasks"
+            active={activeItem === "Tasks"}
+            onClick={handleItemClick}
+          />
+        </Link>
         <Menu.Item
           name="Settings"
           icon="settings"
           active={activeItem === "Settings"}
           onClick={handleItemClick}
         />
-        {isAuth().role==="Teacher" ? (
-
-<Menu.Item position="right">
-<Dropdown floating className="icon" icon="add circle" button>
-  <Dropdown.Menu>
-    <Dropdown.Header
-      icon="mouse pointer"
-      content="Select something to add"
-    />
-    <Dropdown.Divider />
-    <ModalSeance
-      headerTitle="Add Theme"
-      buttonTriggerTitle="Add Theme"
-      buttonSubmitTitle="Add"
-      buttonColor="black"
-      icon="th"
-    />
-    <ModalCourses
-      headerTitle="Add Courses"
-      buttonTriggerTitle="Add Courses"
-      buttonSubmitTitle="Add"
-      buttonColor="red"
-      icon="add"
-    />
-    <Link to="/AddTask">
-    <Dropdown.Item icon="tasks" text="Add task" />
-    </Link>
-  </Dropdown.Menu>
-</Dropdown>
-</Menu.Item>
-        ) : (<></>) }
-    
+        {isAuth().role === "Teacher" ? (
+          <Menu.Item position="right">
+            <Dropdown floating className="icon" icon="add circle">
+              <Dropdown.Menu>
+                <Dropdown.Header
+                  icon="mouse pointer"
+                  content="Select something to add"
+                />
+                <Dropdown.Divider />
+                <ModalSeance
+                  headerTitle="Add Theme"
+                  buttonTriggerTitle="Add Theme"
+                  buttonSubmitTitle="Add"
+                  buttonColor="black"
+                  icon="th"
+                />
+                <ModalCourses
+                  headerTitle="Add Courses"
+                  buttonTriggerTitle="Add Courses"
+                  buttonSubmitTitle="Add"
+                  buttonColor="red"
+                  icon="add"
+                />
+                <Link to="/AddTask">
+                  <>
+                    <Dropdown.Item icon="tasks" text="Add task" />
+                  </>
+                </Link>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        ) : (
+          <></>
+        )}
       </Menu>
     </div>
   );

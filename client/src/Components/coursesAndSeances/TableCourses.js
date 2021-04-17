@@ -161,7 +161,7 @@ function TableCourses(props) {
                                         <Grid.Column width={3}>
                                           <Grid.Row>
                                             <Header as="h4" color="red">
-                                              {files.originalname}
+                                              {files.originalname.slice(0, 7)}
                                             </Header>
                                           </Grid.Row>
                                           <Grid.Row>
@@ -201,7 +201,7 @@ function TableCourses(props) {
                                         <Grid.Column width={3}>
                                           <Grid.Row>
                                             <Header as="h4" color="red">
-                                              {files.originalname}
+                                              {files.originalname.slice(0, 7)}
                                             </Header>
                                           </Grid.Row>
                                           <Grid.Row>
@@ -241,7 +241,7 @@ function TableCourses(props) {
                                         <Grid.Column width={3}>
                                           <Grid.Row>
                                             <Header as="h4" color="red">
-                                              {files.originalname}
+                                              {files.originalname.slice(0, 7)}
                                             </Header>
                                           </Grid.Row>
                                           <Grid.Row>
@@ -268,7 +268,7 @@ function TableCourses(props) {
                                     <Grid.Column width={3}>
                                       <Grid.Row>
                                         <Header as="h4" color="red">
-                                          {files.originalname}
+                                          {files.originalname.slice(0, 7)}
                                         </Header>
                                       </Grid.Row>
                                       <Grid.Row>
@@ -303,7 +303,7 @@ function TableCourses(props) {
                                     <Grid.Column width={3}>
                                       <Grid.Row>
                                         <Header as="h4" color="red">
-                                          {files.originalname}
+                                          {files.originalname.slice(0, 7)}
                                         </Header>
                                       </Grid.Row>
                                       <Grid.Row>
@@ -346,7 +346,7 @@ function TableCourses(props) {
                                       <Grid.Column width={3}>
                                         <Grid.Row>
                                           <Header as="h4" color="red">
-                                            {files.originalname}
+                                            {files.originalname.slice(0, 7)}
                                           </Header>
                                         </Grid.Row>
                                         <Grid.Row>

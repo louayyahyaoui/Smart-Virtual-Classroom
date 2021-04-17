@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ModalChangeProfilePicture from "./ModalChangeProfilePicture";
 import axios from "axios";
 import { getCookie, isAuth, setLocalStorage } from "../../helpers/auth";
-import { getUserById } from "../../redux/slices/User";
+import { getUserById, UpdateUserState } from "../../redux/slices/User";
 import { useParams } from "react-router";
 import ModalChangePassword from "./ModalChangePassword";
 
@@ -80,7 +80,7 @@ function UpdateProfile() {
       )
       .then((res) => {
         console.log(res.data);
-
+        dispatch(UpdateUserState());
         setLocalStorage("user", res.data.result);
         setFormSuccessMessage("Your profile was updated successfully !");
         SetFormClassName("success");

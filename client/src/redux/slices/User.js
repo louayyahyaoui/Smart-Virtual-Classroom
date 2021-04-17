@@ -7,11 +7,11 @@ export const UpdateProfilePicture = createAsyncThunk(
 
   async (resources) => {
     const promise = await axios.post(
-      "https://closer-server.herokuapp.com/courses/upload",
+      "https://closer-server.herokuapp.com/courses/api/upload",
       resources
     );
     console.log(promise.data.result.reqFiles);
-    return promise.data.result.reqFiles[0];
+    return promise.data.result.reqFiles[0].url;
   }
 );
 
@@ -35,12 +35,18 @@ export const ChangePassword = createAsyncThunk(
   }
 );
 
+export const UpdateUserState = createAsyncThunk(
+  "users/UpdateUserState",
+  async () => {}
+);
+
 export const UserSlice = createSlice({
   name: "user",
   initialState: {
     Resources: "",
     UserById: null,
     statusChangePassword: null,
+    userUpdated: false,
   },
 
   extraReducers: {
@@ -53,6 +59,9 @@ export const UserSlice = createSlice({
     },
     [ChangePassword.fulfilled]: (state, action) => {
       state.statusChangePassword = "changed !";
+    },
+    [UpdateUserState.fulfilled]: (state, action) => {
+      state.userUpdated = !state.userUpdated;
     },
   },
 });

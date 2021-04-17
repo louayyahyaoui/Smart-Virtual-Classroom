@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -13,8 +13,15 @@ import {
 import { isAuth, signout } from "../../helpers/auth";
 import moment from "moment";
 import Main from "../Main/Main";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../../redux/slices/User";
 
 function SideBareComponent() {
+  const state = useSelector((state) => state.user.userUpdated);
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {}, [state]);
+
   const [activeItem, SetActiveItem] = useState("Dashboard");
   const handleItemClick = (e, { name }) => {
     if (name === "Logout") {
@@ -58,11 +65,10 @@ function SideBareComponent() {
                 active={activeItem === "Dashboard"}
                 onClick={handleItemClick}
               >
-                <Label color="red">1</Label>
                 Dashboard
               </Menu.Item>
             </Link>
-         
+
             <Menu.Item
               name="Courses"
               active={activeItem === "Courses"}
@@ -70,7 +76,7 @@ function SideBareComponent() {
             >
               Courses
             </Menu.Item>
-            <Link to="/schedule"> 
+            <Link to="/schedule">
               <Menu.Item
                 name="Routine"
                 active={activeItem === "Routine"}
@@ -85,7 +91,21 @@ function SideBareComponent() {
                 active={activeItem === "Profile"}
                 onClick={handleItemClick}
               >
-                Profile
+                {isAuth().bio === "" ||
+                !isAuth().bio ||
+                isAuth().linkedInUrl === "" ||
+                !isAuth().linkedInUrl ||
+                isAuth().GithubUrl === "" ||
+                !isAuth().GithubUrl ||
+                isAuth().picture === "" ||
+                !isAuth().picture ? (
+                  <>
+                    {" "}
+                    <Label color="red">1</Label>,{"profile"}
+                  </>
+                ) : (
+                  <> {"Profile"}</>
+                )}
               </Menu.Item>
             </Link>
             <Link to="/login">
@@ -102,7 +122,7 @@ function SideBareComponent() {
         <Card.Content extra>
           <a>
             <Icon name="group" />
-            <Main></Main> 
+            <Main></Main>
           </a>
         </Card.Content>
       </Card>

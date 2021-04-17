@@ -1,9 +1,11 @@
 import React from "react";
 
 import "react-dropzone-uploader/dist/styles.css";
+
 import Dropzone from "react-dropzone-uploader";
 import {
   Button,
+  Dimmer,
   Dropdown,
   Form,
   Header,
@@ -63,7 +65,7 @@ function FormCourses(props) {
   const AddCourse = (e) => {
     e.preventDefault();
     const idOwner = isAuth()._id;
-
+    SetLoader(true);
     const rep = dispatch(
       AddCourses(
         selectedItem,
@@ -75,6 +77,7 @@ function FormCourses(props) {
       )
     )
       .then((response) => {
+        SetLoader(false);
         console.log(response);
 
         const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
@@ -150,8 +153,11 @@ function FormCourses(props) {
           styles={{ dropzone: { minHeight: 120, maxHeight: 250 } }}
           onChangeStatus={handleChangeStatus}
         />
+        <br />
         {loader ? (
-          <Loader active inline="centered" />
+          <Dimmer active inverted>
+            <Loader inline="centered">Preparing Files ... please wait !</Loader>
+          </Dimmer>
         ) : (
           <>
             <Message
