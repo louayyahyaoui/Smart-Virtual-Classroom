@@ -305,6 +305,7 @@ router.post(
                   res.status(201).json({
                     msg: "Successfully Added",
                     success: true,
+                    time: results.time,
                     result: {
                       idClass: result.idClass,
                       idSeance: result.idSeance,

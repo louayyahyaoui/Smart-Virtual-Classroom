@@ -124,6 +124,7 @@ exports.updateProfileController = (req, res) => {
               picture: req.body.picture,
               linkedInUrl: result.linkedInUrl,
               GithubUrl: result.GithubUrl,
+              role: result.role,
               salt: result.salt,
               email: result.email,
             },
