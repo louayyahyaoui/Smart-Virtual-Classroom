@@ -147,9 +147,7 @@ module.exports = {
   },
 
   addQuestion: async (req, res) => {
-    const file = uploads(req, res);
     const Questionn = req.body;
-    Questionn.Filee = file;
     const newQuestion = new Question(Questionn);
     try {
       const data = await newQuestion.save();
