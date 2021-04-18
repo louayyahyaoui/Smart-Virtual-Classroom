@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Dropdown, Menu } from "semantic-ui-react";
+import { Dropdown, Grid, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
@@ -9,7 +9,7 @@ function Header() {
   const [activeItem, setActiveItem] = useState("Stream");
   const handleItemClick = (e, { name }) => setActiveItem(name);
   return (
-    <div>
+    <>
       <Menu pointing secondary>
         <Link to="/stream">
           <Menu.Item
@@ -86,7 +86,7 @@ function Header() {
           <></>
         )}
       </Menu>
-    </div>
+    </>
   );
 }
 

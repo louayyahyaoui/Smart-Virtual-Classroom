@@ -9,6 +9,7 @@ import {
   Grid,
   Header,
   Icon,
+  Image,
   Label,
   LabelDetail,
   Progress,
@@ -17,7 +18,7 @@ import {
 import { RetrieveCoursesByIdSeance } from "../../redux/slices/Courses";
 import ModalCoursesEdit from "./ModalCoursesEdit";
 import ModalConfirmDeleteCourses from "./ModalConfirmDeleteCour";
-import { Image } from "antd";
+
 import { Link } from "react-router-dom";
 import { isAuth } from "../../helpers/auth";
 
@@ -44,12 +45,16 @@ function ListCoursesBySeance() {
   return (
     <div>
       {courses.length === 0 ? (
-        <Segment placeholder>
-          <Header icon>
-            <Icon name="pdf file outline" />
-            No documents are listed for this customer.
+        <>
+          <Image
+            centered
+            size="medium"
+            src={process.env.PUBLIC_URL + "/NoFileFound.png"}
+          />
+          <Header as="h2" textAlign="center">
+            <Header.Content>Sorry No Courses Found </Header.Content>
           </Header>
-        </Segment>
+        </>
       ) : (
         <Header as="h2" color="red" icon textAlign="center">
           <Icon color="red" name="file alternate" circular />
@@ -77,7 +82,7 @@ function ListCoursesBySeance() {
                         index={index}
                         onClick={handleClick}
                       >
-                        <Grid>
+                        <Grid stackable>
                           <Grid.Column width={11}>
                             <Feed.Summary>
                               <a>{c.idOwner.name}</a> posted a new course
@@ -136,7 +141,7 @@ function ListCoursesBySeance() {
 
                         <Feed.Extra text>{c.description}</Feed.Extra>
                         <Feed.Extra images>
-                          <Grid>
+                          <Grid stackable>
                             <Grid.Row>
                               {c.multiple_resources.map((files, index) =>
                                 files.type === "application/pdf" ? (

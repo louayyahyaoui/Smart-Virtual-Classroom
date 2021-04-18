@@ -31,20 +31,23 @@ function Home() {
 
   return (
     <div>
-      <Grid celled="internally">
-        <Grid.Row>
+      <Grid stackable celled="internally">
+        <Grid.Row reversed>
           <Grid.Column width={3}>
             <SideBareComponent />
           </Grid.Column>
           <Grid.Column width={10}>
-            <Container textAlign="center">
-              <Header />
-            </Container>
+            <Header />
 
             <br />
 
             <Grid>
-              <Grid.Column width={3}></Grid.Column>
+              <Grid.Column
+                mobile={16}
+                tablet={8}
+                computer={4}
+                width={3}
+              ></Grid.Column>
               <Grid.Column width={9}></Grid.Column>
               <Grid.Column width={4}></Grid.Column>
             </Grid>

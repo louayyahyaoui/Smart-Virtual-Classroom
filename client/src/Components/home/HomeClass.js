@@ -12,7 +12,7 @@ const server = process.env.REACT_APP_API_URL || "";
 function Home() {
   return (
     <div>
-      <Grid celled="internally">
+      <Grid stackable celled="internally">
         <Grid.Row>
           <Grid.Column width={3}>
             <SideBareComponent />

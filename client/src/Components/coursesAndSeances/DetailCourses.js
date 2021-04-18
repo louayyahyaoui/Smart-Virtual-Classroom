@@ -40,7 +40,7 @@ function DetailCourses() {
 
   return (
     <div>
-      <Grid>
+      <Grid stackable>
         <Grid.Row>
           <Grid.Column width={1}></Grid.Column>
           <Grid.Column width={14}>
@@ -59,7 +59,7 @@ function DetailCourses() {
               <p>{description}</p>
             </Container>
             <br />
-            <Grid>
+            <Grid stackable>
               <Grid.Row>
                 {resources.map((files, index) =>
                   files.type === "application/pdf" ? (

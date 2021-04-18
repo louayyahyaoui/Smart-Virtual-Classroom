@@ -97,7 +97,7 @@ function UpdateProfile() {
         Profile Update
       </Header>
       <br />
-      <Grid>
+      <Grid doubling>
         <Grid.Row>
           <Grid.Column width={10}>
             <Form className={formClassName}>

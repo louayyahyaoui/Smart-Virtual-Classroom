@@ -72,7 +72,7 @@ function TableCourses(props) {
                         index={index}
                         onClick={handleClick}
                       >
-                        <Grid>
+                        <Grid stackable>
                           <Grid.Column width={11}>
                             <Feed.Summary>
                               <a>{c.idOwner.name}</a> posted a new course
@@ -131,7 +131,7 @@ function TableCourses(props) {
 
                         <Feed.Extra text>{c.description}</Feed.Extra>
                         <Feed.Extra images>
-                          <Grid>
+                          <Grid stackable>
                             <Grid.Row>
                               {c.multiple_resources.map((files, index) =>
                                 files.type === "application/pdf" ? (

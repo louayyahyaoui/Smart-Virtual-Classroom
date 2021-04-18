@@ -49,7 +49,7 @@ function HomeCoursesAndSeance() {
   return (
     <div>
       <Router>
-        <Grid celled="internally">
+        <Grid stackable celled="internally">
           <Grid.Row>
             <Grid.Column width={3}></Grid.Column>
             <Grid.Column width={10}>
@@ -88,7 +88,7 @@ function HomeCoursesAndSeance() {
 
               <br />
 
-              <Grid>
+              <Grid stackable>
                 <Grid.Column width={3}></Grid.Column>
                 <Grid.Column width={9}></Grid.Column>
                 <Grid.Column width={4}>

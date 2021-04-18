@@ -23,6 +23,8 @@ import {
   UpdateCourses,
   UpdateResources,
 } from "../../redux/slices/Courses";
+import TextareaAutosize from "react-textarea-autosize";
+
 import axios from "axios";
 
 function FormCoursesEdit(props) {
@@ -164,7 +166,8 @@ function FormCoursesEdit(props) {
           value={titre}
           onChange={handleTitreChanges}
         />
-        <Form.TextArea
+        <Form.Field
+          control={TextareaAutosize}
           label="Description"
           type="text"
           placeholder="In this workshop we will learn ..."
@@ -201,7 +204,7 @@ function FormCoursesEdit(props) {
           PreviewComponent={Preview}
         />
         <br />
-        <Grid>
+        <Grid stackable>
           <Grid.Row>
             <Grid.Column width={2}></Grid.Column>
             <Grid.Column width={12}>

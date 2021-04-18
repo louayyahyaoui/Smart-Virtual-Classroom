@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
-import { Card, Dropdown, Feed, Grid, Header, Segment } from "semantic-ui-react";
+import {
+  Card,
+  Dropdown,
+  Feed,
+  Grid,
+  Header,
+  Image,
+  Segment,
+} from "semantic-ui-react";
 import {
   GetSeancesByIdClass,
   RetrieveSeances,
@@ -24,8 +32,18 @@ function TableSeance(props) {
 
   return (
     <div>
-      {!seances ? (
-        <div></div>
+      {seances.length === 0 ? (
+        <>
+          <br />
+          <Image
+            centered
+            size="medium"
+            src={process.env.PUBLIC_URL + "/NothingToDisplay.png"}
+          />
+          <Header as="h4" textAlign="center">
+            <Header.Content>No themes found </Header.Content>
+          </Header>
+        </>
       ) : (
         <div>
           <br />
@@ -42,7 +60,7 @@ function TableSeance(props) {
               <Card key={seance._id}>
                 <Card.Content>
                   <Card.Header>
-                    <Grid>
+                    <Grid stackable>
                       <Grid.Row>
                         <Grid.Column width={12}>
                           <Link to={`/seance/${seance.titre}/${seance._id}`}>
@@ -96,14 +114,6 @@ function TableSeance(props) {
                     <ReactTimeAgo date={seance.dateCreation} locale="en-US" />
                   </Card.Meta>
                   <Card.Description>{seance.description}</Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <Grid>
-                    <Grid.Column width={5}></Grid.Column>
-                    <Grid.Column width={11}>
-                      <Feed.Meta></Feed.Meta>
-                    </Grid.Column>
-                  </Grid>
                 </Card.Content>
               </Card>
             ))}

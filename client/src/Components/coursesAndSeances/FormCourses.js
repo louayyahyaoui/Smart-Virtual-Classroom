@@ -19,6 +19,8 @@ import {
   AddCourses,
   RetrieveCoursesByIdClass,
 } from "../../redux/slices/Courses";
+import TextareaAutosize from "react-textarea-autosize";
+
 import { useParams } from "react-router";
 import { isAuth, signout } from "../../helpers/auth";
 
@@ -33,7 +35,7 @@ function FormCourses(props) {
   const [formClassName, SetFormClassName] = useState("");
   const [formSuccessMessage, SetFormSuccessMessage] = useState("");
   const [formErrorMessage, SetFormErrorMessage] = useState("");
-  const [selectedItem, SetSelectedItem] = useState(0);
+  const [selectedItem, SetSelectedItem] = useState();
   const [loader, SetLoader] = useState(false);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
   const idClass = CurrentClass._id;
@@ -128,17 +130,18 @@ function FormCourses(props) {
           value={titre}
           onChange={handleTitreChanges}
         />
-        <Form.TextArea
+        <Form.Field
+          control={TextareaAutosize}
           label="Description"
           type="text"
           placeholder="In this workshop we will learn ..."
           name="Description"
-          maxLength="5000"
           required
           value={description}
           onChange={handleDescriptionChanges}
         />
         <Header as="h5" icon="file alternate outline" content="Select Seance" />
+
         <select value={selectedItem} onChange={handleChangeSelect}>
           {SeanceOptions.map((c, index) => (
             <option key={index} value={c.key}>
