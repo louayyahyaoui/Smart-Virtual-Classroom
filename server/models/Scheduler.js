@@ -18,5 +18,9 @@ const StudentSchema = new mongoose.Schema({
     allDay : {
         type : Boolean,
     },
+    postOwner :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    },
 })
 module.exports = mongoose.model('Scheduler', StudentSchema);

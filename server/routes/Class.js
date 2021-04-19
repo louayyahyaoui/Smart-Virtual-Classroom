@@ -12,6 +12,9 @@ const {
   removeUserFromClass,
   getClassById,
   getUserByEmail,
+  getUserByid,
+  CountActiveClass,
+  updateClassActive,
 } = require("../controllers/Class.js");
 router.get("/", getClass);
 router.get("/byyear/:id", ClassByDateYear);
@@ -24,4 +27,7 @@ router.put("/:id/:email", addUserToClass);
 router.put("/r/:id/:email", removeUserFromClass);
 router.get("/email/:email", getUserByEmail);
 router.get("/:_id", getClassById);
+router.get("/userid/:_id", getUserByid);
+router.get("/countactive/:id", CountActiveClass);
+router.get("/updateactive/:id", updateClassActive);
 module.exports = router;

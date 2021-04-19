@@ -1,8 +1,7 @@
 const ClassModel = require("../models/Class.js");
-const StudentModel= require("../models/auth.model.js");
+const StudentModel = require("../models/auth.model.js");
 const mongoose = require("mongoose");
 module.exports = {
-  
   getClass: async (req, res) => {
     try {
       res
@@ -35,7 +34,23 @@ module.exports = {
         await ClassModel.aggregate([
           {
             $match: {
-              $or: [ {classUsers: { $in: [mongoose.Types.ObjectId(req.params.id)] }},{classOwner: { $in: [mongoose.Types.ObjectId(req.params.id)] }} ],
+              $and: [
+                { classStatus: "Active" },
+                {
+                  $or: [
+                    {
+                      classUsers: {
+                        $in: [mongoose.Types.ObjectId(req.params.id)],
+                      },
+                    },
+                    {
+                      classOwner: {
+                        $in: [mongoose.Types.ObjectId(req.params.id)],
+                      },
+                    },
+                  ],
+                },
+              ],
             },
           },
           {
@@ -43,7 +58,7 @@ module.exports = {
           },
           {
             $group: {
-              _id: {  $year: "$classDatePost"  },
+              _id: { $year: "$classDatePost" },
               classObjet: {
                 $push: {
                   className: "$className",
@@ -53,6 +68,8 @@ module.exports = {
                   classOwner: "$classOwner",
                   classUsers: "$classUsers",
                   classLevel: "$classLevel",
+                  classColor: "$classColor",
+                  classStatus: "$classStatus",
                   _id: "$_id",
                 },
               },
@@ -75,7 +92,23 @@ module.exports = {
       let newLevel = await ClassModel.aggregate([
         {
           $match: {
-            $or: [ {classUsers: { $in: [mongoose.Types.ObjectId(req.params.id)] }},{classOwner: { $in: [mongoose.Types.ObjectId(req.params.id)] }} ],
+            $and: [
+              { classStatus: "Active" },
+              {
+                $or: [
+                  {
+                    classUsers: {
+                      $in: [mongoose.Types.ObjectId(req.params.id)],
+                    },
+                  },
+                  {
+                    classOwner: {
+                      $in: [mongoose.Types.ObjectId(req.params.id)],
+                    },
+                  },
+                ],
+              },
+            ],
           },
         },
         {
@@ -93,6 +126,8 @@ module.exports = {
                 classOwner: "$classOwner",
                 classUsers: "$classUsers",
                 classLevel: "$classLevel",
+                classColor: "$classColor",
+                classStatus: "$classStatus",
                 _id: "$_id",
               },
             },
@@ -104,14 +139,12 @@ module.exports = {
           },
         },
       ]);
-      res
-        .status(200)
-        .json(
-          await ClassModel.populate(newLevel, {
-            path: "classOwner",
-            model: "Student",
-          })
-        );
+      res.status(200).json(
+        await ClassModel.populate(newLevel, {
+          path: "classOwner",
+          model: "Student",
+        })
+      );
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
@@ -131,7 +164,7 @@ module.exports = {
   },
   updateClass: async (req, res) => {
     try {
-     // const updateClass = new ClassModel(req.body);
+      // const updateClass = new ClassModel(req.body);
       const data = await ClassModel.findByIdAndUpdate(
         mongoose.Types.ObjectId(req.params.id),
         req.body
@@ -208,6 +241,56 @@ module.exports = {
     try {
       const dataFind = await StudentModel.findOne({ email: req.params.email });
       res.status(201).json(dataFind);
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  getUserByid: async (req, res) => {
+    try {
+      const dataFind = await StudentModel.findOne({ _id: req.params._id });
+      res.status(201).json(dataFind);
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  CountActiveClass: async (req, res) => {
+    try {
+      const dataFind = await ClassModel.aggregate(
+        [
+          {
+            $match: {
+              $and: [
+                { classStatus: "Active" },
+                {
+                      classUsers: {
+                        $in: [mongoose.Types.ObjectId(req.params.id)],
+                      },  
+                },
+              ],
+            },
+          },
+          {
+            $count: "active_class"
+          }
+        ]
+      )
+      res.status(201).json(dataFind);
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  updateClassActive: async (req, res) => {
+    try {
+      // const updateClass = new ClassModel(req.body);
+      const data = await ClassModel.findByIdAndUpdate(
+        mongoose.Types.ObjectId(req.params.id),
+        {classStatus:"Archive"}
+      );
+      res.status(201).json({
+        statue: true,
+        message: " Class Archived Succefully",
+        result: data,
+      });
     } catch (error) {
       res.status(400).json({ statue: false, message: error.message });
     }

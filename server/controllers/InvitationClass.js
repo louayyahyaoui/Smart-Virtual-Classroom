@@ -1,14 +1,22 @@
 const InvitationClassModel = require("../models/InvitationClass.js");
 const mongoose = require("mongoose");
 module.exports = {
-
   getInvitationByUserClass: async (req, res) => {
     try {
-      res
-        .status(200)
-        .json(
-          await InvitationClassModel.find( {userOb: mongoose.Types.ObjectId(req.params.id)}).populate({path:"classOb",populate : { path:"classOwner",model:"User"}}).populate("userOb").populate({path:"classOb",populate : { path:"classUsers",model:"User"}})
-        );
+      res.status(200).json(
+        await InvitationClassModel.find({
+          userOb: mongoose.Types.ObjectId(req.params.id),
+        })
+          .populate({
+            path: "classOb",
+            populate: { path: "classOwner", model: "User" },
+          })
+          .populate("userOb")
+          .populate({
+            path: "classOb",
+            populate: { path: "classUsers", model: "User" },
+          })
+      );
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
@@ -63,6 +71,25 @@ module.exports = {
         message: "InvitationClass Deleted Succefully",
         result: data,
       });
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  CountRequestClass: async (req, res) => {
+    try {
+      const dataFind = await InvitationClassModel.aggregate([
+        {
+          $match: {
+            userOb: {
+              $in: [mongoose.Types.ObjectId(req.params.id)],
+            },
+          },
+        },
+        {
+          $count: "request_class",
+        },
+      ]);
+      res.status(201).json(dataFind);
     } catch (error) {
       res.status(400).json({ statue: false, message: error.message });
     }

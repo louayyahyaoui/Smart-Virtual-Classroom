@@ -16,6 +16,12 @@ const ClassSchema = new Schema({
     classLevel : {
         type : Number
     },
+    classStatus : {
+        type : String , default : "Active"
+    },
+    classColor : {
+        type : String 
+    },
     classOwner :{
         type: Schema.Types.ObjectId,
         ref : 'User'
