@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
+import ScreenRecord from "./ScreenRecord";
 import {
   Button,
   Comment,
@@ -284,6 +285,8 @@ function DetailCourses() {
             <br />
             <br />
             <CommentComponent courseID={id} />
+            <br />
+            
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>

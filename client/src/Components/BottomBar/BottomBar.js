@@ -1,5 +1,8 @@
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useEffect } from "react";
+import styled from "styled-components";
+import useMediaRecorder from "@wmik/use-media-recorder";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const BottomBar = ({
   clickChat,
@@ -10,7 +13,7 @@ const BottomBar = ({
   screenShare,
   videoDevices,
   showVideoDevices,
-  setShowVideoDevices
+  setShowVideoDevices,
 }) => {
   const handleToggle = useCallback(
     (e) => {
@@ -19,15 +22,62 @@ const BottomBar = ({
     [setShowVideoDevices]
   );
 
+  function Player({ srcBlob, audio }) {
+    if (!srcBlob) {
+      return null;
+    }
+
+    if (audio) {
+      return <audio src={URL.createObjectURL(srcBlob)} controls />;
+    }
+
+    return (
+      <video
+        src={URL.createObjectURL(srcBlob)}
+        width={520}
+        height={480}
+        controls
+      />
+    );
+  }
+
+  let {
+    error,
+    status,
+    mediaBlob,
+    stopRecording,
+    getMediaStream,
+    startRecording,
+  } = useMediaRecorder({
+    recordScreen: true,
+    blobOptions: { type: "video/mp4" },
+    mediaStreamConstraints: { audio: true, video: true },
+  });
+  const dispatch = useDispatch();
+  const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
+  useEffect(() => {
+    if (!mediaBlob) {
+      return;
+    }
+    console.log(mediaBlob);
+    var formData = new FormData();
+    formData.append("multiple_resources", mediaBlob);
+    axios
+      .post("https://closer-server.herokuapp.com/courses/api/upload", formData)
+      .then((response) => {
+        console.log(response.data.result.reqFiles[0]);
+      });
+  }, [mediaBlob]);
+
   return (
     <Bar>
       <Left>
-        <CameraButton onClick={toggleCameraAudio} data-switch='video'>
+        <CameraButton onClick={toggleCameraAudio} data-switch="video">
           <div>
             {userVideoAudio.video ? (
-              <FaIcon className='fas fa-video'></FaIcon>
+              <FaIcon className="fas fa-video"></FaIcon>
             ) : (
-              <FaIcon className='fas fa-video-slash'></FaIcon>
+              <FaIcon className="fas fa-video-slash"></FaIcon>
             )}
           </div>
           Camera
@@ -43,14 +93,14 @@ const BottomBar = ({
           </SwitchList>
         )}
         <SwitchMenu onClick={handleToggle}>
-          <i className='fas fa-angle-up'></i>
+          <i className="fas fa-angle-up"></i>
         </SwitchMenu>
-        <CameraButton onClick={toggleCameraAudio} data-switch='audio'>
+        <CameraButton onClick={toggleCameraAudio} data-switch="audio">
           <div>
             {userVideoAudio.audio ? (
-              <FaIcon className='fas fa-microphone'></FaIcon>
+              <FaIcon className="fas fa-microphone"></FaIcon>
             ) : (
-              <FaIcon className='fas fa-microphone-slash'></FaIcon>
+              <FaIcon className="fas fa-microphone-slash"></FaIcon>
             )}
           </div>
           Audio
@@ -59,19 +109,37 @@ const BottomBar = ({
       <Center>
         <ChatButton onClick={clickChat}>
           <div>
-            <FaIcon className='fas fa-comments'></FaIcon>
+            <FaIcon className="fas fa-comments"></FaIcon>
           </div>
           Chat
         </ChatButton>
+        <StartButton onClick={startRecording} disabled={status === "recording"}>
+          <div>
+            <FaIcon className="fas fa-play-circle"></FaIcon>
+          </div>
+          Start
+        </StartButton>
+        <StopRecordButton
+          onClick={stopRecording}
+          disabled={status !== "recording"}
+        >
+          <div>
+            <FaIcon className="fas fa-stop-circle"></FaIcon>
+          </div>
+          Stop
+        </StopRecordButton>
+
         <ScreenButton onClick={clickScreenSharing}>
           <div>
             <FaIcon
-              className={`fas fa-desktop ${screenShare ? 'sharing' : ''}`}
+              className={`fas fa-desktop ${screenShare ? "sharing" : ""}`}
             ></FaIcon>
           </div>
           Share Screen
         </ScreenButton>
+        {error ? `${status} ${error.message}` : status}
       </Center>
+
       <Right>
         <StopButton onClick={goToBack}>Stop</StopButton>
       </Right>
@@ -107,6 +175,39 @@ const Center = styled.div`
 const Right = styled.div``;
 
 const ChatButton = styled.div`
+  width: 75px;
+  border: none;
+  font-size: 0.9375rem;
+  padding: 5px;
+
+  :hover {
+    background-color: #77b7dd;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+
+  * {
+    pointer-events: none;
+  }
+`;
+const StartButton = styled.div`
+  width: 75px;
+  border: none;
+  font-size: 0.9375rem;
+  padding: 5px;
+
+  :hover {
+    background-color: #77b7dd;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+
+  * {
+    pointer-events: none;
+  }
+`;
+
+const StopRecordButton = styled.div`
   width: 75px;
   border: none;
   font-size: 0.9375rem;
