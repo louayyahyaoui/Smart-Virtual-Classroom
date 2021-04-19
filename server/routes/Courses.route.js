@@ -97,7 +97,7 @@ router.post(
         }
 
         // Create new blob in the bucket referencing the file
-        const blob = bucket.file(req.files[i].originalname);
+        const blob = bucket.file(Date.now() + "-" + req.files[i].originalname);
 
         // Create writable stream and specifying file mimetype
         const blobWriter = blob.createWriteStream({
@@ -255,7 +255,7 @@ router.post(
         }
 
         // Create new blob in the bucket referencing the file
-        const blob = await bucket.file(req.files[i].originalname);
+        const blob = bucket.file(Date.now() + "-" + req.files[i].originalname);
 
         // Create writable stream and specifying file mimetype
         const blobWriter = await blob.createWriteStream({
