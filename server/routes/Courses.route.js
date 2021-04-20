@@ -23,6 +23,10 @@ const uploader = multer({
   limits: {
     fileSize: 300 * 1024 * 1024, // limiting files size to 5 MB
   },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, Date.now() + "-" + fileName);
+  },
 });
 
 function UploadingArray(files) {
