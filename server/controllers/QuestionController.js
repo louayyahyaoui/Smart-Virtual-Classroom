@@ -111,7 +111,7 @@ module.exports = {
       const id = req.params.id;
       const questions = await Question.find({
         Class: mongoose.Types.ObjectId(req.params.id),
-      }).sort({ Date: -1 });
+      }).sort({ Date: -1 }).populate("Writerq");
 
       return res.status(200).json(questions);
     } catch (error) {
