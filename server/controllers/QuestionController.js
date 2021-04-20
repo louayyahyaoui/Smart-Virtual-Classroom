@@ -215,9 +215,9 @@ module.exports = {
     try {
       const  id  = req.params.id;
       const  tag  = req.params.tag;
-
-      const question = await Question.find({Class: mongoose.Types.ObjectId(id),
-        Hashtags: { $in: ["" + tag] },
+      $and: [{ age: { $gt: 2 } }, { age: { $lte: 4 } }]
+      const question = await Question.find({$and:[{ {Class: mongoose.Types.ObjectId(id)},
+       { Hashtags: { $in: ["" + tag]} }]
       });
       if (!question) return next();
       return res.status(200).json(question);
