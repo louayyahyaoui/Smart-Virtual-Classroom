@@ -247,7 +247,7 @@ module.exports = {
   },
   CountActiveClass: async (req, res) => {
     try {
-      const dataFind = await ClassModel.find([
+      const dataFind = await ClassModel.aggregate([
         {
           $match: {
             classStatus: "Active",
