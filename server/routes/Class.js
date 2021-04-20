@@ -29,5 +29,5 @@ router.get("/email/:email", getUserByEmail);
 router.get("/:_id", getClassById);
 router.get("/userid/:_id", getUserByid);
 router.get("/countactive/:id", CountActiveClass);
-router.get("/updateactive/:id", updateClassActive);
+router.put("/updateactive/:id", updateClassActive);
 module.exports = router;

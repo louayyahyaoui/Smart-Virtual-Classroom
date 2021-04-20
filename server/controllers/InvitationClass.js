@@ -21,6 +21,26 @@ module.exports = {
       res.status(404).json({ statue: false, message: error.message });
     }
   },
+  getInvitationByClassid: async (req, res) => {
+    try {
+      res.status(200).json(
+        await InvitationClassModel.find({
+         "classOb._id": mongoose.Types.ObjectId(req.params.id),
+        })
+          .populate({
+            path: "classOb",
+            populate: { path: "classOwner", model: "User" },
+          })
+          .populate("userOb")
+          .populate({
+            path: "classOb",
+            populate: { path: "classUsers", model: "User" },
+          })
+      );
+    } catch (error) {
+      res.status(404).json({ statue: false, message: error.message });
+    }
+  },
   addInvitationClass: async (req, res) => {
     const newInvitationClass = new InvitationClassModel(req.body);
     try {

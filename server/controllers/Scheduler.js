@@ -6,7 +6,7 @@ module.exports = {
       res
         .status(200)
         .json(
-          await SchedulerModel.find({})
+          await SchedulerModel.find({}).populate("postOwner")
         );
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
