@@ -216,7 +216,7 @@ module.exports = {
       const  id  = req.params.id;
       const  tag  = req.params.tag;
       $and: [{ age: { $gt: 2 } }, { age: { $lte: 4 } }]
-      const question = await Question.find({$and:[{ {Class: mongoose.Types.ObjectId(id)},
+      const question = await Question.find({$and:[ {Class: mongoose.Types.ObjectId(id)},
        { Hashtags: { $in: ["" + tag]} }]
       });
       if (!question) return next();
