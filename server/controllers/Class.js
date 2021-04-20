@@ -34,21 +34,17 @@ module.exports = {
         await ClassModel.aggregate([
           {
             $match: {
-              $and: [
-                { classStatus: "Active" },
+              classStatus: "Active",
+              $or: [
                 {
-                  $or: [
-                    {
-                      classUsers: {
-                        $in: [mongoose.Types.ObjectId(req.params.id)],
-                      },
-                    },
-                    {
-                      classOwner: {
-                        $in: [mongoose.Types.ObjectId(req.params.id)],
-                      },
-                    },
-                  ],
+                  classUsers: {
+                    $in: [mongoose.Types.ObjectId(req.params.id)],
+                  },
+                },
+                {
+                  classOwner: {
+                    $in: [mongoose.Types.ObjectId(req.params.id)],
+                  },
                 },
               ],
             },
@@ -92,21 +88,17 @@ module.exports = {
       let newLevel = await ClassModel.aggregate([
         {
           $match: {
-            $and: [
-              { classStatus: "Active" },
+            classStatus: "Active",
+            $or: [
               {
-                $or: [
-                  {
-                    classUsers: {
-                      $in: [mongoose.Types.ObjectId(req.params.id)],
-                    },
-                  },
-                  {
-                    classOwner: {
-                      $in: [mongoose.Types.ObjectId(req.params.id)],
-                    },
-                  },
-                ],
+                classUsers: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
+                },
+              },
+              {
+                classOwner: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
+                },
               },
             ],
           },
@@ -255,25 +247,19 @@ module.exports = {
   },
   CountActiveClass: async (req, res) => {
     try {
-      const dataFind = await ClassModel.aggregate(
-        [
-          {
-            $match: {
-              $and: [
-                { classStatus: "Active" },
-                {
-                      classUsers: {
-                        $in: [mongoose.Types.ObjectId(req.params.id)],
-                      },  
-                },
-              ],
+      const dataFind = await ClassModel.find([
+        {
+          $match: {
+            classStatus: "Active",
+            classUsers: {
+              $in: [mongoose.Types.ObjectId(req.params.id)],
             },
           },
-          {
-            $count: "active_class"
-          }
-        ]
-      )
+        },
+        {
+          $count: "active_class",
+        },
+      ]);
       res.status(201).json(dataFind);
     } catch (error) {
       res.status(400).json({ statue: false, message: error.message });
@@ -284,7 +270,7 @@ module.exports = {
       // const updateClass = new ClassModel(req.body);
       const data = await ClassModel.findByIdAndUpdate(
         mongoose.Types.ObjectId(req.params.id),
-        {classStatus:"Archive"}
+        { classStatus: "Archive" }
       );
       res.status(201).json({
         statue: true,
