@@ -276,8 +276,8 @@ module.exports = {
   updateClassActive: async (req, res) => {
     try {
       // const updateClass = new ClassModel(req.body);
-      const data = await ClassModel.findByIdAndUpdate(
-        mongoose.Types.ObjectId(req.params.id),
+      const data = await ClassModel.update(
+        { _id: req.params.id },
         { classStatus: "Archive" }
       );
       res.status(201).json({

@@ -25,9 +25,10 @@ router.delete("/:id", deleteClass);
 router.delete("/", deleteAllClass);
 router.put("/:id/:email", addUserToClass);
 router.put("/r/:id/:email", removeUserFromClass);
+router.put("/update/archive/:id", updateClassActive);
 router.get("/email/:email", getUserByEmail);
 router.get("/:_id", getClassById);
 router.get("/userid/:_id", getUserByid);
 router.get("/countactive/:id", CountActiveClass);
-router.put("/updateactive/:id", updateClassActive);
+
 module.exports = router;
