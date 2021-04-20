@@ -11,6 +11,7 @@ const Grade = require("./routes/Grade.js");
 var questionRouter = require("./routes/question");
 var anwerRouter = require("./routes/answer");
 var CommentCourse = require("./routes/CommentCourse");
+var Notification = require("./routes/notification");
 
 //Hamza routes
 const ClassRouter = require("./routes/Class.js");
@@ -73,6 +74,7 @@ app.use("/grade", Grade);
 app.use("/question", questionRouter);
 app.use("/answer", anwerRouter);
 app.use("/coursesComment", CommentCourse);
+app.use("/notification", Notification);
 
 //Hamza routes:
 app.use("/class", ClassRouter);
@@ -128,7 +130,7 @@ io.on("connection", (socket) => {
           users.push({ userId: client, info: socketList[client] });
         });
         socket.broadcast.to(roomId).emit("FE-user-join", users);
-        // io.sockets.in(roomId).emit('FE-user-join', users);
+        io.sockets.emit('List_user', users);
       } catch (e) {
         io.sockets.in(roomId).emit("FE-error-user-exist", { err: true });
       }
@@ -171,6 +173,9 @@ io.on("connection", (socket) => {
     socket.broadcast
       .to(roomId)
       .emit("FE-toggle-camera", { userId: socket.id, switchTarget });
+  });
+  socket.on("add-new-notification",function (data) {
+    io.emit("new-notification", data);
   });
 });
 

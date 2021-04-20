@@ -42,6 +42,6 @@ router.put('/update/:id',updateQuestion);
 // DELETE QUESTION 
 router.delete('/delete/:id',deletQuestion);
 // findby hashtag  
-router.get('/tags/:tag',findquestionbyTags);
+router.get('/tags/:id/:tag',findquestionbyTags);
 
 module.exports = router;

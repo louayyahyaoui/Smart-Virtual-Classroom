@@ -57,9 +57,7 @@ module.exports = {
           blobWriter.on("finish", async () => {
             // Assembling public URL for accessing the file via HTTP
 
-            await reqFiles.push(
-              encodeURI(blob.name)
-            );
+            await reqFiles.push(encodeURI(blob.name));
 
             // Return the file name and its public URL
 
@@ -86,8 +84,7 @@ module.exports = {
 
   getAnswerAndQuestion: async (req, res, next) => {
     try {
-      const { id } = req.params.id;
-      const answers = await Question.aggregate([
+      /*const answers = await Question.aggregate([
         { $match: { Class: mongoose.Types.ObjectId(req.params.id) } },
         {
           $lookup: {
@@ -111,6 +108,12 @@ module.exports = {
     .status(200)
     .json(answerQuestions);
 */
+      const id = req.params.id;
+      const questions = await Question.find({
+        Class: mongoose.Types.ObjectId(req.params.id),
+      }).sort({ Date: -1 });
+
+      return res.status(200).json(questions);
     } catch (error) {
       return res.status(400).json({ status: 400, message: error.message });
     }
@@ -210,9 +213,10 @@ module.exports = {
   },
   findquestionbyTags: async (req, res, next) => {
     try {
-      const { tag } = req.params;
-      console.log(tag);
-      const question = await Question.find({
+      const  id  = req.params.id;
+      const  tag  = req.params.tag;
+
+      const question = await Question.find({Class: mongoose.Types.ObjectId(id),
         Hashtags: { $in: ["" + tag] },
       });
       if (!question) return next();
