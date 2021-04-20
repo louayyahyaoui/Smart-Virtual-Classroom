@@ -250,10 +250,18 @@ module.exports = {
       const dataFind = await ClassModel.aggregate([
         {
           $match: {
-            classStatus: "Active",
-            classUsers: {
-              $in: [mongoose.Types.ObjectId(req.params.id)],
-            },
+            classStatus: "Active",   $or: [
+              {
+                classUsers: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
+                },
+              },
+              {
+                classOwner: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
+                },
+              },
+            ],
           },
         },
         {
