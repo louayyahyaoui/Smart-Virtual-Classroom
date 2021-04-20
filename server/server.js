@@ -90,6 +90,12 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", (socket) => {
+  socket.on("canvas-data", (data) => {
+    socket.broadcast.emit("canvas-data", data);
+  });
+});
+
+io.on("connection", (socket) => {
   //question
   socket.on("send_question", function (data) {
     io.emit("new-question", data);
@@ -130,7 +136,7 @@ io.on("connection", (socket) => {
           users.push({ userId: client, info: socketList[client] });
         });
         socket.broadcast.to(roomId).emit("FE-user-join", users);
-        io.sockets.emit('List_user', users);
+        io.sockets.emit("List_user", users);
       } catch (e) {
         io.sockets.in(roomId).emit("FE-error-user-exist", { err: true });
       }
@@ -174,7 +180,7 @@ io.on("connection", (socket) => {
       .to(roomId)
       .emit("FE-toggle-camera", { userId: socket.id, switchTarget });
   });
-  socket.on("add-new-notification",function (data) {
+  socket.on("add-new-notification", function (data) {
     io.emit("new-notification", data);
   });
 });
