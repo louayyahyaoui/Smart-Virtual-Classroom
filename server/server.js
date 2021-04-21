@@ -183,10 +183,7 @@ io.on("connection", (socket) => {
   socket.on("add-new-notification", function (data) {
     io.emit("new-notification", data);
   });
-  socket.on('disconnect', () => {
-    socket.disconnect();
-    console.log('User disconnected!');
-  });
+
 
 });
 
