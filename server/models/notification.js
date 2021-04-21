@@ -8,7 +8,7 @@ var Notification = new Schema({
   Course: { type: Schema.Types.ObjectId, ref: "courses", default: null },
   Task: { type: Schema.Types.ObjectId, ref: "tasks", default: null },
   Message: { type: String },
-  Date: { type: String, default: Date.now() },
+  Date: { type: Date, default: Date.now() },
   Owner: [{ type: Schema.Types.ObjectId, ref: "User" }],
   status: { type: Boolean, default: false },
 });
