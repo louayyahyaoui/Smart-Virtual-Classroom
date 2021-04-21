@@ -17,6 +17,7 @@ export default function StepsBar() {
     foptionB : "",
     foptionC : "",
     foptionD : "",
+    fpoint : "",
 
 
 })

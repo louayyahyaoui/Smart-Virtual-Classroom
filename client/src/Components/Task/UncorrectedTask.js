@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router';
-import { Button, Card, Header, Icon, Image, Input, Loader, Segment } from 'semantic-ui-react'
+import { Button, Card, Grid, Header, Icon, Image, Input, Loader, Segment } from 'semantic-ui-react'
 import { isAuth } from '../../helpers/auth';
 import { assignGradeToStudent } from '../../redux/slices/Grade';
 import { getDetailTask } from '../../redux/slices/Task';
@@ -66,7 +67,10 @@ export default function UncorrectedTask(props) {
   
   </Card.Meta>
       <Card.Description>
-     <strong>File </strong>
+  
+    File
+             
+
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
