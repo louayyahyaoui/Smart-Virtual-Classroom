@@ -214,11 +214,10 @@ module.exports = {
   findquestionbyTags: async (req, res, next) => {
     try {
       const  id  = req.params.id;
-      const  tag  = req.params.tag;
-      $and: [{ age: { $gt: 2 } }, { age: { $lte: 4 } }]
+      const  tags  = req.params.tag;
       const question = await Question.find({$and:[ {Class: mongoose.Types.ObjectId(id)},
-       { Hashtags: { $in: ["" + tag]} }]
-      });
+       { Hashtags: { $in: ["" + tags]} }]
+      }).populate("Writerq");
       if (!question) return next();
       return res.status(200).json(question);
     } catch (error) {
