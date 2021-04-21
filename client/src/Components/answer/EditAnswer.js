@@ -13,7 +13,6 @@ import FileUploadEdit from "../../utlis/FileUploadEdit";
 
 export default function EditAnswer(props) {
   const answer = props.answerSelected;
-  console.log(answer.Body);
 
   const [open, setOpen] = React.useState(false);
 

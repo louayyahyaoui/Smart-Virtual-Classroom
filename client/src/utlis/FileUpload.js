@@ -1,7 +1,7 @@
 import { set } from "js-cookie";
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment, Loader, Tab, Dimmer } from "semantic-ui-react";
+import { Icon, Segment,Loader, Tab, Dimmer } from "semantic-ui-react";
 import { array } from "yup/lib/locale";
 import { AddquestionsApi } from "../api/api";
 
@@ -24,7 +24,6 @@ function FileUpload(props) {
 
   const [hideshow, setetat] = useState("none");
 
-  const [loaderFile, setLoaderFile] = useState(true);
   const [Images, setImages] = useState(arr);
   var [fd, setfd] = useState(new FormData());
 
@@ -34,49 +33,52 @@ function FileUpload(props) {
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
-    console.log(files);
-    files.forEach((f) => {
+  //  console.log(files);
+    files.forEach((f)=>{
       formData.append("files", f);
-
-      console.log(formData.getAll("files"));
+  
+     // console.log(formData.getAll("files"));
       arr.push(f.name);
       props.refreshFunction(arr);
-    });
+    })
     fd = formData;
     setfd(formData);
-    console.log(fd.getAll("files"));
-    setImages(arr);
-
+   // console.log(fd.getAll("files"));
+    setImages(arr)
+     
     /*formData.append("files", files[i]);
     fd = formData;
     setfd(formData);
    */
+    
+   
+
   };
-  useEffect(async () => {
-    console.log(fd.getAll("files"));
+  useEffect( async() => {
+   // console.log(fd.getAll("files"));
     if (props.Enbale) {
-      setLoaderFile(false);
       //save the Image we chose inside the Node Server
 
-      console.log(fd.getAll("files"));
+    //  console.log(fd.getAll("files"));
+
+SetLoader(true);
+
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
 
-      const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
-        (response) => {
-          
-          console.log("repsonse!!!!");
+      const res= await AddquestionsApi.uploadFileQuestions(fd, config).then((response) => {
+        
 
-          if (response.data != null) {
-            setLoaderFile(true);
-            console.log("hi");
-          } else {
-            alert("Failed to save the File in Server");
-          }
+        if (response.data!=null) {
+          SetLoader(false);
+        } else {
+          alert("Failed to save the File in Server");
         }
-      );
+      });
+    
     }
+
   });
 
   const onDelete = (image) => {
@@ -114,13 +116,6 @@ function FileUpload(props) {
           </div>
         )}
       </Dropzone>
-      {!loaderFile ? (
-        <Dimmer active inverted>
-          <Loader inline="centered">Preparing Files ... please wait !</Loader>
-        </Dimmer>
-      ) : (
-        <></>
-      )}
 
       <div
         style={{
@@ -180,6 +175,13 @@ function FileUpload(props) {
           </Segment>
         ))}
       </div>
+      {loader ? (
+          <Dimmer active inverted>
+            <Loader inline="centered">Preparing Files ... please wait !</Loader>
+          </Dimmer>
+        ) : (
+          <></>
+        )}
     </div>
   );
 }

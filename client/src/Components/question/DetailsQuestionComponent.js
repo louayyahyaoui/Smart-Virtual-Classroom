@@ -86,7 +86,15 @@ function DetailsQuestion(props) {
         
 
           try {
-            let arr=[res.Writer]
+            let arr
+          questions.forEach(element => {
+           
+            if(element._id===id)
+            {
+              
+               arr=[element.Writerq._id];
+            }
+          });
             notif.Owner=arr;
             const res2 = await notificationsApi.addNotification(notif);
             socket.emit("add-new-notification", arr);
@@ -300,7 +308,7 @@ function DetailsQuestion(props) {
               </Feed.Extra>
               <div style={{ marginTop: "3%", marginBottom: "3%" }}>
                 {question.Hashtags.map((hashtag, index) => (
-                  <Label color="red" as="a" tag>
+                  <Label color="grey" as="a" tag>
                     #{hashtag}
                   </Label>
                 ))}

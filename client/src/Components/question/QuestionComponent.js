@@ -36,46 +36,18 @@ export default function QuestionComponent(props) {
   const socket = io(ENDPOINT);
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  console.log("id class : " + currentClass._id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   socket.on("new-question", (content) => {
-  //     dispatch(fetchQuestions(currentClass._id));
-  //   });
-  // }, [socket, idd]);
+  useEffect(() => {
+    socket.on("new-question", (content) => {
+      dispatch(fetchQuestions(currentClass._id));
+    });
+  }, [socket, idd]);
 
-  // Realtime
-  // Join room
-
-  /* const [userConn, setuserConn] = useState({
-    email: "",
-name: "",
-role: "",
-_id: ""
-});
-
-  const documentData = JSON.parse(localStorage.getItem('user'));
- 
-    if (localStorage.getItem('user')) {
-      setuserConn({
-        _id: documentData._id,
-        email: documentData.email,
-        name: documentData.name,
-        role: documentData.role
-    })
-} else {
-  setuserConn({
-    email: "",
-    name: "",
-    role: "",
-    _id: ""
-    })
-}
-*/
+  
 const [enableUpload, setEnableUpload] = useState(false);
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
@@ -254,9 +226,9 @@ const [enableUpload, setEnableUpload] = useState(false);
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/"+currentClass._id +"/" +hashtag} >
+              <Link to={"/tags/"+currentClass._id+"/" + hashtag} >
            
-              <Label key={index} color="red" as="a" tag>
+              <Label key={index} color="grey" as="a" tag>
                 #{hashtag}
               </Label>
               </Link>

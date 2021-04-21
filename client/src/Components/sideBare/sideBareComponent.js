@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   Card,
   Image,
+  Button,
   Icon,
   Message,
   Menu,
@@ -27,10 +28,12 @@ import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function SideBareComponent() {
   const socket = io(ENDPOINT);
+  const dispatchh = useDispatch();
 
   const state = useSelector((state) => state.user.userUpdated);
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {}, [state]);
 
   const [activeItem, SetActiveItem] = useState("Dashboard");
   const handleItemClick = (e, { name }) => {
@@ -43,12 +46,13 @@ function SideBareComponent() {
       SetActiveItem(name);
     }
   };
-
-  const [nbrNotif, setNbrNotif] = useState(0);
-  const [notifications] = useSelector(selectNotifications);
-
   useEffect(() => {
     dispatch(fetchNotifications(user._id));
+  }, [dispatch]);
+  const [nbrNotif, setNbrNotif] = useState(0);
+  const [notifications, errr] = useSelector(selectNotifications);
+
+  useEffect(() => {
     let i = 0;
     notifications.forEach((element) => {
       if (!element.status) {
@@ -68,11 +72,18 @@ function SideBareComponent() {
         }
       });
     });
-  }, [state, socket]);
+  }, [socket]);
   const updatenotification = async (id_notif) => {
     try {
+      let i=0;
       const res = await notificationsApi.putNotification(id_notif);
       dispatch(fetchNotifications(user._id));
+      notifications.forEach((element) => {
+        if (!element.status) {
+          i += 1;
+          setNbrNotif(i);
+        }
+      });
     } catch (error) {
       alert(error);
     }
@@ -135,6 +146,43 @@ function SideBareComponent() {
                         </Link>
                       )}
                       <Dropdown.Divider />
+                      {notif.Question !== null && (
+                        <Link
+                          to={"/FAQ/" + notif.Question}
+                          onClick={() => updatenotification(notif._id)}
+                        >
+                          <List divided>
+                            <List.Item>
+                              <List.Icon
+                                name="question circle outline"
+                                size="large"
+                                verticalAlign="middle"
+                              />
+
+                              <List.Content>
+                                {notif.status === false ? (
+                                  <List.Header as="p" style={{ color: "blue" }}>
+                                    {notif.Message}
+                                  </List.Header>
+                                ) : (
+                                  <List.Header as="p">
+                                    {notif.Message}
+                                  </List.Header>
+                                )}
+                                <List.Description>
+                                  <p style={{ fontSize: "13px" }}>
+                                    <ReactTimeAgo
+                                      date={notif.Date}
+                                      locale="en-US"
+                                    />{" "}
+                                  </p>{" "}
+                                </List.Description>
+                              </List.Content>
+                            </List.Item>
+                          </List>
+                          <Divider />
+                        </Link>
+                      )}
                     </div>
                   ))}
                 </Dropdown.Menu>
@@ -202,8 +250,7 @@ function SideBareComponent() {
                   !isAuth().picture ? (
                     <>
                       {" "}
-                      <Label color="red">1</Label>
-                      {"Profile"}
+                      <Label color="red">1</Label>{"Profile"}
                     </>
                   ) : (
                     <> {"Profile"}</>
