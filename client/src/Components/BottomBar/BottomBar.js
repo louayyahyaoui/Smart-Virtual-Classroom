@@ -3,6 +3,10 @@ import styled from "styled-components";
 import useMediaRecorder from "@wmik/use-media-recorder";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { isAuth } from "../../helpers/auth";
+import { AddCourses } from "../../redux/slices/Courses";
+
+import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 const BottomBar = ({
   clickChat,
@@ -52,21 +56,50 @@ const BottomBar = ({
     recordScreen: true,
     blobOptions: { type: "video/mp4" },
     mediaStreamConstraints: { audio: true, video: true },
+    mediaRecorderOptions: {
+      audioBitsPerSecond: 128000,
+      videoBitsPerSecond: 2500000,
+    },
   });
   const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
   useEffect(() => {
     if (!mediaBlob) {
       return;
     }
+
     console.log(mediaBlob);
-    var formData = new FormData();
-    formData.append("multiple_resources", mediaBlob);
-    axios
-      .post("https://closer-server.herokuapp.com/courses/api/upload", formData)
-      .then((response) => {
-        console.log(response.data.result.reqFiles[0]);
-      });
+    const idSeance = "";
+    const today = Date.now();
+    const titre =
+      "Recorded Session of : " +
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(today);
+    const description =
+      "this is a recorded session was added as a course automaticly beacause your teacher has recorded the lesson so you can access to this video .";
+    const multiple_resources = [];
+    multiple_resources.push(mediaBlob);
+    const idOwner = isAuth()._id;
+    const idClass = CurrentClass._id;
+    dispatch(
+      AddCourses(
+        idSeance,
+        titre,
+        description,
+        multiple_resources,
+        idOwner,
+        idClass
+      )
+    ).then((res) => {
+      console.log(res.data);
+    });
   }, [mediaBlob]);
 
   return (
@@ -119,15 +152,39 @@ const BottomBar = ({
           </div>
           Start
         </StartButton>
-        <StopRecordButton
-          onClick={stopRecording}
-          disabled={status !== "recording"}
+        {/* Modal of info when record has been stoped */}
+        <Modal
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+          trigger={
+            <StopRecordButton
+              onClick={stopRecording}
+              disabled={status !== "recording"}
+            >
+              <div>
+                <FaIcon className="fas fa-stop-circle"></FaIcon>
+              </div>
+              Stop
+            </StopRecordButton>
+          }
         >
-          <div>
-            <FaIcon className="fas fa-stop-circle"></FaIcon>
-          </div>
-          Stop
-        </StopRecordButton>
+          <Header icon="record" content="Information about Record Session" />
+          <Modal.Content>
+            <p>
+              After this session got recorded it will be added automatically as
+              a new courses in your class timeline and it will take as a title
+              "Recorded Session of today"
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color="red" onClick={() => setOpen(false)}>
+              <Icon name="remove" /> ok
+            </Button>
+          </Modal.Actions>
+        </Modal>
+
+        {/* Modal of info when record has been stoped */}
 
         <ScreenButton onClick={clickScreenSharing}>
           <div>
@@ -137,7 +194,6 @@ const BottomBar = ({
           </div>
           Share Screen
         </ScreenButton>
-        {error ? `${status} ${error.message}` : status}
       </Center>
 
       <Right>

@@ -42,13 +42,7 @@ export const AddCourses = (
   idOwner,
   idClass
 ) => async (dispatch) => {
-  const cour = {
-    titre: titre,
-    description: description,
-    multiple_resources: multiple_resources,
-    idSeance: idSeance,
-  };
-  console.log(idClass);
+  console.log(multiple_resources);
   var formData = new FormData();
   for (const key of Object.keys(multiple_resources)) {
     formData.append("multiple_resources", multiple_resources[key]);
@@ -56,7 +50,10 @@ export const AddCourses = (
   formData.append("titre", titre);
 
   formData.append("description", description);
-  formData.append("idSeance", idSeance);
+  if (idSeance !== "") {
+    formData.append("idSeance", idSeance);
+  }
+
   formData.append("idOwner", idOwner);
   formData.append("idClass", idClass);
 
