@@ -51,8 +51,8 @@ var step=3;
     setOpen(false)
   }
   const clicConfirmAssign = () =>{
-    console.log("cc")
-    console.log(props.data);
+    //console.log("cc")
+    //console.log(props.data);
     dispatch(assignTask(props.data));
     props.nextStep(step+1);
     setOpen(false)

@@ -20,6 +20,7 @@ export default function UncorrectedTask(props) {
        
     console.log(grade)
         setObjGrade({"_id" :data,"grade" : e.target.value })
+        
 
  console.log(objgrade)
   

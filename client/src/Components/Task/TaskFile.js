@@ -23,7 +23,7 @@ export default function TaskFile(props) {
     const dispatch = useDispatch()
     const [multiple_resources, SetMultiple_resources] = useState([]);
     const handleChangeStatus = ({ meta, file }, status) => {
-      console.log(status, meta, file);
+      //console.log(status, meta, file);
   
       if (status === "done") {
 
@@ -40,13 +40,13 @@ export default function TaskFile(props) {
     var step=2;
     const testUpload = () => {  
   dispatch(addUploadFile(multiple_resources)).then((res)=>{
-      console.log(res.payload);
+     // console.log(res.payload);
       props.addTask(tasks.listQuestion = res.payload);
       props.addTask(tasks);
-      console.log(tasks)
+     //console.log(tasks)
   
 })
-  console.log(tasks)
+  //console.log(tasks)
   props.nextStep(step+1);
       }
     

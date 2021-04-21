@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, Divider, Header, Icon, Item, Label, Segment, Statistic } from 'semantic-ui-react'
 import { getTasksById } from '../../redux/slices/Grade';
 
@@ -20,7 +21,8 @@ export default function MissingTasks(props) {
                    ) : (
                     props.taskmissing.map((task,index) =>
                     task.taskStatus ==="missing" ?(
-                      <Segment color="red" raised> 
+                      <Link to={task.task.typeTask==="Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>  
+                      <Segment color="grey" raised> 
                        <Item.Group divided key={index} >
                      
              <Item  >
@@ -40,9 +42,10 @@ export default function MissingTasks(props) {
              </Item>
              
              </Item.Group>
-             
+          
              </Segment>
-             
+             <Divider hidden></Divider>
+             </Link>
                      ) : (<div></div>) ) ) }
         </div>
     )
