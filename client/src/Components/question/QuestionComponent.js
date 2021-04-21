@@ -42,11 +42,11 @@ export default function QuestionComponent(props) {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  useEffect(() => {
-    socket.on("new-question", (content) => {
-      dispatch(fetchQuestions(currentClass._id));
-    });
-  }, [socket, idd]);
+  // useEffect(() => {
+  //   socket.on("new-question", (content) => {
+  //     dispatch(fetchQuestions(currentClass._id));
+  //   });
+  // }, [socket, idd]);
 
   // Realtime
   // Join room
