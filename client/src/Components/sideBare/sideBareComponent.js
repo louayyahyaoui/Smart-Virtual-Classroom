@@ -206,7 +206,7 @@ function SideBareComponent() {
                   !isAuth().picture ? (
                     <>
                       {" "}
-                      <Label color="red">1</Label>,{"profile"}
+                      <Label color="red">1</Label>{"Profile"}
                     </>
                   ) : (
                     <> {"Profile"}</>

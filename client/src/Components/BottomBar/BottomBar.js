@@ -194,6 +194,17 @@ const BottomBar = ({
           </div>
           Share Screen
         </ScreenButton>
+        <a href="http://localhost:3000/WhiteBoard" target="_blank"
+                                      rel="noopener noreferrer" >
+           <WhiteBoard>
+           <div>
+            <FaIcon
+              className={'fas fa-chalkboard-teacher'}
+            ></FaIcon>
+          </div>
+          WhiteBoard
+        </WhiteBoard>
+        </a>
       </Center>
 
       <Right>
@@ -221,7 +232,22 @@ const Left = styled.div`
 
   margin-left: 15px;
 `;
+const WhiteBoard = styled.div`
+width: 75px;
+border: none;
+font-size: 0.9375rem;
+padding: 5px;
 
+:hover {
+  background-color: #77b7dd;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+* {
+  pointer-events: none;
+}
+`;
 const Center = styled.div`
   flex: 1;
   display: flex;

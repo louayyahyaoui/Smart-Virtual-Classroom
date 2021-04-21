@@ -18,6 +18,7 @@ import HomeClass from "./Components/home/HomeClass";
 import "./material.css";
 import Main from "./Components/Main/Main";
 import Room from "./Components/Room/Room";
+import WhiteBoard from "./Components/container/WhiteBoard";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -123,6 +124,11 @@ function App() {
             path="/class"
             exact
             render={(props) => <HomeClass {...props} />}
+          />
+              <Route
+            path="/WhiteBoard"
+            exact
+            render={(props) => <WhiteBoard {...props} />}
           />
           <Route exact path="/meet" component={Main} />
           <Route exact path="/room/:roomId" component={Room} />

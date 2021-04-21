@@ -31,7 +31,7 @@ export default function ModalTask(props) {
     setOpen(false);
   };
   const handleChangeStatus = async ({ meta, file }, status) => {
-    console.log(status, meta, file);
+   // console.log(status, meta, file);
 
 if(status === "done") {
 //setPicture(picture.concat(file))
@@ -43,7 +43,7 @@ formData.append("listQuestion", file);
       dispatch(uploadFile(formData));
   
        
-       console.log(file);
+     //  console.log(file);
  
       }
       
@@ -52,10 +52,10 @@ formData.append("listQuestion", file);
   const handleRemoveUpload = (e, res) => {
    
 
-    console.log(res);
+   // console.log(res);
     dispatch(DeleteResources(res));
-    console.log("Trigger remove photo");
-    console.log(Resources);
+  //  console.log("Trigger remove photo");
+    //console.log(Resources);
   };
 
   const Preview = ({ meta }) => {

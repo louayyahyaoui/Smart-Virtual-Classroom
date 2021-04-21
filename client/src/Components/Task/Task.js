@@ -12,7 +12,7 @@ export default function Task() {
  
   
   const dispatch = useDispatch();
- console.log(tasks)
+ //console.log(tasks)
    
  useEffect(()=>{
      

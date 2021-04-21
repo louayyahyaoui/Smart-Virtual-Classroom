@@ -5,6 +5,7 @@ import {
   fetchRequestClass,
   fetchInvitationclass,
   selectinvitationclass,
+  fetchclass,
 } from "./../../redux/slices/classsline";
 import { ClassInvitationApi,AddclassApi } from "../../api/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +39,7 @@ export default function InvitationClassComonent() {
       dispatch(fetchInvitationclass(documentData._id));
       dispatch(fetchActiveClass(documentData._id));
       dispatch(fetchRequestClass(documentData._id));
+      dispatch(fetchclass(documentData.role, documentData._id));
     } catch (error) {
       alert(error);
     }
