@@ -72,7 +72,7 @@ function SideBareComponent() {
         }
       });
     });
-  }, [socket]);
+  });
   const updatenotification = async (id_notif) => {
     try {
       let i=0;

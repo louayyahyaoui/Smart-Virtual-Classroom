@@ -121,20 +121,20 @@ const [enableUpload, setEnableUpload] = useState(false);
                     switch (file.split(".").pop()) {
                       case "pdf":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             {" "}
                             <Icon name="file pdf" color="red" size="huge" />
                           </a>
                         );
                       case "docx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon name="file word" color="blue" size="huge" />
                           </a>
                         );
                       case "pptx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon
                               name="file powerpoint"
                               color="red"
@@ -144,7 +144,7 @@ const [enableUpload, setEnableUpload] = useState(false);
                         );
                       case "xlsx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon
                               name="file excel outline"
                               color="green"
@@ -154,31 +154,33 @@ const [enableUpload, setEnableUpload] = useState(false);
                         );
                       case "zip":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon name="zip" size="huge" />
                           </a>
                         );
                       case "js":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon name="js" color="yellow" size="huge" />
                           </a>
                         );
                       case "php":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon name="zip" color="blue" size="huge" />
                           </a>
                         );
                       case "txt":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                             <Icon name="file text" size="huge" color="blue" />
                           </a>
                         );
 
                       case "jpg":
                         return (
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+
                           <img
                             style={{
                               minWidth: "50px",
@@ -188,9 +190,12 @@ const [enableUpload, setEnableUpload] = useState(false);
                             src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                             alt={`scan`}
                           />
+                          </a>
                         );
                       case "jpeg":
                         return (
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+
                           <img
                             style={{
                               minWidth: "50px",
@@ -200,9 +205,12 @@ const [enableUpload, setEnableUpload] = useState(false);
                             src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                             alt={`scan`}
                           />
+                          </a>
                         );
                       case "png":
                         return (
+                          <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+
                           <img
                             style={{
                               minWidth: "50px",
@@ -212,6 +220,7 @@ const [enableUpload, setEnableUpload] = useState(false);
                             src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                             alt={`scan`}
                           />
+                          </a>
                         );
 
                       default:
