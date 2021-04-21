@@ -252,7 +252,7 @@ router.post(
     console.log(req.files);
     const reqFiles = [];
     try {
-      if (req.files) {
+      if (req.files.length !== 0) {
         for (let i = 0; i < req.files.length; i++) {
           if (!req.files[i]) {
             // res.status(400).send("Error, could not upload file");
@@ -338,7 +338,8 @@ router.post(
           // When there is no more data to be consumed from the stream
           blobWriter.end(req.files[i].buffer);
         }
-      } else {
+      }
+      if (req.files.length === 0) {
         console.log("this is resources");
         console.log(i + 1);
         console.log(req.files.length);
