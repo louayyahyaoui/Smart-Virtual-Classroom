@@ -252,134 +252,88 @@ router.post(
     console.log(req.files);
     const reqFiles = [];
     try {
-      if (req.files.length !== 0) {
-        for (let i = 0; i < req.files.length; i++) {
-          if (!req.files[i]) {
-            // res.status(400).send("Error, could not upload file");
-            return;
-          }
-
-          // Create new blob in the bucket referencing the file
-          const blob = bucket.file(
-            Date.now() + "-" + req.files[i].originalname
-          );
-
-          // Create writable stream and specifying file mimetype
-          const blobWriter = await blob.createWriteStream({
-            metadata: {
-              contentType: req.files[i].mimetype,
-            },
-          });
-
-          blobWriter.on("error", (err) => next(err));
-          perf.start();
-          blobWriter.on("finish", async () => {
-            // Assembling public URL for accessing the file via HTTP
-            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${
-              bucket.name
-            }/o/${encodeURI(blob.name)}?alt=media`;
-
-            // Return the file name and its public URL
-
-            await reqFiles.push({
-              type: req.files[i].mimetype,
-              originalname: req.files[i].originalname,
-
-              url: publicUrl,
-            });
-            const results = perf.stop();
-            console.log(results.time);
-            if (i + 1 === req.files.length) {
-              setTimeout(() => {
-                console.log("this is resources");
-                console.log(i + 1);
-                console.log(req.files.length);
-                console.log(reqFiles);
-                const course = new Courses({
-                  idClass: req.body.idClass,
-                  idSeance: req.body.idSeance,
-                  titre: req.body.titre,
-                  description: req.body.description,
-                  dateCreation: Date.now(),
-                  multiple_resources: reqFiles,
-                  idOwner: req.body.idOwner,
-                });
-
-                course
-                  .save()
-                  .then((result) => {
-                    res.status(201).json({
-                      msg: "Successfully Added",
-                      success: true,
-                      time: results.time,
-                      result: {
-                        _id: result._id,
-                        idClass: result.idClass,
-                        idSeance: result.idSeance,
-                        titre: result.titre,
-                        description: result.description,
-                        dateCreation: result.dateCreation,
-                        multiple_resources: result.multiple_resources,
-                        idOwner: result.idOwner,
-                      },
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err),
-                      res.status(500).json({
-                        success: false,
-                        error: err,
-                      });
-                  });
-              }, results.time);
-            }
-          });
-
-          // When there is no more data to be consumed from the stream
-          blobWriter.end(req.files[i].buffer);
+      for (let i = 0; i < req.files.length; i++) {
+        if (!req.files[i]) {
+          // res.status(400).send("Error, could not upload file");
+          return;
         }
-      }
-      if (req.files.length === 0) {
-        console.log("this is resources");
-        console.log(i + 1);
-        console.log(req.files.length);
-        console.log(reqFiles);
-        const course = new Courses({
-          idClass: req.body.idClass,
-          idSeance: req.body.idSeance,
-          titre: req.body.titre,
-          description: req.body.description,
-          dateCreation: Date.now(),
-          multiple_resources: [],
-          idOwner: req.body.idOwner,
+
+        // Create new blob in the bucket referencing the file
+        const blob = bucket.file(Date.now() + "-" + req.files[i].originalname);
+
+        // Create writable stream and specifying file mimetype
+        const blobWriter = await blob.createWriteStream({
+          metadata: {
+            contentType: req.files[i].mimetype,
+          },
         });
 
-        course
-          .save()
-          .then((result) => {
-            res.status(201).json({
-              msg: "Successfully Added",
-              success: true,
-              time: results.time,
-              result: {
-                _id: result._id,
-                idClass: result.idClass,
-                idSeance: result.idSeance,
-                titre: result.titre,
-                description: result.description,
-                dateCreation: result.dateCreation,
-                multiple_resources: result.multiple_resources,
-                idOwner: result.idOwner,
-              },
-            });
-          })
-          .catch((err) => {
-            console.log(err),
-              res.status(500).json({
-                success: false,
-                error: err,
-              });
+        blobWriter.on("error", (err) => next(err));
+        perf.start();
+        blobWriter.on("finish", async () => {
+          // Assembling public URL for accessing the file via HTTP
+          const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${
+            bucket.name
+          }/o/${encodeURI(blob.name)}?alt=media`;
+
+          // Return the file name and its public URL
+
+          await reqFiles.push({
+            type: req.files[i].mimetype,
+            originalname: req.files[i].originalname,
+
+            url: publicUrl,
           });
+          const results = perf.stop();
+          console.log(results.time);
+          if (i + 1 === req.files.length) {
+            setTimeout(() => {
+              console.log("this is resources");
+              console.log(i + 1);
+              console.log(req.files.length);
+              console.log(reqFiles);
+              const course = new Courses({
+                idClass: req.body.idClass,
+                idSeance: req.body.idSeance,
+                titre: req.body.titre,
+                description: req.body.description,
+                dateCreation: Date.now(),
+                multiple_resources: reqFiles,
+                idOwner: req.body.idOwner,
+              });
+
+              course
+                .save()
+                .then((result) => {
+                  res.status(201).json({
+                    msg: "Successfully Added",
+                    success: true,
+                    time: results.time,
+                    result: {
+                      _id: result._id,
+                      idClass: result.idClass,
+                      idSeance: result.idSeance,
+                      titre: result.titre,
+                      description: result.description,
+                      dateCreation: result.dateCreation,
+                      multiple_resources: result.multiple_resources,
+                      idOwner: result.idOwner,
+                    },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err),
+                    res.status(500).json({
+                      success: false,
+                      error: err,
+                    });
+                });
+            }, results.time);
+          }
+        });
+
+        // When there is no more data to be consumed from the stream
+        blobWriter.end(req.files[i].buffer);
       }
     } catch (error) {
       // res.status(400).send(`Error, could not upload file: ${error}`);
