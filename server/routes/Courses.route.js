@@ -311,6 +311,7 @@ router.post(
                     success: true,
                     time: results.time,
                     result: {
+                      _id: result._id,
                       idClass: result.idClass,
                       idSeance: result.idSeance,
                       titre: result.titre,
