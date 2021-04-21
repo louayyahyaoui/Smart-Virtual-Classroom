@@ -59,11 +59,10 @@ function DetailsQuestion(props) {
   useEffect(() => {
     dispatch(fetchAnswers(id));
   }, [dispatch]);
-  const [notif]=useState({
-        Message: "new comment for your question !",
-        Owner:{_id:""+documentData._id}   ,
-        Question:{_id:""+id}  
-
+  const [notif] = useState({
+    Message: "new comment for your question !",
+    Owner: { _id: "" + documentData._id },
+    Question: { _id: "" + id },
   });
   const [questionAndanswer, er] = useSelector(selectAnswer);
   const formik = useFormik({

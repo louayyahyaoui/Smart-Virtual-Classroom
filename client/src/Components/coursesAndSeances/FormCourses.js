@@ -23,8 +23,12 @@ import TextareaAutosize from "react-textarea-autosize";
 
 import { useParams } from "react-router";
 import { isAuth, signout } from "../../helpers/auth";
+import { notificationsApi } from "../../api/api";
+import io from "socket.io-client";
+const ENDPOINT = "https://closer-server.herokuapp.com/";
 
 function FormCourses(props) {
+  const socket = io(ENDPOINT);
   const seances = useSelector((state) => state.seance.seance);
   const { id } = useParams();
   const [titre, SetTitre] = useState("");
@@ -39,7 +43,10 @@ function FormCourses(props) {
   const [loader, SetLoader] = useState(false);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
   const idClass = CurrentClass._id;
-
+  const members = [];
+  for (let i = 0; i < CurrentClass.classUsers.length; i++) {
+    members.push(CurrentClass.classUsers[i]._id);
+  }
   const SeanceOptions = [{ key: Number, text: "", value: "" }];
   const dispatch = useDispatch();
   for (let i = 0; i < seances.length; i++) {
@@ -51,6 +58,12 @@ function FormCourses(props) {
 
     SeanceOptions.push(option);
   }
+
+  const [notif] = useState({
+    Message: "new Courses was added check your timeline ! !",
+    Owner: [],
+    Course: { _id: "" },
+  });
 
   const handleChangeSelect = async (e) => {
     console.log(e.target.value);
@@ -65,6 +78,7 @@ function FormCourses(props) {
     SetDescription(e.target.value);
   };
   const AddCourse = (e) => {
+    console.log(members);
     e.preventDefault();
     const idOwner = isAuth()._id;
     SetLoader(true);
@@ -80,6 +94,12 @@ function FormCourses(props) {
     )
       .then((response) => {
         SetLoader(false);
+        console.log(response);
+        notif.Owner = members;
+        notif.Course = response.result._id;
+        const res2 = notificationsApi.addNotification(notif);
+        socket.emit("add-new-notification", members);
+
         console.log(response);
 
         const CurrentClass = JSON.parse(localStorage.getItem("idClass"));

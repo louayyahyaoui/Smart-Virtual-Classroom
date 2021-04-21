@@ -48,7 +48,7 @@ function SideBareComponent() {
   };
   useEffect(() => {
     dispatch(fetchNotifications(user._id));
-  }, [dispatchh]);
+  }, [dispatch]);
   const [nbrNotif, setNbrNotif] = useState(0);
   const [notifications, errr] = useSelector(selectNotifications);
 
@@ -61,7 +61,9 @@ function SideBareComponent() {
       }
     });
     socket.on("new-notification", (content) => {
-      dispatch(fetchNotifications(content));
+      content.forEach((i) => {
+        dispatch(fetchNotifications(i));
+      });
 
       notifications.forEach((element) => {
         if (!element.status) {
@@ -85,48 +87,57 @@ function SideBareComponent() {
         <Card stackable>
           <Image src={isAuth().picture} wrapped ui={false} />
           <Card.Content>
-            <Card.Header>{isAuth().name}
-            {"  |  "}
+            <Card.Header>
+              {isAuth().name}
+              {"  |  "}
               <Dropdown text={nbrNotif} icon="bell outline" scrolling>
                 <Dropdown.Menu>
                   <Dropdown.Divider />
-                  <Dropdown.Header icon="bell outline"  content="      Notification"   as="h3"/>
-                  <Divider/>
+                  <Dropdown.Header
+                    icon="bell outline"
+                    content="      Notification"
+                    as="h3"
+                  />
+                  <Divider />
                   {notifications.map((notif, index) => (
                     <div>
-                      <Link
-                        to={"/FAQ/" + notif.Question}
-                        onClick={() => updatenotification(notif._id)}
-                      >
-                        <List divided >
-                          <List.Item >
-                            <List.Icon
-                              name="question circle outline"
-                              size="large"
-                              verticalAlign="middle"
-                            />
+                      {notif.Course !== null && (
+                        <Link
+                          to={"/detailCourses/" + notif.Course}
+                          onClick={() => updatenotification(notif._id)}
+                        >
+                          <List divided>
+                            <List.Item>
+                              <List.Icon
+                                name="file text"
+                                size="large"
+                                verticalAlign="middle"
+                              />
 
-                            <List.Content  >
-                            {notif.status === false ?
-
-                              <List.Header  as="p" style={{color:"blue"}}>{notif.Message}</List.Header>
-                              :
-                              <List.Header  as="p" >{notif.Message}</List.Header>
-
-                            }
-                              <List.Description>
-                                <p style={{fontSize:"13px"}}>
-                                  <ReactTimeAgo
-                                    date={notif.Date}
-                                    locale="en-US"
-                                  />{" "}
-                                </p>{" "}
-                              </List.Description>
-                            </List.Content>
-                          </List.Item>
-                        </List>
-                        <Divider/>
-                      </Link>
+                              <List.Content>
+                                {notif.status === false ? (
+                                  <List.Header as="p" style={{ color: "blue" }}>
+                                    {notif.Message}
+                                  </List.Header>
+                                ) : (
+                                  <List.Header as="p">
+                                    {notif.Message}
+                                  </List.Header>
+                                )}
+                                <List.Description>
+                                  <p style={{ fontSize: "13px" }}>
+                                    <ReactTimeAgo
+                                      date={notif.Date}
+                                      locale="en-US"
+                                    />{" "}
+                                  </p>{" "}
+                                </List.Description>
+                              </List.Content>
+                            </List.Item>
+                          </List>
+                          <Divider />
+                        </Link>
+                      )}
                       <Dropdown.Divider />
                     </div>
                   ))}
