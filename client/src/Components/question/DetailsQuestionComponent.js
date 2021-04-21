@@ -61,7 +61,7 @@ function DetailsQuestion(props) {
   }, [dispatch]);
   const [notif] = useState({
     Message: "new comment for your question !",
-    Owner: { _id: "" + documentData._id },
+    Owner: [],
     Question: { _id: "" + id },
   });
   const [questionAndanswer, er] = useSelector(selectAnswer);
@@ -83,9 +83,13 @@ function DetailsQuestion(props) {
       try {
         if (values.Body !== " ") {
           const res = await AddAnswersApi.postAnswers(values);
+        
+
           try {
+            let arr=[res.Writer]
+            notif.Owner=arr;
             const res2 = await notificationsApi.addNotification(notif);
-            socket.emit("add-new-notification", documentData._id);
+            socket.emit("add-new-notification", arr);
           } catch (error) {
             alert(error);
           }
