@@ -4,15 +4,10 @@ const mongoose = require("mongoose");
 module.exports = {
   getnotification: async (req, res, next) => {
     try {
-      {
-        Owner: {
-          $in: ["" + mongoose.Types.ObjectId(req.params.id)];
-        }
-      }
       const id = req.params.id;
       const notifications = await Notification.find({
         Owner: {
-          $in: ["" + mongoose.Types.ObjectId(req.params.id)],
+          $in: [mongoose.Types.ObjectId(req.params.id)],
         },
       }).sort({ Date: -1 });
 
