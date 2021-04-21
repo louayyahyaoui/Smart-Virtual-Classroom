@@ -33,7 +33,6 @@ function SideBareComponent() {
   const state = useSelector((state) => state.user.userUpdated);
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
-  useEffect(() => {}, [state]);
 
   const [activeItem, SetActiveItem] = useState("Dashboard");
   const handleItemClick = (e, { name }) => {
@@ -46,13 +45,36 @@ function SideBareComponent() {
       SetActiveItem(name);
     }
   };
-  useEffect(() => {
-    dispatch(fetchNotifications(user._id));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchNotifications(user._id));
+  // }, [dispatch]);
   const [nbrNotif, setNbrNotif] = useState(0);
   const [notifications, errr] = useSelector(selectNotifications);
 
+  // useEffect(() => {
+  //   let i = 0;
+  //   notifications.forEach((element) => {
+  //     if (!element.status) {
+  //       i += 1;
+  //       setNbrNotif(i);
+  //     }
+  //   });
+  //   socket.on("new-notification", (content) => {
+  //     content.forEach((i) => {
+  //       dispatch(fetchNotifications(i));
+  //     });
+
+  //     notifications.forEach((element) => {
+  //       if (!element.status) {
+  //         i += 1;
+  //         setNbrNotif(i);
+  //       }
+  //     });
+  //   });
+  // }, [socket]);
+
   useEffect(() => {
+    dispatch(fetchNotifications(user._id));
     let i = 0;
     notifications.forEach((element) => {
       if (!element.status) {
@@ -72,7 +94,7 @@ function SideBareComponent() {
         }
       });
     });
-  }, [socket]);
+  }, [state, socket]);
   const updatenotification = async (id_notif) => {
     try {
       const res = await notificationsApi.putNotification(id_notif);
@@ -206,7 +228,8 @@ function SideBareComponent() {
                   !isAuth().picture ? (
                     <>
                       {" "}
-                      <Label color="red">1</Label>{"Profile"}
+                      <Label color="red">1</Label>
+                      {"Profile"}
                     </>
                   ) : (
                     <> {"Profile"}</>
