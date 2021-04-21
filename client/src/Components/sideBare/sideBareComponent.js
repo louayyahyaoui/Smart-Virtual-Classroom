@@ -47,7 +47,7 @@ function SideBareComponent() {
     }
   };
   useEffect(() => {
-    dispatch(fetchNotifications(user._id));
+    dispatch(fetchNotifications("6067673296e46c35f91da747"));
   }, [dispatch]);
   const [nbrNotif, setNbrNotif] = useState(0);
   const [notifications, errr] = useSelector(selectNotifications);
