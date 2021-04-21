@@ -4,10 +4,17 @@ const mongoose = require("mongoose");
 module.exports = {
   getnotification: async (req, res, next) => {
     try {
+      {
+        Owner: {
+          $in: ["" + mongoose.Types.ObjectId(req.params.id)];
+        }
+      }
       const id = req.params.id;
       const notifications = await Notification.find({
-        Owner: mongoose.Types.ObjectId(req.params.id),
-      }).sort({Date:-1});
+        Owner: {
+          $in: ["" + mongoose.Types.ObjectId(req.params.id)],
+        },
+      }).sort({ Date: -1 });
 
       return res.status(200).json(notifications);
     } catch (error) {
@@ -18,12 +25,12 @@ module.exports = {
   addnotification: async (req, res) => {
     const notif = req.body;
     const newNotification = new Notification(notif);
-    
+
     try {
       const result = await newNotification.save();
       res.status(201).json(result);
     } catch (error) {
-      return "res.status(400).json({ status: 400, message: error.message });"
+      return "res.status(400).json({ status: 400, message: error.message });";
     }
   },
   deletenotification: async (req, res) => {
@@ -40,21 +47,20 @@ module.exports = {
     }
   },
   updatenotification: async (req, res) => {
-  
     try {
-        const { id } = req.params;
-     
-        Notification.updateOne({ _id: mongoose.Types.ObjectId(req.params.id)} , { status: true }, function(
-        err,
-        result
-      ) {
-        if (err) {
-          res.send(err);
-        } else {
-            res.status(201).json( result);
+      const { id } = req.params;
+
+      Notification.updateOne(
+        { _id: mongoose.Types.ObjectId(req.params.id) },
+        { status: true },
+        function (err, result) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.status(201).json(result);
+          }
         }
-      });
-      
+      );
     } catch (error) {
       return res.status(400).json({ status: 400, message: error.message });
     }
