@@ -104,7 +104,11 @@ function App() {
           />
 
           <Route path="/FAQ" exact render={(props) => <Home {...props} />} />
-
+          <Route
+            path="/tags/:id/:tag"
+            exact
+            render={(props) => <Home {...props} />}
+          />
           <Route
             path="/members"
             exact

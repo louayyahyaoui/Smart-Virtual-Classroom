@@ -20,8 +20,12 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import io from "socket.io-client";
 import { selectedClasses } from "../../redux/slices/classsline";
+import { useHistory } from "react-router-dom";
+
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function AddQuestion() {
+  const history = useHistory();
+
   const documentData = JSON.parse(localStorage.getItem("user"));
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
@@ -30,7 +34,10 @@ function AddQuestion() {
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
+
     setImages(newImages);
+    
+   
   };
   //inpput tags
   const [tags, setTags] = useState([]);
@@ -50,10 +57,14 @@ function AddQuestion() {
 
     onSubmit: async (values) => {
       try {
+        
+        alert("images"+Images)
+      
         values.Filee = Images;
         values.Writerq._id = documentData._id;
         values.Hashtags = tags;
         values.Class = currentClass._id;
+        setEnableUpload(true);
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
         const socket = io(ENDPOINT);
@@ -61,11 +72,14 @@ function AddQuestion() {
         setTags([]);
         values.Title = "";
         values.Body = "";
+        console.log(res)
+      history.push("/FAQ/"+res._id);
       } catch (error) {
         alert(error);
       }
     },
   });
+  const [enableUpload, setEnableUpload] = useState(false);
 
   return (
     <Modal
@@ -110,7 +124,7 @@ function AddQuestion() {
           <Button type="submit" color="red">
             Ask!
           </Button>
-          <FileUpload refreshFunction={updateImages} listfile={null} />
+          <FileUpload refreshFunction={updateImages} listfile={null} Enbale={enableUpload}/>
         </Form>
       </Modal.Content>
       <Modal.Actions>

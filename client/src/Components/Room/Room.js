@@ -42,6 +42,7 @@ const Room = (props) => {
 
         socket.emit("BE-join-room", { roomId, userName: currentUser });
         socket.on("FE-user-join", (users) => {
+        //  console.log("ici users list : "+JSON.stringify(users))
           // all users
           const peers = [];
           users.forEach(({ userId, info }) => {

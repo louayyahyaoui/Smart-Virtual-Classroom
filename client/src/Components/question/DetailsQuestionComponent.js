@@ -6,7 +6,7 @@ import { selectQuestions } from "../../redux/slices/questionslice";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { AddAnswersApi } from "../../api/api";
+import { AddAnswersApi, notificationsApi } from "../../api/api";
 import { fetchQuestions } from "../../redux/slices/questionslice";
 import { AddquestionsApi } from "../../api/api";
 import InputEmoji from "react-input-emoji";
@@ -59,6 +59,12 @@ function DetailsQuestion(props) {
   useEffect(() => {
     dispatch(fetchAnswers(id));
   }, [dispatch]);
+  const [notif]=useState({
+        Message: "new comment for your question !",
+        Owner:{_id:""+documentData._id}   ,
+        Question:{_id:""+id}  
+
+  });
   const [questionAndanswer, er] = useSelector(selectAnswer);
   const formik = useFormik({
     initialValues: {
@@ -78,6 +84,12 @@ function DetailsQuestion(props) {
       try {
         if (values.Body !== " ") {
           const res = await AddAnswersApi.postAnswers(values);
+          try {
+            const res2 = await notificationsApi.addNotification(notif);
+            socket.emit("add-new-notification", documentData._id);
+          } catch (error) {
+            alert(error);
+          }
 
           dispatch(fetchQuestions(currentClass._id));
 
@@ -126,6 +138,8 @@ function DetailsQuestion(props) {
       alert(error);
     }
   };
+  const [enableUpload, setEnableUpload] = useState(false);
+
   return (
     <Container>
       <AddQuestion />
@@ -240,7 +254,7 @@ function DetailsQuestion(props) {
                                   width: "50px",
                                   height: "50px",
                                 }}
-                                src={`http://localhost:5000/file/${file}`}
+                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                                 alt={`scan`}
                               />
                             );
@@ -252,7 +266,7 @@ function DetailsQuestion(props) {
                                   width: "50px",
                                   height: "50px",
                                 }}
-                                src={`http://localhost:5000/file/${file}`}
+                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                                 alt={`scan`}
                               />
                             );
@@ -264,7 +278,7 @@ function DetailsQuestion(props) {
                                   width: "50px",
                                   height: "50px",
                                 }}
-                                src={`http://localhost:5000/file/${file}`}
+                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                                 alt={`scan`}
                               />
                             );
@@ -308,6 +322,7 @@ function DetailsQuestion(props) {
                     <FileUpload
                       refreshFunction={updateImages}
                       listfile={null}
+                      Enbale={enableUpload}
                     />
                   </div>
                 </div>

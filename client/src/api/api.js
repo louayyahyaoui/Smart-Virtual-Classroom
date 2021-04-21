@@ -4,12 +4,32 @@ export const api = axios.create({
   baseURL: "https://closer-server.herokuapp.com/",
   responseType: "json",
 });
+export const notificationsApi = {
+  async getNotification(id) {
+    const { data } = await api.get(`https://closer-server.herokuapp.com/notification/${id}`);
+    return data;
+  }, 
+  async addNotification(notif) {
+    const { data } = await api.post(`https://closer-server.herokuapp.com/notification/add`,notif);
+    return data;
+  },
+  async putNotification(id) {
+    const { data } = await api.put(`https://closer-server.herokuapp.com/notification/update/${id}`);
+    return data;
+  },
+};
 export const questionsApi = {
   async getQuestions(id) {
     const { data } = await api.get(`question/c/${id}`);
     return data;
   },
+  async getQuestionsByTags(id,tag) {
+    const { data } = await api.get(`question/findTag/${id}/${tag}`);
+    return data;
+  },
+
 };
+
 export const answersApi = {
   async getAnswers(id) {
     console.log(id);
@@ -80,58 +100,75 @@ export const CommentsApi = {
     const { data } = await api.put(`coursesComment/update/${id}`, newcomment);
     return data;
   }};
-export const getclassApi = {
-  async getclassByLevel(iduser) {
-    const { data } = await api.get(`class/bylevel/` + iduser);
-    return data;
-  },
-  async getUserByEmail(email) {
-    const { data } = await api.get(`class/email/` + email);
-    return data;
-  },
-  async getclassByYear(iduser) {
-    const { data } = await api.get(`class/byyear/` + iduser);
-    return data;
-  },
-  async getclassById(idclass) {
-    const { data } = await api.get(`class/` + idclass);
-    return data;
-  },
-};
-export const ClassInvitationApi = {
-  async getClassInvitation(email) {
-    const { data } = await api.get(`invitationclass/` + email);
-    return data;
-  },
-  async AddClassInvitation(add) {
-    const { data } = await api.post(`invitationclass/`,add);
-    return data;
-  },
-  async deleteClassInvitation(id) {
-    const { data } = await api.delete(`invitationclass/${id}`);
-    return data;
-  },
-};
-export const AddclassApi = {
-  async addClass(cl) {
-    const { data } = await api.post(`class/`, cl);
-    return data;
-  },
-  async updateClass(id,cl) {
-    const { data } = await api.put(`class/${id}`, cl);
-    return data;
-  },
-  async addUserToClass(idclass,email) {
-    const { data } = await api.put(`class/${idclass}/${email}`);
-    return data;
-  },
-  async removeUserFromClass(idclass,email) {
-    const { data } = await api.put(`class/r/${idclass}/${email}`);
-    return data;
-  },
-  async deleteClass(id) {
-    const { data } = await api.delete(`class/${id}`);
-    return data;
-  },
-};
+/// hamza
+  export const getclassApi = {
+    async getclassByLevel(iduser) {
+      const { data } = await api.get(`class/bylevel/` + iduser);
+      return data;
+    },
+    async getUserByEmail(email) {
+      const { data } = await api.get(`class/email/` + email);
+      return data;
+    },
+    async getUserByid(id) {
+      const { data } = await api.get(`class/userid/` + id);
+      return data;
+    },
+    async CountActiveClass(id) {
+      const { data } = await api.get(`class/countactive/` + id);
+      return data;
+    },
+    async getclassByYear(iduser) {
+      const { data } = await api.get(`class/byyear/` + iduser);
+      return data;
+    },
+    async getclassById(idclass) {
+      const { data } = await api.get(`class/` + idclass);
+      return data;
+    },
+  };
+  export const ClassInvitationApi = {
+    async getClassInvitation(email) {
+      const { data } = await api.get(`invitationclass/` + email);
+      return data;
+    },
+    async CountRequestClass(id) {
+      const { data } = await api.get(`invitationclass/countrequest/` + id);
+      return data;
+    },
+    async AddClassInvitation(add) {
+      const { data } = await api.post(`invitationclass/`,add);
+      return data;
+    },
+    async deleteClassInvitation(id) {
+      const { data } = await api.delete(`invitationclass/${id}`);
+      return data;
+    },
+  };
+  export const AddclassApi = {
+    async addClass(cl) {
+      const { data } = await api.post(`class/`, cl);
+      return data;
+    },
+    async updateClass(id,cl) {
+      const { data } = await api.put(`class/${id}`, cl);
+      return data;
+    },
+    async addUserToClass(idclass,email) {
+      const { data } = await api.put(`class/${idclass}/${email}`);
+      return data;
+    },
+    async removeUserFromClass(idclass,email) {
+      const { data } = await api.put(`class/r/${idclass}/${email}`);
+      return data;
+    },
+    async updateClassActive(id) {
+      const { data } = await api.put(`class/update/archive/${id}`);
+      return data;
+    },
+    async deleteClass(id) {
+      const { data } = await api.delete(`class/${id}`);
+      return data;
+    },
+  };
 export default api;

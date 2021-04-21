@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputEmoji from "react-input-emoji";
 import {
-  Comment,
+
   Form,
   Button,
   Header,
@@ -18,75 +18,73 @@ import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { AddAnswersApi, AddquestionsApi } from "../../api/api";
 import AddQuestion from "./AddQuestionComponent";
 import FileUpload from "../../utlis/FileUpload";
 import {
-  fetchQuestions,
-  selectQuestions,
+
+    fetchQuestionsByTags, selectQuestions,
+
 } from "../../redux/slices/questionslice";
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
-import { selectedClasses } from "../../redux/slices/classsline";
 import io from "socket.io-client";
-import { AddquestionsApi } from "../../api/api";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 
-export default function QuestionComponent(props) {
+export default function QuestionByTags(props) {
   const socket = io(ENDPOINT);
-  const { idd } = useParams();
+  const { tag } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   console.log("id class : " + currentClass._id);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchQuestions(currentClass._id));
+    dispatch(fetchQuestionsByTags(currentClass._id,tag));
   }, [dispatch]);
 
-  useEffect(() => {
-    socket.on("new-question", (content) => {
-      dispatch(fetchQuestions(currentClass._id));
-    });
-  }, [socket, idd]);
-
-  // Realtime
-  // Join room
-
-  /* const [userConn, setuserConn] = useState({
-    email: "",
-name: "",
-role: "",
-_id: ""
-});
-
-  const documentData = JSON.parse(localStorage.getItem('user'));
  
-    if (localStorage.getItem('user')) {
-      setuserConn({
-        _id: documentData._id,
-        email: documentData.email,
-        name: documentData.name,
-        role: documentData.role
-    })
-} else {
-  setuserConn({
-    email: "",
-    name: "",
-    role: "",
-    _id: ""
-    })
-}
-*/
-const [enableUpload, setEnableUpload] = useState(false);
+ 
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
   function handleOnEnter(text) {
     console.log("enter", text);
   }
 
-  console.log();
+
   const [id, setIdquestion] = useState(null);
   const [questions, errr] = useSelector(selectQuestions);
-  
+  const formik = useFormik({
+    initialValues: {
+      Body: " ",
+      Writer: { _id: "" + documentData._id },
+      Question: {},
+      Filee: [],
+    },
+    validationSchema: yupSchema,
+
+    onSubmit: async (values) => {
+      values.Question = id;
+      values.Filee = Images;
+      values.Body = text;
+      try {
+        if (values.Body !== " ") {
+          alert(JSON.stringify(values));
+
+          const res = await AddAnswersApi.postAnswers(values);
+          alert(JSON.stringify(res));
+          dispatch(fetchQuestionsByTags(currentClass._id,tag));
+        
+          socket.emit("send_question", "message");
+
+          setText("");
+          setImages([]);
+        }
+        console.log("error");
+      } catch (error) {
+        alert(error);
+      }
+    },
+  });
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
 
@@ -96,7 +94,7 @@ const [enableUpload, setEnableUpload] = useState(false);
   const deletee = async (idq) => {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
-      dispatch(fetchQuestions(currentClass._id));
+      dispatch(fetchQuestionsByTags(currentClass._id,tag));
     } catch (error) {
       alert(error);
     }
@@ -105,13 +103,7 @@ const [enableUpload, setEnableUpload] = useState(false);
   return (
     <Container fluid>
       <AddQuestion floated="right" />
-      {Number(questions.length) === 0 && (
-        <Segment raised color="black" size="huge">
-          <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
-            No Question{" "}
-          </Header>
-        </Segment>
-      )}
+    
       {questions.map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
@@ -254,15 +246,33 @@ const [enableUpload, setEnableUpload] = useState(false);
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/"+currentClass._id +"/" +hashtag} >
-           
               <Label key={index} color="red" as="a" tag>
                 #{hashtag}
               </Label>
-              </Link>
             ))}
           </div>
-          
+          <InputEmoji
+            onChange={setText}
+            cleanOnEnter
+            onEnter={handleOnEnter}
+            placeholder="Type a message"
+          />
+          <Form onSubmit={formik.handleSubmit}>
+            <div style={{ float: "right", marginRight: "5%" }}>
+              <Button
+                style={{ maxHeight: "40px" }}
+                type="submit"
+                content="Reply"
+                icon="edit"
+                onClick={() => setIdquestion(question._id)}
+              />
+            </div>
+            <div style={{ display: "flex" }}>
+              <div style={{ marginLeft: "5%" }}>
+                <FileUpload refreshFunction={updateImages} listfile={null} />
+              </div>
+            </div>
+          </Form>
           <Header dividing as="h3" style={{ marginLeft: "2%" }}>
             Comments({question.Question_Answer.length})
           </Header>

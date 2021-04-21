@@ -30,27 +30,30 @@ const questionSlice = createSlice({
     },
 
     updateQuestion: (state, action) => {
-      alert("hello from slices ")
-      
+      alert("hello from slices ");
+
       const payload = action.payload;
       alert(JSON.stringify(payload));
       const index = state.questions.findIndex(
         (item) => item._id === payload._id
       );
       if (index !== -1) {
-        
-
         state.questions[index] = payload;
       }
     },
   },
 });
 export const fetchQuestions = (id) => async (dispatch) => {
-  console.log("test")
-
   const res = questionsApi.getQuestions(id);
-  console.log("test")
-  console.log(res);
+
+  res.then((data) => {
+    dispatch(getProducts(data));
+  });
+};
+
+export const fetchQuestionsByTags = (id,tag) => async (dispatch) => {
+  const res = questionsApi.getQuestionsByTags(id,tag);
+
   res.then((data) => {
     dispatch(getProducts(data));
   });

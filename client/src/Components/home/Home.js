@@ -22,6 +22,7 @@ import DetailsQuestion from "../question/DetailsQuestionComponent";
 import MemberComponent from "../Class/MemberComponent";
 import PrivateRoute from "../../Routes/PrivateRoute";
 import Quiz from "../Quiz/Quiz";
+import QuestionByTags from "../question/QuestionByTags";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -114,6 +115,7 @@ function Home() {
               render={(props) => <TableCourses {...props} />}
             />
             <PrivateRoute path="/FAQ" exact component={QuestionComponent} />
+            <PrivateRoute path="/tags/:id/:tag" exact component={QuestionByTags} />
             <PrivateRoute path="/FAQ/:id" exact component={DetailsQuestion} />
             <PrivateRoute path="/members" exact component={MemberComponent} />
           </Grid.Column>

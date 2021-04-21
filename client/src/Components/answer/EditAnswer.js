@@ -1,19 +1,19 @@
-import React,{useEffect} from 'react'
-import { Button, Form,TextArea, Modal, Icon } from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Button, Form, TextArea, Modal, Icon } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { AddAnswersApi } from "../../api/api";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {  fetchQuestions } from "../../redux/slices/questionslice";
-import FileUpload from "../../utlis/FileUpload"
-import { fetchAnswers } from '../../redux/slices/answerslice';
-
+import { fetchQuestions } from "../../redux/slices/questionslice";
+import FileUpload from "../../utlis/FileUpload";
+import { fetchAnswers } from "../../redux/slices/answerslice";
+import FileUploadEdit from "../../utlis/FileUploadEdit";
 
 export default function EditAnswer(props) {
-const answer=props.answerSelected;
-console.log(answer.Body)
+  const answer = props.answerSelected;
+  console.log(answer.Body);
 
   const [open, setOpen] = React.useState(false);
 
@@ -34,12 +34,12 @@ console.log(answer.Body)
         setImages(element);
       });
     } else {
-      alert("hi")
+      alert("hi");
       setUp(1);
       setImages(newImages);
     }
   };
- 
+
   const [up, setUp] = useState(0);
 
   const formik = useFormik({
@@ -52,11 +52,14 @@ console.log(answer.Body)
 
     onSubmit: async (values) => {
       try {
-        values.Filee = Images;
+        if (Images.length !== 0) {
+          values.Filee = Images;
+        } else {
+          values.Filee = answer.Filee;
+        }
 
         const res = await AddAnswersApi.putAnswers(values, answer._id);
         dispatch(fetchAnswers(answer.Question._id));
-        
       } catch (error) {
         alert(error);
       }
@@ -64,42 +67,37 @@ console.log(answer.Body)
   });
 
   return (
-     <Modal
+    <Modal
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={ 
-      
-        <Icon name="edit">
-        </Icon>
-        
-    }
+      trigger={<Icon name="edit"></Icon>}
     >
       <Modal.Header>Update Your Answer</Modal.Header>
       <Modal.Content>
         <Form onSubmit={formik.handleSubmit}>
-
-        
-            
           <Form.Field
-              control={TextArea}
-              placeholder="write your answer here"
-              label="Content"
-              name="Body"
-              value={formik.values.Body}
-              onChange={formik.handleChange}
-              error={formik.errors.Body}
-            />
+            control={TextArea}
+            placeholder="write your answer here"
+            label="Content"
+            name="Body"
+            value={formik.values.Body}
+            onChange={formik.handleChange}
+            error={formik.errors.Body}
+          />
           <Button type="submit" color="red">
-          Update!
+            Update!
           </Button>
-              </Form>
+          <FileUploadEdit
+            refreshFunction={updateImages}
+            listfile={answer.Filee}
+          />
+        </Form>
       </Modal.Content>
       <Modal.Actions>
         <Button color="black" onClick={() => setOpen(false)}>
           Cancel
         </Button>
-       
       </Modal.Actions>
     </Modal>
   );

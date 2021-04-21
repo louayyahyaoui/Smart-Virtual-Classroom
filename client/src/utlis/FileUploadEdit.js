@@ -1,30 +1,24 @@
-import { set } from "js-cookie";
+
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment,Loader, Tab } from "semantic-ui-react";
-import { array } from "yup/lib/locale";
+import { Icon, Segment } from "semantic-ui-react";
+
 import { AddquestionsApi } from "../api/api";
 
-function FileUpload(props) {
+function FileUploadEdit(props) {
   const arr = [];
-  const [enablee, setUploadfilee] = useState(props.Enbale);
-  const [loader, SetLoader] = useState(false);
 
   useEffect(() => {
-    if (props.upImg === 0) {
-      if (props.listfile != null) {
-        props.listfile.forEach((element) => {
-          arr.push(element);
-        });
-      } else {
-        setImages([]);
-      }
+    if (props.listfile != null) {
+      props.listfile.forEach((element) => {
+        arr.push(element);
+      });
     }
   });
 
   const [hideshow, setetat] = useState("none");
 
-  const [Images, setImages] = useState(arr);
+  const [Images, setImages] = useState([]);
   var [fd, setfd] = useState(new FormData());
 
   const onDrop = (files) => {
@@ -34,27 +28,21 @@ function FileUpload(props) {
       header: { "content-type": "multipart/form-data" },
     };
     console.log(files);
-    files.forEach((f)=>{
+    files.forEach((f) => {
       formData.append("files", f);
-  
+
       console.log(formData.getAll("files"));
       arr.push(f.name);
-      props.refreshFunction(arr);
-    })
+      props.refreshFunction([...Images, f.name]);
+    });
     fd = formData;
     setfd(formData);
     console.log(fd.getAll("files"));
-    setImages(arr)
-     
-    /*formData.append("files", files[i]);
-    fd = formData;
-    setfd(formData);
-   */
-    
-   
+    setImages(arr);
 
+ 
   };
-  useEffect( async() => {
+  useEffect(async () => {
     console.log(fd.getAll("files"));
     if (props.Enbale) {
       //save the Image we chose inside the Node Server
@@ -64,20 +52,15 @@ function FileUpload(props) {
         header: { "content-type": "multipart/form-data" },
       };
 
-      const res= await AddquestionsApi.uploadFileQuestions(fd, config).then((response) => {
-        console.log("datat ::: "+response.data[0])
-        console.log("datat ::: "+response.data[1])
-
-        if (response.data!=null) {
-        console.log("hi")
-          
-        } else {
-          alert("Failed to save the File in Server");
+      const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
+        (response) => {
+          if (response.data) {
+          } else {
+            alert("Failed to save the File in Server");
+          }
         }
-      });
-    
+      );
     }
-
   });
 
   const onDelete = (image) => {
@@ -89,9 +72,12 @@ function FileUpload(props) {
     setImages(newImages);
     props.refreshFunction(newImages);
   };
-
+  
+  
   return (
     <div style={{ display: "flexwrap" }}>
+     
+      
       <Dropzone onDrop={onDrop} multiple={true} maxSize={800000000}>
         {({ getRootProps, getInputProps }) => (
           <div
@@ -111,16 +97,100 @@ function FileUpload(props) {
               onClick={() => setetat("flex")}
               name="paperclip"
               style={{ fontSize: "1rem" }}
+              
             />
           </div>
         )}
       </Dropzone>
+      <h3>old File</h3>
+      {props.listfile.map((image, index) => (
+          <Segment
+            key={index}
+            raised
+            color="black"
+          >
+            {(() => {
+              switch (image.split(".").pop()) {
+                case "pdf":
+                  return <Icon name="file pdf" color="white" size="huge" />;
+                case "docx":
+                  return <Icon name="file word" color="blue" size="huge" />;
+                case "pptx":
+                  return (
+                    <Icon name="file powerpoint" color="red" size="huge" />
+                  );
+                case "xlsx":
+                  return (
+                    <Icon name="file excel outline" color="green" size="huge" />
+                  );
+                case "zip":
+                  return <Icon name="zip" size="huge" />;
+                case "js":
+                  return <Icon name="js" size="huge" />;
+                case "php":
+                  return <Icon name="zip" size="huge" />;
+                case "txt":
+                  return <Icon name="file text" size="huge" />;
 
+                case "jpg":
+                  return (
+                    <img
+                      style={{
+                        minWidth: "50px",
+                        width: "50px",
+                        height: "50px",
+                      }}
+                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                      alt={`scan`}
+                    />
+                  );
+
+                case "jpeg":
+                  return (
+                    <img
+                      style={{
+                        minWidth: "50px",
+                        width: "50px",
+                        height: "50px",
+                      }}
+                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                      alt={`scan`}
+                    />
+                  );
+                case "png":
+                  return (
+                    <img
+                      style={{
+                        minWidth: "50px",
+                        width: "50px",
+                        height: "50px",
+                      }}
+                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                      alt={`scan`}
+                    />
+                  );
+
+                default:
+                  return <Icon name="file" color="red" />;
+              }
+            })()}
+
+            <p
+              style={{
+                wordBreak: "break-all",
+              }}
+            >
+              {image}
+            </p>
+          </Segment>
+        ))}
       <div
         style={{
           display: "wrap" + hideshow,
         }}
       >
+          <h3>All File</h3>
+
         {Images.map((image, index) => (
           <Segment
             key={index}
@@ -164,6 +234,7 @@ function FileUpload(props) {
                   return <Icon name="file" color="red" />;
               }
             })()}
+
             <p
               style={{
                 wordBreak: "break-all",
@@ -174,9 +245,8 @@ function FileUpload(props) {
           </Segment>
         ))}
       </div>
-     
     </div>
   );
 }
 
-export default FileUpload;
+export default FileUploadEdit;

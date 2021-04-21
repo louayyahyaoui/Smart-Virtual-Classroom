@@ -1,13 +1,18 @@
-import React from "react";
-import { Button, Modal, Form, Input, TextArea, Icon } from "semantic-ui-react";
+import React,{useState} from "react";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  TextArea,
+  Dropdown,
+} from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 //import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addClasss,updateClasss } from "../../redux/slices/classsline";
+import { addClasss, updateClasss } from "../../redux/slices/classsline";
 import { AddclassApi } from "../../api/api";
-
-
 
 export default function EditClassComponent(props) {
   const documentData = JSON.parse(localStorage.getItem("user"));
@@ -22,22 +27,27 @@ export default function EditClassComponent(props) {
     },
     validationSchema: Yup.object({
       className: Yup.string().required(),
-      classSection: Yup.string().required().matches(/^[1-5]([A-Z])\w+$/, "first letter of classSection must be in 1-5"),
-      classLevel:  Yup.string(),
+      classSection: Yup.string()
+        .required()
+        .matches(
+          /^[1-5]([A-Z])\w+$/,
+          "first letter of classSection must be in 1-5"
+        ),
+      classLevel: Yup.string(),
       classDescription: Yup.string().required(),
     }),
     onSubmit: async (formData) => {
-      console.log(formData)
+      console.log(formData);
       try {
-        const lvl = formData.classSection.substring(0,1);    
+        const lvl = formData.classSection.substring(0, 1);
         const data = {
           className: formData.className,
           classSection: formData.classSection,
           classLevel: lvl,
           classDescription: formData.classDescription,
           classOwner: documentData._id,
-        }
-        const res = await AddclassApi.updateClass(props.classes._id,data);
+        };
+        const res = await AddclassApi.updateClass(props.classes._id, data);
         console.log(res);
         dispatch(updateClasss(res));
         handleClose();
@@ -50,27 +60,23 @@ export default function EditClassComponent(props) {
     },
   });
 
-  
-  const [open, setOpen] = React.useState(false);
+  const [modalOpen, SetModalOpen] = useState(false);
+  const handleOpen = (e) => SetModalOpen(true);
+  const handleClose = (e) => SetModalOpen(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div>
-     
       <Modal
-       onClose={() => setOpen(false)}
-       onOpen={() => setOpen(true)}
-       open={open}
-       trigger={<Icon name="edit">Edit</Icon>}
+        trigger={
+          <Dropdown.Item onClick={handleOpen} icon="edit" text="Edit" />
+        }
+        open={modalOpen}
+        onClose={handleClose}
+        dimmer="inverted"
+        
       >
-        <Modal.Header>Add Class</Modal.Header>
+        <Modal.Header>Edit Class</Modal.Header>
         <Modal.Content>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group widths="equal">
@@ -98,7 +104,7 @@ export default function EditClassComponent(props) {
                 placeholder="Class Level"
                 name="classLevel"
                 onChange={formik.handleChange}
-                value={formik.values.classSection.substring(0,1)}
+                value={formik.values.classSection.substring(0, 1)}
                 error={formik.errors.classLevel}
               />
             </Form.Group>
@@ -114,11 +120,13 @@ export default function EditClassComponent(props) {
             <Form.Group>
               {error.visible && <Form.Error>{error.message}</Form.Error>}
             </Form.Group>
-           
+
             <Button.Group floated="right">
-              <Button onClick={()=>handleClose()}  >Cancel</Button>
+              <Button onClick={() => handleClose()}>Cancel</Button>
               <Button.Or />
-              <Button  color="red"  type="submit">Update</Button>
+              <Button color="red" type="submit">
+                Update
+              </Button>
             </Button.Group>
           </Form>
         </Modal.Content>

@@ -1,7 +1,8 @@
 import { Grid, Image, Label, Segment, Button, Card } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import {
-  fetchclass,
+  fetchActiveClass,
+  fetchRequestClass,
   fetchInvitationclass,
   selectinvitationclass,
 } from "./../../redux/slices/classsline";
@@ -24,6 +25,8 @@ export default function InvitationClassComonent() {
     try {
       const res = await ClassInvitationApi.deleteClassInvitation(idq);
       dispatch(fetchInvitationclass(documentData._id));
+      dispatch(fetchActiveClass(documentData._id));
+      dispatch(fetchRequestClass(documentData._id));
     } catch (error) {
       alert(error);
     }
@@ -33,6 +36,8 @@ export default function InvitationClassComonent() {
       const res = await AddclassApi.addUserToClass(idclass,email);
       const res2 = await ClassInvitationApi.deleteClassInvitation(idinviation);
       dispatch(fetchInvitationclass(documentData._id));
+      dispatch(fetchActiveClass(documentData._id));
+      dispatch(fetchRequestClass(documentData._id));
     } catch (error) {
       alert(error);
     }
@@ -54,7 +59,7 @@ export default function InvitationClassComonent() {
                       <Image
                         floated="right"
                         size="mini"
-                        src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
+                        src={co.userOb.picture}
                       />
                       <Card.Header>{co.classOb.className}</Card.Header>
                       <Card.Meta>{co.classOb.classSection}</Card.Meta>
