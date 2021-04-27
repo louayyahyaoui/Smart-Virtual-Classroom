@@ -10,6 +10,8 @@ import ScreenRecord from "../coursesAndSeances/ScreenRecord";
 const Room = (props) => {
   const currentUser = sessionStorage.getItem("user");
   const [peers, setPeers] = useState([]);
+  const [userslist, setuserslist] = useState([]);
+
   const [userVideoAudio, setUserVideoAudio] = useState({
     localUser: { video: true, audio: true },
   });
@@ -356,6 +358,7 @@ const Room = (props) => {
             videoDevices={videoDevices}
             showVideoDevices={showVideoDevices}
             setShowVideoDevices={setShowVideoDevices}
+            listuserRoom={userslist}
           />
         </VideoAndBarContainer>
         <Chat display={displayChat} roomId={roomId} />

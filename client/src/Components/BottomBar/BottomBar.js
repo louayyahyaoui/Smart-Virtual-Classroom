@@ -7,6 +7,7 @@ import { isAuth } from "../../helpers/auth";
 import { AddCourses } from "../../redux/slices/Courses";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import ListUsers from "./ListUsers";
 
 const BottomBar = ({
   clickChat,
@@ -18,6 +19,7 @@ const BottomBar = ({
   videoDevices,
   showVideoDevices,
   setShowVideoDevices,
+  listuserRoom,
 }) => {
   const handleToggle = useCallback(
     (e) => {
@@ -105,6 +107,7 @@ const BottomBar = ({
   return (
     <Bar>
       <Left>
+      <ListUsers  userlistromm={listuserRoom}/>
         <CameraButton onClick={toggleCameraAudio} data-switch="video">
           <div>
             {userVideoAudio.video ? (
@@ -138,6 +141,7 @@ const BottomBar = ({
           </div>
           Audio
         </CameraButton>
+
       </Left>
       <Center>
         <ChatButton onClick={clickChat}>
