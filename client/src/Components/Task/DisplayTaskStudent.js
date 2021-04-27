@@ -15,15 +15,21 @@ export default function DisplayTaskStudent() {
  
   const [activeItem, setActiveItem] = useState("All");
   const grades = useSelector( state => state.grades.grades);
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  const taskDetail={
+    "idUser":isAuth()._id,
+    "idClass" : currentClass._id,
+    
+  }
   console.log(grades)
     const dispatch = useDispatch();
   console.log(grades);
     useEffect(()=>{
      
-        dispatch(getTasksById(isAuth()._id));
+        dispatch(getTasksById(taskDetail));
        
        
-       },[dispatch])
+       },[])
 
        const handleItemClick = (e, { name }) => setActiveItem(name);
   return (

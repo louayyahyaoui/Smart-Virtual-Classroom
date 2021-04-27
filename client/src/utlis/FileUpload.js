@@ -24,7 +24,6 @@ function FileUpload(props) {
 
   const [hideshow, setetat] = useState("none");
 
-  const [loaderFile, setLoaderFile] = useState(true);
   const [Images, setImages] = useState(arr);
   var [fd, setfd] = useState(new FormData());
 
@@ -34,17 +33,17 @@ function FileUpload(props) {
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
-    console.log(files);
+    //  console.log(files);
     files.forEach((f) => {
       formData.append("files", f);
 
-      console.log(formData.getAll("files"));
+      // console.log(formData.getAll("files"));
       arr.push(f.name);
       props.refreshFunction(arr);
     });
     fd = formData;
     setfd(formData);
-    console.log(fd.getAll("files"));
+    // console.log(fd.getAll("files"));
     setImages(arr);
 
     /*formData.append("files", files[i]);
@@ -55,21 +54,20 @@ function FileUpload(props) {
   useEffect(async () => {
     // console.log(fd.getAll("files"));
     if (props.Enbale) {
-      setLoaderFile(false);
       //save the Image we chose inside the Node Server
 
-      console.log(fd.getAll("files"));
+      //  console.log(fd.getAll("files"));
+
+      SetLoader(true);
+
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
 
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
-          //console.log("repsonse!!!!");
-
           if (response.data != null) {
-            setLoaderFile(true);
-            //console.log("hi");
+            SetLoader(false);
           } else {
             alert("Failed to save the File in Server");
           }
@@ -113,13 +111,6 @@ function FileUpload(props) {
           </div>
         )}
       </Dropzone>
-      {!loaderFile ? (
-        <Dimmer active inverted>
-          <Loader inline="centered">Preparing Files ... please wait !</Loader>
-        </Dimmer>
-      ) : (
-        <></>
-      )}
 
       <div
         style={{
@@ -179,6 +170,13 @@ function FileUpload(props) {
           </Segment>
         ))}
       </div>
+      {loader ? (
+        <Dimmer active inverted>
+          <Loader inline="centered">Preparing Files ... please wait !</Loader>
+        </Dimmer>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

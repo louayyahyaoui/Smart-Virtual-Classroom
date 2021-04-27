@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment } from "semantic-ui-react";
+import { Icon, Message, Segment } from "semantic-ui-react";
 
 import { AddquestionsApi } from "../api/api";
 
@@ -102,7 +102,11 @@ function FileUploadEdit(props) {
           </div>
         )}
       </Dropzone>
-      <h3>old File</h3>
+      <h3>old Files</h3>
+      {props.listfile.length===0 &&(
+    <Message color='brown'>Opps !! you didn't add files </Message>
+
+      )}
       {props.listfile.map((image, index) => (
           <Segment
             key={index}

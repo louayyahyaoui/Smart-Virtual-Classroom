@@ -36,47 +36,20 @@ export default function QuestionComponent(props) {
   const socket = io(ENDPOINT);
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  //console.log("id class : " + currentClass._id);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   socket.on("new-question", (content) => {
-  //     dispatch(fetchQuestions(currentClass._id));
-  //   });
-  // }, [socket, idd]);
+  useEffect(() => {
+    socket.on("new-question", (content) => {
+      dispatch(fetchQuestions(currentClass._id));
+    });
+  }, [socket, idd]);
 
-  // Realtime
-  // Join room
-
-  /* const [userConn, setuserConn] = useState({
-    email: "",
-name: "",
-role: "",
-_id: ""
-});
-
-  const documentData = JSON.parse(localStorage.getItem('user'));
- 
-    if (localStorage.getItem('user')) {
-      setuserConn({
-        _id: documentData._id,
-        email: documentData.email,
-        name: documentData.name,
-        role: documentData.role
-    })
-} else {
-  setuserConn({
-    email: "",
-    name: "",
-    role: "",
-    _id: ""
-    })
-}
-*/
   const [enableUpload, setEnableUpload] = useState(false);
+
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
   function handleOnEnter(text) {
@@ -147,20 +120,26 @@ _id: ""
                     switch (file.split(".").pop()) {
                       case "pdf":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             {" "}
                             <Icon name="file pdf" color="red" size="huge" />
                           </a>
                         );
                       case "docx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="file word" color="blue" size="huge" />
                           </a>
                         );
                       case "pptx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon
                               name="file powerpoint"
                               color="red"
@@ -170,7 +149,9 @@ _id: ""
                         );
                       case "xlsx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon
                               name="file excel outline"
                               color="green"
@@ -180,64 +161,84 @@ _id: ""
                         );
                       case "zip":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="zip" size="huge" />
                           </a>
                         );
                       case "js":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="js" color="yellow" size="huge" />
                           </a>
                         );
                       case "php":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="zip" color="blue" size="huge" />
                           </a>
                         );
                       case "txt":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="file text" size="huge" color="blue" />
                           </a>
                         );
 
                       case "jpg":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
                       case "jpeg":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
                       case "png":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
 
                       default:
@@ -253,7 +254,7 @@ _id: ""
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
               <Link to={"/tags/" + currentClass._id + "/" + hashtag}>
-                <Label key={index} color="red" as="a" tag>
+                <Label key={index} color="grey" as="a" tag>
                   #{hashtag}
                 </Label>
               </Link>

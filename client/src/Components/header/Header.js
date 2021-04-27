@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
 import { isAuth } from "../../helpers/auth";
+import ModalTaskFile from "../Task/ModalTaskFile";
 
 function Header() {
   const [activeItem, setActiveItem] = useState("Stream");
@@ -70,6 +71,13 @@ function Header() {
                 <ModalCourses
                   headerTitle="Add Courses"
                   buttonTriggerTitle="Add Courses"
+                  buttonSubmitTitle="Add"
+                  buttonColor="red"
+                  icon="add"
+                />
+                  <ModalTaskFile
+                  headerTitle="Add Task"
+                  buttonTriggerTitle="Add Task"
                   buttonSubmitTitle="Add"
                   buttonColor="red"
                   icon="add"

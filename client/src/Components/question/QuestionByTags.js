@@ -103,7 +103,13 @@ export default function QuestionByTags(props) {
   return (
     <Container fluid>
       <AddQuestion floated="right" />
-    
+      {Number(questions.length) === 0 && (
+        <Segment raised color="black" size="huge">
+          <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
+            No Question{" "}
+          </Header>
+        </Segment>
+      )}
       {questions.map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
@@ -246,7 +252,7 @@ export default function QuestionByTags(props) {
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Label key={index} color="red" as="a" tag>
+              <Label key={index} color="grey" as="a" tag>
                 #{hashtag}
               </Label>
             ))}

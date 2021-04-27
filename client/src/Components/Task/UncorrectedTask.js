@@ -14,23 +14,22 @@ export default function UncorrectedTask(props) {
   const {id} = useParams();
     const [grade , setGrade] = useState();
     const [_id, setIdTask] = useState();
-    const [objgrade , setObjGrade] =useState({"_id" : null , "grade" :null})
+    const [objgrade , setObjGrade] =useState({"_id" : null , "grade" :null});
+
     const submitGrade =   ( e ,data) => {
         
-       
-       
-    console.log(grade)
-        setObjGrade({"_id" :data,"grade" : e.target.value })
-        
-
- console.log(objgrade)
-  
+            setObjGrade({"_id" :data,"grade" : e.target.value });
+    
+  console.log(objgrade);
     };
     const  dispatch = useDispatch();
 
     const assignGrade = () =>{
-
-        dispatch(assignGradeToStudent(objgrade));
+  
+        dispatch(assignGradeToStudent(objgrade)).then(()=>{
+          dispatch(getDetailTask(id));
+        });
+        
     }
       
     useEffect(() => {
@@ -42,7 +41,7 @@ export default function UncorrectedTask(props) {
     return (
         <div>
               <Card.Group>
-                  { !props.uncorrectTasks ? (<div> <Loader active inline='centered' /></div>)  : (
+                  { props.uncorrectTasks.length<= 0  ? (<div> vide</div>)  : (
 
  props.uncorrectTasks.map((task,index) =>
     task.grade ===null ? (
@@ -91,8 +90,9 @@ onChange={(e) => submitGrade(e , task._id)}
     </Card.Content>
   </Card>
     ): (
+      
 <></>
-    ))
+    )) 
                    )}
   
   </Card.Group>

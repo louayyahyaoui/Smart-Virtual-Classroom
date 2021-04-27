@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+
 export const getNbrTasksRemis = createAsyncThunk(
   "Task/getNbrTasksRemis",
   async (id) => {
@@ -23,9 +25,10 @@ export const getNbrTasksMissing = createAsyncThunk(
 );
 export const getTaskByTeacher = createAsyncThunk(
   "Task/getTaskByTeacher",
-  async (id) => {
+  async (taskDetail) => {
+    console.log(taskDetail);
     const { data } = await axios.get(
-      `https://closer-server.herokuapp.com/task/${id}`
+      `https://closer-server.herokuapp.com/task/teacher?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`,
     );
 
     return data;
@@ -71,7 +74,7 @@ export const addUploadFile = createAsyncThunk(
   async (files) => {
     var formData = new FormData();
     for (const key of Object.keys(files)) {
-      formData.append("listQuestion", files[key]);
+      formData.append("multiple_resources", files[key]);
     }
 
     const response = await axios.post(
@@ -107,12 +110,17 @@ export const uploadFile = createAsyncThunk("Task/uploadFile", async (files) => {
 export const assignAfterSave = createAsyncThunk(
   "Task/assignAfterSave",
   async (task) => {
-    const { response } = await axios.post(
+    console.log(task);
+    const promise = await axios.post(
       `https://closer-server.herokuapp.com/task/assignAfterSave/`,
       task
-    );
-
-    return response;
+    ).then((response) => {
+      const data = response.data;
+      return data;
+    });
+  
+  const data = await promise;
+  return data;
   }
 );
 
@@ -129,12 +137,35 @@ export const updateTaskStatus = createAsyncThunk(
 );
 export const updateTask = createAsyncThunk("Task/UpdateTask", async (task) => {
   // console.log(task)
-  const { response } = await axios.put(
+  const promise = await axios.put(
     `https://closer-server.herokuapp.com/task/${task._id}`,
     task
-  );
+  ).then((response) => {
+    const data = response.data;
+    console.log(data);
+    return data;
+  });
 
-  return response;
+const data = await promise;
+return data;
+
+ 
+});
+export const deleteTask = createAsyncThunk("Task/deleteTask", async (id) => {
+ 
+  
+  const  promise  = await axios.delete(
+    `https://closer-server.herokuapp.com/task/deleteTask/${id}`
+    
+  ).then((response) => {
+    const data = response.data;
+    return data;
+  });
+
+const data = await promise;
+return data;
+
+
 });
 
 export const DeleteResources = createAsyncThunk(
@@ -189,6 +220,7 @@ export const taskSlice = createSlice({
       state.files.push(action.payload);
     },
     [addUploadFile.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.filesL.push(action.payload);
     },
     [DeleteResources.fulfilled]: (state, action) => {
@@ -199,8 +231,8 @@ export const taskSlice = createSlice({
       });
       state.files = resources;
     },
-    [getTaskByTeacher.fulfilled]: (state, { payload }) => {
-      state.tasks = payload;
+    [getTaskByTeacher.fulfilled]: (state, action) => {
+      state.tasks = action.payload;
       state.status = "success";
     },
     [getTaskByTeacher.rejected]: (state, action) => {
@@ -220,14 +252,36 @@ export const taskSlice = createSlice({
     postTasks: (state, action) => {
       state.tasks.push(action.payload);
     },
+    [deleteTask.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [deleteTask.fulfilled]: (state, action ) => {
+      state.tasks = state.tasks.filter((u) => {
+        return u._id !== action.payload._id;
+      });
+      
+      state.status = "success";
+     
+    },
+    [deleteTask.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+   
     assignTask: (state, action) => {
       state.tasks.push(action.payload);
     },
     [updateTask.pending]: (state, action) => {
       state.status = "loading";
     },
-    [updateTask.fulfilled]: (state, { payload }) => {
-      state.tasks = payload;
+    [updateTask.fulfilled]: (state, action ) => {
+     const index = state.tasks.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.tasks[index] = action.payload;
+        state.status = "success";
+      }
+
     },
     [updateTask.rejected]: (state, action) => {
       state.status = "failed";
@@ -263,7 +317,14 @@ export const taskSlice = createSlice({
       state.status = "loading";
     },
     [assignAfterSave.fulfilled]: (state, action) => {
-      state.tasks.push(action.payload);
+      const payload = action.payload;
+      const index = state.tasks.findIndex(
+        (item) => item._id === payload._id
+      );
+      if (index !== -1) {
+        state.tasks[index] = payload;
+        state.status = "success";
+      }
     },
     [assignAfterSave.rejected]: (state, action) => {
       state.status = "failed";

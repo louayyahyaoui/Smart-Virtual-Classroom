@@ -12,11 +12,17 @@ export const rendreTask = createAsyncThunk("Task/rendreTask", async (grade) => {
 export const getDetailByTaskByStudent = createAsyncThunk(
   "Grade/getDetailByTaskByStudent",
   async (id) => {
-    const { data } = await axios.get(
+    const promise = await axios.get(
       `https://closer-server.herokuapp.com/grade/DetailByTaskByStudent/${id}`
-    );
+    ).then((response) => {
 
-    return data;
+      const data = response.data;
+      console.log(data);
+      return data;
+    });
+  
+  const data = await promise;
+  return data;
   }
 );
 export const getListQuestionTasksById = createAsyncThunk(
@@ -32,22 +38,30 @@ export const getListQuestionTasksById = createAsyncThunk(
 export const assignGradeToStudent = createAsyncThunk(
   "Task/UpdateTask",
   async (grade) => {
-    const { response } = await axios.put(
+    const promise = await axios.put(
       `https://closer-server.herokuapp.com/grade/`,
       grade
-    );
-
-    return response;
+    ).then((response) => {
+      const data = response.data;
+      return data;
+    });
+  
+  const data = await promise;
+  return data;
   }
 );
 export const getTasksById = createAsyncThunk(
   "Grade/getTasksById",
-  async (id) => {
-    const { data } = await axios.get(
-      `https://closer-server.herokuapp.com/grade/${id}`
-    );
-
-    return data;
+  async (taskDetail) => {
+    const promise = await axios.get(
+      `https://closer-server.herokuapp.com/grade?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`
+    ).then((response) => {
+      const data = response.data;
+      return data;
+    });
+  
+  const data = await promise;
+  return data;
   }
 );
 
@@ -74,7 +88,7 @@ export const gradeSlice = createSlice({
   initialState: {
     grades: [],
     listQuestion: [],
-
+      grade : {},
     status: null,
   },
   extraReducers: {
@@ -100,8 +114,8 @@ export const gradeSlice = createSlice({
     [getTasksById.pending]: (state, action) => {
       state.status = "loading";
     },
-    [getTasksById.fulfilled]: (state, { payload }) => {
-      state.grades = payload;
+    [getTasksById.fulfilled]: (state, action) => {
+      state.grades = action.payload;
       state.status = "success";
     },
     [getTasksById.rejected]: (state, action) => {
@@ -114,8 +128,15 @@ export const gradeSlice = createSlice({
     [assignGradeToStudent.pending]: (state, action) => {
       state.status = "loading";
     },
-    [assignGradeToStudent.fulfilled]: (state, { payload }) => {
-      state.grades = payload;
+    [assignGradeToStudent.fulfilled]: (state,  action) => {
+      const payload = action.payload;
+      const index = state.grades.findIndex(
+        (item) => item._id === payload._id
+      );
+      if (index !== -1) {
+        state.grades[index] = payload;
+        state.status = "success";
+      }
     },
     [assignGradeToStudent.rejected]: (state, action) => {
       state.status = "failed";
@@ -133,8 +154,10 @@ export const gradeSlice = createSlice({
     [getDetailByTaskByStudent.pending]: (state, action) => {
       state.status = "loading";
     },
-    [getDetailByTaskByStudent.fulfilled]: (state, { payload }) => {
-      state.grades = payload;
+    [getDetailByTaskByStudent.fulfilled]: (state, action) => {
+      console.log( action.payload);
+      state.grade = action.payload;
+      state.status = "success";
     },
     [getDetailByTaskByStudent.rejected]: (state, action) => {
       state.status = "failed";

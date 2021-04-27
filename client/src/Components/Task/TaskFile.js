@@ -3,8 +3,9 @@ import Dropzone from "react-dropzone-uploader";
 import "react-dropzone-uploader/dist/styles.css";
 import { Button, Divider } from 'semantic-ui-react';
 import axios from "axios"
-import { addUploadFile } from '../../redux/slices/Task';
+import { addUploadFile, uploadFile } from '../../redux/slices/Task';
 import { useDispatch } from 'react-redux';
+import FileUpload from '../../utlis/FileUpload';
 
 export default function TaskFile(props) {
 
@@ -20,58 +21,47 @@ export default function TaskFile(props) {
         creator : props.data.creator
      
     });
-    const dispatch = useDispatch()
-    const [multiple_resources, SetMultiple_resources] = useState([]);
-    const handleChangeStatus = ({ meta, file }, status) => {
-      //console.log(status, meta, file);
-  
-      if (status === "done") {
 
-          SetMultiple_resources(multiple_resources.concat(file));
-      }
-      if (status === "removed") {
-          let multiple_resource = multiple_resources.slice();
-          multiple_resource = multiple_resources.filter((u) => {
-            return u !== file;
-          });
-          SetMultiple_resources(multiple_resource);
-      }
-    };
-    var step=2;
-    const testUpload = () => {  
-  dispatch(addUploadFile(multiple_resources)).then((res)=>{
-     // console.log(res.payload);
-      props.addTask(tasks.listQuestion = res.payload);
-      props.addTask(tasks);
-     //console.log(tasks)
+    const [Images, setImages] = useState(props.data.listQuestion);
+
+    const [enableUpload, setEnableUpload] = useState(false);
+   
+  const updateImages = (newImages) => {
   
-})
-  //console.log(tasks)
-  props.nextStep(step+1);
-      }
+    setImages(newImages);
     
-      const event = ()=>{
-        
-        //props.addTask(tasks.listQuestion = inputFields);
-       // props.addTask(tasks);
+   
+  };
+  
+    var step=2;
+    const onclicNext = () => {  
+     
+     
+      props.addTask(tasks.listQuestion = Images);
+      props.addTask(tasks);
       
+     
+
+   
+        props.nextStep(step+1);
+        setEnableUpload(true);
+        console.log(enableUpload);
+
       }
+ 
     return (
         <div>
-           <Dropzone
-          styles={{ dropzone: { minHeight: 120, maxHeight: 250 } }}
-          canCancel={true}
-          canRemove={true}
-          canRestart={true}
-          onChangeStatus={handleChangeStatus}
-        />
+          <div>       
+              <FileUpload refreshFunction={updateImages} listfile={null} Enbale={enableUpload}/>
+          </div>
+ 
          <Divider hidden></Divider>
   <Button
       
             color="red"
               type="submit" 
               floated='right'
-              onClick={testUpload}
+              onClick={()=>onclicNext()}
              >Next</Button>
         </div>
     )

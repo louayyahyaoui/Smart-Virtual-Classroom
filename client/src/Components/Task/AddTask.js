@@ -33,6 +33,7 @@ export default function AddTask(props) {
     title: props.data.title,
     description: props.data.description,
     theme: props.data.theme,
+    cour : props.data.cour,
     typeTask: props.data.typeTask,
     listQuestion: props.data.listQuestion,
     listStudents: props.data.listStudents,
@@ -75,7 +76,7 @@ export default function AddTask(props) {
         <Grid>
           <Grid.Row>
             <Grid.Column width={11}>
-              <Form>
+              <Form >
                 <Form.Field>
                   <Form.Input
                     label="Title"
@@ -90,6 +91,7 @@ export default function AddTask(props) {
                 <Form.Field required>
                   <label>Description</label>
                   <TextArea
+                  required
                     label="Description"
                     value={tasks.description}
                     onChange={(e) =>
@@ -99,20 +101,7 @@ export default function AddTask(props) {
                     style={{ minHeight: 50 }}
                   />
                 </Form.Field>
-                <Form.Field required>
-                  <label>Type of Task </label>
-                  <Dropdown
-                    onChange={(e, data) =>
-                      setTask({ ...tasks, typeTask: data.value })
-                    }
-                    placeholder="I open on focus"
-                    openOnFocus
-                    options={options}
-                    selection
-                    required
-                    value={tasks.typeTask}
-                  />{" "}
-                </Form.Field>
+            
                 <Form.Field>
                   <label>Due</label>
                   <SemanticDatepicker
@@ -127,6 +116,7 @@ export default function AddTask(props) {
             <Grid.Column width={5}>
               <label>For : </label>
               <Multiselect
+              required
                 placeholder="Select seance"
                 style={{
                   chips: { background: "red" },

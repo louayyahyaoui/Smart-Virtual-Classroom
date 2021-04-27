@@ -9,7 +9,7 @@ import { getTasksById } from '../../redux/slices/Grade';
 export default function AllTasksStudent(props) {
 
    
-    
+    console.log(props.allGrades);
     return (
         <div>
               { props.allGrades.length <= 0 ? (
@@ -24,7 +24,7 @@ export default function AllTasksStudent(props) {
                    ) : (
                     props.allGrades.map((task,index) =>
                     
-                    <Link to={task.task.typeTask==="Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>                      
+                    <Link to={task.task.typeTask === "Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>                      
                       <Segment color='grey' raised > 
                      
                        <Item.Group divided key={index} >
@@ -36,7 +36,7 @@ export default function AllTasksStudent(props) {
               <Item.Content >
                 <Item.Header as='a'>{task.task.title}</Item.Header>
                 <Item.Meta>
-                  <span > <span className='cinema'>{moment(task.task.DateAt).format("MMMM Do yy")}</span></span>
+                  <span > <span className='cinema'>{moment(task.task.DateAt).format("YYYY-MM-DD")}</span></span>
                 </Item.Meta>
                 <Item.Description>{task.task.description}</Item.Description>
               

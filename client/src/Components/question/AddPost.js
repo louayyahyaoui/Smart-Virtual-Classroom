@@ -15,7 +15,7 @@ import io from "socket.io-client";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function AddPost() {
   const socket = io(ENDPOINT);
-  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
   const documentData = JSON.parse(localStorage.getItem("user"));
   const history = useHistory();
   const [error] = useState({ visible: false, message: "" });
@@ -31,7 +31,6 @@ function AddPost() {
       Body: "",
       Writerq: { _id: "" },
       Filee: [],
-      Class: { _id: "" },
     },
     validationSchema: yupSchema,
 
@@ -39,7 +38,7 @@ function AddPost() {
       try {
         values.Filee = Images;
         values.Writerq._id = documentData._id;
-        values.Class = currentClass._id;
+
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
         socket.emit("send_question", "message");
@@ -59,7 +58,15 @@ function AddPost() {
     <div>
       <Segment raised color="red">
         <Form onSubmit={formik.handleSubmit}>
-          
+          <Form.Group widths="equal">
+            <Form.Field
+              control={Input}
+              placeholder="Title"
+              label="Title"
+              name="Title"
+              onChange={formik.handleChange}
+            />
+          </Form.Group>
           <Form.Field
             control={TextArea}
             placeholder="whats your question?"

@@ -86,7 +86,15 @@ function DetailsQuestion(props) {
         
 
           try {
-            let arr=[res.Writer]
+            let arr
+          questions.forEach(element => {
+           
+            if(element._id===id)
+            {
+              
+               arr=[element.Writerq._id];
+            }
+          });
             notif.Owner=arr;
             const res2 = await notificationsApi.addNotification(notif);
             socket.emit("add-new-notification", arr);
@@ -180,127 +188,126 @@ function DetailsQuestion(props) {
               <Feed.Extra images>
                 <List horizontal>
                   {question.Filee.map((file, index) => (
-                    <List.Item key={index}>
-                      {(() => {
-                        switch (file.split(".").pop()) {
-                          case "pdf":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                {" "}
-                                <Icon name="file pdf" color="red" size="huge" />
-                              </a>
-                            );
-                          case "docx":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon
-                                  name="file word"
-                                  color="blue"
-                                  size="huge"
-                                />
-                              </a>
-                            );
-                          case "pptx":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon
-                                  name="file powerpoint"
-                                  color="red"
-                                  size="huge"
-                                />
-                              </a>
-                            );
-                          case "xlsx":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon
-                                  name="file excel outline"
-                                  color="green"
-                                  size="huge"
-                                />
-                              </a>
-                            );
-                          case "zip":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon name="zip" size="huge" />
-                              </a>
-                            );
-                          case "js":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon name="js" color="yellow" size="huge" />
-                              </a>
-                            );
-                          case "php":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon name="zip" color="blue" size="huge" />
-                              </a>
-                            );
-                          case "txt":
-                            return (
-                              <a href={`http://localhost:5000/file/${file}`}>
-                                <Icon
-                                  name="file text"
-                                  size="huge"
-                                  color="blue"
-                                />
-                              </a>
-                            );
-
-                          case "jpg":
-                            return (
-                              <img
-                                style={{
-                                  minWidth: "50px",
-                                  width: "50px",
-                                  height: "50px",
-                                }}
-                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                                alt={`scan`}
-                              />
-                            );
-                          case "jpeg":
-                            return (
-                              <img
-                                style={{
-                                  minWidth: "50px",
-                                  width: "50px",
-                                  height: "50px",
-                                }}
-                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                                alt={`scan`}
-                              />
-                            );
-                          case "png":
-                            return (
-                              <img
-                                style={{
-                                  minWidth: "50px",
-                                  width: "50px",
-                                  height: "50px",
-                                }}
-                                src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                                alt={`scan`}
-                              />
-                            );
-
-                          default:
-                            return (
-                              <Icon name="File" color="Black" size="huge" />
-                            );
-                        }
-                      })()}
-
-                      <p>{file.split("_").pop()}</p>
-                    </List.Item>
+                     <List.Item key={index}>
+                     {(() => {
+                       switch (file.split(".").pop()) {
+                         case "pdf":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               {" "}
+                               <Icon name="file pdf" color="red" size="huge" />
+                             </a>
+                           );
+                         case "docx":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon name="file word" color="blue" size="huge" />
+                             </a>
+                           );
+                         case "pptx":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon
+                                 name="file powerpoint"
+                                 color="red"
+                                 size="huge"
+                               />
+                             </a>
+                           );
+                         case "xlsx":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon
+                                 name="file excel outline"
+                                 color="green"
+                                 size="huge"
+                               />
+                             </a>
+                           );
+                         case "zip":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon name="zip" size="huge" />
+                             </a>
+                           );
+                         case "js":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon name="js" color="yellow" size="huge" />
+                             </a>
+                           );
+                         case "php":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon name="zip" color="blue" size="huge" />
+                             </a>
+                           );
+                         case "txt":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                               <Icon name="file text" size="huge" color="blue" />
+                             </a>
+                           );
+   
+                         case "jpg":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+   
+                             <img
+                               style={{
+                                 minWidth: "50px",
+                                 width: "50px",
+                                 height: "50px",
+                               }}
+                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                               alt={`scan`}
+                             />
+                             </a>
+                           );
+                         case "jpeg":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+   
+                             <img
+                               style={{
+                                 minWidth: "50px",
+                                 width: "50px",
+                                 height: "50px",
+                               }}
+                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                               alt={`scan`}
+                             />
+                             </a>
+                           );
+                         case "png":
+                           return (
+                             <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+   
+                             <img
+                               style={{
+                                 minWidth: "50px",
+                                 width: "50px",
+                                 height: "50px",
+                               }}
+                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                               alt={`scan`}
+                             />
+                             </a>
+                           );
+   
+                         default:
+                           return <Icon name="File" color="Black" size="huge" />;
+                       }
+                     })()}
+   
+                     <p>{file.split("_").pop()}</p>
+                   </List.Item>
                   ))}
                 </List>
               </Feed.Extra>
               <div style={{ marginTop: "3%", marginBottom: "3%" }}>
                 {question.Hashtags.map((hashtag, index) => (
-                  <Label color="red" as="a" tag>
+                  <Label color="grey" as="a" tag>
                     #{hashtag}
                   </Label>
                 ))}
@@ -351,152 +358,119 @@ function DetailsQuestion(props) {
                         <List horizontal>
                           {answer.Filee.map((file, index) => (
                             <List.Item key={index}>
-                              {(() => {
-                                switch (file.split(".").pop()) {
-                                  case "pdf":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        {" "}
-                                        <Icon
-                                          name="file pdf"
-                                          color="red"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "docx":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="file word"
-                                          color="blue"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "pptx":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="file powerpoint"
-                                          color="red"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "xlsx":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="file excel outline"
-                                          color="green"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "zip":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon name="zip" size="huge" />
-                                      </a>
-                                    );
-                                  case "js":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="js"
-                                          color="yellow"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "php":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="zip"
-                                          color="blue"
-                                          size="huge"
-                                        />
-                                      </a>
-                                    );
-                                  case "txt":
-                                    return (
-                                      <a
-                                        href={`http://localhost:5000/file/${file}`}
-                                      >
-                                        <Icon
-                                          name="file text"
-                                          size="huge"
-                                          color="blue"
-                                        />
-                                      </a>
-                                    );
-
-                                  case "jpg":
-                                    return (
-                                      <img
-                                        style={{
-                                          minWidth: "50px",
-                                          width: "50px",
-                                          height: "50px",
-                                        }}
-                                        src={`http://localhost:5000/file/${file}`}
-                                        alt={`scan`}
-                                      />
-                                    );
-                                  case "jpeg":
-                                    return (
-                                      <img
-                                        style={{
-                                          minWidth: "50px",
-                                          width: "50px",
-                                          height: "50px",
-                                        }}
-                                        src={`http://localhost:5000/file/${file}`}
-                                        alt={`scan`}
-                                      />
-                                    );
-                                  case "png":
-                                    return (
-                                      <img
-                                        style={{
-                                          minWidth: "50px",
-                                          width: "50px",
-                                          height: "50px",
-                                        }}
-                                        src={`http://localhost:5000/file/${file}`}
-                                        alt={`scan`}
-                                      />
-                                    );
-
-                                  default:
-                                    return (
+                            {(() => {
+                              switch (file.split(".").pop()) {
+                                case "pdf":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      {" "}
+                                      <Icon name="file pdf" color="red" size="huge" />
+                                    </a>
+                                  );
+                                case "docx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="file word" color="blue" size="huge" />
+                                    </a>
+                                  );
+                                case "pptx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
                                       <Icon
-                                        name="File"
-                                        color="Black"
+                                        name="file powerpoint"
+                                        color="red"
                                         size="huge"
                                       />
-                                    );
-                                }
-                              })()}
-
-                              <p>{file.split("_").pop()}</p>
-                            </List.Item>
+                                    </a>
+                                  );
+                                case "xlsx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon
+                                        name="file excel outline"
+                                        color="green"
+                                        size="huge"
+                                      />
+                                    </a>
+                                  );
+                                case "zip":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="zip" size="huge" />
+                                    </a>
+                                  );
+                                case "js":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="js" color="yellow" size="huge" />
+                                    </a>
+                                  );
+                                case "php":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="zip" color="blue" size="huge" />
+                                    </a>
+                                  );
+                                case "txt":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="file text" size="huge" color="blue" />
+                                    </a>
+                                  );
+          
+                                case "jpg":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+                                case "jpeg":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+                                case "png":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+          
+                                default:
+                                  return <Icon name="File" color="Black" size="huge" />;
+                              }
+                            })()}
+          
+                            <p>{file.split("_").pop()}</p>
+                          </List.Item>
                           ))}
                         </List>
                       </Feed.Extra>

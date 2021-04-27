@@ -58,7 +58,7 @@ function AddQuestion() {
     onSubmit: async (values) => {
       try {
         
-        alert("images"+Images)
+       // alert("images"+Images)
       
         values.Filee = Images;
         values.Writerq._id = documentData._id;

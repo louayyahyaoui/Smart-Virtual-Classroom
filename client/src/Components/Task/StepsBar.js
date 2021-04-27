@@ -1,14 +1,19 @@
 import React, {  useState } from 'react'
-import {Link} from 'react-router-dom'
+
 import {Step,Icon,Button ,Divider,Header, Message} from 'semantic-ui-react';
 import AddTask from './AddTask';
 import SendTask from './SendTask';
 import AddQuiz from '../Quiz/AddQuiz';
 import TaskFile from './TaskFile';
 import { isAuth } from '../../helpers/auth';
+import { Link } from 'react-router-dom';
 
 
 export default function StepsBar() {
+
+ 
+
+  const classs = JSON.parse(localStorage.getItem("idClass"));
   /* save data quiz */
   const [quiz , setQuiz] = useState({
     id : "",
@@ -30,7 +35,8 @@ export default function StepsBar() {
     title : "",
     description : "",
     theme : "",
-    typeTask : "",
+    cour : classs._id,
+    typeTask : "Quiz",
     listQuestion : [],
     listStudents : [],
     endDate : null,
@@ -109,8 +115,9 @@ console.log(step)
     header='Your Task  was successful Added'
     content='You may now log-in with the username you have chosen'
   ></Message>
-  
+  <Link to="/TaskList">
   <Button fluid color="red">View All Tasks</Button>
+  </Link>
   
   </>
   ) }

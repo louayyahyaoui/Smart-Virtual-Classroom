@@ -6,7 +6,7 @@ const {getTaskByStudent,rendreTask,addGrade,assignGradeToStudent,getListQuestion
 
 router.get('/DetailByTaskByStudent/:id',getDetailByTaskByStudent);
 router.get('/listQuestion/:id',getListQuestionByTask);
-router.get('/:id',getTaskByStudent);
+router.get('/',getTaskByStudent);
 router.put('/',assignGradeToStudent);
 router.put('/rendreTask/:id',rendreTask);
 router.post('/',addGrade);

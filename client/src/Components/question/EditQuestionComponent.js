@@ -24,7 +24,7 @@ const ENDPOINT = "https://closer-server.herokuapp.com/";
 export default function EditQuestions({ qes }) {
   const socket = io(ENDPOINT);
   const [open, setOpen] = React.useState(false);
-  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  const [currentClass, err] = useSelector(selectedClasses);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -66,13 +66,13 @@ export default function EditQuestions({ qes }) {
         
         if(Images.length !==0 )
        { values.Filee = Images;
-        
+        alert("images : here : "+values.Filee);
       }
       else{
         values.Filee = qes.Filee;
       }
         const res = await AddquestionsApi.putQuestions(values, qes._id);
-      dispatch(fetchQuestions(currentClass._id));
+      //  dispatch(fetchQuestions(currentClass._id));
         socket.emit("send_question", "message");
       } catch (error) {
         alert(error);
@@ -112,7 +112,7 @@ export default function EditQuestions({ qes }) {
             error={formik.errors.Title}
           />
           <Button type="update" color="red">
-            Ask!
+            Update
           </Button>
           <FileUploadEdit
             refreshFunction={updateImages}
