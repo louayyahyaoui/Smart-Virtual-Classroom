@@ -1,32 +1,35 @@
 const Grade = require("../models/Grade.js");
 const Task = require("../models/Task.js");
 
-module.exports = {
-  uploadFile: (req, res, next) => {
-    console.log(req.files);
-    const reqFiles = [];
-    const url = req.protocol + "://" + req.get("host");
-    if (req.files) {
-      for (var i = 0; i < req.files.length; i++) {
-        reqFiles.push("http://localhost:5000/uploads/file/" + req.files[i].filename);
-      }
-    }
 
-    res.status(201).json(reqFiles);
-  },
+module.exports = {
+ 
   getStatOfTaskRemis: (req, res, next) => {
+  
     try {
       Grade.aggregate([
         {
           $match: {
             taskStatus: {
               $eq: "remis",
-            },
-          },
+            }
+        
+        },
         },
         {
-          $count: "count",
-        },
+        $group:
+     {
+      _id : "$task",
+      task : {
+        _id : $req.params.id
+
+      }
+      }
+    },
+    {
+      $count: "count",
+    },
+       
       ]).then((grade) => res.json(grade));
     } catch (error) {
       res.status(404).json({ message: error.message });
@@ -37,11 +40,22 @@ module.exports = {
       Grade.aggregate([
         {
           $match: {
+            task: {
+              $eq: req.params.id,
+            },
             taskStatus: {
               $eq: "missing",
             },
+          
           },
         },
+        {
+          $group:
+      {
+        _id : "$task"
+        }
+      },
+       
         {
           $count: "count",
         },
@@ -74,8 +88,12 @@ module.exports = {
   },
 
   getTaskByTeacher: (req, res, next) => {
+    
+ 
     try {
-      Task.find({ creator: req.params.id }).then((task) => res.json(task));
+
+     // console.log(req.query.idClass);
+      Task.find({creator : req.query.idUser,cour :req.query.idClass }).then((task) => res.json(task));
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
@@ -96,18 +114,26 @@ module.exports = {
   },
   assignTaskAfterSave: (req, res) => {
     const task = req.body;
-    //task.status = 'assign';
+    task.status = "assign";
+    task.dateAt = Date.now();
+    const newTask = new Task(task);
 
     try {
       task.listStudents.forEach((element) => {
         const newgrade = new Grade({
           task: task._id,
-          student: element.id,
+          student: element._id,
         });
         newgrade.save();
       });
-
-      res.status(201).json(newTask);
+  
+      Task.findByIdAndUpdate(task._id, newTask, {
+        useFindAndModify: false,
+      }).then((task) => 
+      
+      Task.findOne({_id:task._id }).then((task) => res.json(task))
+      );
+     
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -138,7 +164,7 @@ module.exports = {
           student: element._id,
         });
         newgrade.save();
-      });
+      }).then((task) => res.json(task));
 
       res.status(201).json(newTask);
     } catch (error) {
@@ -171,9 +197,11 @@ module.exports = {
   },
 
   deleteTask: (req, res) => {
+    
     try {
-      Task.findByIdAndDelete(req.params.id);
-      res.status(202);
+    
+      Task.findByIdAndDelete({_id : req.params.id}).then((task)=>   res.json(task));
+    
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
