@@ -19,25 +19,48 @@ import { assignTask, postTasks } from "../../redux/slices/Task";
 import moment from "moment";
 
 import ReactPlayer from "react-player";
+import FileUpload from "../../utlis/FileUpload";
+import FileUploadEdit from "../../utlis/FileUploadEdit";
 export default function SendTask(props) {
   const [activeIndex, setActiveIndex] = useState();
   const dispatch = useDispatch();
  
-
  
+  const [Images, setImages] = useState(props.data.listQuestion);
+
+  const [enableUpload, setEnableUpload] = useState(false);
+ 
+const updateImages = (newImages) => {
+
+  setImages(newImages);
+  
+ 
+};
   var step = 3;
- 
-
+  const [cancel, setCancel] = useState(false);
   const [open, setOpen] = useState(false);
+  const [opensave, setOpensave] = useState(false);
 
   const [close, setClose] = useState(false);
+  const clicCancel = () => {
+    setCancel(true);
+  };
   const clicOpen = () => {
     setOpen(true);
   };
+  const clicOpensave = () => {
+    setOpensave(true);
+  };
+  const clicConfirmCancel = () => {
+    //dispatch(postTasks(props.data));
+   // props.nextStep(step + 1);
+   setCancel(false);
+  };
   const clicConfirm = () => {
+   
     dispatch(postTasks(props.data));
     props.nextStep(step + 1);
-    setOpen(false);
+    setOpensave(false);
   };
   const clicConfirmAssign = () => {
     dispatch(assignTask(props.data));
@@ -47,6 +70,13 @@ export default function SendTask(props) {
   const clicClose = () => {
     setOpen(false);
   };
+  const clicClosesave = () => {
+    setOpensave(false);
+  };
+  const clicCloseCancel = () => {
+    setCancel(false);
+  };
+ 
 
   return (
     <div>
@@ -166,164 +196,29 @@ export default function SendTask(props) {
           ) : props.data.listQuestion.legnth >=0 ? (
             <></>
           ) : (
-            <Grid>
-              <Grid.Row>
-                {props.data.listQuestion.map((files, index) =>
-                  files.split(".").pop() === "pdf" ||
-                  files.split(".").pop() === "pptx" ||
-                  files.split(".").pop() === "docx" ? (
-                    <div key={index}>
-                      <a href={files} target="_blank" rel="noopener noreferrer">
-                        <div>
-                          <Grid.Column width={3}>
-                            <img
-                              src={
-                                process.env.PUBLIC_URL +
-                                "/files-type/" +
-                                files.split(".").pop() +
-                                ".png"
-                              }
-                              style={{
-                                margin: "10px",
-                                height: "100px",
-                                width: "100px",
-                              }}
-                              alt=""
-                            />
-                          </Grid.Column>
-                          <Grid.Column width={3}>
-                            <Grid.Row>
-                              <Header as="h4" color="red">
-                                {files.split("-").pop().slice(0, 7) +
-                                  "." +
-                                  files.split(".").pop()}
-                              </Header>
-                            </Grid.Row>
-                            <Grid.Row>
-                              <Header as="h4" color="grey">
-                                {files.split("-").pop().slice(0, 7) +
-                                  "." +
-                                  files.split(".").pop()}{" "}
-                                File
-                              </Header>
-                            </Grid.Row>
-                          </Grid.Column>
-                        </div>
-                      </a>
-                    </div>
-                  ) : files.split(".").pop() === "mp3" ||
-                    files.split(".").pop() === "mp4" ? (
-                    <ReactPlayer
-                      key={index}
-                      width="300px"
-                      height="230px"
-                      controls={true}
-                      url={files}
-                    />
-                  ) : files.split(".").pop() === "png" ||
-                    files.split(".").pop() === "jpg" ||
-                    files.split(".").pop() === "jpeg" ||
-                    files.split(".").pop() === "gif" ? (
-                    <div>
-                      <Grid.Column width={3}>
-                        <a
-                          href={files}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Image
-                            src={files}
-                            alt={files.split("-").pop()}
-                            style={{
-                              margin: "10px",
-                              height: "100px",
-                              width: "100px",
-                            }}
-                          />
-                        </a>
-                      </Grid.Column>
-                      <Grid.Column width={3}>
-                        <Grid.Row>
-                          <Header as="h4" color="red">
-                            {files.split("-").pop().slice(0, 7) +
-                              "." +
-                              files.split(".").pop()}
-                          </Header>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Header as="h4" color="grey">
-                            {files.split(".").pop()} File
-                          </Header>
-                        </Grid.Row>
-                      </Grid.Column>
-                    </div>
-                  ) : (
-                    // <a href={files} target="_blank" rel="noopener noreferrer">
-                    //   <img
-                    //     src={files}
-                    //     width="300px"
-                    //     style={{ margin: "2px" }}
-                    //     alt=""
-                    //   />
-                    // </a>
-                    <a href={files} target="_blank" rel="noopener noreferrer">
-                      <div>
-                        <Grid.Column width={3}>
-                          <img
-                            style={{
-                              margin: "10px",
-                              height: "100px",
-                              width: "100px",
-                            }}
-                            src={
-                              process.env.PUBLIC_URL +
-                              "/files-type/" +
-                              "noFile.png"
-                            }
-                            alt={files.split("-").pop()}
-                          />
-                        </Grid.Column>
-                        <Grid.Column width={3}>
-                          <Grid.Row>
-                            <Header as="h4" color="red">
-                              {files.split("-").pop().slice(0, 7) +
-                                "." +
-                                files.split(".").pop()}
-                            </Header>
-                          </Grid.Row>
-                          <Grid.Row>
-                            <Header as="h4" color="grey">
-                              {files.split("-").pop().slice(0, 7) +
-                                "." +
-                                files.split(".").pop()}{" "}
-                              File
-                            </Header>
-                          </Grid.Row>
-                        </Grid.Column>
-                      </div>
-                    </a>
-                  )
-                )}
-              </Grid.Row>
-            </Grid>
+           
+            <FileUploadEdit
+            refreshFunction={updateImages}
+            listfile={props.data.listQuestion}  
+          />
           )}
         </Grid.Row>
       </Grid>
 
       <Button.Group floated="right">
-        <Button onClick={() => clicOpen()}>Cancel</Button>
+        <Button onClick={() => clicCancel()}>Cancel</Button>
         <Confirm
           header="Cancel Add "
           content="Are you sure?"
-          open={open}
-          onCancel={clicClose}
-          onConfirm={clicConfirm}
+          open={cancel}
+          onCancel={clicCloseCancel}
+          onConfirm={clicConfirmCancel}
         />
         <Button.Or />
         <Button
           color="red"
           type="submit"
-          onClick={() => clicOpen()}
+          onClick={() => clicOpensave()}
           //onClick={onSubmitSaveTask}
         >
           Save
@@ -331,8 +226,8 @@ export default function SendTask(props) {
         <Confirm
           header="Save Task To Assign"
           content="Are you sure?"
-          open={open}
-          onCancel={clicClose}
+          open={opensave}
+          onCancel={clicClosesave}
           onConfirm={clicConfirm}
         />
         <Button.Or />

@@ -14,11 +14,13 @@ import AdminRoute from "./Routes/AdminRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./Components/home/Home";
+import HomeCloser from "./Components/home/HomeCloser";
 import HomeClass from "./Components/home/HomeClass";
 import "./material.css";
 import Main from "./Components/Main/Main";
 import Room from "./Components/Room/Room";
 import WhiteBoard from "./Components/container/WhiteBoard";
+import Page_404 from "./Components/home/404";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -28,9 +30,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Switch>
-          <Route path="/login" render={(props) => <Login {...props} />} />
-          <Route path="/" exact render={(props) => <Login {...props} />} />
-
+         
+          <Route path="/" exact render={(props) => <HomeCloser {...props} />} />
+          <Route path="/login" exact render={(props) => <Login {...props} />} />
           <Route path="/register" render={(props) => <Register {...props} />} />
           <Route
             path="/updateProfile/:id"
@@ -47,13 +49,14 @@ function App() {
             exact
             render={(props) => <Home {...props} />}
           />
+       
           <Route
-            path="/Result/:id"
+            path="/TaskQuiz/:id"
             exact
             render={(props) => <Home {...props} />}
           />
-          <Route
-            path="/TaskQuiz/:id"
+             <Route
+            path="/Result/:id"
             exact
             render={(props) => <Home {...props} />}
           />
@@ -130,11 +133,16 @@ function App() {
             exact
             render={(props) => <WhiteBoard {...props} />}
           />
+               <Route
+            path="/404"
+            exact
+            render={(props) => <Page_404 {...props} />}
+          />
           <Route exact path="/meet" component={Main} />
           <Route exact path="/room/:roomId" component={Room} />
           <PrivateRoute path="/private" exact component={Private} />
           <AdminRoute path="/admin" exact component={Admin} />
-          <Redirect to="/" />
+          <Redirect to="/404" />
         </Switch>
       </BrowserRouter>
     </div>

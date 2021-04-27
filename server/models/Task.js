@@ -20,9 +20,13 @@ const TaskSchema =  mongoose.Schema({
     },
    
        
-    theme : { // cours id here
+    theme : { 
         type: mongoose.Schema.Types.ObjectId,
         ref: "Seance",
+    },
+    cour : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Class",
     },
     status : { 
         type: String,
@@ -32,8 +36,9 @@ const TaskSchema =  mongoose.Schema({
    
 
          
-    DateAt : { type : Date,
-        default : new Date()
+    DateAt : { 
+        type : Date,
+        default : Date.now()
     
     },
     endDate : {

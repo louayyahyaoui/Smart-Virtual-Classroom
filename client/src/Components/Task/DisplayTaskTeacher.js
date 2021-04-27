@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -9,12 +9,13 @@ import {
   Icon,
   Divider,
   Item,
-  Label,
+
   Header,
   Segment,
   Grid,
-  Image,
-  Accordion,
+  Dropdown,
+  Confirm,
+
 } from "semantic-ui-react";
 import { isAuth } from "../../helpers/auth";
 
@@ -23,33 +24,35 @@ import {
   getNbrTasksRemis,
   getTaskByTeacher,
   updateTaskStatus,
-  assignTask,
+
   assignAfterSave,
 } from "../../redux/slices/Task";
+import ModalAssignTask from "./ModalAssignTask";
 
-const teacher = [{ id: "606781123ed972382c721fce", student: "Sofien" }];
+import ModalConfirmDeleteTask from "./ModalConfirmDeleteTask";
+import ModalUpdateTask from "./ModalUpdateTask";
+
 export default function DisplayTaskTeacher() {
+
   const tasks = useSelector((state) => state.tasks.tasks);
   const remis = useSelector((state) => state.tasks.nbrRemis);
   const missing = useSelector((state) => state.tasks.nbrMissing);
-  console.log(tasks);
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const dispatch = useDispatch();
+  const taskDetail={
+    "idUser":isAuth()._id,
+    "idClass" : currentClass._id,
+    
+  }
 
-  const onSubmitAssignTask = (task) => {
-    // dispatch(assignAfterSave(task));
-    dispatch(updateTaskStatus(task)).then(() => {
-      dispatch(assignAfterSave(task)).then(() => {
-        dispatch(getTaskByTeacher(isAuth()._id));
-      });
-    });
-  };
+
   const getItemInfo = (id) => {
     dispatch(getNbrTasksMissing(id));
     dispatch(getNbrTasksRemis(id));
   };
   useEffect(() => {
-    dispatch(getTaskByTeacher(isAuth()._id));
-  }, [isAuth()._id]);
+    dispatch(getTaskByTeacher(taskDetail));
+  }, [dispatch]);
   return (
     <>
       <Divider hidden />
@@ -58,27 +61,37 @@ export default function DisplayTaskTeacher() {
 
       <Divider />
 
-      {!tasks ? (
+      {tasks.length <=0  ? (
         <Segment placeholder>
           <Header icon>
             <Icon name="tasks" />
-            No Tasks For you {teacher[0].student}.
+            No Tasks Added.
+            <Link to="/AddTask">
+              <Button color='google plus' >
+           Add Task
+              </Button>
+              
+            </Link>
           </Header>
         </Segment>
       ) : (
         tasks.map((task, index) => (
-          <Link to={"/DetailTask/" + task._id}>
+         <>
             <Segment color="grey" raised>
               <Item.Group divided key={index}>
+             
                 <Item>
+              
                   <Item.Image
                     size="tiny"
                     avatar
                     src={process.env.PUBLIC_URL + "/quiz.png"}
                   />
-
+  
                   <Item.Content>
+                  <Link to={"/DetailTask/" + task._id}>
                     <Item.Header as="a">{task.title}</Item.Header>
+                    </Link>
                     <Item.Meta>
                       <span className="cinema">
                         {moment(task.endDate).format("MMMM Do yy")}
@@ -86,10 +99,14 @@ export default function DisplayTaskTeacher() {
                     </Item.Meta>
                     <Item.Description>{task.description}</Item.Description>
                   </Item.Content>
-
-                  <Grid columns="equal">
-                    <Grid.Row>
+                
+                  <Grid columns={4}>
+              
+                    <Grid.Row >
+                   
                       <Statistic.Group size="small">
+                        
+                      
                         <Statistic color="red">
                           <Statistic.Value>
                             {getItemInfo.call(this, task._id)}
@@ -98,7 +115,7 @@ export default function DisplayTaskTeacher() {
 
                           <Statistic.Label>Missing</Statistic.Label>
                         </Statistic>
-
+               
                         <Grid.Column>
                           <Statistic color="green">
                             <Statistic.Value>
@@ -109,22 +126,50 @@ export default function DisplayTaskTeacher() {
                           </Statistic>
                         </Grid.Column>
                       </Statistic.Group>
+                      <Grid.Column></Grid.Column>
+                      <Grid.Column>  
+                       <Dropdown
+                              fluid
+                              pointing
+                              direction="left"
+                              className="icon"
+                              icon="ellipsis vertical"
+                            >
+                              <Dropdown.Menu>
+                                <ModalUpdateTask
+                                  headerTitle="Edit Task"
+                                  buttonTriggerTitle="Edit"
+                                  buttonColor="red"
+                                  icon="edit"
+                                  task={task}
+                                >
+
+
+                                </ModalUpdateTask>
+                              <ModalConfirmDeleteTask
+                                  headerTitle="Delete Task"
+                                  buttonTriggerTitle="Delete"
+                                  buttonColor="red"
+                                  icon="trash"
+                                  task={task}
+                                 
+                                />
+                              </Dropdown.Menu>
+                            </Dropdown></Grid.Column>
                     </Grid.Row>
 
                     <Grid.Row>
                       <Grid.Column>
                         {task.status === "not assign" ? (
-                          <Button
-                            color="red"
-                            type="submit"
-                            onClick={() => onSubmitAssignTask(task)}
-                          >
-                            Assign
-                          </Button>
+                          <>
+                       
+    <ModalAssignTask task={task}></ModalAssignTask>
+                          </>
                         ) : (
-                          <></>
+                      <></>
                         )}
                       </Grid.Column>
+                    
                     </Grid.Row>
                   </Grid>
                 </Item>
@@ -132,7 +177,7 @@ export default function DisplayTaskTeacher() {
             </Segment>
 
             <Divider hidden></Divider>
-          </Link>
+          </>
         ))
       )}
     </>

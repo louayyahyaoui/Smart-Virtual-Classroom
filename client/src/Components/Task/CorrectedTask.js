@@ -21,7 +21,7 @@ export default function CorrectedTask(props) {
         <Image
           floated='right'
           size='mini'
-          src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+          src={task.student.picture}
         />
         <Card.Header>
         <strong>{task.student.name}</strong>
@@ -47,7 +47,7 @@ export default function CorrectedTask(props) {
     </Card>
              ) : (
              
-             <></>
+             <>Vide</>
              
              )))}
   </Card.Group>

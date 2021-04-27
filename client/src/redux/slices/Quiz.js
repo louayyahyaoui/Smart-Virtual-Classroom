@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getQuizzes = createAsyncThunk("Quiz/getQuizzes", async () => {
-  const { data } = await axios.get("https://closer-server.herokuapp.com/quiz");
+  const { data } = await axios.get("http://localhost:5000/quiz");
 
   return data;
 });
 
 export const postQuiz = createAsyncThunk("/Quiz", async (quiz) => {
   const { response } = await axios.post(
-    "https://closer-server.herokuapp.com/quiz",
+    "http://localhost:5000/quiz",
     quiz
   );
 
