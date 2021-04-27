@@ -53,7 +53,7 @@ function FileUpload(props) {
    */
   };
   useEffect(async () => {
-    console.log(fd.getAll("files"));
+    // console.log(fd.getAll("files"));
     if (props.Enbale) {
       setLoaderFile(false);
       //save the Image we chose inside the Node Server
@@ -65,12 +65,11 @@ function FileUpload(props) {
 
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
-          
-          console.log("repsonse!!!!");
+          //console.log("repsonse!!!!");
 
           if (response.data != null) {
             setLoaderFile(true);
-            console.log("hi");
+            //console.log("hi");
           } else {
             alert("Failed to save the File in Server");
           }

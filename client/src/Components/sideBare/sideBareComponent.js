@@ -68,7 +68,7 @@ function SideBareComponent() {
         }
       });
     });
-  }, [state, socket]);
+  }, [state]);
   const updatenotification = async (id_notif) => {
     try {
       const res = await notificationsApi.putNotification(id_notif);

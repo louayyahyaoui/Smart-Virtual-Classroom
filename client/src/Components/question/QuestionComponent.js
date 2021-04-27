@@ -36,7 +36,7 @@ export default function QuestionComponent(props) {
   const socket = io(ENDPOINT);
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  console.log("id class : " + currentClass._id);
+  //console.log("id class : " + currentClass._id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchQuestions(currentClass._id));
@@ -76,7 +76,7 @@ _id: ""
     })
 }
 */
-const [enableUpload, setEnableUpload] = useState(false);
+  const [enableUpload, setEnableUpload] = useState(false);
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
   function handleOnEnter(text) {
@@ -86,11 +86,9 @@ const [enableUpload, setEnableUpload] = useState(false);
   console.log();
   const [id, setIdquestion] = useState(null);
   const [questions, errr] = useSelector(selectQuestions);
-  
+
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
-
-   
     setImages(newImages);
   };
   const deletee = async (idq) => {
@@ -254,15 +252,13 @@ const [enableUpload, setEnableUpload] = useState(false);
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/"+currentClass._id +"/" +hashtag} >
-           
-              <Label key={index} color="red" as="a" tag>
-                #{hashtag}
-              </Label>
+              <Link to={"/tags/" + currentClass._id + "/" + hashtag}>
+                <Label key={index} color="red" as="a" tag>
+                  #{hashtag}
+                </Label>
               </Link>
             ))}
           </div>
-          
           <Header dividing as="h3" style={{ marginLeft: "2%" }}>
             Comments({question.Question_Answer.length})
           </Header>
