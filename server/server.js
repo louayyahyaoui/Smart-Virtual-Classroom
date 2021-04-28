@@ -96,6 +96,11 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
+
+  socket.on('disconnect', () => {
+    socket.disconnect();
+    console.log('User disconnected!');
+  });
   //question
   socket.on("send_question", function (data) {
     io.emit("new-question", data);
