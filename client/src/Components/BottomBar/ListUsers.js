@@ -2,25 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 
 function ListUsers(props) {
-  const [user, setusers] = useState([]);
-
-  useEffect(() => {
-    props.userlistromm.forEach((element) => {
-      setusers(user.concat(element.info.userName));
-      console.log(
-        "list from list user " + JSON.stringify(element.info.userName)
-      );
+  const listUsers = [{ key: Number, text: "", value: "" }];
+  for (let i = 0; i < props.userlistromm.length; i++) {
+    const option = {
+      key: props.userlistromm[i]._id,
+      text: props.userlistromm[i].info.userName,
+      value: props.userlistromm[i].info.userName,
+    };
     
-    });
-  });
+    listUsers.push(option);
+  }
+  console.log("cc");
+  console.log(props.userlistromm);
+  
 
   return (
     <div>
-     {
-         props.userlistromm.map((u,index)=>{
-         <h>{ JSON.stringify(u.info.userName)}</h>
-         })
-        }
+     
+     <Dropdown
+    placeholder='Select Friend'
+  
+    selection
+    options={listUsers}
+  />
+        
+
     </div>
   );
 }
