@@ -44,7 +44,8 @@ const Room = (props) => {
 
         socket.emit("BE-join-room", { roomId, userName: currentUser });
         socket.on("FE-user-join", (users) => {
-         console.log("ici users list : "+JSON.stringify(users))
+          console.log("users from room : "+users);
+          setuserslist(users);
           // all users
           const peers = [];
           users.forEach(({ userId, info }) => {
@@ -107,13 +108,12 @@ const Room = (props) => {
         });
 
         socket.on("FE-user-leave", ({ userId, userName }) => {
-         let userslist=[];
           const peerIdx = findPeer(userId);
           peerIdx.peer.destroy();
          
           setPeers((users) => {
             users = users.filter((user) => user.peerID !== peerIdx.peer.peerID);
-            userslist=users;
+            setuserslist(users);
             return [...users];
           });
           console.log("ici users list AFTER LEAVE : "+JSON.stringify(userslist))

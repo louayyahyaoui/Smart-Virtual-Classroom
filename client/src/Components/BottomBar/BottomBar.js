@@ -103,7 +103,10 @@ const BottomBar = ({
       console.log(res.data);
     });
   }, [mediaBlob]);
+  useEffect(() => {
+    console.log("list from bttom bar  "+listuserRoom)
 
+    });
   return (
     <Bar>
       <Left>
