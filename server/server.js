@@ -124,7 +124,7 @@ io.on("connection", (socket) => {
    */
   socket.on("BE-join-room", ({ roomId, userName }) => {
     // Socket Join RoomName
-    socket.join(roomId).clients((err, clients) => {
+    io.socket.join(roomId).clients((err, clients) => {
       try {
         console.log("clients !!!!!!!!!!!!!!!!!!!!");
         console.log(clients);
