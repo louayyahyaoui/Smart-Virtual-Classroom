@@ -1,13 +1,70 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import url("https://use.fontawesome.com/releases/v5.14.0/css/all.css");
+
+input,
+strong,
+p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.width0 {
+  width: 0% !important;
+}
+
+.width-peer0 {
+  width: 45% !important;
+}
+
+.width-peer1 {
+  width: 45% !important;
+}
+.width-peer2 {
+  width: 30% !important;
+}
+.width-peer3 {
+  width: 28% !important;
+}
+.width-peer4 {
+  width: 28% !important;
+}
+.width-peer5 {
+  width: 28% !important;
+}
+.width-peer6 {
+  width: 25% !important;
+}
+
+.width-peer7 {
+  width: 25% !important;
+}
+.width-peer8 {
+  width: 25% !important;
+}
+
+.width-peer {
+  width: 20% !important;
 }
