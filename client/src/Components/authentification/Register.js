@@ -114,7 +114,8 @@ const Register = () => {
                 />
 
                 <button
-                  type="submit"
+                    style={{backgroundColor:"red"}}
+                    type="submit"
                   className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                 >
                   <i className="fas fa-user-plus fa 1x w-6  -ml-2" />
@@ -128,6 +129,8 @@ const Register = () => {
               </div>
               <div className="flex flex-col items-center">
                 <a
+                                    style={{backgroundColor:"#FF9595"}}
+
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                   href="/login"

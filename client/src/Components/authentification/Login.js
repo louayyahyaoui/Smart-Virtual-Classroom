@@ -120,6 +120,8 @@ const Login = ({ history }) => {
                   cookiePolicy={"single_host_origin"}
                   render={(renderProps) => (
                     <button
+                    style={{backgroundColor:"#FF9595"}}
+
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
@@ -137,6 +139,8 @@ const Login = ({ history }) => {
                   callback={responseFacebook}
                   render={(renderProps) => (
                     <button
+                    style={{backgroundColor:"#FF9595"}}
+
                       onClick={renderProps.onClick}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                     >
@@ -149,6 +153,8 @@ const Login = ({ history }) => {
                 />
 
                 <a
+                                    style={{backgroundColor:"#FF9595"}}
+
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                   href="/register"
@@ -183,7 +189,8 @@ const Login = ({ history }) => {
                 />
                 <button
                   type="submit"
-                  className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                      style={{backgroundColor:"red"}}
+                      className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                 >
                   <i className="fas fa-sign-in-alt  w-6  -ml-2" />
                   <span className="ml-3">Sign In</span>

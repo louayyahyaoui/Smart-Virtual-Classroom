@@ -56,7 +56,6 @@ export default function QuestionComponent(props) {
     console.log("enter", text);
   }
 
-  console.log();
   const [id, setIdquestion] = useState(null);
   const [questions, errr] = useSelector(selectQuestions);
 
