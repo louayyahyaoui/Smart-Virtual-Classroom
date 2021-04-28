@@ -126,6 +126,8 @@ io.on("connection", (socket) => {
     // Socket Join RoomName
     socket.join(roomId).clients((err, clients) => {
       try {
+        console.log("clients !!!!!!!!!!!!!!!!!!!!");
+        console.log(clients);
         const users = [];
         clients.forEach((client) => {
           // Add User List
