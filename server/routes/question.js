@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {getAllQuestion,addQuestion,uploadFile, getOneQuestion,updateQuestion,deletQuestion,getAnswerAndQuestion,findquestionbyTags,uploads} =require('../controllers/QuestionController');
-
+const multer = require("multer");
 ///UPLOAD FILE 
 const { Storage } = require("@google-cloud/storage");
 const perf = require("execution-time")();

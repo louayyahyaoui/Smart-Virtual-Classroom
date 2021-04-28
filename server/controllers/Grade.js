@@ -39,7 +39,7 @@ module.exports = {
       .populate("task",{_id: 0 ,listQuestion : 1})
    
       
-     .then((grade)=>res.json(grade));
+     .then((grades)=>res.json(grades));
         
     } catch (error) {
         res.status(404).json({message : error.message});
@@ -47,11 +47,11 @@ module.exports = {
 },
   assignGradeToStudent : (req,res,next) =>{
     const newGrade = new Grade(req.body);
-
+console.log(newGrade);
     try {
             
-        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "remis"}).then((grade)=>res.json(grade));
-      
+        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "remis",$push :{listReponse : newGrade.listReponse}})   
+        .then((grade)=>res.json(grade));
  
      } catch (error) {
          res.status(404).json({message : error.message});
@@ -59,12 +59,14 @@ module.exports = {
 },
   getTaskByStudent : (req,res,next) =>{
     try {
-        
-      Grade.find({student : req.params.id})
-      .populate("task")
+        console.log("cc");
+      //Grade.find({creator : req.query.idUser,cour :req.query.idClass }).then((task) => res.json(task));
+      Grade.find({student : req.query.idUser})
+      //.populate({ path: 'task', cour: req.query.idClass })
+      .populate('task')
       .populate('student')
       
-     .then((grade)=>res.json(grade));
+      .then((grade)=>res.json(grade));
         
     } catch (error) {
         res.status(404).json({message : error.message});

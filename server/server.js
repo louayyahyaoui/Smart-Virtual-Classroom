@@ -95,6 +95,14 @@ io.on("connection", (socket) => {
   socket.on("canvas-data", (data) => {
     socket.broadcast.emit("canvas-data", data);
   });
+});
+
+io.on("connection", (socket) => {
+
+  socket.on('disconnect', () => {
+    socket.disconnect();
+    console.log('User disconnected!');
+  });
   //question
   socket.on("send_question", function (data) {
     io.emit("new-question", data);
@@ -188,8 +196,6 @@ io.on("connection", (socket) => {
   socket.on("add-new-notification", function (data) {
     io.emit("new-notification", data);
   });
-
-
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
