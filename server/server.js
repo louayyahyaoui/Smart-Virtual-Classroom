@@ -124,8 +124,20 @@ io.on("connection", (socket) => {
    */
   socket.on("BE-join-room", ({ roomId, userName }) => {
     // Socket Join RoomName
-    socket.join(roomId);
-    socketList[socket.id] = { userName, video: true, audio: true };
+    socket.join(roomId).clients((err, clients) => {
+      try {
+        const users = [];
+        clients.forEach((client) => {
+          // Add User List
+          users.push({ userId: client, info: socketList[client] });
+        });
+        socket.broadcast.to(roomId).emit("FE-user-join", users);
+        io.sockets.emit("List_user", users);
+      } catch (e) {
+        io.sockets.in(roomId).emit("FE-error-user-exist", { err: true });
+      }
+    });
+    //socketList[socket.id] = { userName, video: true, audio: true };
 
     // Set User List (update list user of that room)
     io.sockets.in(roomId).clients((err, clients) => {
@@ -183,8 +195,6 @@ io.on("connection", (socket) => {
   socket.on("add-new-notification", function (data) {
     io.emit("new-notification", data);
   });
-
-
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
