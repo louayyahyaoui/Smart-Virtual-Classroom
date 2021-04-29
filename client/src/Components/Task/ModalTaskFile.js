@@ -19,7 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { isAuth } from "../../helpers/auth";
 import FileUpload from "../../utlis/FileUpload";
-import { assignTask, postTasks } from "../../redux/slices/Task";
+import { assignTask, getTaskByTeacher, postTasks } from "../../redux/slices/Task";
 import { AddquestionsApi } from "../../api/api";
 import { addQuestion } from "../../redux/slices/questionslice";
 
@@ -52,6 +52,12 @@ export default function ModalTaskFile(props) {
      
     });
 
+    const taskDetail={
+      "idUser":isAuth()._id,
+      "idClass" : currentClass._id,
+      
+    }
+  
     const  dispatch = useDispatch();
     const clicCancel = () => {
       setCancel(true);
@@ -72,7 +78,9 @@ export default function ModalTaskFile(props) {
       setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
       setEnableUpload(true);
-      dispatch(postTasks(tasks));
+      dispatch(postTasks(tasks)).then(()=>{
+        dispatch(getTaskByTeacher(taskDetail));
+      });
      
     
       setOpensave(false);
@@ -82,7 +90,9 @@ export default function ModalTaskFile(props) {
       setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
       setEnableUpload(true);
-      dispatch(assignTask(tasks));
+      dispatch(assignTask(tasks)).then(()=>{
+        dispatch(getTaskByTeacher(taskDetail));
+      });;
     
       setOpen(false);
     };
@@ -244,12 +254,14 @@ export default function ModalTaskFile(props) {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+
+               
         <FileUpload refreshFunction={updateImages} listfile={null} Enbale={enableUpload}/>
       
       
      
         </Modal.Content>
-        <Modal.Actions>
+     
         <Button.Group floated="right">
         <Button onClick={() => clicCancel()}>Cancel</Button>
         <Confirm
@@ -295,7 +307,9 @@ export default function ModalTaskFile(props) {
         />
       </Button.Group>
      
-        </Modal.Actions>
+      <br/>
+      <br/>
+      <br/>
        
       </Modal>
         </div>

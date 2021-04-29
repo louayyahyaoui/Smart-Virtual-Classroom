@@ -13,6 +13,7 @@ import {
   List,
   Modal,
 } from "semantic-ui-react";
+import FileUploadEdit from "../../utlis/FileUploadEdit";
 import { isAuth } from "../../helpers/auth";
 import { DeleteResources, UpdateResources, uploadFile } from "../../redux/slices/Task";
 import { UpdateProfilePicture } from "../../redux/slices/User";
@@ -24,6 +25,17 @@ export default function ModalTask(props) {
   const [picture, setPicture] = React.useState([]);
   const dispatch = useDispatch();
 
+ /* const updateImages = (newImages) => {
+    if (newImages === null) {
+      qes.Filee.forEach((element) => {
+        setImages(element);
+      });
+    } else {
+      alert("hi")
+      setUp(1);
+      setImages(newImages);
+    }
+  };*/
   const closeModel = () => {
   
    
@@ -89,78 +101,11 @@ formData.append("listQuestion", file);
         <Modal.Content>
           <Modal.Description>
             
-            <Dropzone
-          inputContent="Drop Files here or click to choose ..."
-          onChangeStatus={handleChangeStatus}
-          canCancel={false}
-          canRemove={false}
-          canRestart={false}
-          PreviewComponent={Preview}
-        />
-  <Grid>
-          <Grid.Row>
-            <Grid.Column width={2}></Grid.Column>
-            <Grid.Column width={12}>
-              <List divided verticalAlign="middle">
+          <FileUploadEdit
+          //  refreshFunction={updateImages}
+           // listfile={qes.Filee}  
+          />
 
-                {Resources.map((files, index) => (
-                  <List.Item>
-                    <List.Content floated="right">
-                      <Button
-                        circular
-                        size="small"
-                        color="red"
-                        icon="trash"
-                        onClick={(e) => {
-                          handleRemoveUpload(e, files[0]);
-                        }}
-                      ></Button>
-                    </List.Content>
-                    {files[0].split(".").pop() === "png" ||
-                    files[0].split(".").pop() === "jpg" ||
-                    files[0].split(".").pop() === "jpeg" ||
-                    files[0].split(".").pop() === "gif" ? (
-                      <Image src={files[0]} rounded size="mini" />
-                    ) : files[0].split(".").pop() === "pdf" ||
-                    files[0].split(".").pop() === "docx" ||
-                    files[0].split(".").pop() === "pptx" ||
-                    files[0].split(".").pop() === "mp4" ||
-                    files[0].split(".").pop() === "mp3" ? (
-                      <Image
-                        rounded
-                        size="mini"
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/files-type/" +
-                          files[0].split(".").pop() +
-                          ".png"
-                        }
-                      />
-                    ) : (
-                      <Image
-                        rounded
-                        size="mini"
-                        src={
-                          process.env.PUBLIC_URL + "/files-type/" + "noFile.png"
-                        }
-                      />
-                    )}
-
-                    <List.Content>
-                      <Header as="h4" color="red">
-                        {files[0].split(".").pop()}
-                      </Header>
-                      <highlight>
-                        <strong>{files[0].split("-").pop()}</strong>
-                      </highlight>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-            </Grid.Column>
-            <Grid.Column width={2}></Grid.Column>
-          </Grid.Row>
-        </Grid>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
@@ -174,7 +119,10 @@ formData.append("listQuestion", file);
             onClick={closeModel}
             color="red"
           />
+             <br></br>
+        
         </Modal.Actions>
+     
       </Modal>
    
       

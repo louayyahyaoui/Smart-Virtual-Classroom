@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form, Divider, Grid, Segment, Icon, Header } from "semantic-ui-react";
 import { v4 as uuidv4 } from "uuid";
-
+import { Multiselect } from "multiselect-react-dropdown";
 export default function AddQuiz(props) {
+  const Options = [{ value: "OPTION A" },
+  { value: "OPTION B" },
+  { value: "OPTION C" },
+ { value: "OPTION D" }
+];
   const [tasks, setTask] = useState({
     title: props.data.title,
     description: props.data.description,
@@ -57,8 +62,14 @@ export default function AddQuiz(props) {
     console.log(newInputFields);
     setInputFields(newInputFields);
   };
+  const [theme, setTheme] = useState();
+  const selectedTheme = (selectedList, selectedItem) => {
 
+    setTheme(selectedItem);
+        
+  };
   const handleAddFields = () => {
+
     setInputFields([
       ...inputFields,
       {
@@ -90,11 +101,7 @@ export default function AddQuiz(props) {
     props.nextStep(step + 1);
   };
 
-  const handleChangeSelect = async (e) => {
-    console.log(e.target.value);
-    await SetSelectedItem(e.target.value);
-    await console.log(selectedItem);
-  };
+ 
   return (
     <div>
       <Grid centered>
@@ -175,12 +182,32 @@ export default function AddQuiz(props) {
                       handleChangeInput(inputField.id, event)
                     }
                   />
-                  <Header
-                    as="h5"
-                    icon="file alternate outline"
-                    content="Select Correct Answer"
-                  />
-
+                <Header as="h5" icon="images outline" content="Select Correct Answer" />
+                <Multiselect
+              required
+                placeholder="Select seance"
+                style={{
+                  chips: { background: "red" },
+                  option: { color: "black" },
+                  searchBox: {
+                  
+                    border: "none",
+                  },
+                  chips: { // To change css chips(Selected options)
+                    background: "red"
+                    }
+                }}
+                onSelect={selectedTheme}
+                fluid
+                options={Options}
+                selection
+                singleSelect={true}
+                hidePlaceholder
+                displayValue="value"
+                selectedValues={tasks.theme.titre}
+              />
+          
+    
               
                 </div>
               ))}

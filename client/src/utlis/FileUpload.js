@@ -9,7 +9,7 @@ function FileUpload(props) {
   const arr = [];
   const [enablee, setUploadfilee] = useState(props.Enbale);
   const [loader, SetLoader] = useState(false);
-
+  const [endloader, SetEndLoader] = useState(true);
   useEffect(() => {
     if (props.upImg === 0) {
       if (props.listfile != null) {
@@ -51,27 +51,34 @@ function FileUpload(props) {
     setfd(formData);
    */
   };
+ 
   useEffect(async () => {
     // console.log(fd.getAll("files"));
-    if (props.Enbale) {
+    if (props.Enbale && endloader) {
       //save the Image we chose inside the Node Server
 
       //  console.log(fd.getAll("files"));
 
+    
       SetLoader(true);
-
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
-
+        console.log("fileeee heree");
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
+       
         (response) => {
-          if (response.data != null) {
+          
+          if (response.data) {
+            SetEndLoader(false)
+            console.log("fileeee heree111111111");
             SetLoader(false);
+           
           } else {
             alert("Failed to save the File in Server");
           }
         }
+     
       );
     }
   });

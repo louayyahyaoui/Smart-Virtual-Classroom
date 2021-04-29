@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 function ListUsers(props) {
   const listUsers = [{ key: Number, text: "", value: "" }];
@@ -18,14 +18,14 @@ function ListUsers(props) {
 
   return (
     <div>
-     
+     <Menu compact>
      <Dropdown
-    placeholder='Select Friend'
+    placeholder='List Participant'
   
     selection
     options={listUsers}
   />
-        
+        </Menu>
 
     </div>
   );

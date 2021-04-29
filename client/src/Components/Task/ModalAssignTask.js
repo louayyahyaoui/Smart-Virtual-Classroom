@@ -18,9 +18,7 @@ export default function ModalAssignTask(props) {
       
       
             dispatch(assignAfterSave(props.task));
-         
-       
-     
+
         
         setOpen(false);
     }
@@ -32,7 +30,7 @@ export default function ModalAssignTask(props) {
       onOpen={() => setOpen(true)}
       open={open}
       size='small'
-      trigger={<Button>Assign</Button>}
+      trigger={<Button negative>Assign</Button>}
     >
       <Header >
         <Icon name='archive' />
