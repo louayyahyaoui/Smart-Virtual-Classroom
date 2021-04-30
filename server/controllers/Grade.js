@@ -5,13 +5,16 @@ module.exports = {
   
   rendreTask : (req,res) =>{
 
-    const grade = req.body;
+    
+    const grade = new Grade(req.body);
   //  const newGrade = new Grade(grade);
     //console.log(grade.id)
     try {
-      Grade.findByIdAndUpdate(grade.id, grade, {
-        useFindAndModify: false,
-      }).then((grade) => res.json(grade));
+      Grade.findByIdAndUpdate({_id :grade._id} ,grade,
+        {
+          useFindAndModify: false,
+        }
+        ).then((grade) => res.json(grade));
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

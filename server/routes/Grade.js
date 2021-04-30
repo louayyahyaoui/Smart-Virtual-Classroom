@@ -8,7 +8,7 @@ router.get('/DetailByTaskByStudent/:id',getDetailByTaskByStudent);
 router.get('/listQuestion/:id',getListQuestionByTask);
 router.get('/',getTaskByStudent);
 router.put('/',assignGradeToStudent);
-router.put('/rendreTask/:id',rendreTask);
+router.put('/rendreTask/',rendreTask);
 router.post('/',addGrade);
 
  module.exports = router;
