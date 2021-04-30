@@ -18,16 +18,13 @@ import {
 import { useSelector } from "react-redux";
 import MultiSelect from "react-multi-select-component";
 
+const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
+
 export default function AddTask(props) {
-  const seances = useSelector((state) => state.seance.seance);
-  const [selectedSeance, setSelectedSeance] = useState(null);
-
-  const [theme, setTheme] = useState(props.data.theme);
-
-  const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  const [selected, setSelected] = useState([]);
-  const studentChosen = [];
   const seanceChosen = [];
+  const studentChosen =[] ;
+  const seances = useSelector((state) => state.seance.seance);
   currentClass.classUsers.forEach((element) => {
     studentChosen.push({ label: element.name, value: element });
   });
@@ -35,6 +32,16 @@ export default function AddTask(props) {
   seances.forEach((element) => {
     seanceChosen.push({ label: element.titre, value: element });
   });
+
+ 
+  const [selectedSeance, setSelectedSeance] = useState(null);
+
+  const [theme, setTheme] = useState(props.data.theme);
+
+ 
+  const [selected, setSelected] = useState([]);
+ 
+ 
 
   var step = 1;
 
