@@ -16,10 +16,6 @@ import {
 } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 
-const options = [
-  { key: 1, text: "Quiz", value: "Quiz" },
-  { key: 2, text: "File", value: "File" },
-];
 export default function AddTask(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const seances = useSelector((state) => state.seance.seance);

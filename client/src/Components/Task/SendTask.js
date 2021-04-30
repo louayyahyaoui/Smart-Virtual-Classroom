@@ -166,7 +166,9 @@ const updateImages = (newImages) => {
                       negative={quiz.foptionA !== quiz.correct_answer}
                     >
                       <Table.Cell>
-                        <Icon name="check circle" color="green" />
+                      {(     quiz.foptionA === quiz.correct_answer  ) ?
+                          (<Icon name="check circle" color="green" />): <></>
+                      }
                         {quiz.foptionA}
                       </Table.Cell>
                     </Table.Row>
@@ -174,19 +176,31 @@ const updateImages = (newImages) => {
                       positive={quiz.foptionB === quiz.correct_answer}
                       negative={quiz.foptionB !== quiz.correct_answer}
                     >
-                      <Table.Cell> {quiz.foptionB}</Table.Cell>
+                      <Table.Cell> 
+                      {(     quiz.foptionB === quiz.correct_answer  ) ?
+                          (<Icon name="check circle" color="green" />): <></>
+                      }
+                        {quiz.foptionB}</Table.Cell>
                     </Table.Row>
                     <Table.Row
                       positive={quiz.foptionC === quiz.correct_answer}
                       negative={quiz.foptionC !== quiz.correct_answer}
                     >
-                      <Table.Cell> {quiz.foptionC}</Table.Cell>
+                      <Table.Cell>
+                      {(     quiz.foptionC === quiz.correct_answer  ) ?
+                          (<Icon name="check circle" color="green" />): <></>
+                      }
+                         {quiz.foptionC}</Table.Cell>
                     </Table.Row>
                     <Table.Row
                       positive={quiz.foptionD === quiz.correct_answer}
                       negative={quiz.foptionD !== quiz.correct_answer}
                     >
-                      <Table.Cell> {quiz.foptionD}</Table.Cell>
+                      <Table.Cell>
+                      {(     quiz.foptionD === quiz.correct_answer  ) ?
+                          (<Icon name="check circle" color="green" />): <></>
+                      }
+                         {quiz.foptionD}</Table.Cell>
                     </Table.Row>
                   </Table.Body>
                 </Table>

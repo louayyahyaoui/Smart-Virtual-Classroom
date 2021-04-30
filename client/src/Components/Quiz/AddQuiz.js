@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Button, Form, Divider, Grid, Segment, Icon, Header } from "semantic-ui-react";
 import { v4 as uuidv4 } from "uuid";
-import { Multiselect } from "multiselect-react-dropdown";
+import Select from 'react-select';
 export default function AddQuiz(props) {
-  const Options = [{ value: "OPTION A" },
-  { value: "OPTION B" },
-  { value: "OPTION C" },
- { value: "OPTION D" }
+  const Options = [
+    { label: "OPTION A", value: "OPTION A" },
+    { label: "OPTION B", value: "OPTION B" },
+    { label: "OPTION C", value: "OPTION C" },
+    { label: "OPTION D", value: "OPTION D" },
 ];
+const [selected, setSelected] = useState(null);
   const [tasks, setTask] = useState({
     title: props.data.title,
     description: props.data.description,
@@ -33,30 +35,54 @@ export default function AddQuiz(props) {
     },
   ]);
 
-  /*const [quiz , setQuiz] = useState({
-        id : inputFields.id,
-        question : inputFields.fquestion,
-        optionA : inputFields.foptionA,
-        optionB : inputFields.foptionB,
-        optionC : inputFields.foptionC,
-        optionD : inputFields.foptionD,
-
-
-    })*/
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("InputFields", inputFields);
 
-    //dispatch(postQuiz(quiz));
   };
 
-  const handleChangeInput = (id, event) => {
+  const handleChangeSelect = (id,selectedOption) => {
+    console.log(id);
+    console.log(selectedOption);
     const newInputFields = inputFields.map((i) => {
+    
+      if (id === i.id) {
+        switch (selectedOption.value) {
+          case 'OPTION A':
+            i["correct_answer"] = i["foptionA"];
+            break;
+          case 'OPTION B':
+            i["correct_answer"] = i["foptionB"];
+            break;
+          case 'OPTION C':
+            i["correct_answer"] = i["foptionC"];
+            break;
+            case 'OPTION D':
+              i["correct_answer"] = i["foptionD"];
+              break;
+         
+        }
+       
+      }
+
+
+      return i;
+    });
+    console.log(newInputFields);
+    setInputFields(newInputFields);
+  };
+  const handleChangeInput = (id, event) => {
+   
+    console.log(id);
+    const newInputFields = inputFields.map((i) => {
+    
+
       if (id === i.id) {
         i[event.target.name] = event.target.value;
-        if (event.target.name === "foptionA")
-          i["correct_answer"] = event.target.value;
+       
       }
+
+
       return i;
     });
     console.log(newInputFields);
@@ -65,7 +91,12 @@ export default function AddQuiz(props) {
   const [theme, setTheme] = useState();
   const selectedTheme = (selectedList, selectedItem) => {
 
-    setTheme(selectedItem);
+    
+  //  inputFields[0]["correct_answer"] = selectedItem.value;
+    
+    
+    console.log(inputFields);
+    setInputFields(inputFields);
         
   };
   const handleAddFields = () => {
@@ -181,31 +212,18 @@ export default function AddQuiz(props) {
                     onChange={(event) =>
                       handleChangeInput(inputField.id, event)
                     }
+                    
                   />
-                <Header as="h5" icon="images outline" content="Select Correct Answer" />
-                <Multiselect
-              required
-                placeholder="Select seance"
-                style={{
-                  chips: { background: "red" },
-                  option: { color: "black" },
-                  searchBox: {
-                  
-                    border: "none",
-                  },
-                  chips: { // To change css chips(Selected options)
-                    background: "red"
-                    }
-                }}
-                onSelect={selectedTheme}
-                fluid
-                options={Options}
-                selection
-                singleSelect={true}
-                hidePlaceholder
-                displayValue="value"
-                selectedValues={tasks.theme.titre}
-              />
+                <Header as="h5" icon="check square outline" content={"The Correct Answer : "+inputField.correct_answer} /> 
+                <Select
+              
+        value={selected}
+        onChange={( selectedOption , event) =>
+          handleChangeSelect(inputField.id,selectedOption)  
+        }
+        options={Options}
+
+      />
           
     
               

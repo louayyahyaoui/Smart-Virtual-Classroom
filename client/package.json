@@ -47,6 +47,7 @@
     "react-loader-spinner": "^4.0.0",
     "react-media-recorder": "^1.4.0",
     "react-mentions": "^4.1.1",
+    "react-multi-select-component": "^4.0.1",
     "react-pdf": "^5.2.0",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.2",
