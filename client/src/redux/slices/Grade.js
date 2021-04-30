@@ -2,12 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const rendreTask = createAsyncThunk("Task/rendreTask", async (grade) => {
-  const { response } = await axios.put(
-    `https://closer-server.herokuapp.com/grade/rendreTask/${grade.id}`,
+  const promise = await axios.put(
+    `https://closer-server.herokuapp.com/grade/rendreTask/`,
     grade
-  );
+  ).then((response) => {
+    console.log(response);
+    const data = response.data;
+    console.log(data);
+    return data;
+  });
 
-  return response;
+const data = await promise;
+return data;
 });
 export const getDetailByTaskByStudent = createAsyncThunk(
   "Grade/getDetailByTaskByStudent",
@@ -96,7 +102,14 @@ export const gradeSlice = createSlice({
       state.status = "loading";
     },
     [rendreTask.fulfilled]: (state, action) => {
-      state.grades = action.payload;
+      const index = state.grades.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.grades[index] = action.payload;
+        state.status = "success";
+      }
+       
     },
     [rendreTask.rejected]: (state, action) => {
       state.status = "failed";
@@ -155,8 +168,8 @@ export const gradeSlice = createSlice({
       state.status = "loading";
     },
     [getDetailByTaskByStudent.fulfilled]: (state, action) => {
-      console.log( action.payload);
-      state.grade = action.payload;
+      //console.log( action.payload);
+      state.grades = action.payload;
       state.status = "success";
     },
     [getDetailByTaskByStudent.rejected]: (state, action) => {

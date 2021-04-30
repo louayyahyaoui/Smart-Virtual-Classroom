@@ -49,7 +49,11 @@ function App() {
             exact
             render={(props) => <Home {...props} />}
           />
-       
+         <Route
+              path="/TaskQuizDetail/:id"
+              exact
+              render={(props) => <Home {...props} />}
+            />
           <Route
             path="/TaskQuiz/:id"
             exact

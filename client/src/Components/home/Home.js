@@ -23,6 +23,7 @@ import MemberComponent from "../Class/MemberComponent";
 import PrivateRoute from "../../Routes/PrivateRoute";
 import Quiz from "../Quiz/Quiz";
 import QuestionByTags from "../question/QuestionByTags";
+import TaskQuizDetail from "../Task/TaskQuizDetail";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -82,10 +83,16 @@ function Home() {
               exact
               render={(props) => <DetailTask {...props} />}
             />
+            
             <Route
               path="/TaskFileDetail/:id"
               exact
               render={(props) => <TaskFileDetail {...props} />}
+            />
+              <Route
+              path="/TaskQuizDetail/:id"
+              exact
+              render={(props) => <TaskQuizDetail {...props} />}
             />
             <Route
               path="/seance/:titre/:id"
