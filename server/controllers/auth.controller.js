@@ -366,7 +366,7 @@ exports.googleController = (req, res) => {
             });
           } else {
             let password = email + process.env.JWT_SECRET;
-            user = new User({ name, email, password, picture, role });
+            user = new User({ name, email, password, picture });
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR GOOGLE LOGIN ON USER SAVE", err);
@@ -466,7 +466,7 @@ exports.facebookController = (req, res) => {
             });
           } else {
             let password = email + process.env.JWT_SECRET;
-            user = new User({ name, email, password, role });
+            user = new User({ name, email, password });
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR FACEBOOK LOGIN ON USER SAVE", err);
