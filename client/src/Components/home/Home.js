@@ -28,6 +28,7 @@ import TaskQuizDetail from "../Task/TaskQuizDetail";
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
   const [activeItem, setActiveItem] = useState();
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
@@ -83,13 +84,13 @@ function Home() {
               exact
               render={(props) => <DetailTask {...props} />}
             />
-            
+
             <Route
               path="/TaskFileDetail/:id"
               exact
               render={(props) => <TaskFileDetail {...props} />}
             />
-              <Route
+            <Route
               path="/TaskQuizDetail/:id"
               exact
               render={(props) => <TaskQuizDetail {...props} />}
@@ -122,7 +123,11 @@ function Home() {
               render={(props) => <TableCourses {...props} />}
             />
             <PrivateRoute path="/FAQ" exact component={QuestionComponent} />
-            <PrivateRoute path="/tags/:id/:tag" exact component={QuestionByTags} />
+            <PrivateRoute
+              path="/tags/:id/:tag"
+              exact
+              component={QuestionByTags}
+            />
             <PrivateRoute path="/FAQ/:id" exact component={DetailsQuestion} />
             <PrivateRoute path="/members" exact component={MemberComponent} />
           </Grid.Column>
