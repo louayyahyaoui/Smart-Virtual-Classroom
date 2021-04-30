@@ -259,21 +259,15 @@ export default function ModalTaskFile(props) {
      
         </Modal.Content>
      
-        <Button.Group floated="right">
-        <Button onClick={() => clicCancel()}>Cancel</Button>
-        <Confirm
-          header="Cancel Add "
-          content="Are you sure?"
-          open={cancel}
-          onCancel={clicCloseCancel}
-          onConfirm={clicConfirmCancel}
-        />
+       
+        <Modal.Actions>
      
         <Button
           color="red"
           type="submit"
           onClick={() => clicOpensave()}
           //onClick={onSubmitSaveTask}
+          floated="right"
         >
           Save
         </Button>
@@ -287,6 +281,7 @@ export default function ModalTaskFile(props) {
       
       
         <Button
+        floated="right"
           color="red"
           type="submit"
           // onClick={onSubmitAssignTask}
@@ -301,13 +296,22 @@ export default function ModalTaskFile(props) {
           open={open}
           onCancel={clicClose}
           onConfirm={clicConfirmAssign}
+          
         />
-      </Button.Group>
-     
-      <br/>
-      <br/>
-      <br/>
+        
+    <Button color="black" onClick={() => clicCancel()}>Back</Button>
+        <Confirm
+          header="Cancel Add "
+          content="Are you sure?"
+
+          open={cancel}
+          onCancel={clicCloseCancel}
+          onConfirm={clicConfirmCancel}
+        />
     
+    
+   
+    </Modal.Actions>
       </Modal>
         </div>
     )
