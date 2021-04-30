@@ -3,18 +3,13 @@ const Grade = require('../models/Grade.js');
 module.exports = { 
 
   
-  rendreTask : (req,res) =>{
+  rendreTask :  (req,res) =>{
 
-    
-    const grade = new Grade(req.body);
-  //  const newGrade = new Grade(grade);
-    //console.log(grade.id)
+   
     try {
-      Grade.findByIdAndUpdate({_id :grade._id} ,grade,
-        {
-          useFindAndModify: false,
-        }
-        ).then((grade) => res.json(grade));
+      Grade.findByIdAndUpdate(req.body._id, req.body, {
+        useFindAndModify: false,
+      }).then((grade) => res.json(grade));
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
