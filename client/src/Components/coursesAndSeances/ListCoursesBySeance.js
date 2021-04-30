@@ -17,6 +17,7 @@ import {
 } from "semantic-ui-react";
 import { RetrieveCoursesByIdSeance } from "../../redux/slices/Courses";
 import ModalCoursesEdit from "./ModalCoursesEdit";
+import QierPlayer from "qier-player";
 import ModalConfirmDeleteCourses from "./ModalConfirmDeleteCour";
 
 import { Link } from "react-router-dom";
@@ -263,22 +264,47 @@ function ListCoursesBySeance() {
                                       </div>
                                     </a>
                                   </div>
-                                ) : files.type === "audio/mpeg" ||
-                                  files.type === "video/mp4" ? (
+                                ) : files.type === "video/mp4" ? (
                                   <div>
                                     <Grid.Column width={3}>
-                                      <ReactPlayer
-                                        key={index}
-                                        width="250px"
-                                        height="100px"
-                                        controls={true}
-                                        url={files.url}
+                                      <QierPlayer
+                                        width={250}
+                                        height={100}
+                                        language="en"
+                                        themeColor="#000000"
+                                        srcOrigin={files.url}
                                       />
                                     </Grid.Column>
                                     <Grid.Column width={3}>
                                       <Grid.Row>
                                         <Header as="h4" color="red">
-                                          {files.originalname}
+                                          {files.originalname.slice(0, 7)}
+                                        </Header>
+                                      </Grid.Row>
+                                      <Grid.Row>
+                                        <Header as="h4" color="grey">
+                                          {files.type.slice(0, 7)} File
+                                        </Header>
+                                      </Grid.Row>
+                                    </Grid.Column>
+                                  </div>
+                                ) : files.type === "audio/mpeg" ? (
+                                  <div>
+                                    <Grid.Column width={3}>
+                                      <div className="player-wrapper">
+                                        <ReactPlayer
+                                          key={index}
+                                          width="250px"
+                                          height="100px"
+                                          controls={true}
+                                          url={files.url}
+                                        />
+                                      </div>
+                                    </Grid.Column>
+                                    <Grid.Column width={3}>
+                                      <Grid.Row>
+                                        <Header as="h4" color="red">
+                                          {files.originalname.slice(0, 7)}
                                         </Header>
                                       </Grid.Row>
                                       <Grid.Row>
