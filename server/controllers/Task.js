@@ -67,7 +67,7 @@ module.exports = {
   getDetailTaskStudens: (req, res, next) => {
     try {
       Grade.find({ task: req.params.id })
-
+      .populate("task")
         .populate("student")
 
         .then((grade) => res.json(grade));
