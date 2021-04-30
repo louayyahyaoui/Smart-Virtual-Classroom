@@ -11,6 +11,8 @@ export default function FormTask({task}) {
 
   const [Images, setImages] = useState([]);
   const [enableUpload, setEnableUpload] = useState(false);
+  const [successMessage, SetSuccessMessage] = useState("");
+  const [errorMessage, SetErrorMessage] = useState("");
 
   const [up, setUp] = useState(0);
 
@@ -69,15 +71,34 @@ export default function FormTask({task}) {
         setEnableUpload(true)
         console.log(values);
         const res = await dispatch(updateTask(values)).then(()=>{
-          dispatch(getTaskByTeacher({"idUser":task.creator,"idClass":task.cour}))
+          dispatch(getTaskByTeacher({"idUser":task.creator,"idClass":task.cour}));
+          SetSuccessMessage("Update Task successfully !")
       });
         } catch (error) {
+          SetErrorMessage("Semothing Wrrong Check Your Data Please  !")
           alert(error);
         }
       },
     });
     return (
         <div>
+          { successMessage ? ( <Message
+          success
+          color="green"
+          header="Nice one! 📒 📕 📚 📖"
+            content={successMessage}
+        />) : (<></>)}
+       
+       {errorMessage ? (
+          <Message
+          warning
+          color="yellow"
+          header="Woah! 😱 😨"
+          content={errorMessage}
+        
+        />
+       ) : (<></>)}
+       
              <Form  onSubmit={formik.handleSubmit}>
         <Form.Input
           label="Titre"
@@ -106,28 +127,20 @@ export default function FormTask({task}) {
          
                  
           
-            <Button type="submit" color="green" floated="right">
-          Save
-        </Button>
+       
         <FileUploadEdit
           refreshFunction={updateImages}
             listfile={task.listQuestion}  
-           // Enbale={enableUpload}
+            Enbale={enableUpload}
           />
-           </Form>
-        <Message
-          success
-          color="green"
-          header="Nice one! 📒 📕 📚 📖"
-            
-        />
-        <Message
-          warning
-          color="yellow"
-          header="Woah! 😱 😨"
+          <br/>
+               <Button type="submit" color="red" content="Update Task"  floated="right"  icon="checkmark" / >
         
-        />
-      
+           </Form>
+
+           <br/>
+        <br/>
+    
         <br /> {/* Yikes! Deal with Semantic UI React! */}
      
         </div>

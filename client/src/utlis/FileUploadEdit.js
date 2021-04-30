@@ -45,10 +45,10 @@ function FileUploadEdit(props) {
   };
   useEffect(async () => {
     console.log(fd.getAll("files"));
-    if (props.Enbale ) {
+    if (props.Enbale && endloader ) {
       //save the Image we chose inside the Node Server
 
-    //  SetLoader(true);
+      SetLoader(true);
       console.log(fd.getAll("files"));
       const config = {
         header: { "content-type": "multipart/form-data" },
@@ -57,9 +57,9 @@ function FileUploadEdit(props) {
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
           if (response.data) {
-          //  SetEndLoader(false)
+            SetEndLoader(false)
             console.log("fileeee heree111111111");
-          //  SetLoader(false);
+            SetLoader(false);
           } else {
             alert("Failed to save the File in Server");
           }

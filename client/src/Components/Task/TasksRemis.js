@@ -20,7 +20,7 @@ export default function TasksRemis(props) {
 </Segment> 
                    ) : (
                     props.remisGrades.map((task,index) =>
-                    task.taskStatus==="remis" ? (
+                    task.taskStatus==="Remis" ? (
                       <Link to={task.task.typeTask==="Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>  
                       <Segment color="grey" raised> 
                        <Item.Group divided key={index} >
