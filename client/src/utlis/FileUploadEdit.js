@@ -58,8 +58,9 @@ function FileUploadEdit(props) {
         (response) => {
           if (response.data) {
             SetEndLoader(false)
-            console.log("fileeee heree111111111");
-            SetLoader(false);
+            setImages([...Images, response.data]);
+            props.refreshFunction([...Images, response.data]);
+                        SetLoader(false);
           } else {
             alert("Failed to save the File in Server");
           }

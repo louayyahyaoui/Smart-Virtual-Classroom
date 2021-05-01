@@ -33,7 +33,6 @@ import { AddquestionsApi } from "../../api/api";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 
 export default function QuestionComponent(props) {
-  const socket = io(ENDPOINT);
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
@@ -42,11 +41,7 @@ export default function QuestionComponent(props) {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  useEffect(() => {
-    socket.on("new-question", (content) => {
-      dispatch(fetchQuestions(currentClass._id));
-    });
-  }, [ idd]);
+  
 
   const [enableUpload, setEnableUpload] = useState(false);
 

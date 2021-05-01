@@ -39,7 +39,7 @@ function FileUpload(props) {
 
       // console.log(formData.getAll("files"));
       arr.push(f.name);
-      props.refreshFunction(arr);
+        props.refreshFunction(arr);
     });
     fd = formData;
     setfd(formData);
@@ -51,7 +51,7 @@ function FileUpload(props) {
     setfd(formData);
    */
   };
- 
+
   useEffect(async () => {
     // console.log(fd.getAll("files"));
     if (props.Enbale && endloader) {
@@ -59,26 +59,23 @@ function FileUpload(props) {
 
       //  console.log(fd.getAll("files"));
 
-    
       SetLoader(true);
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
-        console.log("fileeee heree");
+      console.log("fileeee heree");
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
-       
         (response) => {
-          
           if (response.data) {
-            SetEndLoader(false)
-            console.log("fileeee heree111111111");
+            SetEndLoader(false);
+
+            setImages([...Images, response.data]);
+            props.refreshFunction([...Images, response.data]);
             SetLoader(false);
-           
           } else {
             alert("Failed to save the File in Server");
           }
         }
-     
       );
     }
   });
