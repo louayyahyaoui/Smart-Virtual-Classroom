@@ -6,7 +6,7 @@ let initialState = {
   active: [],
   request: [],
   invitationclass: [],
-  invitationclassId: [],
+  members: [],
   selectedclass: {},
   errors: "",
 };
@@ -30,8 +30,8 @@ const classlice = createSlice({
     getInvitationClass: (state, action) => {
       state.invitationclass = action.payload;
     },
-    getInvitationClassId: (state, action) => {
-      state.invitationclassId = action.payload;
+    getMembers: (state, action) => {
+      state.members = action.payload;
     },
     setErrors: (state, action) => {
       state.errors = action.payload;
@@ -76,13 +76,7 @@ export const fetchInvitationclass = (email) => async (dispatch) => {
    
   });
 };
-export const fetchInvitationclassId = (id) => async (dispatch) => {
-  const res = ClassInvitationApi.getClassInvitationClassId(id);
-  res.then((data) => {
-    dispatch(getInvitationClassId(data));
 
-  });
-};
 export const fetchSingleClass = (data) => async (dispatch) => { 
 
     dispatch(selectClass(data));
@@ -98,6 +92,14 @@ export const fetchRequestClass = (d) => async (dispatch) => {
   const res = ClassInvitationApi.CountRequestClass(d);
   res.then((data) => {
     dispatch(geRequest(data));
+  });
+};
+export const fetchInvitationclassId = (id) => async (dispatch) => {
+  const res = ClassInvitationApi.getClassInvitationClassId(id);
+  res.then((data) => {
+    dispatch(getMembers(data));
+    console.log(data);
+
   });
 };
 export const selectclass = (state) => {
@@ -116,13 +118,13 @@ export const selectactiveclass = (state) => {
 export const selectrequestclass = (state) => {
   return [state.classs.request, state.classs.errors];
 };
-export const selectrequestclassId = (state) => {
-  return [state.classs.invitationclassId, state.classs.errors];
+export const selectmembers = (state) => {
+  return [state.classs.members, state.classs.errors];
 };
 export const {
   getClasss,
   getInvitationClass,
-  getInvitationClassId,
+  getMembers,
   selectClass,
   setErrors,
   addClasss,

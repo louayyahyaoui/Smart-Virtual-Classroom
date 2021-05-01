@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Multiselect } from "multiselect-react-dropdown";
 import Select from "react-select";
@@ -25,9 +25,15 @@ import { AddquestionsApi } from "../../api/api";
 import { addQuestion } from "../../redux/slices/questionslice";
 import MultiSelect from "react-multi-select-component";
 
-const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
+
 export default function ModalTaskFile(props) {
+ 
+    const currentClass =JSON.parse(localStorage.getItem("idClass"));
   
+    //const [classCurr , setClassCurr] = useState([]);
+   // setClassCurr(currentClass.classUsers)
+  //const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const seances = useSelector((state) => state.seance.seance);
   const studentChosen = [];
   const seanceChosen = [];

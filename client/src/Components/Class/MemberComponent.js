@@ -12,19 +12,23 @@ import { AddclassApi, getclassApi,ClassInvitationApi } from "../../api/api";
 import {
   fetchclass,
   fetchInvitationclassId,
-  selectrequestclassId,
+  selectmembers,
 } from "../../redux/slices/classsline";
 import AddUserToClassComponent from "./AddUserToClassComponent";
 
 function MemberComponent() {
   const history = useHistory();
-  const [requestmembers, errr] = useSelector(selectrequestclassId);
+  
   const classinvit = JSON.parse(localStorage.getItem("idClass"));
   const documentData = JSON.parse(localStorage.getItem("user"));
+  const [members] = useSelector(selectmembers);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchInvitationclassId(classinvit._id));
   }, [dispatch]);
+  console.log(members);
+  setTimeout(()=>{},200);
   const Remove = async (idclass, email) => {
     try {
       const res = await AddclassApi.removeUserFromClass(idclass, email);
@@ -34,18 +38,19 @@ function MemberComponent() {
       dispatch(fetchclass(documentData.role, documentData._id));
       history.push("/members");
     } catch (error) {
-      alert(error);
+     console.log(error);
     }
   };
-  /*const RemoveInvitation = async (idq) => {
+
+  const RemoveInvitation = async (idq) => {
     try {
       const res = await ClassInvitationApi.deleteClassInvitation(idq);
       dispatch(fetchInvitationclassId(classinvit._id));
-
     } catch (error) {
       alert(error);
     }
-  };*/
+  };
+
   return (
     <div>
       {classinvit.classOwner._id === documentData._id && (
@@ -89,21 +94,14 @@ function MemberComponent() {
           </Header.Subheader>
         </div>
       </Segment>
-     
-    </div>
-  );
-}
-
-export default MemberComponent;
-/*
- <Header as="h2" icon textAlign="center">
+      <Header as="h2" icon textAlign="center">
         <Icon name="add user" size="big" />
         Pending Accounts
       </Header>
       <Segment raised color="orange">
         <div>
           <Header.Subheader>
-            {requestmembers.userOb?.map((co, i) => (
+            {members?.map((co, i) => (
               <div key={i}>
                 <Grid stackable>
                   <Grid.Row>
@@ -111,16 +109,32 @@ export default MemberComponent;
                       <Image
                         circular
                         size="mini"
-                        src={co.picture}
+                        src={co.userOb.picture}
                       />
                     </Grid.Column>
-                    <Grid.Column width={14}>{co.name}</Grid.Column>
-                    <Grid.Column width={1}> 
+                    <Grid.Column width={14}>{co.userOb.name}</Grid.Column>
+                    <Grid.Column width={1}>
+                    {classinvit.classOwner._id === documentData._id ? (
+                        <Icon
+                          name="delete"
+                          size="tiny"
+                          link
+                          onClick={() => RemoveInvitation(co._id)}
+                        />
+                      ) : (
+                        <></>
+                      )}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
               </div>
+          
             ))}
           </Header.Subheader>
         </div>
-      </Segment>*/
+      </Segment>
+    </div>
+  );
+}
+
+export default MemberComponent;
