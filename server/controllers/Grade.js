@@ -3,13 +3,11 @@ const Grade = require('../models/Grade.js');
 module.exports = { 
 
   
-  rendreTask : (req,res) =>{
+  rendreTask :  (req,res) =>{
 
-    const grade = req.body;
-  //  const newGrade = new Grade(grade);
-    //console.log(grade.id)
+   
     try {
-      Grade.findByIdAndUpdate(grade.id, grade, {
+      Grade.findByIdAndUpdate(req.body._id, req.body, {
         useFindAndModify: false,
       }).then((grade) => res.json(grade));
     } catch (error) {
@@ -50,7 +48,7 @@ module.exports = {
 console.log(newGrade);
     try {
             
-        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "remis",$push :{listReponse : newGrade.listReponse}})   
+        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "Remis",$push :{listReponse : newGrade.listReponse}})   
         .then((grade)=>res.json(grade));
  
      } catch (error) {
