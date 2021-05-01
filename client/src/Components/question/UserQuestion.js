@@ -273,7 +273,7 @@ const morQuestion =  (nb) => {
         </Segment>
       ))}
      {enableLoadMore &&(
-          <Segment textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
+          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
 
      )}
 

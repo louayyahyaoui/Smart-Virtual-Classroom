@@ -577,7 +577,7 @@ updateImages(null);
                 </Comment.Group>
               ))}
               {enableLoadMore && (
-                <Segment textAlign="center" onClick={() => morQuestion(5)}>
+                <Segment raised color="grey" textAlign="center" onClick={() => morQuestion(5)}>
                   Load more.
                 </Segment>
               )}

@@ -41,8 +41,6 @@ export default function QuestionComponent(props) {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  
-
   const [enableUpload, setEnableUpload] = useState(false);
 
   const documentData = JSON.parse(localStorage.getItem("user"));
@@ -67,17 +65,32 @@ export default function QuestionComponent(props) {
     }
   };
   const [filtrequestion, setfilterQuestionbyUser] = useState(false);
-
+  const [loadmore, setloadmore] = useState(5)
+  const [enableLoadMore, setenableLoadMore] = useState(true)
+  const morQuestion =  (nb) => {
+        setloadmore(loadmore +5)
+        console.log(questions.length)
+        if(questions.length-loadmore<=0 )
+        {
+          setenableLoadMore(false)
+        }
+    };
   return (
     <Container fluid>
       <AddQuestion floated="right" />
-<Link to="/MyPosts">
-      <Label as='a' color='grey' image style={{marginLeft:"60%",height:"34px"}} onClick={(()=>setfilterQuestionbyUser(true))}>
-      <img src={isAuth().picture}  />
-      Your
-      <Label.Detail>Posts</Label.Detail>
-    </Label>
-    </Link>
+      <Link to="/MyPosts">
+        <Label
+          as="a"
+          color="grey"
+          image
+          style={{ marginLeft: "60%", height: "34px" }}
+          onClick={() => setfilterQuestionbyUser(true)}
+        >
+          <img src={isAuth().picture} />
+          Your
+          <Label.Detail>Posts</Label.Detail>
+        </Label>
+      </Link>
       {Number(questions.length) === 0 && (
         <Segment raised color="black" size="huge">
           <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
@@ -86,7 +99,7 @@ export default function QuestionComponent(props) {
         </Segment>
       )}
 
-      {questions.map((question, index) => (
+      {questions.slice(0,loadmore).map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
             <Dropdown floated="right" icon="ellipsis vertical">
@@ -263,14 +276,19 @@ export default function QuestionComponent(props) {
               </Link>
             ))}
           </div>
-          <Header dividing as="h3" style={{ marginLeft: "2%" }}>
-          </Header>
+          <Header dividing as="h3" style={{ marginLeft: "2%" }}></Header>
           <Segment inverted color="red">
             <Link to={"/FAQ/" + question._id} style={{ color: "white" }}>
               <h6 style={{ textAlign: "center" }}>See more</h6>
             </Link>
           </Segment>
+          {enableLoadMore &&(
+          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
+
+     )}
+
         </Segment>
+        
       ))}
     </Container>
   );
