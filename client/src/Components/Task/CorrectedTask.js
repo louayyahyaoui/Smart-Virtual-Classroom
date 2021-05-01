@@ -155,7 +155,12 @@ export default function CorrectedTask(props) {
                         </List>
                       </Feed.Extra>
         
+                      <Label   color="red" icon>
+        <Icon name='clipboard check' />
+                              <Label.Detail>{task.grade}</Label.Detail>
         
+       
+      </Label>
         </>) : (<> <h5>Quiz</h5>  <br/>   <Label   color="red" icon>
         <Icon name='clipboard check' />
                               <Label.Detail>{task.grade}</Label.Detail>
