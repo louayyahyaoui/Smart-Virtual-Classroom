@@ -25,7 +25,7 @@ module.exports = {
     try {
       res.status(200).json(
         await InvitationClassModel.find({
-         "classOb._id": mongoose.Types.ObjectId(req.params.id),
+         classOb: mongoose.Types.ObjectId(req.params.id),
         })
           .populate({
             path: "classOb",
