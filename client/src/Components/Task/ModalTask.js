@@ -68,7 +68,7 @@ export default function ModalTask({task}) {
           console.log(Images);
           if(Images.length !==0 )
          { values.listReponse = Images;
-          alert("images : here : "+values.listReponse);
+          
         }
         else{
           values.listReponse = task.listReponse;
@@ -76,7 +76,8 @@ export default function ModalTask({task}) {
         setEnableUpload(true)
         console.log(values);
         const res = await dispatch(rendreTask(values)).then(()=>{
-          dispatch(getDetailByTaskByStudent(task._id))
+
+          dispatch(getDetailByTaskByStudent(task._id));
 
           setEnableUpload(false)
         });
@@ -94,7 +95,7 @@ export default function ModalTask({task}) {
 
 useEffect(() => {
   dispatch(getDetailByTaskByStudent(task._id));
-}, [])
+}, [task._id])
 
   return (
     <div>
@@ -108,11 +109,11 @@ useEffect(() => {
         size="tiny"
         trigger={
           <div className='ui two buttons'>
-          <Button 
+          <Button  color="red" fluid floated
           icon="cloud upload"
           >
             <Icon name="cloud upload"></Icon>
-              upload File
+              { task.taskStatus === "Remis" ? ( <> update Task </>) : ( <> Rendre Task </> ) }
             </Button>
             </div>
          
@@ -123,7 +124,7 @@ useEffect(() => {
           <Modal.Description>
           <Form  onSubmit={formik.handleSubmit}>
          
-        { task.listReponse ? ( 
+        { task.taskStatus ==="Remis"  ? ( 
     <FileUploadEdit
     refreshFunction={updateImages}
     listfile={ task.listReponse}  

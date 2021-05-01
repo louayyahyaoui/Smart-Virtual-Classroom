@@ -18,6 +18,7 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { getDetailByTaskByStudent, rendreTask } from "../../redux/slices/Grade";
+import CommentComponent from "../Comment/CommentComponent";
 import ModalTask from "./ModalTask";
 
 export default function TaskQuizDetail() {
@@ -87,7 +88,7 @@ const [openModal , setOpenModal] = useState(false);
                     <Container>
                       <p>{task.task.description}</p>
                     </Container>
-                  
+                    <CommentComponent taskID={task._id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>
@@ -123,7 +124,7 @@ const [openModal , setOpenModal] = useState(false);
         ( task.taskStatus === "Remis" ? (
         (
         <Link to={"/Result/"+task._id}><Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"View Quiz"} /> </Link>)
-        
+
         ) : ( <Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"Start Quiz"} /> ) )
       }
         dimmer="inverted"

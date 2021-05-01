@@ -209,7 +209,7 @@ export default function UncorrectedTask(props) {
 onChange={(e) => submitGrade(e , task._id)}
 
 
-/><Button color="red" onClick={()=>assignGrade()} >Send</Button>
+/><Button color="red" floated onClick={()=>assignGrade()} >Send</Button>
     
     </Card.Content>
   </Card>

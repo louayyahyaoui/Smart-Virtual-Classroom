@@ -5,12 +5,15 @@ import { Divider, Grid, Header, Icon, Image, Message, Segment, Table } from 'sem
 import { getDetailByTaskByStudent } from '../../redux/slices/Grade';
 
 export default function EndQuiz() {
-
+let pts = 0;
 const task = useSelector((state) => state.grades.grades);
 const [finalTask , setFinalTask] = useState(task);
 const { id } = useParams();
     const  dispatch = useDispatch();
     console.log();
+    finalTask[0].task.listQuestion.forEach((element) => {
+       pts+=  parseInt(element.fpoint);
+    });
    
   useEffect(() => {
 
@@ -30,12 +33,24 @@ const { id } = useParams();
         
        
         
-          <Image centered src={process.env.PUBLIC_URL + "/Certification.png"} />
+        
     
-    
-    <p>
-      Congrats {finalTask[0].student.name} you have ben passed the Quiz.
+    { (finalTask[0].grade * 100 / pts) > 70 ? (<>
+  <Image centered src={process.env.PUBLIC_URL + "/Certification.png"} />
+<p>
+Congrats {finalTask[0].student.name} you have ben passed the Quiz  {finalTask[0].grade} / {pts}.
+</p>
+</>
+    ) : (
+      <>
+      <Image centered src={process.env.PUBLIC_URL + "/failedQuiz.jpg"} />
+      <p>
+      Sorry {finalTask[0].student.name} next Time .  {finalTask[0].grade} / {pts}.
     </p>
+    </>
+
+    ) }
+   
     
     <Divider horizontal>
       <Header as='h4'>
