@@ -1,11 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone-uploader";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Dropdown,
   Feed,
+  Form,
   Grid,
   Header,
   Icon,
@@ -13,56 +14,87 @@ import {
   List,
   Modal,
 } from "semantic-ui-react";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import FileUploadEdit from "../../utlis/FileUploadEdit";
 import { isAuth } from "../../helpers/auth";
-import { DeleteResources, UpdateResources, uploadFile } from "../../redux/slices/Task";
+import {  getDetailByTaskByStudent, rendreTask } from "../../redux/slices/Grade";
 import { UpdateProfilePicture } from "../../redux/slices/User";
+import FileUpload from "../../utlis/FileUpload";
 
-export default function ModalTask(props) {
-  const Resources = useSelector((state) => state.tasks.files);
+export default function ModalTask({task}) {
+  
 
-  const [open, setOpen] = React.useState(false);
-  const [picture, setPicture] = React.useState([]);
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
 
+  const [Images, setImages] = useState([]);
+  const [enableUpload, setEnableUpload] = useState(false);
+
+  
+
+  const updateImages = (newImages) => {
+    if (newImages === null) {
+      task.listReponse.forEach((element) => {
+        setImages(element);
+        
+      });
+    } else {
+      setImages(Images.concat(newImages));
+    }
+  };
+
+    
+
+
+    const formik = useFormik({
+      initialValues: {
+        _id : task._id,
+        grade: task.grade,
+        taskStatus: "Remis",
+      student : task.student,
+       task: task.task,
+        listReponse: [],
+      
+
+      },
+  
+  
+      onSubmit: async (values) => {
+       
+        try {
+          console.log("cc");
+          console.log(Images);
+          if(Images.length !==0 )
+         { values.listReponse = Images;
+          alert("images : here : "+values.listReponse);
+        }
+        else{
+          values.listReponse = task.listReponse;
+        }
+        setEnableUpload(true)
+        console.log(values);
+        const res = await dispatch(rendreTask(values)).then(()=>{
+          dispatch(getDetailByTaskByStudent(task._id))
+
+          setEnableUpload(false)
+        });
+        } catch (error) {
+          alert(error);
+        }
+      },
+    });
   const closeModel = () => {
   
-   
+    dispatch(getDetailByTaskByStudent(task._id));
    
     setOpen(false);
   };
-  const handleChangeStatus = async ({ meta, file }, status) => {
-   // console.log(status, meta, file);
 
-if(status === "done") {
-//setPicture(picture.concat(file))
-var formData = new FormData();
-
-formData.append("listQuestion", file);
-
-  
-      dispatch(uploadFile(formData));
-  
-       
-     //  console.log(file);
- 
-      }
-      
-  };
-
-  const handleRemoveUpload = (e, res) => {
-   
-
-   // console.log(res);
-    dispatch(DeleteResources(res));
-  //  console.log("Trigger remove photo");
-    //console.log(Resources);
-  };
-
-  const Preview = ({ meta }) => {
-    const { name, percent, status } = meta;
-    return <span></span>;
-  };
-
+useEffect(() => {
+  dispatch(getDetailByTaskByStudent(task._id));
+}, [])
 
   return (
     <div>
@@ -73,6 +105,7 @@ formData.append("listQuestion", file);
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
+        size="tiny"
         trigger={
           <div className='ui two buttons'>
           <Button 
@@ -85,96 +118,43 @@ formData.append("listQuestion", file);
          
         }
       >
-        <Modal.Header>Select a Photo</Modal.Header>
+        <Modal.Header>Upload Your File Here </Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            
-            <Dropzone
-          inputContent="Drop Files here or click to choose ..."
-          onChangeStatus={handleChangeStatus}
-          canCancel={false}
-          canRemove={false}
-          canRestart={false}
-          PreviewComponent={Preview}
+          <Form  onSubmit={formik.handleSubmit}>
+         
+        { task.listReponse ? ( 
+    <FileUploadEdit
+    refreshFunction={updateImages}
+    listfile={ task.listReponse}  
+    Enbale={enableUpload}
+  />
+
+        ) : (
+
+          <FileUpload
+          refreshFunction={updateImages}
+          listfile={ null}  
+          Enbale={enableUpload}
         />
-  <Grid>
-          <Grid.Row>
-            <Grid.Column width={2}></Grid.Column>
-            <Grid.Column width={12}>
-              <List divided verticalAlign="middle">
-
-                {Resources.map((files, index) => (
-                  <List.Item>
-                    <List.Content floated="right">
-                      <Button
-                        circular
-                        size="small"
-                        color="red"
-                        icon="trash"
-                        onClick={(e) => {
-                          handleRemoveUpload(e, files[0]);
-                        }}
-                      ></Button>
-                    </List.Content>
-                    {files[0].split(".").pop() === "png" ||
-                    files[0].split(".").pop() === "jpg" ||
-                    files[0].split(".").pop() === "jpeg" ||
-                    files[0].split(".").pop() === "gif" ? (
-                      <Image src={files[0]} rounded size="mini" />
-                    ) : files[0].split(".").pop() === "pdf" ||
-                    files[0].split(".").pop() === "docx" ||
-                    files[0].split(".").pop() === "pptx" ||
-                    files[0].split(".").pop() === "mp4" ||
-                    files[0].split(".").pop() === "mp3" ? (
-                      <Image
-                        rounded
-                        size="mini"
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/files-type/" +
-                          files[0].split(".").pop() +
-                          ".png"
-                        }
-                      />
-                    ) : (
-                      <Image
-                        rounded
-                        size="mini"
-                        src={
-                          process.env.PUBLIC_URL + "/files-type/" + "noFile.png"
-                        }
-                      />
-                    )}
-
-                    <List.Content>
-                      <Header as="h4" color="red">
-                        {files[0].split(".").pop()}
-                      </Header>
-                      <highlight>
-                        <strong>{files[0].split("-").pop()}</strong>
-                      </highlight>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-            </Grid.Column>
-            <Grid.Column width={2}></Grid.Column>
-          </Grid.Row>
-        </Grid>
+        )}
+         <Button type="submit" color="green" floated="right"   icon="checkmark">
+          Upload File
+        </Button>
+</Form>
           </Modal.Description>
         </Modal.Content>
+        <br/>
+        <br/>
         <Modal.Actions>
           <Button color="black" onClick={() => setOpen(false)}>
-            Discard
+            Back To Task
           </Button>
-          <Button
-            content="Yep, Save"
-            labelPosition="right"
-            icon="checkmark"
-            onClick={closeModel}
-            color="red"
-          />
+        
+             <br></br>
+        
         </Modal.Actions>
+     
       </Modal>
    
       

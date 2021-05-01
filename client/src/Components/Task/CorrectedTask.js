@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, Header, Icon, Image, Input, Label, Segment } from 'semantic-ui-react'
+import { Button, Card, Feed, Header, Icon, Image, Input, Label, List, Segment } from 'semantic-ui-react'
 import { getCorrectedTask, getDetailTask } from '../../redux/slices/Task'
 
 export default function CorrectedTask(props) {
@@ -33,7 +33,130 @@ export default function CorrectedTask(props) {
     
     </Card.Meta>
         <Card.Description>
-       <strong>File </strong>
+        { task.task.typeTask === "File" ?  (<>
+          <Feed.Extra images style={{ display: "flex" }}>
+                        <List horizontal>
+                          {task.listReponse.map((file, index) => (
+                            <List.Item key={index}>
+                            {(() => {
+                              switch (file.split(".").pop()) {
+                                case "pdf":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      {" "}
+                                      <Icon name="file pdf" color="red" size="huge" />
+                                    </a>
+                                  );
+                                case "docx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="file word" color="blue" size="huge" />
+                                    </a>
+                                  );
+                                case "pptx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon
+                                        name="file powerpoint"
+                                        color="red"
+                                        size="huge"
+                                      />
+                                    </a>
+                                  );
+                                case "xlsx":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon
+                                        name="file excel outline"
+                                        color="green"
+                                        size="huge"
+                                      />
+                                    </a>
+                                  );
+                                case "zip":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="zip" size="huge" />
+                                    </a>
+                                  );
+                                case "js":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="js" color="yellow" size="huge" />
+                                    </a>
+                                  );
+                                case "php":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="zip" color="blue" size="huge" />
+                                    </a>
+                                  );
+                                case "txt":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                      <Icon name="file text" size="huge" color="blue" />
+                                    </a>
+                                  );
+          
+                                case "jpg":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+                                case "jpeg":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+                                case "png":
+                                  return (
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+          
+                                    <img
+                                      style={{
+                                        minWidth: "50px",
+                                        width: "50px",
+                                        height: "50px",
+                                      }}
+                                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                      alt={`scan`}
+                                    />
+                                    </a>
+                                  );
+          
+                                default:
+                                  return <Icon name="File" color="Black" size="huge" />;
+                              }
+                            })()}
+          
+                            <p>{file.split("_").pop()}</p>
+                          </List.Item>
+                          ))}
+                        </List>
+                      </Feed.Extra>
+        
+        
+        </>) : (<> Quiz </>)}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
@@ -47,7 +170,7 @@ export default function CorrectedTask(props) {
     </Card>
              ) : (
              
-             <>Vide</>
+             <></>
              
              )))}
   </Card.Group>

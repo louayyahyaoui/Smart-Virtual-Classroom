@@ -15,28 +15,41 @@ import {
   Label,
   Modal,
   Confirm,
+  Header,
 } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuth } from "../../helpers/auth";
 import FileUpload from "../../utlis/FileUpload";
-import { assignTask, postTasks } from "../../redux/slices/Task";
+import { assignTask, getTaskByTeacher, postTasks } from "../../redux/slices/Task";
 import { AddquestionsApi } from "../../api/api";
 import { addQuestion } from "../../redux/slices/questionslice";
+import MultiSelect from "react-multi-select-component";
 
+const currentClass = JSON.parse(localStorage.getItem("idClass"));
 export default function ModalTaskFile(props) {
-
+  
+  const seances = useSelector((state) => state.seance.seance);
+  const studentChosen = [];
+  const seanceChosen = [];
+ 
+  currentClass.classUsers.forEach((element) => {
+    studentChosen.push({ label: element.name, value: element });
+  });
+  seances.forEach((element) => {
+    seanceChosen.push({ label: element.titre, value: element });
+  });
     const [cancel, setCancel] = useState(false);
     const [open, setOpen] = useState(false);
     const [opensave, setOpensave] = useState(false);
   
     const [close, setClose] = useState(false);
-    const currentClass = JSON.parse(localStorage.getItem("idClass"));
-    const seances = useSelector((state) => state.seance.seance);
-    const [studentChosen] = useState(currentClass.classUsers);
+   
+   
+ 
+    const [selectedSeance, setSelectedSeance] = useState(null);
+    
 
-    const [listStud , setListStud] = useState([]);
-
-    const [theme, setTheme] = useState([]);
+    const [selected, setSelected] = useState([]);
    
     const [tasks , setTask] = useState({
    
@@ -45,6 +58,7 @@ export default function ModalTaskFile(props) {
         theme : "",
         cour : currentClass._id,
         typeTask : "File",
+   
         listQuestion : [],
         listStudents : [],
         endDate : null,
@@ -52,6 +66,12 @@ export default function ModalTaskFile(props) {
      
     });
 
+    const taskDetail={
+      "idUser":isAuth()._id,
+      "idClass" : currentClass._id,
+      
+    }
+  
     const  dispatch = useDispatch();
     const clicCancel = () => {
       setCancel(true);
@@ -68,21 +88,49 @@ export default function ModalTaskFile(props) {
      setCancel(false);
     };
     const clicConfirm = () => {
-      setTask(...tasks.theme = theme._id);
-      setTask(...tasks.listStudents = listStud);
+
+     setTask(
+        selected.forEach((itemselect) => {
+          const index = tasks.listStudents.findIndex(
+            (item) => item._id === itemselect.value._id
+          );
+          if (index !== -1) {
+            tasks.listStudents[index] = itemselect.value;
+          }
+          tasks.listStudents.push(  itemselect.value);
+        })
+      );
+      console.log(selectedSeance);
+      setTask(tasks.theme = selectedSeance.value);
+     // setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
       setEnableUpload(true);
-      dispatch(postTasks(tasks));
+      dispatch(postTasks(tasks)).then(()=>{
+        dispatch(getTaskByTeacher(taskDetail));
+      });
      
     
       setOpensave(false);
     };
     const clicConfirmAssign = () => {
-      setTask(...tasks.theme = theme._id);
-      setTask(...tasks.listStudents = listStud);
+      setTask(
+        selected.forEach((itemselect) => {
+          const index = tasks.listStudents.findIndex(
+            (item) => item._id === itemselect.value._id
+          );
+          if (index !== -1) {
+            tasks.listStudents[index] = itemselect.value;
+          }
+          tasks.listStudents.push(  itemselect.value);
+        })
+      );
+      setTask(tasks.theme = selectedSeance.value);
+     // setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
       setEnableUpload(true);
-      dispatch(assignTask(tasks));
+      dispatch(assignTask(tasks)).then(()=>{
+        dispatch(getTaskByTeacher(taskDetail));
+      });;
     
       setOpen(false);
     };
@@ -96,7 +144,7 @@ export default function ModalTaskFile(props) {
       setCancel(false);
     };
 
-      const event = (selectedList) => {
+    /*  const event = (selectedList) => {
         //prop(tasks);
 
         setTask(...tasks.theme = theme._id);
@@ -129,7 +177,7 @@ export default function ModalTaskFile(props) {
        
        setTheme(selectedItem);
   
-      };
+      };*/
       const [enableUpload, setEnableUpload] = useState(false);
       const [Images, setImages] = useState([]);
       const updateImages = (newImages) => {
@@ -188,83 +236,52 @@ export default function ModalTaskFile(props) {
               </Form>
             </Grid.Column>
             <Grid.Column width={6}>
-              <label>For : </label>
-              <Multiselect
-              required
-                placeholder="Select seance"
-                style={{
-                  chips: { background: "red" },
-                  option: { color: "black" },
-                  searchBox: {
-                  
-                    border: "none",
-                  },
-                  chips: { // To change css chips(Selected options)
-                    background: "red"
-                    }
-                }}
-                onSelect={selectedTheme}
-                fluid
-                options={seances}
-                selection
-                singleSelect={true}
-                hidePlaceholder
-                displayValue="titre"
-              
+            <Header
+                as="h5"
+                icon="check square outline"
+                content={"Choose Theme  "}
               />
-              <br/>
-              <Form.Field required>
-                           <label>For : </label>
-              <Multiselect
-                placeholder="Select Student"
-                style={{
-                  chips: { background: "red" },
-                  option: { color: "black" },
-                  searchBox: {
-                    // To change search box element look
-                    border: "none",
-                  },
-                  chips: { // To change css chips(Selected options)
-                    background: "red"
-                    }
-                }}
-                loadingMessage
-                showArrow
-                fluid
-                selection
-                multiple
-                displayValue="name"
-                options={studentChosen}
-                selectedValues={tasks.listStudents}
-                onSelect={onSelect}
-                onRemove={onRemove}
-                hidePlaceholder
+              <Select
+               options={seanceChosen}
+                value={selectedSeance}
+                onChange={setSelectedSeance}
+               
               />
-              </Form.Field>
+        
+              <Header
+                as="h5"
+                icon="check square outline"
+                content={" For Student  "}
+              />
+            
+               
+                <MultiSelect
+                  options={studentChosen}
+                  value={selected}
+                  onChange={setSelected}
+                  labelledBy="Select"
+                />
+            
             </Grid.Column>
           </Grid.Row>
         </Grid>
+
+               
         <FileUpload refreshFunction={updateImages} listfile={null} Enbale={enableUpload}/>
       
       
      
         </Modal.Content>
+     
+       
         <Modal.Actions>
-        <Button.Group floated="right">
-        <Button onClick={() => clicCancel()}>Cancel</Button>
-        <Confirm
-          header="Cancel Add "
-          content="Are you sure?"
-          open={cancel}
-          onCancel={clicCloseCancel}
-          onConfirm={clicConfirmCancel}
-        />
-        <Button.Or />
+     
         <Button
           color="red"
           type="submit"
           onClick={() => clicOpensave()}
           //onClick={onSubmitSaveTask}
+          floated="right"
         >
           Save
         </Button>
@@ -275,9 +292,10 @@ export default function ModalTaskFile(props) {
           onCancel={clicClosesave}
           onConfirm={clicConfirm}
         />
-        <Button.Or />
+      
       
         <Button
+        floated="right"
           color="red"
           type="submit"
           // onClick={onSubmitAssignTask}
@@ -292,11 +310,22 @@ export default function ModalTaskFile(props) {
           open={open}
           onCancel={clicClose}
           onConfirm={clicConfirmAssign}
+          
         />
-      </Button.Group>
-     
-        </Modal.Actions>
-       
+        
+    <Button color="black" onClick={() => clicCancel()}>Back</Button>
+        <Confirm
+          header="Cancel Add "
+          content="Are you sure?"
+
+          open={cancel}
+          onCancel={clicCloseCancel}
+          onConfirm={clicConfirmCancel}
+        />
+    
+    
+   
+    </Modal.Actions>
       </Modal>
         </div>
     )

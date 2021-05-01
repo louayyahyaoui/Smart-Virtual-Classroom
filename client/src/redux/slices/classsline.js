@@ -6,6 +6,7 @@ let initialState = {
   active: [],
   request: [],
   invitationclass: [],
+  invitationclassId: [],
   selectedclass: {},
   errors: "",
 };
@@ -28,6 +29,9 @@ const classlice = createSlice({
     },
     getInvitationClass: (state, action) => {
       state.invitationclass = action.payload;
+    },
+    getInvitationClassId: (state, action) => {
+      state.invitationclassId = action.payload;
     },
     setErrors: (state, action) => {
       state.errors = action.payload;
@@ -56,13 +60,12 @@ export const fetchclass = (role, iduser) => async (dispatch) => {
     const res = getclassApi.getclassByLevel(iduser);
     res.then((data) => {
       dispatch(getClasss(data));
-      console.log(data);
     });
   } else if (role === "Student") {
     const res = getclassApi.getclassByYear(iduser);
     res.then((data) => {
       dispatch(getClasss(data));
-      console.log(data);
+     
     });
   }
 };
@@ -70,7 +73,14 @@ export const fetchInvitationclass = (email) => async (dispatch) => {
   const res = ClassInvitationApi.getClassInvitation(email);
   res.then((data) => {
     dispatch(getInvitationClass(data));
-    console.log(data);
+   
+  });
+};
+export const fetchInvitationclassId = (id) => async (dispatch) => {
+  const res = ClassInvitationApi.getClassInvitationClassId(id);
+  res.then((data) => {
+    dispatch(getInvitationClassId(data));
+
   });
 };
 export const fetchSingleClass = (data) => async (dispatch) => { 
@@ -81,14 +91,13 @@ export const fetchActiveClass = (d) => async (dispatch) => {
   const res = getclassApi.CountActiveClass(d);
   res.then((data) => {
     dispatch(getActive(data));
-    console.log(data);
+    
   });
 };
 export const fetchRequestClass = (d) => async (dispatch) => { 
   const res = ClassInvitationApi.CountRequestClass(d);
   res.then((data) => {
     dispatch(geRequest(data));
-    console.log(data);
   });
 };
 export const selectclass = (state) => {
@@ -107,9 +116,13 @@ export const selectactiveclass = (state) => {
 export const selectrequestclass = (state) => {
   return [state.classs.request, state.classs.errors];
 };
+export const selectrequestclassId = (state) => {
+  return [state.classs.invitationclassId, state.classs.errors];
+};
 export const {
   getClasss,
   getInvitationClass,
+  getInvitationClassId,
   selectClass,
   setErrors,
   addClasss,

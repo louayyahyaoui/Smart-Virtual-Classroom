@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Divider, Grid, Header, Icon, Image, Message, Segment, Table } from 'semantic-ui-react';
@@ -6,13 +6,19 @@ import { getDetailByTaskByStudent } from '../../redux/slices/Grade';
 
 export default function EndQuiz() {
 
-const task = useSelector((state) => state.grades.grade)
-
+const task = useSelector((state) => state.grades.grades);
+const [finalTask , setFinalTask] = useState(task);
+const { id } = useParams();
     const  dispatch = useDispatch();
+    console.log();
    
   useEffect(() => {
 
-    //  dispatch(getDetailByTaskByStudent("60838f24aa6cf03c78b27b19"))
+    dispatch(getDetailByTaskByStudent(id)).then((response)=>{
+     
+      console.log(response);
+      setFinalTask(response.payload);
+          });
     
     },[] );
  
@@ -28,7 +34,7 @@ const task = useSelector((state) => state.grades.grade)
     
     
     <p>
-      Congrats {task[0].student.name} you have ben passed the Quiz.
+      Congrats {finalTask[0].student.name} you have ben passed the Quiz.
     </p>
     
     <Divider horizontal>
@@ -40,7 +46,7 @@ const task = useSelector((state) => state.grades.grade)
     <Grid columns="three">
         <Grid.Row>
           
-            {task[0].task.listQuestion.map((quiz, index) => (
+            {finalTask[0].task.listQuestion.map((quiz, index) => (
     <Grid.Column>
                 <Table key={index} color="red" textAlign="center">
                   <Table.Header>
@@ -54,14 +60,14 @@ const task = useSelector((state) => state.grades.grade)
                   <Table.Body>
                     <Table.Row
                       positive={quiz.foptionA === quiz.correct_answer  }
-                      negative={ quiz.foptionA !==  quiz.correct_answer &&  quiz.foptionA === task[0].listReponse[index]}
+                      negative={ quiz.foptionA !==  quiz.correct_answer &&  quiz.foptionA === finalTask[0].listReponse[index]}
                     >
                       <Table.Cell>
-                        {(     quiz.foptionA === task[0].listReponse[index] && quiz.foptionA === quiz.correct_answer  ) ?
+                        {(     quiz.foptionA === finalTask[0].listReponse[index] && quiz.foptionA === quiz.correct_answer  ) ?
                           (<Icon name="check circle" color="green" />): <></>
                       }
 
-                {(     quiz.foptionA === task[0].listReponse[index] && quiz.foptionA !== quiz.correct_answer  ) ?
+                {(     quiz.foptionA === finalTask[0].listReponse[index] && quiz.foptionA !== quiz.correct_answer  ) ?
                           (<Icon name="close" color="red" />): <></>
                       }
                       
@@ -71,15 +77,15 @@ const task = useSelector((state) => state.grades.grade)
                     </Table.Row>
                     <Table.Row
                                    positive={quiz.foptionB === quiz.correct_answer  }
-                                   negative={quiz.foptionB !==  quiz.correct_answer &&  quiz.foptionB === task[0].listReponse[index]}
+                                   negative={quiz.foptionB !==  quiz.correct_answer &&  quiz.foptionB === finalTask[0].listReponse[index]}
                                   
                     >
                       <Table.Cell> 
-                      {(   quiz.foptionB === task[0].listReponse[index] && quiz.foptionB === quiz.correct_answer ) ?
+                      {(   quiz.foptionB === finalTask[0].listReponse[index] && quiz.foptionB === quiz.correct_answer ) ?
                           (<Icon name="check circle" color="green" />): <></>
                       }
 
-{(     quiz.foptionB === task[0].listReponse[index] && quiz.foptionB !== quiz.correct_answer  ) ?
+{(     quiz.foptionB === finalTask[0].listReponse[index] && quiz.foptionB !== quiz.correct_answer  ) ?
                           (<Icon name="close" color="red" />): <></>
                       }
                       
@@ -88,13 +94,13 @@ const task = useSelector((state) => state.grades.grade)
                     </Table.Row>
                     <Table.Row
                                   positive={quiz.foptionC === quiz.correct_answer  }
-                                  negative={quiz.foptionC !==  quiz.correct_answer &&  quiz.foptionC === task[0].listReponse[index]}
+                                  negative={quiz.foptionC !==  quiz.correct_answer &&  quiz.foptionC === finalTask[0].listReponse[index]}
                     >
                       <Table.Cell> 
-                      {(  quiz.foptionC === task[0].listReponse[index] &&  quiz.foptionC === quiz.correct_answer ) ?
+                      {(  quiz.foptionC === finalTask[0].listReponse[index] &&  quiz.foptionC === quiz.correct_answer ) ?
                           (<Icon name="check circle" color="green" />): <></>
                       }
-                        {(     quiz.foptionC === task[0].listReponse[index] && quiz.foptionC !== quiz.correct_answer  ) ?
+                        {(     quiz.foptionC === finalTask[0].listReponse[index] && quiz.foptionC !== quiz.correct_answer  ) ?
                           (<Icon name="close" color="red" />): <></>
                       }
                       
@@ -102,13 +108,13 @@ const task = useSelector((state) => state.grades.grade)
                     </Table.Row>
                     <Table.Row
                                 positive={quiz.foptionD === quiz.correct_answer  }
-                                negative={quiz.foptionD !==  quiz.correct_answer &&  quiz.foptionD === task[0].listReponse[index]}
+                                negative={quiz.foptionD !==  quiz.correct_answer &&  quiz.foptionD === finalTask[0].listReponse[index]}
                     >
                       <Table.Cell> 
-                      {(    quiz.foptionD === task[0].listReponse[index] && quiz.foptionD === quiz.correct_answer ) ?
+                      {(    quiz.foptionD === finalTask[0].listReponse[index] && quiz.foptionD === quiz.correct_answer ) ?
                           (<Icon name="check circle" color="green" />): <></>
                       }
-                        {(     quiz.foptionD === task[0].listReponse[index] && quiz.foptionD !== quiz.correct_answer  ) ?
+                        {(     quiz.foptionD === finalTask[0].listReponse[index] && quiz.foptionD !== quiz.correct_answer  ) ?
                           (<Icon name="close" color="red" />): <></>
                       }
                       

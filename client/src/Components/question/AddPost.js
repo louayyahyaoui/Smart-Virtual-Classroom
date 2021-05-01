@@ -61,15 +61,7 @@ function AddPost() {
     <div>
       <Segment raised color="red">
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group widths="equal">
-            <Form.Field
-              control={Input}
-              placeholder="Title"
-              label="Title"
-              name="Title"
-              onChange={formik.handleChange}
-            />
-          </Form.Group>
+        
           <Form.Field
             control={TextArea}
             placeholder="whats your question?"

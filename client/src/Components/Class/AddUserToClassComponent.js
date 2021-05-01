@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 //import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addInvitationClass, selectedClasses,fetchInvitationclass } from "../../redux/slices/classsline";
+import { addInvitationClass, selectedClasses,fetchInvitationclass,fetchInvitationclassId } from "../../redux/slices/classsline";
 import { ClassInvitationApi,getclassApi } from "../../api/api";
 
 function exampleReducer(state, action) {
@@ -41,6 +41,7 @@ export default function AddUserToClassComponent() {
         const res = await ClassInvitationApi.AddClassInvitation(data);
         dis({ type: "CLOSE_MODAL" });
         dispatch(fetchInvitationclass(documentData._id));
+        dispatch(fetchInvitationclassId(classinvit._id));
       } catch (err) {
         error = {
           visible: true,

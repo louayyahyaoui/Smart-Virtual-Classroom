@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Button, Form, Divider, Grid, Segment, Icon, Header } from "semantic-ui-react";
 import { v4 as uuidv4 } from "uuid";
-
+import Select from 'react-select';
 export default function AddQuiz(props) {
+  const Options = [
+    { label: "OPTION A", value: "OPTION A" },
+    { label: "OPTION B", value: "OPTION B" },
+    { label: "OPTION C", value: "OPTION C" },
+    { label: "OPTION D", value: "OPTION D" },
+];
+const [selected, setSelected] = useState(null);
   const [tasks, setTask] = useState({
     title: props.data.title,
     description: props.data.description,
@@ -28,37 +35,72 @@ export default function AddQuiz(props) {
     },
   ]);
 
-  /*const [quiz , setQuiz] = useState({
-        id : inputFields.id,
-        question : inputFields.fquestion,
-        optionA : inputFields.foptionA,
-        optionB : inputFields.foptionB,
-        optionC : inputFields.foptionC,
-        optionD : inputFields.foptionD,
-
-
-    })*/
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("InputFields", inputFields);
 
-    //dispatch(postQuiz(quiz));
   };
 
-  const handleChangeInput = (id, event) => {
+  const handleChangeSelect = (id,selectedOption) => {
+    console.log(id);
+    console.log(selectedOption);
     const newInputFields = inputFields.map((i) => {
+    
       if (id === i.id) {
-        i[event.target.name] = event.target.value;
-        if (event.target.name === "foptionA")
-          i["correct_answer"] = event.target.value;
+        switch (selectedOption.value) {
+          case 'OPTION A':
+            i["correct_answer"] = i["foptionA"];
+            break;
+          case 'OPTION B':
+            i["correct_answer"] = i["foptionB"];
+            break;
+          case 'OPTION C':
+            i["correct_answer"] = i["foptionC"];
+            break;
+            case 'OPTION D':
+              i["correct_answer"] = i["foptionD"];
+              break;
+         
+        }
+       
       }
+
+
       return i;
     });
     console.log(newInputFields);
     setInputFields(newInputFields);
   };
+  const handleChangeInput = (id, event) => {
+   
+    console.log(id);
+    const newInputFields = inputFields.map((i) => {
+    
 
+      if (id === i.id) {
+        i[event.target.name] = event.target.value;
+       
+      }
+
+
+      return i;
+    });
+    console.log(newInputFields);
+    setInputFields(newInputFields);
+  };
+  const [theme, setTheme] = useState();
+  const selectedTheme = (selectedList, selectedItem) => {
+
+    
+  //  inputFields[0]["correct_answer"] = selectedItem.value;
+    
+    
+    console.log(inputFields);
+    setInputFields(inputFields);
+        
+  };
   const handleAddFields = () => {
+
     setInputFields([
       ...inputFields,
       {
@@ -90,11 +132,7 @@ export default function AddQuiz(props) {
     props.nextStep(step + 1);
   };
 
-  const handleChangeSelect = async (e) => {
-    console.log(e.target.value);
-    await SetSelectedItem(e.target.value);
-    await console.log(selectedItem);
-  };
+ 
   return (
     <div>
       <Grid centered>
@@ -174,13 +212,20 @@ export default function AddQuiz(props) {
                     onChange={(event) =>
                       handleChangeInput(inputField.id, event)
                     }
+                    
                   />
-                  <Header
-                    as="h5"
-                    icon="file alternate outline"
-                    content="Select Correct Answer"
-                  />
+                <Header as="h5" icon="check square outline" content={"The Correct Answer : "+inputField.correct_answer} /> 
+                <Select
+              
+        value={selected}
+        onChange={( selectedOption , event) =>
+          handleChangeSelect(inputField.id,selectedOption)  
+        }
+        options={Options}
 
+      />
+          
+    
               
                 </div>
               ))}

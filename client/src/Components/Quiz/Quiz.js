@@ -25,7 +25,7 @@ import EndQuiz from "./EndQuiz.js";
 export default function Quiz(props) {
   const { id } = useParams();
   const quizzes = useSelector((state) => state.grades.listQuestion);
-
+  //const task = useSelector((state) => state.grades.grades)
   const [objgrade, setObjGrade] = useState({
     _id: null,
     grade: 0,
@@ -73,9 +73,9 @@ export default function Quiz(props) {
 
   useEffect(() => {
     // dispatch(getQuizzes());
-    dispatch(getDetailByTaskByStudent(id))
+    dispatch(getDetailByTaskByStudent(id));
     dispatch(getListQuestionTasksById(id));
-  }, [id]);
+  }, []);
 
   return (
     <div className="Quiz">

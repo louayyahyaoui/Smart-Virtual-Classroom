@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React , {useEffect} from "react";
+import { useDispatch,useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Grid,
@@ -8,17 +8,23 @@ import {
   Image,
   Segment,
 } from "semantic-ui-react";
-import { AddclassApi, getclassApi } from "../../api/api";
+import { AddclassApi, getclassApi,ClassInvitationApi } from "../../api/api";
 import {
   fetchclass,
+  fetchInvitationclassId,
+  selectrequestclassId,
 } from "../../redux/slices/classsline";
 import AddUserToClassComponent from "./AddUserToClassComponent";
 
 function MemberComponent() {
   const history = useHistory();
+  const [requestmembers, errr] = useSelector(selectrequestclassId);
   const classinvit = JSON.parse(localStorage.getItem("idClass"));
   const documentData = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchInvitationclassId(classinvit._id));
+  }, [dispatch]);
   const Remove = async (idclass, email) => {
     try {
       const res = await AddclassApi.removeUserFromClass(idclass, email);
@@ -31,6 +37,15 @@ function MemberComponent() {
       alert(error);
     }
   };
+  /*const RemoveInvitation = async (idq) => {
+    try {
+      const res = await ClassInvitationApi.deleteClassInvitation(idq);
+      dispatch(fetchInvitationclassId(classinvit._id));
+
+    } catch (error) {
+      alert(error);
+    }
+  };*/
   return (
     <div>
       {classinvit.classOwner._id === documentData._id && (
@@ -74,8 +89,38 @@ function MemberComponent() {
           </Header.Subheader>
         </div>
       </Segment>
+     
     </div>
   );
 }
 
 export default MemberComponent;
+/*
+ <Header as="h2" icon textAlign="center">
+        <Icon name="add user" size="big" />
+        Pending Accounts
+      </Header>
+      <Segment raised color="orange">
+        <div>
+          <Header.Subheader>
+            {requestmembers.userOb?.map((co, i) => (
+              <div key={i}>
+                <Grid stackable>
+                  <Grid.Row>
+                    <Grid.Column width={1}>
+                      <Image
+                        circular
+                        size="mini"
+                        src={co.picture}
+                      />
+                    </Grid.Column>
+                    <Grid.Column width={14}>{co.name}</Grid.Column>
+                    <Grid.Column width={1}> 
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </div>
+            ))}
+          </Header.Subheader>
+        </div>
+      </Segment>*/

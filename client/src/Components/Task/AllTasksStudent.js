@@ -24,7 +24,7 @@ export default function AllTasksStudent(props) {
                    ) : (
                     props.allGrades.map((task,index) =>
                     
-                    <Link to={task.task.typeTask === "Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>                      
+                    <Link to={task.task.typeTask === "Quiz" ? "/TaskQuizDetail/"+task._id : "/TaskFileDetail/"+task._id}>                      
                       <Segment color='grey' raised > 
                      
                        <Item.Group divided key={index} >

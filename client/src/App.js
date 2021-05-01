@@ -37,7 +37,7 @@ function App() {
           <Route
             path="/updateProfile/:id"
             exact
-            render={(props) => <Home {...props} />}
+            render={(props) => <HomeClass {...props} />}
           />
           <Route
             path="/DetailTask/:id"
@@ -49,7 +49,11 @@ function App() {
             exact
             render={(props) => <Home {...props} />}
           />
-       
+         <Route
+              path="/TaskQuizDetail/:id"
+              exact
+              render={(props) => <Home {...props} />}
+            />
           <Route
             path="/TaskQuiz/:id"
             exact

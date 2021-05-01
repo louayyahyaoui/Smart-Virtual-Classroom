@@ -7,6 +7,7 @@ import PrivateRoute from "../../Routes/PrivateRoute";
 import GetAllClassComponent from "../Class/GetAllClassComponent";
 import AddClassComponent from "../Class/AddUserToClassComponent";
 import CalendarComponent from "../Class/CalendarComponent";
+import UpdateProfile from "../authentification/UpdateProfile";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -34,6 +35,11 @@ function Home() {
               path="/schedule"
               exact
               component={CalendarComponent}
+            />
+            <PrivateRoute
+              path="/updateProfile/:id"
+              exact
+              component={UpdateProfile}
             />
           </Grid.Column>
         </Grid.Row>

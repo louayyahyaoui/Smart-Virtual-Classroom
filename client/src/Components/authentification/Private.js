@@ -20,7 +20,7 @@ const Private = ({ history }) => {
   const loadProfile = () => {
     const token = getCookie("token");
     axios
-      .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+      .get(`https://closer-server.herokuapp.com/api/user/${isAuth()._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -65,7 +65,7 @@ const Private = ({ history }) => {
         updateUser(res, () => {
           toast.success("Profile Updated Successfully");
           setFormData({ ...formData, textChange: "Update" });
-          history.push("/stream");
+          history.push("/class");
         });
       })
       .catch((err) => {

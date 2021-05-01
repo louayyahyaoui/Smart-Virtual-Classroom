@@ -72,18 +72,18 @@ export default function GetAllClassComponent() {
       <Segment.Group horizontal>
         <Segment>
           <Header as="h2" icon textAlign="center">
-            <Icon name="users" circular />
+            <Icon name="tasks" circular />
             <Header.Content>Missed Activity</Header.Content>
           </Header>
           <div style={{ textAlign: "center" }}>
             <Label style={{ textAlign: "center" }} circular color="red">
-              2
+              0
             </Label>
           </div>
         </Segment>
         <Segment>
           <Header as="h2" icon textAlign="center">
-            <Icon name="tv" circular />
+            <Icon name="file text" circular />
             <Header.Content>Active Courses</Header.Content>
           </Header>
           <div style={{ textAlign: "center" }}>
@@ -100,7 +100,7 @@ export default function GetAllClassComponent() {
         </Segment>
         <Segment>
           <Header as="h2" icon textAlign="center">
-            <Icon name="redo" circular />
+            <Icon name="add user" circular />
 
             <Header.Content>Request Courses</Header.Content>
           </Header>

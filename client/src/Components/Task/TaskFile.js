@@ -40,9 +40,7 @@ export default function TaskFile(props) {
       props.addTask(tasks.listQuestion = Images);
       props.addTask(tasks);
       
-     
-
-   
+ 
         props.nextStep(step+1);
         setEnableUpload(true);
         console.log(enableUpload);
