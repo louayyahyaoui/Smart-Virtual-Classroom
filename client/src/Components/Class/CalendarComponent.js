@@ -102,9 +102,9 @@ export default function CalendarComponent() {
     showToast("Updated", e.appointmentData.result.text, "info");
   };
 
-  const showDeletedToast = (e) => {
+ /* const showDeletedToast = (e) => {
     showToast("Deleted", e.appointmentData.result.text, "warning");
-  };
+  };*/
   const views = ["day", "week", "month", "agenda"];
   return (
     <div>
@@ -117,7 +117,7 @@ export default function CalendarComponent() {
         onAppointmentAdded={showAddedToast}
         onAppointmentUpdated={showUpdatedToast}
         appointmentComponent={Appointment}
-        onAppointmentDeleted={showDeletedToast}
+        //onAppointmentDeleted={showDeletedToast}
       >
         <Resource
           fieldExpr="sectionId"

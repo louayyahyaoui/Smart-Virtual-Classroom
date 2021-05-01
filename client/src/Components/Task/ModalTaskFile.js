@@ -24,11 +24,14 @@ import { assignTask, getTaskByTeacher, postTasks } from "../../redux/slices/Task
 import { AddquestionsApi } from "../../api/api";
 import { addQuestion } from "../../redux/slices/questionslice";
 import MultiSelect from "react-multi-select-component";
+
 const currentClass = JSON.parse(localStorage.getItem("idClass"));
 export default function ModalTaskFile(props) {
+  
   const seances = useSelector((state) => state.seance.seance);
   const studentChosen = [];
   const seanceChosen = [];
+ 
   currentClass.classUsers.forEach((element) => {
     studentChosen.push({ label: element.name, value: element });
   });
@@ -55,6 +58,7 @@ export default function ModalTaskFile(props) {
         theme : "",
         cour : currentClass._id,
         typeTask : "File",
+   
         listQuestion : [],
         listStudents : [],
         endDate : null,
@@ -109,7 +113,17 @@ export default function ModalTaskFile(props) {
       setOpensave(false);
     };
     const clicConfirmAssign = () => {
-
+      setTask(
+        selected.forEach((itemselect) => {
+          const index = tasks.listStudents.findIndex(
+            (item) => item._id === itemselect.value._id
+          );
+          if (index !== -1) {
+            tasks.listStudents[index] = itemselect.value;
+          }
+          tasks.listStudents.push(  itemselect.value);
+        })
+      );
       setTask(tasks.theme = selectedSeance.value);
      // setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
@@ -245,7 +259,7 @@ export default function ModalTaskFile(props) {
                   options={studentChosen}
                   value={selected}
                   onChange={setSelected}
-                 // labelledBy="Select"
+                  labelledBy="Select"
                 />
             
             </Grid.Column>
