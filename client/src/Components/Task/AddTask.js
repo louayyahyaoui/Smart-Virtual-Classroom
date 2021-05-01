@@ -61,19 +61,23 @@ export default function AddTask(props) {
 
   const event = () => {
     props.addTask(
-      selected.forEach((itemselect) => {
-        const index = tasks.listStudents.findIndex(
-          (item) => item._id === itemselect.value._id
+      currentClass.classUsers.forEach((itemselect) => {
+      
+        const index = selected.findIndex(
+          (item) => item.value === itemselect._id
         );
         if (index !== -1) {
-          tasks.listStudents[index] = itemselect.value;
+          
+      
+          tasks.listStudents.push(itemselect);
         }
-        tasks.listStudents.push(itemselect.value);
+      
+        
       })
     );
-
+   // console.log(tasks.listStudents);
     props.addTask((tasks.theme = selectedSeance.value));
-    console.log(tasks.theme);
+   // console.log(tasks.theme);
     props.addTask(tasks);
 
     props.nextStep(step + 1);

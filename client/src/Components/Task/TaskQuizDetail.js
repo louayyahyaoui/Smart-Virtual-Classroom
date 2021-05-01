@@ -55,7 +55,7 @@ export default function TaskQuizDetail() {
           console.log(task);
     
   }, []);
-
+const [openModal , setOpenModal] = useState(false);
   return (
     <div>
       {!task ? (
@@ -119,14 +119,23 @@ export default function TaskQuizDetail() {
                       <Card.Content extra>
                           
                           <Modal
-        trigger={<Button color="red" content="Start Quiz" />}
+        trigger={ 
+        ( task.taskStatus === "Remis" ? (
+        (
+        <Link to={"/Result/"+task._id}><Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"View Quiz"} /> </Link>)
+        
+        ) : ( <Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"Start Quiz"} /> ) )
+      }
         dimmer="inverted"
         size="tiny"
         closeIcon="close"
+        open={openModal}
       >
           <Modal.Header>Quiz </Modal.Header>
         <Modal.Content>
-            <p>Start</p>
+            <p>Once you start this Quiz you will no longer be able to do this Quiz Again.
+              
+            </p>
         </Modal.Content>
 
     
@@ -134,7 +143,10 @@ export default function TaskQuizDetail() {
           <Link to={"/TaskQuiz/"+task._id}>
           <Button color="red">Start</Button>
           </Link>
-          <Button color="black">Back</Button>
+          <Button color="black"
+          onClick={()=>setOpenModal(false)}
+          
+          >Back</Button>
       </Modal.Actions>
       </Modal>             
                     

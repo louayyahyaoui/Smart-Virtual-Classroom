@@ -92,7 +92,7 @@ function FileUpload(props) {
 
   return (
     <div style={{ display: "flexwrap" }}>
-      <Dropzone onDrop={onDrop} multiple={true} maxSize={800000000}>
+      <Dropzone    onDrop={onDrop} multiple={true} maxSize={800000000}>
         {({ getRootProps, getInputProps }) => (
           <div
             style={{
@@ -104,12 +104,15 @@ function FileUpload(props) {
               justifyContent: "center",
             }}
             {...getRootProps()}
+          
           >
             <input {...getInputProps()} />
 
             <Icon
+            
               onClick={() => setetat("flex")}
               name="paperclip"
+              
               style={{ fontSize: "1rem" }}
             />
           </div>
