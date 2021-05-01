@@ -15,8 +15,10 @@ const {
   getUserByid,
   CountActiveClass,
   updateClassActive,
+  getUsers,
 } = require("../controllers/Class.js");
 router.get("/", getClass);
+router.get("/usersall/", getUsers);
 router.get("/byyear/:id", ClassByDateYear);
 router.get("/bylevel/:id", ClassByLevel);
 router.post("/", addClass);

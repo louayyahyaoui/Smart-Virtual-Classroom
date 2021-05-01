@@ -15,6 +15,17 @@ module.exports = {
       res.status(404).json({ statue: false, message: error.message });
     }
   },
+  getUsers: async (req, res) => {
+    try {
+      res
+        .status(200)
+        .json(
+          await StudentModel.find({})
+        );
+    } catch (error) {
+      res.status(404).json({ statue: false, message: error.message });
+    }
+  },
   getClassById: async (req, res) => {
     try {
       res
