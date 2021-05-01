@@ -4,7 +4,7 @@ import { Button, Comment, Form, Header, Icon } from "semantic-ui-react";
 import {
   fetchCommentsCourse,
   selectComments,
-  fetchCommentsTask
+  fetchCommentsTask,
 } from "../../redux/slices/commentslice";
 import { CommentsApi } from "../../api/api";
 import { useFormik } from "formik";
@@ -17,12 +17,12 @@ function CommentComponent(props) {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(props.taskID)
-      if(props.courseID!=null)
-   { dispatch(fetchCommentsCourse(props.courseID));}
-   else
-   { dispatch(fetchCommentsTask(props.taskID));}
-
+    if (props.courseID !== undefined) {
+      console.log("test")
+      dispatch(fetchCommentsCourse(props.courseID));
+    } else {
+      dispatch(fetchCommentsTask(props.taskID));
+    }
   }, [dispatch]);
   const [commentss, er] = useSelector(selectComments);
   const [text, setText] = useState("");
@@ -33,9 +33,10 @@ function CommentComponent(props) {
     initialValues: {
       Body: " ",
       Writer: { _id: "" + documentData._id },
-     // Course: { _id: "" + props.courseID },
-      Task: { _id: "" + props.taskID },
+      Course: props.courseID,
+      Task: props.taskID,
     },
+
     validationSchema: yupSchema,
 
     onSubmit: async (values) => {
@@ -43,19 +44,20 @@ function CommentComponent(props) {
 
       try {
         if (values.Body !== " ") {
-          const res = await CommentsApi.postComments(values).then((data)=>{
+          console.log(values.Task);
 
-            if(data.Course!=null)
-            {console.log("course")
-              dispatch(fetchCommentsCourse(props.courseID));}
-            else if(data.Task!=null)
-            {console.log("task")
-            dispatch(fetchCommentsTask(props.taskID));
+          const res = await CommentsApi.postComments(values).then((data) => {
+            console.log("course"+data.Course );
+
+            if (data.Course !== null) {
+              console.log("course");
+
+              dispatch(fetchCommentsCourse(props.courseID));
+            } else if (data.Task !== null) {
+              console.log("task");
+              dispatch(fetchCommentsTask(props.taskID));
             }
-
-          })
-
-        
+          });
         }
       } catch (error) {
         alert(error);
@@ -66,13 +68,14 @@ function CommentComponent(props) {
     try {
       const res = await CommentsApi.deleteComments(idcomment);
 
-if(props.courseID!=null)
-            {console.log("course")
-              dispatch(fetchCommentsCourse(props.courseID));}
-            else if(props.taskID!=null)
-            {console.log("task")
-            dispatch(fetchCommentsTask(props.taskID));
-            }    } catch (error) {
+      if (props.courseID != null) {
+        console.log("course");
+        dispatch(fetchCommentsCourse(props.courseID));
+      } else if (props.taskID != null) {
+        console.log("task");
+        dispatch(fetchCommentsTask(props.taskID));
+      }
+    } catch (error) {
       alert(error);
     }
   };
@@ -95,13 +98,12 @@ if(props.courseID!=null)
             />
           </Form>
         </div>
-{Number(commentss.length)!==0 &&(
-  <Header as="h3" dividing>
-  Comments 
-</Header>
+        {Number(commentss.length) !== 0 && (
+          <Header as="h3" dividing>
+            Comments
+          </Header>
+        )}
 
-)}
-      
         {commentss.map((commentt, index) => (
           <Comment key={index}>
             <Comment.Avatar
