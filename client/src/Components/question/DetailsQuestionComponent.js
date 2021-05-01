@@ -35,8 +35,7 @@ import io from "socket.io-client";
 import { selectedClasses } from "../../redux/slices/classsline";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function DetailsQuestion(props) {
-  const socket = io(ENDPOINT);
-  const [currentClass, err] = useSelector(selectedClasses);
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
@@ -50,11 +49,11 @@ function DetailsQuestion(props) {
   }, [dispatch]);
 
   const id = props.match.params.id;
-  useEffect(() => {
+ /* useEffect(() => {
     socket.on("new-answer", (content) => {
       dispatch(fetchAnswers(id));
     });
-  }, []);
+  });*/
   const [questions, errr] = useSelector(selectQuestions);
   useEffect(() => {
     dispatch(fetchAnswers(id));
@@ -97,14 +96,18 @@ function DetailsQuestion(props) {
           });
             notif.Owner=arr;
             const res2 = await notificationsApi.addNotification(notif);
-            socket.emit("add-new-notification", arr);
+            const socket = io(ENDPOINT);
+
+           socket.emit("add-new-notification", arr);
           } catch (error) {
             alert(error);
           }
 
           dispatch(fetchQuestions(currentClass._id));
+          
+          dispatch(fetchAnswers(id));
 
-          socket.emit("send_answer", "message");
+        //  socket.emit("send_answer", "message");
 
           setText("");
           setImages([]);
@@ -144,7 +147,7 @@ function DetailsQuestion(props) {
       const res = await AddAnswersApi.deleteAnswers(idA);
       dispatch(fetchAnswers(id));
 
-      socket.emit("send_answer", "message");
+      //socket.emit("send_answer", "message");
     } catch (error) {
       alert(error);
     }

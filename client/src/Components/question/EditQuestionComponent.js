@@ -22,7 +22,7 @@ import io from "socket.io-client";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 export default function EditQuestions({ qes }) {
-  const socket = io(ENDPOINT);
+  //const socket = io(ENDPOINT);
   const [open, setOpen] = React.useState(false);
   const [currentClass, err] = useSelector(selectedClasses);
 
@@ -73,7 +73,7 @@ export default function EditQuestions({ qes }) {
       }
         const res = await AddquestionsApi.putQuestions(values, qes._id);
       //  dispatch(fetchQuestions(currentClass._id));
-        socket.emit("send_question", "message");
+     //   socket.emit("send_question", "message");
       } catch (error) {
         alert(error);
       }

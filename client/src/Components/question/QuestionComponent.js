@@ -46,7 +46,7 @@ export default function QuestionComponent(props) {
     socket.on("new-question", (content) => {
       dispatch(fetchQuestions(currentClass._id));
     });
-  }, [socket, idd]);
+  }, [ idd]);
 
   const [enableUpload, setEnableUpload] = useState(false);
 
@@ -260,7 +260,6 @@ export default function QuestionComponent(props) {
             ))}
           </div>
           <Header dividing as="h3" style={{ marginLeft: "2%" }}>
-            Comments({question.Question_Answer.length})
           </Header>
           <Segment inverted color="red">
             <Link to={"/FAQ/" + question._id} style={{ color: "white" }}>
