@@ -46,12 +46,7 @@ function Header() {
             onClick={handleItemClick}
           />
         </Link>
-        <Menu.Item
-          name="Settings"
-          icon="settings"
-          active={activeItem === "Settings"}
-          onClick={handleItemClick}
-        />
+      
         {isAuth().role === "Teacher" ? (
           <Menu.Item position="right">
             <Dropdown floating className="icon" icon="add circle">

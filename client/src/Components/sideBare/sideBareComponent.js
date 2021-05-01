@@ -219,13 +219,7 @@ function SideBareComponent() {
                 </Menu.Item>
               </Link>
 
-              <Menu.Item
-                name="Courses"
-                active={activeItem === "Courses"}
-                onClick={handleItemClick}
-              >
-                Courses
-              </Menu.Item>
+           
               <Link to="/schedule">
                 <Menu.Item
                   name="Routine"

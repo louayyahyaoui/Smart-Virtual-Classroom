@@ -18,10 +18,12 @@ import {
 import { useSelector } from "react-redux";
 import MultiSelect from "react-multi-select-component";
 
-const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
 
 
 export default function AddTask(props) {
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  
   const seanceChosen = [];
   const studentChosen =[] ;
   const seances = useSelector((state) => state.seance.seance);
