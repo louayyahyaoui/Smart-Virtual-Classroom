@@ -132,6 +132,10 @@ export const CommentsApi = {
       const { data } = await api.get(`invitationclass/` + email);
       return data;
     },
+    async getClassInvitationClassId(id) {
+      const { data } = await api.get(`invitationclass/inviteclassid/` + id);
+      return data;
+    },
     async CountRequestClass(id) {
       const { data } = await api.get(`invitationclass/countrequest/` + id);
       return data;
