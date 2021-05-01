@@ -34,7 +34,7 @@ function FileUploadEdit(props) {
 
       console.log(formData.getAll("files"));
       arr.push(f.name);
-      props.refreshFunction([...Images, f.name]);
+      // props.refreshFunction([...Images, f.name]);
     });
     fd = formData;
     setfd(formData);
@@ -58,9 +58,9 @@ function FileUploadEdit(props) {
         (response) => {
           if (response.data) {
             SetEndLoader(false)
-            setImages([...Images, response.data]);
-            props.refreshFunction([...Images, response.data]);
-                        SetLoader(false);
+            setImages(response.data);
+            props.refreshFunction(response.data);
+            SetLoader(false);
           } else {
             alert("Failed to save the File in Server");
           }

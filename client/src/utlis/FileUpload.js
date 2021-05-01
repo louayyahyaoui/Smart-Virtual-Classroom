@@ -39,7 +39,7 @@ function FileUpload(props) {
 
       // console.log(formData.getAll("files"));
       arr.push(f.name);
-        props.refreshFunction(arr);
+      props.refreshFunction(arr);
     });
     fd = formData;
     setfd(formData);
@@ -68,9 +68,9 @@ function FileUpload(props) {
         (response) => {
           if (response.data) {
             SetEndLoader(false);
-
-            setImages([...Images, response.data]);
-            props.refreshFunction([...Images, response.data]);
+            console.log(response.data);
+            setImages(response.data);
+            props.refreshFunction(response.data);
             SetLoader(false);
           } else {
             alert("Failed to save the File in Server");
