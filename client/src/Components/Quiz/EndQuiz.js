@@ -16,7 +16,7 @@ const { id } = useParams();
     });
    
   useEffect(() => {
-
+      console.log(finalTask[0]);
     dispatch(getDetailByTaskByStudent(id)).then((response)=>{
      
       console.log(response);
@@ -38,14 +38,14 @@ const { id } = useParams();
     { (finalTask[0].grade * 100 / pts) > 70 ? (<>
   <Image centered src={process.env.PUBLIC_URL + "/Certification.png"} />
 <p>
-Congrats {finalTask[0].student.name} you have ben passed the Quiz  {finalTask[0].grade} / {pts}.
+Congrats {finalTask[0].student.name} you have ben passed the Quiz  {finalTask[0].grade} / {pts} points.
 </p>
 </>
     ) : (
       <>
       <Image centered src={process.env.PUBLIC_URL + "/failedQuiz.jpg"} />
       <p>
-      Sorry {finalTask[0].student.name} next Time .  {finalTask[0].grade} / {pts}.
+      Sorry {finalTask[0].student.name} next Time .  {finalTask[0].grade} / {pts} points.
     </p>
     </>
 

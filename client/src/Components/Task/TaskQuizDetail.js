@@ -123,7 +123,7 @@ const [openModal , setOpenModal] = useState(false);
         trigger={ 
         ( task.taskStatus === "Remis" ? (
         (
-        <Link to={"/Result/"+task._id}><Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"View Quiz"} /> </Link>)
+        <Link to={"/Result/"+task._id}><Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"View Result"} /> </Link>)
 
         ) : ( <Button onClick={()=>setOpenModal(true)} color="red" compact  fluid content={"Start Quiz"} /> ) )
       }
