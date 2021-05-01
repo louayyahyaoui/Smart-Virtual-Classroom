@@ -17,10 +17,11 @@ function CommentComponent(props) {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(props.taskID)
       if(props.courseID!=null)
    { dispatch(fetchCommentsCourse(props.courseID));}
    else
-   { dispatch(fetchCommentsTask(props.courseID));}
+   { dispatch(fetchCommentsTask(props.taskID));}
 
   }, [dispatch]);
   const [commentss, er] = useSelector(selectComments);
@@ -32,8 +33,8 @@ function CommentComponent(props) {
     initialValues: {
       Body: " ",
       Writer: { _id: "" + documentData._id },
-      Course: { _id: "" + props.courseID },
-      task: { _id: "" + props.taskID },
+     // Course: { _id: "" + props.courseID },
+      Task: { _id: "" + props.taskID },
     },
     validationSchema: yupSchema,
 
@@ -42,9 +43,19 @@ function CommentComponent(props) {
 
       try {
         if (values.Body !== " ") {
-          const res = await CommentsApi.postComments(values);
-          console.log(res);
-          dispatch(fetchCommentsCourse(props.courseID));
+          const res = await CommentsApi.postComments(values).then((data)=>{
+
+            if(data.Course!=null)
+            {console.log("course")
+              dispatch(fetchCommentsCourse(props.courseID));}
+            else if(data.Task!=null)
+            {console.log("task")
+            dispatch(fetchCommentsTask(props.taskID));
+            }
+
+          })
+
+        
         }
       } catch (error) {
         alert(error);
@@ -54,8 +65,14 @@ function CommentComponent(props) {
   const deletecomment = async (idcomment) => {
     try {
       const res = await CommentsApi.deleteComments(idcomment);
-      dispatch(fetchCommentsCourse(props.courseID));
-    } catch (error) {
+
+if(props.courseID!=null)
+            {console.log("course")
+              dispatch(fetchCommentsCourse(props.courseID));}
+            else if(props.taskID!=null)
+            {console.log("task")
+            dispatch(fetchCommentsTask(props.taskID));
+            }    } catch (error) {
       alert(error);
     }
   };
@@ -78,10 +95,13 @@ function CommentComponent(props) {
             />
           </Form>
         </div>
+{Number(commentss.length)!==0 &&(
+  <Header as="h3" dividing>
+  Comments 
+</Header>
 
-        <Header as="h3" dividing>
-          Comments added to this courses
-        </Header>
+)}
+      
         {commentss.map((commentt, index) => (
           <Comment key={index}>
             <Comment.Avatar

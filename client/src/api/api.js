@@ -82,7 +82,6 @@ export const CommentsApi = {
     return data;
   },
   async getCommentsTask(id) {
-    console.log(id);
     const { data } = await api.get(`coursesComment/task/${id}`);
     console.log(data);
     return data;

@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import InputEmoji from "react-input-emoji";
 import {
   fetchCommentsCourse,
+  fetchCommentsTask,
   selectComments,
 } from "../../redux/slices/commentslice";
 function EditComment(props) {
@@ -33,20 +34,19 @@ function EditComment(props) {
       Body: " " + props.comment.Body,
       Writer: { _id: "" + props.comment.Writer._id },
       Course: { _id: "" + props.comment.Course },
-      task: { _id: ""  },
+      task: { _id: "" + props.comment.Task },
     },
     validationSchema: yupSchema,
 
     onSubmit: async (values) => {
-
-
       try {
-      
-          alert(values.Body);
-          const res = await CommentsApi.putComments(values, props.comment._id );
-          console.log(JSON.stringify(props.comment.Course))
-          dispatch(fetchCommentsCourse(props.comment.Course ));
-        
+        alert(values.Body);
+        const res = await CommentsApi.putComments(values, props.comment._id);
+        if (props.comment.Task  == null) {
+          dispatch(fetchCommentsCourse(props.comment.Course));
+        } else {
+          dispatch(fetchCommentsTask(props.comment.Task));
+        }
       } catch (error) {
         alert(error);
       }

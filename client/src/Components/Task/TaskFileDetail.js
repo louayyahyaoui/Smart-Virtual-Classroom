@@ -16,6 +16,7 @@ import {
   Message,
 } from "semantic-ui-react";
 import { getDetailByTaskByStudent, rendreTask } from "../../redux/slices/Grade";
+import CommentComponent from "../Comment/CommentComponent";
 import ModalTask from "./ModalTask";
 
 export default function TaskFileDetail() {
@@ -236,6 +237,7 @@ export default function TaskFileDetail() {
                     </Grid>
                     <br />
                     <br />
+                    <CommentComponent taskID={task._id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>
