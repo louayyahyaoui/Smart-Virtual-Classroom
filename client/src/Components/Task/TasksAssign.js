@@ -52,7 +52,7 @@ export default function TasksAssign(props) {
              <Divider hidden></Divider>
              </Link>
              
-                     ) : (<div></div>)  ))}
+                     ) : (<></>)  ))}
         </div>
     )
 }

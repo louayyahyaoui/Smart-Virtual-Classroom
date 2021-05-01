@@ -79,7 +79,7 @@ function Header() {
                 />
                 <Link to="/AddTask">
                   <>
-                    <Dropdown.Item icon="tasks" text="Add task" />
+                    <Dropdown.Item icon="tasks" text="Add Quiz" />
                   </>
                 </Link>
               </Dropdown.Menu>

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { Button, Divider, Header, Icon, Item, Label, Segment, Statistic } from 'semantic-ui-react'
 import { getTasksById } from '../../redux/slices/Grade';
 
-const student = [
-    {id : "6065ef725837a846a0aa2718" ,student : 'Sofien'}]
+
 export default function TasksRemis(props) {
+
     return (
         <div>
                 { props.remisGrades.length <= 0 ? (
@@ -14,11 +14,13 @@ export default function TasksRemis(props) {
 <Segment placeholder>
 <Header icon>
   <Icon name='tasks' />
-  No Remis Tasks For you {student[0].student}.
+  No Remis Tasks For you.
 </Header>
 
 </Segment> 
                    ) : (
+                     
+                     
                     props.remisGrades.map((task,index) =>
                     task.taskStatus==="Remis" ? (
                       <Link to={task.task.typeTask==="Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>  
@@ -44,7 +46,9 @@ export default function TasksRemis(props) {
              </Segment>
              <Divider hidden></Divider>
              </Link>
-                    ) : (<div></div>) ))}
+
+             
+                ) : (<></>) ))}
         </div>
     )
 }

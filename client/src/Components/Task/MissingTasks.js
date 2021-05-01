@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Divider, Header, Icon, Item, Label, Segment, Statistic } from 'semantic-ui-react'
 import { getTasksById } from '../../redux/slices/Grade';
 
-const student = [
-    {id : "6065ef725837a846a0aa2718" ,student : 'Sofien'}]
+
 export default function MissingTasks(props) {
     return (
         <div>
@@ -14,7 +13,7 @@ export default function MissingTasks(props) {
 <Segment placeholder>
 <Header icon>
   <Icon name='tasks' />
-  No Missing Tasks For you {student[0].student}.
+  No Missing Tasks For you.
 </Header>
 
 </Segment> 
@@ -46,7 +45,7 @@ export default function MissingTasks(props) {
              </Segment>
              <Divider hidden></Divider>
              </Link>
-                     ) : (<div></div>) ) ) }
+                     ) : (<></>) ) ) }
         </div>
     )
 }

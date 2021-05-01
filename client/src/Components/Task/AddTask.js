@@ -23,12 +23,12 @@ import MultiSelect from "react-multi-select-component";
 
 export default function AddTask(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  
+
   const seanceChosen = [];
   const studentChosen =[] ;
   const seances = useSelector((state) => state.seance.seance);
   currentClass.classUsers.forEach((element) => {
-    studentChosen.push({ label: element.name, value: element });
+    studentChosen.push({ label: element.name, value: element._id });
   });
 
   seances.forEach((element) => {
