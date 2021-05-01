@@ -1,96 +1,94 @@
-import React from "react";
-import { Button, Modal, Form, Input, TextArea } from "semantic-ui-react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React, { useState } from "react";
+import { Button, Modal, Form,  } from "semantic-ui-react";
 //import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addInvitationClass, selectedClasses,fetchInvitationclass,fetchInvitationclassId } from "../../redux/slices/classsline";
-import { ClassInvitationApi,getclassApi } from "../../api/api";
+import { useDispatch } from "react-redux";
+import {
+  fetchInvitationclass,
+  fetchInvitationclassId,
+} from "../../redux/slices/classsline";
+import { ClassInvitationApi } from "../../api/api";
+import MultiSelect from "react-multi-select-component";
 
-function exampleReducer(state, action) {
-  switch (action.type) {
-    case "OPEN_MODAL":
-      return { open: true, dimmer: action.dimmer };
-    case "CLOSE_MODAL":
-      return { open: false };
-    default:
-      throw new Error();
-  }
-}
-
-export default function AddUserToClassComponent() {
+export default function AddUserToClassComponent(props) {
   const dispatch = useDispatch();
+  const selectedusers = [];
   const documentData = JSON.parse(localStorage.getItem("user"));
   const classinvit = JSON.parse(localStorage.getItem("idClass"));
+  const [modalOpen, SetModalOpen] = useState(false);
+  const handleOpen = (e) => SetModalOpen(true);
+  const handleClose = (e) => SetModalOpen(false);
+  props.users.forEach((element) => {
+    selectedusers.push({
+      label: element.name,
+      value: element._id,
+    });
+  });
+  const [selected, setSelected] = useState([]);
   let error = { visible: false, message: "" };
-  const formik = useFormik({
-    initialValues: {
-      Email: "",
-    },
-    validationSchema: Yup.object({
-      Email: Yup.string().required(),
-    }),
-    onSubmit: async (formData) => {
-      try {
-        const res2 = await getclassApi.getUserByEmail(formData.Email);
-        const data ={
+  const Add = async () => {
+    let data = [];
+    selected.forEach((itemselect) => {
+      data.push(itemselect.value);
+    });
+    console.log(data);
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+      console.log(element);
+      if (data.length > 0) {
+        const dataField = {
           status: "Invitation",
           classOb: classinvit._id,
-          userOb: res2._id,
-        }
-        const res = await ClassInvitationApi.AddClassInvitation(data);
-        dis({ type: "CLOSE_MODAL" });
-        dispatch(fetchInvitationclass(documentData._id));
-        dispatch(fetchInvitationclassId(classinvit._id));
-      } catch (err) {
-        error = {
-          visible: true,
-          message: JSON.stringify(err.errors, null, 2),
+          userOb: element,
         };
+        try {
+          const res = await ClassInvitationApi.AddClassInvitation(dataField);
+          handleClose()
+          dispatch(fetchInvitationclass(documentData._id));
+          dispatch(fetchInvitationclassId(classinvit._id));
+        } catch (err) {
+          error = {
+            visible: true,
+            message: JSON.stringify(err.errors, null, 2),
+          };
+        }
       }
-    },
-  });
-
-  const [state, dis] = React.useReducer(exampleReducer, {
-    open: false,
-    dimmer: undefined,
-  });
-  const { open, dimmer } = state;
+    }
+  };
 
   return (
     <div>
-      <Button circular content="Add User" icon='add' onClick={() => dis({ type: "OPEN_MODAL", dimmer: "blurring" })} />
+      
 
-      <Modal
-        dimmer={dimmer}
-        open={open}
-        onClose={() => dis({ type: "CLOSE_MODAL" })}
-      >
-        <Modal.Header>Add Class</Modal.Header>
+      <Modal trigger={<Button
+        circular
+        content="Add User"
+        icon="add"
+        onClick={handleOpen}
+      />} open={modalOpen} onClose={handleClose} dimmer="inverted">
+        <Modal.Header>Add User To Class</Modal.Header>
         <Modal.Content>
-          <Form onSubmit={formik.handleSubmit}>
+          <Form>
             <Form.Group widths="equal">
               <Form.Field
-                control={Input}
-                label="Email"
-                placeholder="Email"
-                name="Email"
-                onChange={formik.handleChange}
-                error={formik.errors.Email}
+                control={MultiSelect}
+                options={selectedusers}
+                value={selected}
+                onChange={setSelected}
+                labelledBy="Select"
               />
-              
-             
             </Form.Group>
-           
-            <Button.Group floated="right">
-              <Button onClick={() => dis({ type: "CLOSE_MODAL" })} >Cancel</Button>
-              <Button.Or />
-              <Button  color="red"  type="submit">Add</Button>
-            </Button.Group>
           </Form>
         </Modal.Content>
+        <Modal.Actions>
+          <Button.Group floated="right">
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button.Or />
+            <Button color="red" onClick={() => Add()} type="submit">
+              Add
+            </Button>
+          </Button.Group>
+        </Modal.Actions>
         <Modal.Content></Modal.Content>
-        <Modal.Actions></Modal.Actions>
       </Modal>
     </div>
   );

@@ -113,6 +113,10 @@ export const CommentsApi = {
       const { data } = await api.get(`class/userid/` + id);
       return data;
     },
+    async getUsersAll() {
+      const { data } = await api.get(`class/usersall/`);
+      return data;
+    },
     async CountActiveClass(id) {
       const { data } = await api.get(`class/countactive/` + id);
       return data;

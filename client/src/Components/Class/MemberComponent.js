@@ -13,6 +13,8 @@ import {
   fetchclass,
   fetchInvitationclassId,
   selectmembers,
+  selectusers,
+  fetchUsers
 } from "../../redux/slices/classsline";
 import AddUserToClassComponent from "./AddUserToClassComponent";
 
@@ -23,11 +25,11 @@ function MemberComponent() {
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [members] = useSelector(selectmembers);
   const dispatch = useDispatch();
-
+  const [usersList] = useSelector(selectusers);
   useEffect(() => {
     dispatch(fetchInvitationclassId(classinvit._id));
-  }, [dispatch]);
-  console.log(members);
+    dispatch(fetchUsers());
+  });
   setTimeout(()=>{},200);
   const Remove = async (idclass, email) => {
     try {
@@ -44,7 +46,7 @@ function MemberComponent() {
 
   const RemoveInvitation = async (idq) => {
     try {
-      const res = await ClassInvitationApi.deleteClassInvitation(idq);
+      await ClassInvitationApi.deleteClassInvitation(idq);
       dispatch(fetchInvitationclassId(classinvit._id));
     } catch (error) {
       alert(error);
@@ -54,7 +56,7 @@ function MemberComponent() {
   return (
     <div>
       {classinvit.classOwner._id === documentData._id && (
-        <AddUserToClassComponent floated="right" />
+        <AddUserToClassComponent floated="right" users={usersList} />
       )}
       <Header as="h2" icon textAlign="center">
         <Icon name="users" size="big" />

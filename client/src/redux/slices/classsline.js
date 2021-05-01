@@ -7,6 +7,7 @@ let initialState = {
   request: [],
   invitationclass: [],
   members: [],
+  users: [],
   selectedclass: {},
   errors: "",
 };
@@ -33,6 +34,9 @@ const classlice = createSlice({
     getMembers: (state, action) => {
       state.members = action.payload;
     },
+    getUsers: (state, action) => {
+      state.users = action.payload;
+    },
     setErrors: (state, action) => {
       state.errors = action.payload;
     },
@@ -56,7 +60,7 @@ const classlice = createSlice({
   },
 });
 export const fetchclass = (role, iduser) => async (dispatch) => {
-  if (role == "Teacher") {
+  if (role === "Teacher") {
     const res = getclassApi.getclassByLevel(iduser);
     res.then((data) => {
       dispatch(getClasss(data));
@@ -98,8 +102,12 @@ export const fetchInvitationclassId = (id) => async (dispatch) => {
   const res = ClassInvitationApi.getClassInvitationClassId(id);
   res.then((data) => {
     dispatch(getMembers(data));
-    console.log(data);
-
+  });
+};
+export const fetchUsers = () => async (dispatch) => {
+  const res = getclassApi.getUsersAll();
+  res.then((data) => {
+    dispatch(getUsers(data));
   });
 };
 export const selectclass = (state) => {
@@ -121,10 +129,14 @@ export const selectrequestclass = (state) => {
 export const selectmembers = (state) => {
   return [state.classs.members, state.classs.errors];
 };
+export const selectusers = (state) => {
+  return [state.classs.users, state.classs.errors];
+};
 export const {
   getClasss,
   getInvitationClass,
   getMembers,
+  getUsers,
   selectClass,
   setErrors,
   addClasss,
