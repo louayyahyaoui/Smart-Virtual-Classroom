@@ -69,23 +69,26 @@ export default function TaskFileDetail() {
                 <Grid.Row>
                   {" "}
                   <Grid.Column width={12}>
-                    <Header as="h1">
-                      <Icon name="file alternate" />
-                      <Header.Content>
-                        {task.task.title}
+                    <Header as="h1" color="black">
+                      <Icon circular name="file alternate" />
+                      <Header.Content >
+                     {task.task.title}
+                        
                         <Header.Subheader>
                           <ReactTimeAgo
                             date={task.task.DateAt}
                             locale="en-US"
                           />
                         </Header.Subheader>
+                       
+                        
                       </Header.Content>
                     </Header>
                     <Divider></Divider>
                     <br />
                     <Container>
-                      <p>{task.task.description}</p>
-                    </Container>
+                      <h6>{task.task.description}</h6>
+                    </Container><br/>
                     <Grid>
                       <Grid.Row>
                       <List horizontal>
@@ -236,13 +239,18 @@ export default function TaskFileDetail() {
                       </Grid.Row>
                     </Grid>
                     <br />
-                    <br />
+                  
+                    <Divider></Divider>
                     <CommentComponent taskID={task._id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>
                       <Card.Content>
-                        <Card.Header>Your Task</Card.Header>
+                      <Card.Header >Your Task -<ReactTimeAgo
+                            date={task.task.endDate}
+                            locale="en-US"
+                          />
+                          </Card.Header>
 
                         <Card.Description>
                           {task.taskStatus === "Remis" ? (

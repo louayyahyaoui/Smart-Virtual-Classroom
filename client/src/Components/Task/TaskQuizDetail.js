@@ -13,6 +13,7 @@ import {
   Header,
   Icon,
   Image,
+  Label,
   List,
   Message,
   Modal,
@@ -72,7 +73,7 @@ const [openModal , setOpenModal] = useState(false);
                   {" "}
                   <Grid.Column width={12}>
                     <Header as="h1">
-                      <Icon name="file alternate" />
+                      <Icon circular  name="tasks" />
                       <Header.Content>
                         {task.task.title}
                         <Header.Subheader>
@@ -83,17 +84,25 @@ const [openModal , setOpenModal] = useState(false);
                         </Header.Subheader>
                       </Header.Content>
                     </Header>
-                    <Divider></Divider>
+                    <Divider ></Divider>
                     <br />
                     <Container>
-                      <p>{task.task.description}</p>
-                    </Container>
+                      <h6>{task.task.description}</h6>
+                    </Container><br/>
+                    <Divider></Divider>
                     <CommentComponent taskID={task._id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>
                       <Card.Content>
-                        <Card.Header>Your Task</Card.Header>
+                       
+                        <Card.Header >Your Task -<ReactTimeAgo
+                            date={task.task.endDate}
+                            locale="en-US"
+                          />
+
+                        
+                        </Card.Header>
 
                         <Card.Description>
                           {task.taskStatus === "Remis" ? (

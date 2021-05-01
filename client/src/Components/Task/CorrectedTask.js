@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Button, Card, Feed, Header, Icon, Image, Input, Label, List, Segment } from 'semantic-ui-react'
 import { getCorrectedTask, getDetailTask } from '../../redux/slices/Task'
 
@@ -13,7 +14,7 @@ export default function CorrectedTask(props) {
              { !props.correctTasks ? (<div></div>)  : (
              props.correctTasks.map((task,index) =>
             task.grade!=null ? (
-    <Card key={index} color='red' raised>
+    <Card key={index} color='grey' raised>
  
      
 
@@ -28,9 +29,8 @@ export default function CorrectedTask(props) {
         </Card.Header>
        
         <Card.Meta >
-            <strong>{task.taskStatus}</strong>
-            
-    
+            <strong>{task.taskStatus}</strong> <br/>
+        
     </Card.Meta>
         <Card.Description>
         { task.task.typeTask === "File" ?  (<>
@@ -156,17 +156,22 @@ export default function CorrectedTask(props) {
                       </Feed.Extra>
         
         
-        </>) : (<> Quiz </>)}
+        </>) : (<> <h5>Quiz</h5>  <br/>   <Label   color="red" icon>
+        <Icon name='clipboard check' />
+                              <Label.Detail>{task.grade}</Label.Detail>
+        
+       
+      </Label> </>)}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
     
-      <Label color="red">
-        {task.grade}
-     
-      </Label>
-      
+    
+      <Link to={ task.task.typeTask === "File" ? "/TaskFileDetail/"+task._id :  "/TaskQuizDetail/"+task._id }>
+            <Button inverted fluid color="red" content="View Detail"/>
+            </Link>
       </Card.Content>
+      
     </Card>
              ) : (
              
