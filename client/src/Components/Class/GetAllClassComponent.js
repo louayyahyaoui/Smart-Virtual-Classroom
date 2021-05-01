@@ -44,7 +44,8 @@ export default function GetAllClassComponent() {
     dispatch(fetchActiveClass(documentData._id));
     dispatch(fetchRequestClass(documentData._id));
   }, [dispatch]);
-
+console.log("classsssssssss ");
+console.log(classs);
   const aff = (id) => {
     if (documentData.role === "Teacher") return "Level " + id + "th";
     else if (documentData.role === "Student") return "Year " + id;
