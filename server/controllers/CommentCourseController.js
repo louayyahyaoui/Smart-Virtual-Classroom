@@ -24,7 +24,7 @@ module.exports = {
 getCourseBytask : async(req,res,next) =>{
   try {
   const  id  = req.params.id;
-  const cmntcours = await CommentCourse.find({task :  mongoose.Types.ObjectId(req.params.id)}).populate("Writer");
+  const cmntcours = await CommentCourse.find({Task :  mongoose.Types.ObjectId(req.params.id)}).populate("Writer");
  
   return res
   .status(200)
