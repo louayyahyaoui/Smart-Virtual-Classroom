@@ -33,7 +33,7 @@ export default function EditAnswer(props) {
         setImages(element);
       });
     } else {
-      alert("hi");
+      //alert("hi");
       setUp(1);
       setImages(newImages);
     }

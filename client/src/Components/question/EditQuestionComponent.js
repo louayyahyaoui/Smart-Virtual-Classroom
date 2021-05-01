@@ -19,12 +19,14 @@ import { addQuestion, fetchQuestions } from "../../redux/slices/questionslice";
 import FileUploadEdit from "../../utlis/FileUploadEdit";
 import { selectedClasses } from "../../redux/slices/classsline";
 import io from "socket.io-client";
+import { useHistory } from "react-router";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 export default function EditQuestions({ qes }) {
   //const socket = io(ENDPOINT);
   const [open, setOpen] = React.useState(false);
   const [currentClass, err] = useSelector(selectedClasses);
+  const history = useHistory();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,7 +47,7 @@ export default function EditQuestions({ qes }) {
         setImages(element);
       });
     } else {
-      alert("hi");
+      //alert("hi");
       setUp(1);
       setImages(newImages);
     }
@@ -65,12 +67,14 @@ export default function EditQuestions({ qes }) {
       try {
         if (Images.length !== 0) {
           values.Filee = Images;
-          alert("images : here : " + values.Filee);
+         // alert("images : here : " + values.Filee);
         } else {
           values.Filee = qes.Filee;
         }
         const res = await AddquestionsApi.putQuestions(values, qes._id);
+        
         setEnableUpload(true);
+        history.push("/FAQ/"+qes._id);
 
         //  dispatch(fetchQuestions(currentClass._id));
         //   socket.emit("send_question", "message");

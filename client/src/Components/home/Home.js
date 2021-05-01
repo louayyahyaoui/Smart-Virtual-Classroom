@@ -24,6 +24,7 @@ import PrivateRoute from "../../Routes/PrivateRoute";
 import Quiz from "../Quiz/Quiz";
 import QuestionByTags from "../question/QuestionByTags";
 import TaskQuizDetail from "../Task/TaskQuizDetail";
+import UserQuestion from "../question/UserQuestion";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -117,6 +118,8 @@ function Home() {
               render={(props) => <AddPost {...props} />}
             />
             <br />
+            <Route exact path="/MyPosts" component={UserQuestion} />
+
             <Route
               path="/stream"
               exact

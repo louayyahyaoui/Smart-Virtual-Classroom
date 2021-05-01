@@ -143,6 +143,8 @@ function App() {
             render={(props) => <Page_404 {...props} />}
           />
           <Route exact path="/meet" component={Main} />
+          <Route exact path="/MyPosts" component={Home} />
+
           <Route exact path="/room/:roomId" component={Room} />
           <PrivateRoute path="/private" exact component={Private} />
           <AdminRoute path="/admin" exact component={Admin} />

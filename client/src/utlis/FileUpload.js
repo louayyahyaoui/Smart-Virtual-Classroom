@@ -72,6 +72,7 @@ function FileUpload(props) {
             setImages(response.data);
             props.refreshFunction(response.data);
             SetLoader(false);
+            setImages([]);
           } else {
             alert("Failed to save the File in Server");
           }

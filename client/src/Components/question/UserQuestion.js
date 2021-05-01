@@ -26,13 +26,13 @@ import {
 } from "../../redux/slices/questionslice";
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
-import { isAuth } from "../../helpers/auth";
+import { selectedClasses } from "../../redux/slices/classsline";
 import io from "socket.io-client";
 import { AddquestionsApi } from "../../api/api";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 
-export default function QuestionComponent(props) {
+export default function UserQuestion(props) {
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
@@ -66,18 +66,19 @@ export default function QuestionComponent(props) {
       alert(error);
     }
   };
-  const [filtrequestion, setfilterQuestionbyUser] = useState(false);
-
+const [loadmore, setloadmore] = useState(5)
+const [enableLoadMore, setenableLoadMore] = useState(true)
+const morQuestion =  (nb) => {
+      setloadmore(loadmore +5)
+      console.log(questions.length)
+      if(questions.length-loadmore<=0 )
+      {
+        setenableLoadMore(false)
+      }
+  };
   return (
     <Container fluid>
       <AddQuestion floated="right" />
-<Link to="/MyPosts">
-      <Label as='a' color='grey' image style={{marginLeft:"60%",height:"34px"}} onClick={(()=>setfilterQuestionbyUser(true))}>
-      <img src={isAuth().picture}  />
-      Your
-      <Label.Detail>Posts</Label.Detail>
-    </Label>
-    </Link>
       {Number(questions.length) === 0 && (
         <Segment raised color="black" size="huge">
           <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
@@ -85,8 +86,7 @@ export default function QuestionComponent(props) {
           </Header>
         </Segment>
       )}
-
-      {questions.map((question, index) => (
+      {questions.filter(qq=>qq.Writerq._id===documentData._id).slice(0,loadmore).map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
             <Dropdown floated="right" icon="ellipsis vertical">
@@ -272,6 +272,11 @@ export default function QuestionComponent(props) {
           </Segment>
         </Segment>
       ))}
+     {enableLoadMore &&(
+          <Segment textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
+
+     )}
+
     </Container>
   );
 }

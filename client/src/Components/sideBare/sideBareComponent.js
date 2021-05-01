@@ -98,7 +98,13 @@ function SideBareComponent() {
             <Card.Header>
               {isAuth().name}
               {"  |  "}
-              <Dropdown text={nbrNotif} icon="bell outline" scrolling>
+              {Number(nbrNotif) !== 0 && (
+                <Label circular color="red">
+                  {nbrNotif}
+                </Label>
+              )}
+
+              <Dropdown icon="bell outline" scrolling>
                 <Dropdown.Menu>
                   <Dropdown.Divider />
                   <Dropdown.Header
@@ -219,7 +225,6 @@ function SideBareComponent() {
                 </Menu.Item>
               </Link>
 
-           
               <Link to="/schedule">
                 <Menu.Item
                   name="Routine"

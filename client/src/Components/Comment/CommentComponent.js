@@ -18,7 +18,6 @@ function CommentComponent(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (props.courseID !== undefined) {
-      console.log("test")
       dispatch(fetchCommentsCourse(props.courseID));
     } else {
       dispatch(fetchCommentsTask(props.taskID));
@@ -47,15 +46,12 @@ function CommentComponent(props) {
           console.log(values.Task);
 
           const res = await CommentsApi.postComments(values).then((data) => {
-            console.log("course"+data.Course );
 
             if (data.Course !== null) {
-              console.log("course");
 
-              dispatch(fetchCommentsCourse(props.courseID));
+              dispatch(fetchCommentsCourse(data.Course));
             } else if (data.Task !== null) {
-              console.log("task");
-              dispatch(fetchCommentsTask(props.taskID));
+              dispatch(fetchCommentsTask(data.Task));
             }
           });
         }
