@@ -54,7 +54,7 @@ export default function ModalTaskFile(props) {
    
  
     const [selectedSeance, setSelectedSeance] = useState(null);
-    
+    const [openModel, setOpenModel] = useState(false);
 
     const [selected, setSelected] = useState([]);
    
@@ -90,21 +90,26 @@ export default function ModalTaskFile(props) {
       setOpensave(true);
     };
     const clicConfirmCancel = () => {
-      //dispatch(postTasks(props.data));
-     // props.nextStep(step + 1);
+    
      setCancel(false);
+     setOpenModel(false);
+     
     };
     const clicConfirm = () => {
 
      setTask(
-        selected.forEach((itemselect) => {
-          const index = tasks.listStudents.findIndex(
-            (item) => item._id === itemselect.value._id
+        currentClass.classUsers.forEach((itemselect) => {
+        
+          const index = selected.findIndex(
+            (item) => item.value === itemselect._id
           );
           if (index !== -1) {
-            tasks.listStudents[index] = itemselect.value;
+            
+        
+            tasks.listStudents.push(itemselect);
           }
-          tasks.listStudents.push(  itemselect.value);
+        
+          
         })
       );
       console.log(selectedSeance);
@@ -114,21 +119,27 @@ export default function ModalTaskFile(props) {
       setEnableUpload(true);
       dispatch(postTasks(tasks)).then(()=>{
         dispatch(getTaskByTeacher(taskDetail));
+        setEnableUpload(false);
+        setOpenModel(false);
       });
-     
-    
       setOpensave(false);
+    
+     
     };
     const clicConfirmAssign = () => {
       setTask(
-        selected.forEach((itemselect) => {
-          const index = tasks.listStudents.findIndex(
-            (item) => item._id === itemselect.value._id
+        currentClass.classUsers.forEach((itemselect) => {
+        
+          const index = selected.findIndex(
+            (item) => item.value === itemselect._id
           );
           if (index !== -1) {
-            tasks.listStudents[index] = itemselect.value;
+            
+        
+            tasks.listStudents.push(itemselect);
           }
-          tasks.listStudents.push(  itemselect.value);
+        
+          
         })
       );
       setTask(tasks.theme = selectedSeance.value);
@@ -137,54 +148,28 @@ export default function ModalTaskFile(props) {
       setEnableUpload(true);
       dispatch(assignTask(tasks)).then(()=>{
         dispatch(getTaskByTeacher(taskDetail));
+        setEnableUpload(false);
+        setOpenModel(false);
       });;
     
       setOpen(false);
+      
     };
     const clicClose = () => {
       setOpen(false);
+     // setOpenModel(false);
     };
     const clicClosesave = () => {
       setOpensave(false);
+     // setOpenModel(false);
+    
     };
     const clicCloseCancel = () => {
       setCancel(false);
+     // setOpenModel(false);
     };
 
-    /*  const event = (selectedList) => {
-        //prop(tasks);
-
-        setTask(...tasks.theme = theme._id);
-        setTask(...tasks.listStudents = listStud);
-        setTask(...tasks.listQuestion = Images);
-        
-        console.log(tasks.listStudents);
-    
-     
-      };
-    
-      const onSelect = (selectedList, selectedItem) => {
-       console.log(selectedItem);
-       setListStud(selectedList);
-
-    console.log(listStud);
-      };
-      const onRemove = (selectedList, removedItem) => {
-    
-         listStud.filter(
-            (item) => item._id !== removedItem._id
-          );
-          setListStud(selectedList);
-        
-        console.log(listStud);
-      
-      };
-    
-      const selectedTheme = (selectedList, selectedItem) => {
-       
-       setTheme(selectedItem);
   
-      };*/
       const [enableUpload, setEnableUpload] = useState(false);
       const [Images, setImages] = useState([]);
       const updateImages = (newImages) => {
@@ -193,13 +178,18 @@ export default function ModalTaskFile(props) {
         
        
       };
+      const handleOpen = ()=>{
+        setOpenModel(true);
+      }
     return (
         <div>
                <Modal
-        trigger={<Dropdown.Item icon="file text" text="Add Task" />}
+        trigger={<Dropdown.Item onClick={handleOpen} icon="file text" text="Add Task" />}
         dimmer="inverted"
         size="tiny"
         closeIcon="close"
+        open={openModel}
+        
       >
         <Modal.Header>{props.headerTitle}</Modal.Header>
         <Modal.Content>
@@ -283,26 +273,38 @@ export default function ModalTaskFile(props) {
        
         <Modal.Actions>
      
+        <Button color="black"      floated="right" onClick={() => clicCancel()}>Back</Button>
+        <Confirm
+         size="tiny"
+          header="Cancel Add "
+          content="Are you sure?"
+      
+          open={cancel}
+          onCancel={clicCloseCancel}
+          onConfirm={clicConfirmCancel}
+        />
+           
         <Button
           color="red"
           type="submit"
           onClick={() => clicOpensave()}
           //onClick={onSubmitSaveTask}
-          floated="right"
+       
         >
           Save
         </Button>
         <Confirm
+          size="tiny"
           header="Save Task To Assign"
           content="Are you sure?"
           open={opensave}
           onCancel={clicClosesave}
           onConfirm={clicConfirm}
         />
-      
+     
       
         <Button
-        floated="right"
+       
           color="red"
           type="submit"
           // onClick={onSubmitAssignTask}
@@ -312,6 +314,7 @@ export default function ModalTaskFile(props) {
         </Button>
    
         <Confirm
+         size="tiny"
           header="Assign Task To Student"
           content="Are you sure?"
           open={open}
@@ -320,15 +323,7 @@ export default function ModalTaskFile(props) {
           
         />
         
-    <Button color="black" onClick={() => clicCancel()}>Back</Button>
-        <Confirm
-          header="Cancel Add "
-          content="Are you sure?"
-
-          open={cancel}
-          onCancel={clicCloseCancel}
-          onConfirm={clicConfirmCancel}
-        />
+ 
     
     
    

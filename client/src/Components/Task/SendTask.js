@@ -37,6 +37,8 @@ const updateImages = (newImages) => {
  
 };
   var step = 3;
+  console.log("cc");
+  console.log(props.data);
   const [cancel, setCancel] = useState(false);
   const [open, setOpen] = useState(false);
   const [opensave, setOpensave] = useState(false);
