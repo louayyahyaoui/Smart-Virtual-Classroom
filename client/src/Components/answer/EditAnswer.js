@@ -58,12 +58,15 @@ export default function EditAnswer(props) {
         }
 
         const res = await AddAnswersApi.putAnswers(values, answer._id);
+        setEnableUpload(true);
+
         dispatch(fetchAnswers(answer.Question._id));
       } catch (error) {
         alert(error);
       }
     },
   });
+  const [enableUpload, setEnableUpload] = useState(false);
 
   return (
     <Modal
@@ -84,19 +87,32 @@ export default function EditAnswer(props) {
             onChange={formik.handleChange}
             error={formik.errors.Body}
           />
-          <Button type="submit" color="red">
-            Update!
-          </Button>
-          <FileUploadEdit
+          <div style={{ float: "right", marginRight: "5%" }}>
+            <Button
+              style={{ maxHeight: "40px" }}
+              type="submit"
+              content="Edit"
+              icon="edit"
+              color="red"
+            />
+            <Button color="black" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+          </div>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginLeft: "5%" }}>
+            <FileUploadEdit
             refreshFunction={updateImages}
             listfile={answer.Filee}
+            Enbale={enableUpload}
           />
+            </div>
+          </div>
+         
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="black" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
+        
       </Modal.Actions>
     </Modal>
   );

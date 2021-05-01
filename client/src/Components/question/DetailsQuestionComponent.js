@@ -82,7 +82,10 @@ function DetailsQuestion(props) {
       try {
         if (values.Body !== " ") {
           const res = await AddAnswersApi.postAnswers(values);
-        
+          if(Images)
+{          setEnableUpload(true);
+}          setText(" ");
+          setImages([]);
 
           try {
             let arr
@@ -97,7 +100,6 @@ function DetailsQuestion(props) {
             notif.Owner=arr;
             const res2 = await notificationsApi.addNotification(notif);
             const socket = io(ENDPOINT);
-
            socket.emit("add-new-notification", arr);
           } catch (error) {
             alert(error);

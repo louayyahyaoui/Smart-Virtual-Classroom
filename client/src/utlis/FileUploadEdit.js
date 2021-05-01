@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment, Loader, Tab, Dimmer,Message } from "semantic-ui-react";
+import { Icon, Segment, Loader, Tab, Dimmer,Message, Label } from "semantic-ui-react";
 
 import { AddquestionsApi } from "../api/api";
 
@@ -44,20 +44,22 @@ function FileUploadEdit(props) {
  
   };
   useEffect(async () => {
-    console.log(fd.getAll("files"));
-    if (props.Enbale && endloader ) {
+    // console.log(fd.getAll("files"));
+    if (props.Enbale && endloader) {
       //save the Image we chose inside the Node Server
 
+      //  console.log(fd.getAll("files"));
+
       SetLoader(true);
-      console.log(fd.getAll("files"));
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
-
+      console.log("fileeee heree");
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
           if (response.data) {
-            SetEndLoader(false)
+            SetEndLoader(false);
+            console.log(response.data);
             setImages(response.data);
             props.refreshFunction(response.data);
             SetLoader(false);
@@ -90,7 +92,7 @@ function FileUploadEdit(props) {
             style={{
               width: "40px",
               height: "40px",
-              border: "1px solid lightgray",
+           //   border: "1px solid lightgray",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -99,12 +101,12 @@ function FileUploadEdit(props) {
           >
             <input {...getInputProps()} />
 
-            <Icon
-              onClick={() => setetat("flex")}
-              name="paperclip"
-              style={{ fontSize: "1rem" }}
-              
-            />
+            <Label as="a" onClick={() => setetat("flex")}>
+              <div style={{ display: "flex" }}>
+                <Icon name="paperclip" floated />
+                <p>Add</p>
+              </div>
+            </Label>
           </div>
         )}
       </Dropzone>

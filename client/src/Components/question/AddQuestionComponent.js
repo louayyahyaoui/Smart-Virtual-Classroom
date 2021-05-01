@@ -121,16 +121,32 @@ function AddQuestion() {
           />
           <TagsInput value={tags} onChange={handleChange} />
 
-          <Button type="submit" color="red">
-            Ask!
-          </Button>
-          <FileUpload refreshFunction={updateImages} listfile={null} Enbale={enableUpload}/>
+          <div style={{ float: "right", marginRight: "5%",marginTop:"2%" }}>
+                  <Button
+                    style={{ maxHeight: "40px" }}
+                    type="submit"
+                    content="Post"
+                    icon="bullhorn"
+                    color="red"
+
+                  />
+                  <Button color="black" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+                </div>
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "5%" }}>
+                    <FileUpload
+                      refreshFunction={updateImages}
+                      listfile={null}
+                      Enbale={enableUpload}
+                    />
+                  </div>
+                </div>
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="black" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
+      
       </Modal.Actions>
     </Modal>
   );

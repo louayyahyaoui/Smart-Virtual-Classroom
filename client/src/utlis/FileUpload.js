@@ -1,7 +1,7 @@
 import { set } from "js-cookie";
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment, Loader, Tab, Dimmer } from "semantic-ui-react";
+import { Icon, Segment, Loader, Tab, Dimmer, Label } from "semantic-ui-react";
 import { array } from "yup/lib/locale";
 import { AddquestionsApi } from "../api/api";
 
@@ -98,7 +98,7 @@ function FileUpload(props) {
             style={{
               width: "40px",
               height: "40px",
-              border: "1px solid lightgray",
+              //border: "1px solid lightgray",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -106,12 +106,12 @@ function FileUpload(props) {
             {...getRootProps()}
           >
             <input {...getInputProps()} />
-
-            <Icon
-              onClick={() => setetat("flex")}
-              name="paperclip"
-              style={{ fontSize: "1rem" }}
-            />
+            <Label as="a" onClick={() => setetat("flex")}>
+              <div style={{ display: "flex" }}>
+                <Icon name="paperclip" floated />
+                <p>Add</p>
+              </div>
+            </Label>
           </div>
         )}
       </Dropzone>

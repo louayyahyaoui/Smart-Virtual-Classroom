@@ -45,35 +45,35 @@ export default function EditQuestions({ qes }) {
         setImages(element);
       });
     } else {
-      alert("hi")
+      alert("hi");
       setUp(1);
       setImages(newImages);
     }
   };
-  const documentData = JSON.parse(localStorage.getItem('user'));
+  const documentData = JSON.parse(localStorage.getItem("user"));
 
   const formik = useFormik({
     initialValues: {
       Title: qes.Title,
       Body: qes.Body,
-      Writerq: { _id: ""+documentData._id },
+      Writerq: { _id: "" + documentData._id },
       Filee: [],
     },
     validationSchema: yupSchema,
 
     onSubmit: async (values) => {
       try {
-        
-        if(Images.length !==0 )
-       { values.Filee = Images;
-        alert("images : here : "+values.Filee);
-      }
-      else{
-        values.Filee = qes.Filee;
-      }
+        if (Images.length !== 0) {
+          values.Filee = Images;
+          alert("images : here : " + values.Filee);
+        } else {
+          values.Filee = qes.Filee;
+        }
         const res = await AddquestionsApi.putQuestions(values, qes._id);
-      //  dispatch(fetchQuestions(currentClass._id));
-     //   socket.emit("send_question", "message");
+        setEnableUpload(true);
+
+        //  dispatch(fetchQuestions(currentClass._id));
+        //   socket.emit("send_question", "message");
       } catch (error) {
         alert(error);
       }
@@ -99,7 +99,6 @@ export default function EditQuestions({ qes }) {
               name="Title"
               onChange={formik.handleChange}
               value={formik.values.Title}
-              
             />
           </Form.Group>
           <Form.Field
@@ -111,19 +110,28 @@ export default function EditQuestions({ qes }) {
             onChange={formik.handleChange}
             error={formik.errors.Title}
           />
-          <Button type="update" color="red">
-            Update
-          </Button>
-          <FileUploadEdit
-            refreshFunction={updateImages}
-            listfile={qes.Filee}  
-          />
+          <div style={{ float: "right", marginRight: "5%" }}>
+            <Button
+              style={{ maxHeight: "40px" }}
+              type="submit"
+              content="Edit"
+              icon="edit"
+              color="red"
+            />
+          </div>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginLeft: "5%" }}>
+              <FileUploadEdit
+                refreshFunction={updateImages}
+                listfile={qes.Filee}
+                Enbale={enableUpload}
+              />
+            </div>
+          </div>
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="black" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
+        
       </Modal.Actions>
     </Modal>
   );

@@ -14,16 +14,25 @@ import { useHistory } from "react-router";
 import io from "socket.io-client";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function AddPost() {
-  const socket = io(ENDPOINT);
-  const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  const documentData = JSON.parse(localStorage.getItem("user"));
   const history = useHistory();
+
+  const documentData = JSON.parse(localStorage.getItem("user"));
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
+  const [open, setOpen] = React.useState(false);
   const [error] = useState({ visible: false, message: "" });
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
-    console.log(newImages);
+
     setImages(newImages);
+    
+   
+  };
+  //inpput tags
+  const [tags, setTags] = useState([]);
+  const handleChange = (tag) => {
+    setTags(tag);
   };
   const formik = useFormik({
     initialValues: {
@@ -31,37 +40,42 @@ function AddPost() {
       Body: "",
       Writerq: { _id: "" },
       Filee: [],
+      Hashtags: [],
       Class: { _id: "" },
-
     },
     validationSchema: yupSchema,
 
     onSubmit: async (values) => {
       try {
+        
+       // alert("images"+Images)
+      
         values.Filee = Images;
         values.Writerq._id = documentData._id;
+        values.Hashtags = tags;
         values.Class = currentClass._id;
-
+        setEnableUpload(true);
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
+        const socket = io(ENDPOINT);
         socket.emit("send_question", "message");
-
-        history.push("/FAQ/" + res._id);
+        setTags([]);
+        values.Title = "";
+        values.Body = "";
+        console.log(res)
+      history.push("/FAQ/"+res._id);
       } catch (error) {
         alert(error);
       }
     },
   });
-  const [tags, setTags] = useState([]);
-  const handleChange = (tag) => {
-    setTags(tag);
-    console.log(tags);
-  };
+  const [enableUpload, setEnableUpload] = useState(false);
+
   return (
     <div>
       <Segment raised color="red">
-        <Form onSubmit={formik.handleSubmit}>
-        
+      <Form onSubmit={formik.handleSubmit}>
+          
           <Form.Field
             control={TextArea}
             placeholder="whats your question?"
@@ -71,16 +85,24 @@ function AddPost() {
             error={formik.errors.Body}
           />
           <TagsInput value={tags} onChange={handleChange} />
-          <div style={{ float: "right", marginRight: "5%", marginTop: "1%" }}>
-            <Button type="submit" color="red">
-              Ask!
-            </Button>
-          </div>
-          <div style={{ display: "flex" }}>
-            <div style={{ marginLeft: "5%" }}>
-              <FileUpload refreshFunction={updateImages} listfile={null} />
-            </div>
-          </div>{" "}
+
+          <div style={{ float: "right", marginRight: "5%" }}>
+                  <Button
+                    style={{ maxHeight: "40px" }}
+                    type="submit"
+                    content="Reply"
+                    icon="edit"
+                  />
+                </div>
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "5%" }}>
+                    <FileUpload
+                      refreshFunction={updateImages}
+                      listfile={null}
+                      Enbale={enableUpload}
+                    />
+                  </div>
+                </div>
         </Form>
       </Segment>
     </div>
