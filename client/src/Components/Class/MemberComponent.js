@@ -89,7 +89,14 @@ function MemberComponent() {
           </Header.Subheader>
         </div>
       </Segment>
-      <Header as="h2" icon textAlign="center">
+     
+    </div>
+  );
+}
+
+export default MemberComponent;
+/*
+ <Header as="h2" icon textAlign="center">
         <Icon name="add user" size="big" />
         Pending Accounts
       </Header>
@@ -116,9 +123,4 @@ function MemberComponent() {
             ))}
           </Header.Subheader>
         </div>
-      </Segment>
-    </div>
-  );
-}
-
-export default MemberComponent;
+      </Segment>*/
