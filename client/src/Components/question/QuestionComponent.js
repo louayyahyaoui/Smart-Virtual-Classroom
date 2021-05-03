@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import InputEmoji from "react-input-emoji";
 import {
-  Comment,
-  Form,
-  Button,
+ 
   Header,
   Icon,
   Segment,
@@ -17,9 +14,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
-import { useFormik } from "formik";
 import AddQuestion from "./AddQuestionComponent";
-import FileUpload from "../../utlis/FileUpload";
 import {
   fetchQuestions,
   selectQuestions,
@@ -27,10 +22,10 @@ import {
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
 import { isAuth } from "../../helpers/auth";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import { AddquestionsApi } from "../../api/api";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+//const ENDPOINT = "https://closer-server.herokuapp.com/";
 
 export default function QuestionComponent(props) {
   const { idd } = useParams();
@@ -41,21 +36,13 @@ export default function QuestionComponent(props) {
     dispatch(fetchQuestions(currentClass._id));
   }, [dispatch]);
 
-  const [enableUpload, setEnableUpload] = useState(false);
 
   const documentData = JSON.parse(localStorage.getItem("user"));
-  const [text, setText] = useState("");
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
+ 
 
-  const [id, setIdquestion] = useState(null);
   const [questions, errr] = useSelector(selectQuestions);
 
-  const [Images, setImages] = useState([]);
-  const updateImages = (newImages) => {
-    setImages(newImages);
-  };
+ 
   const deletee = async (idq) => {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
@@ -64,7 +51,6 @@ export default function QuestionComponent(props) {
       alert(error);
     }
   };
-  const [filtrequestion, setfilterQuestionbyUser] = useState(false);
   const [loadmore, setloadmore] = useState(5)
   const [enableLoadMore, setenableLoadMore] = useState(true)
   const morQuestion =  (nb) => {
@@ -84,7 +70,6 @@ export default function QuestionComponent(props) {
           color="grey"
           image
           style={{ marginLeft: "60%", height: "34px" }}
-          onClick={() => setfilterQuestionbyUser(true)}
         >
           <img src={isAuth().picture} />
           Your
@@ -269,8 +254,8 @@ export default function QuestionComponent(props) {
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/" + currentClass._id + "/" + hashtag}>
-                <Label key={index} color="grey" as="a" tag>
+              <Link to={"/tags/" + currentClass._id + "/" + hashtag} key={index}>
+                <Label  color="grey" as="a" tag>
                   #{hashtag}
                 </Label>
               </Link>
@@ -282,17 +267,15 @@ export default function QuestionComponent(props) {
               <h6 style={{ textAlign: "center" }}>See more</h6>
             </Link>
           </Segment>
-          {enableLoadMore &&(
-          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
-
-     )}
+   
 
         </Segment>
         
       ))}
+             {enableLoadMore &&(
+          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
+
+     )}
     </Container>
   );
 }
-const yupSchema = Yup.object({
-  Body: Yup.string().required("Champs requis!"),
-});

@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from "react";
-import InputEmoji from "react-input-emoji";
+import React, { useState,useEffect } from "react";
 import {
 
-  Form,
-  Button,
   Header,
   Icon,
   Segment,
@@ -16,11 +13,9 @@ import {
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { AddAnswersApi, AddquestionsApi } from "../../api/api";
+import { isAuth } from "../../helpers/auth";
+import {  AddquestionsApi } from "../../api/api";
 import AddQuestion from "./AddQuestionComponent";
-import FileUpload from "../../utlis/FileUpload";
 import {
 
     fetchQuestionsByTags, selectQuestions,
@@ -36,7 +31,6 @@ export default function QuestionByTags(props) {
   const socket = io(ENDPOINT);
   const { tag } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  console.log("id class : " + currentClass._id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchQuestionsByTags(currentClass._id,tag));
@@ -45,52 +39,9 @@ export default function QuestionByTags(props) {
  
  
   const documentData = JSON.parse(localStorage.getItem("user"));
-  const [text, setText] = useState("");
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
-
-
-  const [id, setIdquestion] = useState(null);
+ 
   const [questions, errr] = useSelector(selectQuestions);
-  const formik = useFormik({
-    initialValues: {
-      Body: " ",
-      Writer: { _id: "" + documentData._id },
-      Question: {},
-      Filee: [],
-    },
-    validationSchema: yupSchema,
-
-    onSubmit: async (values) => {
-      values.Question = id;
-      values.Filee = Images;
-      values.Body = text;
-      try {
-        if (values.Body !== " ") {
-          alert(JSON.stringify(values));
-
-          const res = await AddAnswersApi.postAnswers(values);
-          alert(JSON.stringify(res));
-          dispatch(fetchQuestionsByTags(currentClass._id,tag));
-        
-          socket.emit("send_question", "message");
-
-          setText("");
-          setImages([]);
-        }
-        console.log("error");
-      } catch (error) {
-        alert(error);
-      }
-    },
-  });
-  const [Images, setImages] = useState([]);
-  const updateImages = (newImages) => {
-
-   
-    setImages(newImages);
-  };
+  
   const deletee = async (idq) => {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
@@ -99,10 +50,31 @@ export default function QuestionByTags(props) {
       alert(error);
     }
   };
-
+  const [loadmore, setloadmore] = useState(5)
+  const [enableLoadMore, setenableLoadMore] = useState(true)
+  const morQuestion =  (nb) => {
+        setloadmore(loadmore +5)
+        console.log(questions.length)
+        if(questions.length-loadmore<=0 )
+        {
+          setenableLoadMore(false)
+        }
+    };
   return (
     <Container fluid>
       <AddQuestion floated="right" />
+      <Link to="/MyPosts">
+        <Label
+          as="a"
+          color="grey"
+          image
+          style={{ marginLeft: "60%", height: "34px" }}
+        >
+          <img src={isAuth().picture} />
+          Your
+          <Label.Detail>Posts</Label.Detail>
+        </Label>
+      </Link>
       {Number(questions.length) === 0 && (
         <Segment raised color="black" size="huge">
           <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
@@ -110,7 +82,8 @@ export default function QuestionByTags(props) {
           </Header>
         </Segment>
       )}
-      {questions.map((question, index) => (
+
+      {questions.slice(0,loadmore).map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
             <Dropdown floated="right" icon="ellipsis vertical">
@@ -147,20 +120,26 @@ export default function QuestionByTags(props) {
                     switch (file.split(".").pop()) {
                       case "pdf":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             {" "}
                             <Icon name="file pdf" color="red" size="huge" />
                           </a>
                         );
                       case "docx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="file word" color="blue" size="huge" />
                           </a>
                         );
                       case "pptx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon
                               name="file powerpoint"
                               color="red"
@@ -170,7 +149,9 @@ export default function QuestionByTags(props) {
                         );
                       case "xlsx":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon
                               name="file excel outline"
                               color="green"
@@ -180,64 +161,84 @@ export default function QuestionByTags(props) {
                         );
                       case "zip":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="zip" size="huge" />
                           </a>
                         );
                       case "js":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="js" color="yellow" size="huge" />
                           </a>
                         );
                       case "php":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="zip" color="blue" size="huge" />
                           </a>
                         );
                       case "txt":
                         return (
-                          <a href={`http://localhost:5000/file/${file}`}>
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
                             <Icon name="file text" size="huge" color="blue" />
                           </a>
                         );
 
                       case "jpg":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
                       case "jpeg":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
                       case "png":
                         return (
-                          <img
-                            style={{
-                              minWidth: "50px",
-                              width: "50px",
-                              height: "50px",
-                            }}
-                            src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
-                            alt={`scan`}
-                          />
+                          <a
+                            href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                          >
+                            <img
+                              style={{
+                                minWidth: "50px",
+                                width: "50px",
+                                height: "50px",
+                              }}
+                              src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                              alt={`scan`}
+                            />
+                          </a>
                         );
 
                       default:
@@ -252,46 +253,28 @@ export default function QuestionByTags(props) {
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Label key={index} color="grey" as="a" tag>
-                #{hashtag}
-              </Label>
+              <Link to={"/tags/" + currentClass._id + "/" + hashtag} key={index}>
+                <Label  color="grey" as="a" tag>
+                  #{hashtag}
+                </Label>
+              </Link>
             ))}
           </div>
-          <InputEmoji
-            onChange={setText}
-            cleanOnEnter
-            onEnter={handleOnEnter}
-            placeholder="Type a message"
-          />
-          <Form onSubmit={formik.handleSubmit}>
-            <div style={{ float: "right", marginRight: "5%" }}>
-              <Button
-                style={{ maxHeight: "40px" }}
-                type="submit"
-                content="Reply"
-                icon="edit"
-                onClick={() => setIdquestion(question._id)}
-              />
-            </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ marginLeft: "5%" }}>
-                <FileUpload refreshFunction={updateImages} listfile={null} />
-              </div>
-            </div>
-          </Form>
-          <Header dividing as="h3" style={{ marginLeft: "2%" }}>
-            Comments({question.Question_Answer.length})
-          </Header>
+          <Header dividing as="h3" style={{ marginLeft: "2%" }}></Header>
           <Segment inverted color="red">
             <Link to={"/FAQ/" + question._id} style={{ color: "white" }}>
               <h6 style={{ textAlign: "center" }}>See more</h6>
             </Link>
           </Segment>
+   
+
         </Segment>
+        
       ))}
+             {enableLoadMore &&(
+          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
+
+     )}
     </Container>
   );
 }
-const yupSchema = Yup.object({
-  Body: Yup.string().required("Champs requis!"),
-});

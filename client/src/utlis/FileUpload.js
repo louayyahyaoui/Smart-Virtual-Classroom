@@ -33,17 +33,14 @@ function FileUpload(props) {
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
-    //  console.log(files);
     files.forEach((f) => {
       formData.append("files", f);
 
-      // console.log(formData.getAll("files"));
       arr.push(f.name);
       props.refreshFunction(arr);
     });
     fd = formData;
     setfd(formData);
-    // console.log(fd.getAll("files"));
     setImages(arr);
 
     /*formData.append("files", files[i]);
@@ -53,22 +50,18 @@ function FileUpload(props) {
   };
 
   useEffect(async () => {
-    // console.log(fd.getAll("files"));
     if (props.Enbale && endloader) {
       //save the Image we chose inside the Node Server
 
-      //  console.log(fd.getAll("files"));
 
       SetLoader(true);
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
-      console.log("fileeee heree");
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
           if (response.data) {
             SetEndLoader(false);
-            console.log(response.data);
             setImages(response.data);
             props.refreshFunction(response.data);
             SetLoader(false);

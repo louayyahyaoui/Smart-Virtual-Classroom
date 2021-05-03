@@ -32,9 +32,7 @@ export const questionsApi = {
 
 export const answersApi = {
   async getAnswers(id) {
-    console.log(id);
     const { data } = await api.get(`answer/q/${id}`);
-    console.log(data);
     return data;
   },
 };
@@ -83,7 +81,6 @@ export const CommentsApi = {
   },
   async getCommentsTask(id) {
     const { data } = await api.get(`coursesComment/task/${id}`);
-    console.log(data);
     return data;
   },
   

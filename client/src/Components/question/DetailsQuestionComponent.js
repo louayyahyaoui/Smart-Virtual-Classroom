@@ -40,7 +40,7 @@ function DetailsQuestion(props) {
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
   function handleOnEnter(text) {
-    console.log("enter", text);
+    //console.log("enter", text);
   }
   const history = useHistory();
   const dispatch = useDispatch();
@@ -78,11 +78,9 @@ function DetailsQuestion(props) {
       values.Filee = Images;
       values.Body = text;
 
-      console.log(values.Body);
       try {
         if (values.Body !== " ") {
           const res = await AddAnswersApi.postAnswers(values);
-          console.log(Images);
         
           if (Images.length != 0) {
             setEnableUpload(true);
@@ -103,8 +101,7 @@ function DetailsQuestion(props) {
 
           }
 setText("")
-setImages(null)
-updateImages(null);
+updateImages([]);
           dispatch(fetchQuestions(currentClass._id));
 
           dispatch(fetchAnswers(id));
@@ -114,7 +111,6 @@ updateImages(null);
 
         }
         
-        console.log("error");
       } catch (error) {
         alert(error);
       }
@@ -122,14 +118,13 @@ updateImages(null);
   });
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
-    console.log(newImages);
     setImages(newImages);
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  /*const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  };
+  };*/
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -159,7 +154,6 @@ updateImages(null);
   const [enableLoadMore, setenableLoadMore] = useState(true);
   const morQuestion = () => {
     setloadmore(loadmore + 5);
-    console.log(questions.length);
     if (questions.length - loadmore <= 0) {
       setenableLoadMore(false);
     }
@@ -174,7 +168,7 @@ updateImages(null);
           <Card fluid key={index}>
             <Segment raised color="grey">
               {question.Writerq._id === documentData._id && (
-                <Dropdown floated="right" icon="ellipsis vertical">
+                <Dropdown floated icon="ellipsis vertical">
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <EditQuestions qes={question} />
@@ -349,7 +343,7 @@ updateImages(null);
               </Feed.Extra>
               <div style={{ marginTop: "3%", marginBottom: "3%" }}>
                 {question.Hashtags.map((hashtag, index) => (
-                  <Label color="grey" as="a" tag>
+                  <Label color="grey" as="a" tag key={index}>
                     #{hashtag}
                   </Label>
                 ))}

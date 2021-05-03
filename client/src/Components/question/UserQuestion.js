@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import InputEmoji from "react-input-emoji";
 import {
-  Comment,
-  Form,
-  Button,
+  
   Header,
   Icon,
   Segment,
@@ -16,24 +13,19 @@ import {
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import AddQuestion from "./AddQuestionComponent";
-import FileUpload from "../../utlis/FileUpload";
 import {
   fetchQuestions,
   selectQuestions,
 } from "../../redux/slices/questionslice";
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
-import { selectedClasses } from "../../redux/slices/classsline";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import { AddquestionsApi } from "../../api/api";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+//const ENDPOINT = "https://closer-server.herokuapp.com/";
 
 export default function UserQuestion(props) {
-  const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const dispatch = useDispatch();
@@ -43,21 +35,13 @@ export default function UserQuestion(props) {
 
   
 
-  const [enableUpload, setEnableUpload] = useState(false);
 
   const documentData = JSON.parse(localStorage.getItem("user"));
-  const [text, setText] = useState("");
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
+  
 
-  const [id, setIdquestion] = useState(null);
-  const [questions, errr] = useSelector(selectQuestions);
+  const [questions] = useSelector(selectQuestions);
 
-  const [Images, setImages] = useState([]);
-  const updateImages = (newImages) => {
-    setImages(newImages);
-  };
+
   const deletee = async (idq) => {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
@@ -256,8 +240,8 @@ const morQuestion =  (nb) => {
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/" + currentClass._id + "/" + hashtag}>
-                <Label key={index} color="grey" as="a" tag>
+              <Link to={"/tags/" + currentClass._id + "/" + hashtag} key={index}>
+                <Label  color="grey" as="a" tag>
                   #{hashtag}
                 </Label>
               </Link>
@@ -280,6 +264,3 @@ const morQuestion =  (nb) => {
     </Container>
   );
 }
-const yupSchema = Yup.object({
-  Body: Yup.string().required("Champs requis!"),
-});
