@@ -84,9 +84,10 @@ export default function DisplayTaskTeacher() {
               
                   <Item.Image
                     size="tiny"
-                    avatar
-                    src={process.env.PUBLIC_URL + "/quiz.png"}
-                  />
+                    
+                    avatar src={process.env.PUBLIC_URL +  task.typeTask === "Quiz" ? "/quiz.jpg" : "file.jpg"} 
+                    /> 
+              
   
                   <Item.Content>
                   <Link to={"/DetailTask/" + task._id}>
@@ -100,13 +101,20 @@ export default function DisplayTaskTeacher() {
                     <Item.Description>{task.description}</Item.Description>
                   </Item.Content>
                 
-                  <Grid columns={4}>
+                  <Grid columns={6}>
               
                     <Grid.Row >
                    
                       <Statistic.Group size="small">
                         
-                      
+                      <Grid.Column>
+                          <Statistic color="black">
+                            <Statistic.Value>
+                             { task.listStudents.length+1}
+                            </Statistic.Value>
+                            <Statistic.Label>Students</Statistic.Label>
+                          </Statistic>
+                        </Grid.Column>
                         <Statistic color="red">
                           <Statistic.Value>
                             {getItemInfo.call(this, task._id)}

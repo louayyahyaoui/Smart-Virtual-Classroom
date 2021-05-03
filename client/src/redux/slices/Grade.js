@@ -60,7 +60,7 @@ export const getTasksById = createAsyncThunk(
   "Grade/getTasksById",
   async (taskDetail) => {
     const promise = await axios.get(
-      `https://closer-server.herokuapp.com/grade?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`
+      `http://localhost:5000/grade?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`
     ).then((response) => {
       const data = response.data;
       return data;

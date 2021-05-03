@@ -31,12 +31,12 @@ export default function AllTasksStudent(props) {
                       
              <Item  >
              <Item.Image size='tiny' 
-              avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' /> 
+              avatar src={process.env.PUBLIC_URL +  task.task.typeTask === "Quiz" ? "/quiz.jpg" : "file.jpg"} /> 
            
               <Item.Content >
                 <Item.Header as='a'>{task.task.title}</Item.Header>
                 <Item.Meta>
-                  <span > <span className='cinema'>{moment(task.task.DateAt).format("YYYY-MM-DD")}</span></span>
+                   <span className='cinema'>At {moment(task.task.DateAt).format("MMM Do YY")}</span>
                 </Item.Meta>
                 <Item.Description>{task.task.description}</Item.Description>
               
@@ -44,7 +44,10 @@ export default function AllTasksStudent(props) {
              
                 </Item.Content>
              
-                  <label>{task.taskStatus}</label>
+                  <label color="green">  Status : {task.taskStatus}<br/>
+                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                  </label>
+                  
              
               
               

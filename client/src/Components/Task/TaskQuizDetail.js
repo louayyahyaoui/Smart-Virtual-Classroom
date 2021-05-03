@@ -141,9 +141,11 @@ const [openModal , setOpenModal] = useState(false);
         closeIcon="close"
         open={openModal}
       >
-          <Modal.Header>Quiz </Modal.Header>
+          <Modal.Header>Start Attempt </Modal.Header>
         <Modal.Content>
             <p>Once you start this Quiz you will no longer be able to do this Quiz Again.
+              
+    
               
             </p>
         </Modal.Content>

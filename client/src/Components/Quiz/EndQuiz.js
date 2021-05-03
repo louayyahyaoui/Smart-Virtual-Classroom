@@ -55,7 +55,7 @@ Congrats {finalTask[0].student.name} you have ben passed the Quiz  {finalTask[0]
     <Divider horizontal>
       <Header as='h4'>
         <Icon name='bar chart' />
-        Reponse
+        Answers
       </Header>
     </Divider>
     <Grid columns="three">

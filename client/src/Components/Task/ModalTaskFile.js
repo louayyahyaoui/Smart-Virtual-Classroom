@@ -16,6 +16,7 @@ import {
   Modal,
   Confirm,
   Header,
+  Message,
 } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuth } from "../../helpers/auth";
@@ -51,7 +52,8 @@ export default function ModalTaskFile(props) {
   
     const [close, setClose] = useState(false);
    
-   
+    const [successMessage, SetSuccessMessage] = useState("");
+    const [errorMessage, SetErrorMessage] = useState("");
  
     const [selectedSeance, setSelectedSeance] = useState(null);
     const [openModel, setOpenModel] = useState(false);
@@ -120,6 +122,7 @@ export default function ModalTaskFile(props) {
       dispatch(postTasks(tasks)).then(()=>{
         dispatch(getTaskByTeacher(taskDetail));
         setEnableUpload(false);
+        SetSuccessMessage("Add Task successfully !")
         setOpenModel(false);
       });
       setOpensave(false);
@@ -149,10 +152,17 @@ export default function ModalTaskFile(props) {
       dispatch(assignTask(tasks)).then(()=>{
         dispatch(getTaskByTeacher(taskDetail));
         setEnableUpload(false);
-        setOpenModel(false);
-      });;
-    
+        SetSuccessMessage("Assgin Task successfully !");
+        
+      
+      });
       setOpen(false);
+      setTimeout(() => {
+        SetSuccessMessage("")
+        setOpenModel(false);
+        
+      }, 1000);
+  
       
     };
     const clicClose = () => {
@@ -193,8 +203,25 @@ export default function ModalTaskFile(props) {
       >
         <Modal.Header>{props.headerTitle}</Modal.Header>
         <Modal.Content>
+        { successMessage ? ( <Message
+          success
+          color="green"
+          header="Nice one! 📒 📕 📚 📖"
+            content={successMessage}
+        />) : (<></>)}
+       
+       {errorMessage ? (
+          <Message
+          warning
+          color="yellow"
+          header="Woah! 😱 😨"
+          content={errorMessage}
+        
+        />
+       ) : (<></>)}
         <Grid>
           <Grid.Row>
+       
             <Grid.Column width={10}>
               <Form >
                 <Form.Field>

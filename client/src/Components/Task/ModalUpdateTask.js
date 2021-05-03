@@ -17,6 +17,7 @@ export default function ModalUpdateTask(props) {
         >
           <Modal.Header>{props.headerTitle}</Modal.Header>
           <Modal.Content>
+            
             <FormTask
               buttonSubmitTitle={props.buttonSubmitTitle}
               buttonColor={props.buttonColor}

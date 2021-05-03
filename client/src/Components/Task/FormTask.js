@@ -126,13 +126,13 @@ export default function FormTask({task}) {
         />
          
                  
-          
-       
-        <FileUploadEdit
+          { task.typeTask === "File" ? (  <FileUploadEdit
           refreshFunction={updateImages}
             listfile={task.listQuestion}  
             Enbale={enableUpload}
-          />
+          />)  :  (<></>)}
+       
+      
           <br/>
                <Button type="submit" color="red" content="Update Task"  floated="right"  icon="checkmark" / >
         

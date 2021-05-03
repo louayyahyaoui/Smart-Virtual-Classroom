@@ -242,7 +242,7 @@ const HomepageLayout = () => (
             </Header>
             <p style={{ fontSize: "1.33em" }}>
               Closer Smart Virtual Classroom is A collaborative web conferencing
-              tool with an online whiteboard, breakout rooms, and screen sharing
+              tool with an <span>online whiteboard</span>, <span>breakout rooms</span>, and <span>screen sharing</span>
               capabilities for teachers and tutors who want to conduct highly
               interactive live online teaching sessions
             </p>
@@ -276,7 +276,7 @@ const HomepageLayout = () => (
         </Header>
         <p style={{ fontSize: "1.33em" }}>
           Share with your participants various types of learning resources on
-          the whiteboard and discuss them during your live sessions. Engage your
+          the <span>whiteboard</span>  and discuss them during your <span>live sessions</span>. Engage your
           participants in different collaborative activities using the tools for
           creating, editing and presenting learning content.
         </p>
@@ -297,8 +297,8 @@ const HomepageLayout = () => (
           Screen-sharing
         </Header>
         <p style={{ fontSize: "1.33em" }}>
-          Demonstrate additional software and multimedia applications by sharing
-          your screen with the participants.
+          Demonstrate additional software and multimedia applications by <span>sharing
+          your screen </span> with the participants.
         </p>
         <Button as="a" size="large">
           Read More
@@ -331,7 +331,7 @@ const HomepageLayout = () => (
           Courses
         </Header>
         <p style={{ fontSize: "1.33em" }}>
-          You can add a new course to the class, also u can
+          You can add a new course to the <span>class</span>, also u can
           Modify/Delete/Display it.
         </p>
         <Button as="a" size="large">
@@ -360,7 +360,7 @@ const HomepageLayout = () => (
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <p>© 2020-2021 Closer is owned and operated by NoLimits</p>
+              <p>© 2020-2021 <span>Closer</span> is owned and operated by NoLimits</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>

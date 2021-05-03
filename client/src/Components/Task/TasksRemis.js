@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -23,22 +24,25 @@ export default function TasksRemis(props) {
                      
                     props.remisGrades.map((task,index) =>
                     task.taskStatus==="Remis" ? (
-                      <Link to={task.task.typeTask==="Quiz" ? "/TaskQuiz/"+task._id : "/TaskFileDetail/"+task._id}>  
+                      <Link to={task.task.typeTask === "Quiz" ? "/TaskQuizDetail/"+task._id : "/TaskFileDetail/"+task._id}>   
                       <Segment color="grey" raised> 
                        <Item.Group divided key={index} >
                      
              <Item  >
              <Item.Image size='tiny' 
-              avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' /> 
+               avatar src={process.env.PUBLIC_URL +  task.task.typeTask === "Quiz" ? "/quiz.jpg" : "file.jpg"} /> 
              
               <Item.Content >
                 <Item.Header as='a'>{task.task.title}</Item.Header>
                 <Item.Meta>
-                  <span >{task.task.description}</span>
-                </Item.Meta>           
+                <span className='cinema'> At {moment(task.task.DateAt).format("MMM Do YY")}</span>
+                </Item.Meta>
+                <Item.Description>{task.task.description}</Item.Description>       
                 </Item.Content>
                
-                <label>{task.taskStatus}</label>
+                <label color="green">  Status : {task.taskStatus}<br/>
+                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                  </label>
              </Item>
              
              </Item.Group>
