@@ -92,7 +92,7 @@ export default function AddClassComponent() {
          const res = await AddclassApi.addClass(data);
         console.log(res);
         dis({ type: "CLOSE_MODAL" });
-        dispatch(fetchclass(documentData.role, documentData._id));
+        dispatch(fetchclass(documentData.role, documentData._id,"Active"));
         dispatch(fetchActiveClass(documentData._id));
         console.log(data);
       } catch (err) {

@@ -40,7 +40,7 @@ export default function GetAllClassComponent() {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(fetchclass(documentData.role, documentData._id));
+    dispatch(fetchclass(documentData.role, documentData._id,"Active"));
     dispatch(fetchActiveClass(documentData._id));
     dispatch(fetchRequestClass(documentData._id));
   }, [dispatch]);

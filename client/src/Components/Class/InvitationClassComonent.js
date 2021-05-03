@@ -39,7 +39,7 @@ export default function InvitationClassComonent() {
       dispatch(fetchInvitationclass(documentData._id));
       dispatch(fetchActiveClass(documentData._id));
       dispatch(fetchRequestClass(documentData._id));
-      dispatch(fetchclass(documentData.role, documentData._id));
+      dispatch(fetchclass(documentData.role, documentData._id,"Active"));
     } catch (error) {
       alert(error);
     }

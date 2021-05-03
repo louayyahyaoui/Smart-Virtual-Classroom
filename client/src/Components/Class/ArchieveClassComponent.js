@@ -15,7 +15,7 @@ export default function ArchieveClassComponent(props) {
     let error = { visible: false, message: "" };
     try {
       const res = await AddclassApi.updateClassActive(params);
-      dispatch(fetchclass(documentData.role, documentData._id));
+      dispatch(fetchclass(documentData.role, documentData._id,"Active"));
       dispatch(fetchActiveClass(documentData._id));
       handleClose();
     } catch (err) {

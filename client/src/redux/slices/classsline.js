@@ -59,14 +59,14 @@ const classlice = createSlice({
     },
   },
 });
-export const fetchclass = (role, iduser) => async (dispatch) => {
+export const fetchclass = (role, iduser,status) => async (dispatch) => {
   if (role === "Teacher") {
-    const res = getclassApi.getclassByLevel(iduser);
+    const res = getclassApi.getclassByLevel(iduser,status);
     res.then((data) => {
       dispatch(getClasss(data));
     });
   } else if (role === "Student") {
-    const res = getclassApi.getclassByYear(iduser);
+    const res = getclassApi.getclassByYear(iduser,status);
     res.then((data) => {
       dispatch(getClasss(data));
      
