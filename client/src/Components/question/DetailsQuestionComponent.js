@@ -32,15 +32,15 @@ import FileUpload from "../../utlis/FileUpload";
 import EditQuestions from "./EditQuestionComponent";
 import EditAnswer from "../answer/EditAnswer";
 import io from "socket.io-client";
-import { selectedClasses } from "../../redux/slices/classsline";
+
 const ENDPOINT = "https://closer-server.herokuapp.com/";
-function DetailsQuestion(props) {
+  function DetailsQuestion(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  const socket = io(ENDPOINT);
 
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
   function handleOnEnter(text) {
-    //console.log("enter", text);
   }
   const history = useHistory();
   const dispatch = useDispatch();
@@ -49,11 +49,14 @@ function DetailsQuestion(props) {
   }, [dispatch]);
 
   const id = props.match.params.id;
-  /* useEffect(() => {
+  useEffect(() => {
     socket.on("new-answer", (content) => {
       dispatch(fetchAnswers(id));
     });
-  });*/
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   const [questions, errr] = useSelector(selectQuestions);
   useEffect(() => {
     dispatch(fetchAnswers(id));
@@ -81,7 +84,7 @@ function DetailsQuestion(props) {
       try {
         if (values.Body !== " ") {
           const res = await AddAnswersApi.postAnswers(values);
-        
+
           if (Images.length != 0) {
             setEnableUpload(true);
           }
@@ -94,23 +97,19 @@ function DetailsQuestion(props) {
             });
             notif.Owner = arr;
             const res2 = await notificationsApi.addNotification(notif);
-            const socket = io(ENDPOINT);
+
             socket.emit("add-new-notification", arr);
           } catch (error) {
             alert(error);
-
           }
-setText("")
-updateImages([]);
+          setText("");
+          updateImages([]);
           dispatch(fetchQuestions(currentClass._id));
 
           dispatch(fetchAnswers(id));
 
-          //  socket.emit("send_answer", "message");
-         
-
+          socket.emit("send_answer", "message");
         }
-        
       } catch (error) {
         alert(error);
       }
@@ -133,6 +132,7 @@ updateImages([]);
     try {
       const res = await AddquestionsApi.deleteQuestions(id);
       dispatch(fetchQuestions(currentClass._id));
+      socket.emit("send_question", "message");
 
       history.push("/FAQ");
     } catch (error) {
@@ -144,7 +144,7 @@ updateImages([]);
       const res = await AddAnswersApi.deleteAnswers(idA);
       dispatch(fetchAnswers(id));
 
-      //socket.emit("send_answer", "message");
+      socket.emit("send_answer", "message");
     } catch (error) {
       alert(error);
     }
@@ -571,7 +571,12 @@ updateImages([]);
                 </Comment.Group>
               ))}
               {enableLoadMore && (
-                <Segment raised color="grey" textAlign="center" onClick={() => morQuestion(5)}>
+                <Segment
+                  raised
+                  color="grey"
+                  textAlign="center"
+                  onClick={() => morQuestion(5)}
+                >
                   Load more.
                 </Segment>
               )}
