@@ -233,15 +233,8 @@ export default function UncorrectedTask(props) {
                             ))}
                           </List>
                         </Feed.Extra>
-                      </>
-                    ) : (
-                      <>
-                        {" "}
-                        <strong> Quiz </strong>{" "}
-                      </>
-                    )}
 
-<Input
+                        <Input
                     name="grade"
                     type="number"
                     size="mini"
@@ -251,6 +244,16 @@ export default function UncorrectedTask(props) {
                   <Button color="red" size='mini' floated onClick={() => assignGrade()}>
                     Send
                   </Button>
+                      </>
+
+                    ) : (
+                      <>
+                        {" "}
+                        <strong> Quiz </strong>{" "}
+                      </>
+                    )}
+
+
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
