@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Comment, Form, Header, Icon } from "semantic-ui-react";
+import {
+  Button,
+  Comment,
+  Form,
+  Header,
+  Icon,
+  Image,
+  Label,
+} from "semantic-ui-react";
 import {
   fetchCommentsCourse,
   selectComments,
@@ -11,6 +19,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputEmoji from "react-input-emoji";
 import EditComment from "./EditComment";
+import { isAuth } from "../../helpers/auth";
 
 function CommentComponent(props) {
   const documentData = JSON.parse(localStorage.getItem("user"));
@@ -46,9 +55,7 @@ function CommentComponent(props) {
           console.log(values.Task);
 
           const res = await CommentsApi.postComments(values).then((data) => {
-
             if (data.Course !== null) {
-
               dispatch(fetchCommentsCourse(data.Course));
             } else if (data.Task !== null) {
               dispatch(fetchCommentsTask(data.Task));
@@ -79,6 +86,10 @@ function CommentComponent(props) {
     <div>
       <Comment.Group size="small">
         <div style={{ display: "flex" }}>
+          <Comment>
+            <Comment.Avatar as="a" src={isAuth().picture}></Comment.Avatar>
+          </Comment>
+
           <InputEmoji
             onChange={setText}
             cleanOnEnter
@@ -102,24 +113,23 @@ function CommentComponent(props) {
 
         {commentss.map((commentt, index) => (
           <Comment key={index}>
-            <Comment.Avatar
-              as="a"
-              src="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
-            />
+            <Comment.Avatar as="a" src={commentt.Writer.picture} />
             <Comment.Content>
               <Comment.Author as="a">{commentt.Writer.name}</Comment.Author>
               <Comment.Metadata>
                 <span>{commentt.Date}</span>
               </Comment.Metadata>
               <Comment.Text>{commentt.Body}</Comment.Text>
-              <Comment.Actions>
-                <Icon
-                  name="delete"
-                  onClick={() => deletecomment(commentt._id)}
-                  color="red"
-                />
-                <EditComment comment={commentt} />
-              </Comment.Actions>
+              {commentt.Writer._id === documentData._id && (
+                <Comment.Actions>
+                  <Icon
+                    name="delete"
+                    onClick={() => deletecomment(commentt._id)}
+                    color="red"
+                  />
+                  <EditComment comment={commentt} />
+                </Comment.Actions>
+              )}
             </Comment.Content>
           </Comment>
         ))}
