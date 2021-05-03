@@ -71,6 +71,7 @@ function SideBareComponent() {
 
    
   },[]);
+  
 
   const updatenotification = async (id_notif) => {
     try {
@@ -220,6 +221,16 @@ function SideBareComponent() {
                   onClick={handleItemClick}
                 >
                   Dashboard
+                </Menu.Item>
+              </Link>
+              <Link to="/archiveclass">
+                <Menu.Item
+                  icon="archive"
+                  name="Archived"
+                  active={activeItem === "Archived"}
+                  onClick={handleItemClick}
+                >
+                  Archived
                 </Menu.Item>
               </Link>
 

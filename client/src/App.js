@@ -132,6 +132,11 @@ function App() {
             exact
             render={(props) => <HomeClass {...props} />}
           />
+          <Route
+            path="/archiveclass"
+            exact
+            render={(props) => <HomeClass {...props} />}
+          />
               <Route
             path="/WhiteBoard"
             exact
