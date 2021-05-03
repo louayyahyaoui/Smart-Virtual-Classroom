@@ -221,6 +221,16 @@ function SideBareComponent() {
                   Dashboard
                 </Menu.Item>
               </Link>
+              <Link to="/archiveclass">
+                <Menu.Item
+                  icon="archive"
+                  name="Archived"
+                  active={activeItem === "Archived"}
+                  onClick={handleItemClick}
+                >
+                  Archived
+                </Menu.Item>
+              </Link>
 
               <Link to="/schedule">
                 <Menu.Item

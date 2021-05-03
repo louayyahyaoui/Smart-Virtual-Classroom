@@ -98,8 +98,8 @@ export const CommentsApi = {
   }};
 /// hamza
   export const getclassApi = {
-    async getclassByLevel(iduser) {
-      const { data } = await api.get(`class/bylevel/` + iduser);
+    async getclassByLevel(iduser,status) {
+      const { data } = await api.get(`class/bylevel/${iduser}/${status}`);
       return data;
     },
     async getUserByEmail(email) {
@@ -118,8 +118,8 @@ export const CommentsApi = {
       const { data } = await api.get(`class/countactive/` + id);
       return data;
     },
-    async getclassByYear(iduser) {
-      const { data } = await api.get(`class/byyear/` + iduser);
+    async getclassByYear(iduser,status) {
+      const { data } = await api.get(`class/byyear/${iduser}/${status}`);
       return data;
     },
     async getclassById(idclass) {
@@ -168,6 +168,10 @@ export const CommentsApi = {
     },
     async updateClassActive(id) {
       const { data } = await api.put(`class/update/archive/${id}`);
+      return data;
+    },
+    async updateClassArchive(id) {
+      const { data } = await api.put(`class/update/active/${id}`);
       return data;
     },
     async deleteClass(id) {

@@ -4,6 +4,7 @@ import { getclassApi, ClassInvitationApi } from "../../api/api";
 let initialState = {
   class: [],
   active: [],
+  archived: [],
   request: [],
   invitationclass: [],
   members: [],
@@ -21,6 +22,9 @@ const classlice = createSlice({
     },
     getClasss: (state, action) => {
       state.class = action.payload;
+    },
+    getClassArchived: (state, action) => {
+      state.archived = action.payload;
     },
     getActive: (state, action) => {
       state.active = action.payload;
@@ -59,16 +63,30 @@ const classlice = createSlice({
     },
   },
 });
-export const fetchclass = (role, iduser) => async (dispatch) => {
+export const fetchclass = (role, iduser,status) => async (dispatch) => {
   if (role === "Teacher") {
-    const res = getclassApi.getclassByLevel(iduser);
+    const res = getclassApi.getclassByLevel(iduser,status);
     res.then((data) => {
       dispatch(getClasss(data));
     });
   } else if (role === "Student") {
-    const res = getclassApi.getclassByYear(iduser);
+    const res = getclassApi.getclassByYear(iduser,status);
     res.then((data) => {
       dispatch(getClasss(data));
+     
+    });
+  }
+};
+export const fetchclassArchived = (role, iduser,status) => async (dispatch) => {
+  if (role === "Teacher") {
+    const res = getclassApi.getclassByLevel(iduser,status);
+    res.then((data) => {
+      dispatch(getClassArchived(data));
+    });
+  } else if (role === "Student") {
+    const res = getclassApi.getclassByYear(iduser,status);
+    res.then((data) => {
+      dispatch(getClassArchived(data));
      
     });
   }
@@ -113,7 +131,9 @@ export const fetchUsers = () => async (dispatch) => {
 export const selectclass = (state) => {
   return [state.classs.class, state.classs.errors];
 };
-
+export const selectclassarchived = (state) => {
+  return [state.classs.archived, state.classs.errors];
+};
 export const selectinvitationclass = (state) => {
   return [state.classs.invitationclass, state.classs.errors];
 };
@@ -136,6 +156,7 @@ export const {
   getClasss,
   getInvitationClass,
   getMembers,
+  getClassArchived,
   getUsers,
   selectClass,
   setErrors,

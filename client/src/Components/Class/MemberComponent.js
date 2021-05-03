@@ -37,7 +37,7 @@ function MemberComponent() {
       console.log(res);
       const res2 = await getclassApi.getclassById(classinvit._id);
       localStorage.setItem("idClass", JSON.stringify(res2));
-      dispatch(fetchclass(documentData.role, documentData._id));
+      dispatch(fetchclass(documentData.role, documentData._id,"Active"));
       history.push("/members");
     } catch (error) {
      console.log(error);

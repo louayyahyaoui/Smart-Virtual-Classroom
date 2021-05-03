@@ -4,67 +4,46 @@ import {
   Segment,
   Card,
   Dropdown,
-  Image,
   Header,
   Icon,
 } from "semantic-ui-react";
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import {
   fetchclass,
   selectclass,
   selectrequestclass,
   selectactiveclass,
   fetchActiveClass,
-  fetchSingleClass,
   fetchRequestClass,
 } from "./../../redux/slices/classsline";
-import getUserById from "./../../redux/slices/User";
 import { useDispatch, useSelector } from "react-redux";
 import InvitationClassComonent from "./InvitationClassComonent";
 import EditComponent from "./EditComponent";
 import ArchieveClassComponent from "./ArchieveClassComponent";
-import { getclassApi, AddclassApi, ClassInvitationApi } from "../../api/api";
+import { getclassApi } from "../../api/api";
 import { useHistory } from "react-router";
 import AddClassComponent from "./AddClassComponent";
 export default function GetAllClassComponent() {
   const documentData = JSON.parse(localStorage.getItem("user"));
-
-  const [classs, err] = useSelector(selectclass);
-  const [active, er] = useSelector(selectactiveclass);
-  const [request, errr] = useSelector(selectrequestclass);
- 
- 
-
+  const [classs] = useSelector(selectclass);
+  const [active] = useSelector(selectactiveclass);
+  const [request] = useSelector(selectrequestclass);
   const dispatch = useDispatch();
-  const dispatchClass = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(fetchclass(documentData.role, documentData._id));
+    dispatch(fetchclass(documentData.role, documentData._id,"Active"));
     dispatch(fetchActiveClass(documentData._id));
     dispatch(fetchRequestClass(documentData._id));
-  }, [dispatch]);
-console.log("classsssssssss ");
-console.log(classs);
+  },[dispatch]);
   const aff = (id) => {
     if (documentData.role === "Teacher") return "Level " + id + "th";
     else if (documentData.role === "Student") return "Year " + id;
   };
-
-  const imageSet = (b) => {};
-  const RequestClass = (b) => {
-    console.log(b);
-    if (request===[])
-    return 0;
-    else
-    return b.request_class;
-  };
   const selectClass = async (classSelected) => {
     const res = await getclassApi.getclassById(classSelected);
     console.log(res.classOwner);
-
     localStorage.setItem("idClass", JSON.stringify(res));
-    // dispatch(fetchSingleClass(res));
     history.push("/stream");
   };
   return (
@@ -133,12 +112,6 @@ console.log(classs);
                         color={co.classColor}
                         onClick={() => selectClass(co._id)}
                       >
-                        <Image
-                          src={imageSet(co.classOwner)}
-                          wrapped
-                          ui={true}
-                        />
-
                         <Card.Content>
                           <Card.Header>
                             <Grid stackable>
@@ -205,11 +178,3 @@ console.log(classs);
     </div>
   );
 }
-// onClick={() => deleteClass(cl.classObjet._id) }
-/*
-  <Image
-                            floated="right"
-                            size="mini"
-                            src="https://react.semantic-ui.com/images/avatar/large/steve.jpg">
-                          
-                            */

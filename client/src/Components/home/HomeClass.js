@@ -5,7 +5,7 @@ import SideBareComponent from "../sideBare/sideBareComponent";
 
 import PrivateRoute from "../../Routes/PrivateRoute";
 import GetAllClassComponent from "../Class/GetAllClassComponent";
-import AddClassComponent from "../Class/AddUserToClassComponent";
+import GetAllArchivedClassComponent from "../Class/GetAllArchivedClassComponent";
 import CalendarComponent from "../Class/CalendarComponent";
 import UpdateProfile from "../authentification/UpdateProfile";
 
@@ -30,6 +30,11 @@ function Home() {
               path="/class"
               exact
               component={GetAllClassComponent}
+            />
+            <PrivateRoute
+              path="/archiveclass"
+              exact
+              component={GetAllArchivedClassComponent}
             />
             <PrivateRoute
               path="/schedule"
