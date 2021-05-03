@@ -56,7 +56,7 @@ function MemberComponent() {
   return (
     <div>
       {classinvit.classOwner._id === documentData._id && (
-        <AddUserToClassComponent floated="right" users={usersList} />
+        <AddUserToClassComponent floated="right" users={usersList} members={members} />
       )}
       <Header as="h2" icon textAlign="center">
         <Icon name="users" size="big" />

@@ -15,6 +15,7 @@ export default function AddUserToClassComponent(props) {
   const documentData = JSON.parse(localStorage.getItem("user"));
   const classinvit = JSON.parse(localStorage.getItem("idClass"));
   const [modalOpen, SetModalOpen] = useState(false);
+
   const handleOpen = (e) => SetModalOpen(true);
   const handleClose = (e) => SetModalOpen(false);
   props.users.forEach((element) => {
@@ -25,23 +26,40 @@ export default function AddUserToClassComponent(props) {
   });
   const [selected, setSelected] = useState([]);
   let error = { visible: false, message: "" };
+
   const Add = async () => {
     let data = [];
     selected.forEach((itemselect) => {
       data.push(itemselect.value);
     });
-    console.log(data);
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      console.log(element);
+      let verif1=true,verif2=true;
+        for (let index11 = 0; index11 < classinvit.classUsers.length; index11++) {
+        if(classinvit.classUsers[index11]._id===element)
+        {
+          verif1=false;
+          break;
+        }
+      }
+      for (let index22 = 0; index22 < props.members.length; index22++) {
+        if(props.members[index22].userOb._id===element )
+        {
+          verif2=false;
+          break;
+        }
+      
+      }
+      if(verif1 && verif2){
       if (data.length > 0) {
+
         const dataField = {
           status: "Invitation",
           classOb: classinvit._id,
           userOb: element,
         };
         try {
-          const res = await ClassInvitationApi.AddClassInvitation(dataField);
+          await ClassInvitationApi.AddClassInvitation(dataField);
           handleClose()
           dispatch(fetchInvitationclass(documentData._id));
           dispatch(fetchInvitationclassId(classinvit._id));
@@ -52,6 +70,9 @@ export default function AddUserToClassComponent(props) {
           };
         }
       }
+    }
+    else
+    console.log("error");
     }
   };
 
