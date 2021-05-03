@@ -22,18 +22,26 @@ import {
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
 import { isAuth } from "../../helpers/auth";
-//import io from "socket.io-client";
+import io from "socket.io-client";
 import { AddquestionsApi } from "../../api/api";
 
-//const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = "https://closer-server.herokuapp.com/";
 
 export default function QuestionComponent(props) {
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  const socket = io(ENDPOINT);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchQuestions(currentClass._id));
+    socket.on("new-question", (content) => {
+      dispatch(fetchQuestions(currentClass._id));
+    });
+    return () => {
+      socket.disconnect();
+    };
+
   }, [dispatch]);
 
 
@@ -47,6 +55,8 @@ export default function QuestionComponent(props) {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
       dispatch(fetchQuestions(currentClass._id));
+      socket.emit("send_question", "message");
+
     } catch (error) {
       alert(error);
     }

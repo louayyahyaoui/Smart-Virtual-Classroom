@@ -1,7 +1,14 @@
-
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment, Loader, Tab, Dimmer,Message, Label } from "semantic-ui-react";
+import {
+  Icon,
+  Segment,
+  Loader,
+  Tab,
+  Dimmer,
+  Message,
+  Label,
+} from "semantic-ui-react";
 
 import { AddquestionsApi } from "../api/api";
 
@@ -19,7 +26,7 @@ function FileUploadEdit(props) {
 
   const [hideshow, setetat] = useState("none");
 
-  const [Images, setImages] = useState([]);
+  const [Images, setImages] = useState(arr);
   var [fd, setfd] = useState(new FormData());
 
   const onDrop = (files) => {
@@ -34,40 +41,40 @@ function FileUploadEdit(props) {
 
       console.log(formData.getAll("files"));
       arr.push(f.name);
-      // props.refreshFunction([...Images, f.name]);
+      props.refreshFunction([...Images, f.name]);
     });
     fd = formData;
     setfd(formData);
-    console.log(fd.getAll("files"));
     setImages(arr);
-
- 
   };
   useEffect(async () => {
     // console.log(fd.getAll("files"));
-    if (props.Enbale && endloader) {
+    if (props.Enbale && endloader ) {
       //save the Image we chose inside the Node Server
 
-      //  console.log(fd.getAll("files"));
+console.log(props.Enbale);
+console.log(endloader);
 
       SetLoader(true);
+      SetEndLoader(false);
+
       const config = {
         header: { "content-type": "multipart/form-data" },
       };
-      console.log("fileeee heree");
       const res = await AddquestionsApi.uploadFileQuestions(fd, config).then(
         (response) => {
+          SetLoader(false);
+
           if (response.data) {
-            SetEndLoader(false);
-            console.log(response.data);
             setImages(response.data);
-            props.refreshFunction(response.data);
-            SetLoader(false);
+            props.refreshFunction([...Images, response.data]);
+
           } else {
             alert("Failed to save the File in Server");
           }
         }
       );
+      console.log(res);
     }
   });
 
@@ -80,19 +87,16 @@ function FileUploadEdit(props) {
     setImages(newImages);
     props.refreshFunction(newImages);
   };
-  
-  
+
   return (
     <div style={{ display: "flexwrap" }}>
-     
-      
       <Dropzone onDrop={onDrop} multiple={true} maxSize={800000000}>
         {({ getRootProps, getInputProps }) => (
           <div
             style={{
               width: "40px",
               height: "40px",
-           //   border: "1px solid lightgray",
+              //   border: "1px solid lightgray",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -111,97 +115,90 @@ function FileUploadEdit(props) {
         )}
       </Dropzone>
       <h3>old Files</h3>
-      {props.listfile.length===0 &&(
-    <Message color='brown'>Opps !! you didn't add files </Message>
-
+      {props.listfile.length === 0 && (
+        <Message color="brown">Opps !! you didn't add files </Message>
       )}
       {props.listfile.map((image, index) => (
-          <Segment
-            key={index}
-            raised
-            color="black"
+        <Segment key={index} raised color="black">
+          {(() => {
+            switch (image.split(".").pop()) {
+              case "pdf":
+                return <Icon name="file pdf" color="white" size="huge" />;
+              case "docx":
+                return <Icon name="file word" color="blue" size="huge" />;
+              case "pptx":
+                return <Icon name="file powerpoint" color="red" size="huge" />;
+              case "xlsx":
+                return (
+                  <Icon name="file excel outline" color="green" size="huge" />
+                );
+              case "zip":
+                return <Icon name="zip" size="huge" />;
+              case "js":
+                return <Icon name="js" size="huge" />;
+              case "php":
+                return <Icon name="zip" size="huge" />;
+              case "txt":
+                return <Icon name="file text" size="huge" />;
+
+              case "jpg":
+                return (
+                  <img
+                    style={{
+                      minWidth: "50px",
+                      width: "50px",
+                      height: "50px",
+                    }}
+                    src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                    alt={`scan`}
+                  />
+                );
+
+              case "jpeg":
+                return (
+                  <img
+                    style={{
+                      minWidth: "50px",
+                      width: "50px",
+                      height: "50px",
+                    }}
+                    src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                    alt={`scan`}
+                  />
+                );
+              case "png":
+                return (
+                  <img
+                    style={{
+                      minWidth: "50px",
+                      width: "50px",
+                      height: "50px",
+                    }}
+                    src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
+                    alt={`scan`}
+                  />
+                );
+
+              default:
+                return <Icon name="file" color="red" />;
+            }
+          })()}
+
+          <p
+            style={{
+              wordBreak: "break-all",
+            }}
           >
-            {(() => {
-              switch (image.split(".").pop()) {
-                case "pdf":
-                  return <Icon name="file pdf" color="white" size="huge" />;
-                case "docx":
-                  return <Icon name="file word" color="blue" size="huge" />;
-                case "pptx":
-                  return (
-                    <Icon name="file powerpoint" color="red" size="huge" />
-                  );
-                case "xlsx":
-                  return (
-                    <Icon name="file excel outline" color="green" size="huge" />
-                  );
-                case "zip":
-                  return <Icon name="zip" size="huge" />;
-                case "js":
-                  return <Icon name="js" size="huge" />;
-                case "php":
-                  return <Icon name="zip" size="huge" />;
-                case "txt":
-                  return <Icon name="file text" size="huge" />;
-
-                case "jpg":
-                  return (
-                    <img
-                      style={{
-                        minWidth: "50px",
-                        width: "50px",
-                        height: "50px",
-                      }}
-                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
-                      alt={`scan`}
-                    />
-                  );
-
-                case "jpeg":
-                  return (
-                    <img
-                      style={{
-                        minWidth: "50px",
-                        width: "50px",
-                        height: "50px",
-                      }}
-                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
-                      alt={`scan`}
-                    />
-                  );
-                case "png":
-                  return (
-                    <img
-                      style={{
-                        minWidth: "50px",
-                        width: "50px",
-                        height: "50px",
-                      }}
-                      src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${image}?alt=media`}
-                      alt={`scan`}
-                    />
-                  );
-
-                default:
-                  return <Icon name="file" color="red" />;
-              }
-            })()}
-
-            <p
-              style={{
-                wordBreak: "break-all",
-              }}
-            >
-              {image}
-            </p>
-          </Segment>
-        ))}
+            {image}
+          </p>
+        </Segment>
+      ))}
       <div
         style={{
           display: "wrap" + hideshow,
         }}
       >
-          <h3>All File</h3>
+        <h3>All File</h3>
 
         {Images.map((image, index) => (
           <Segment
@@ -256,18 +253,15 @@ function FileUploadEdit(props) {
             </p>
           </Segment>
         ))}
-            
-      {loader ? (
-        <Dimmer active inverted>
-          <Loader inline="centered">Preparing Files ... please wait !</Loader>
-        </Dimmer>
-      ) : (
-        <></>
-      )}
-   
-        
+
+        {loader ? (
+          <Dimmer active inverted>
+            <Loader inline="centered">Preparing Files ... please wait !</Loader>
+          </Dimmer>
+        ) : (
+          <></>
+        )}
       </div>
-      
     </div>
   );
 }

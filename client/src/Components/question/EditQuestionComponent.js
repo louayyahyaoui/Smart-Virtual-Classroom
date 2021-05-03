@@ -1,58 +1,44 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Button,
   Form,
   Input,
   TextArea,
-  Segment,
   Modal,
   Icon,
-  Label,
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { AddquestionsApi } from "../../api/api";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addQuestion, fetchQuestions } from "../../redux/slices/questionslice";
+import { useDispatch } from "react-redux";
+import {  fetchQuestions } from "../../redux/slices/questionslice";
 import FileUploadEdit from "../../utlis/FileUploadEdit";
-import { selectedClasses } from "../../redux/slices/classsline";
-import io from "socket.io-client";
 import { useHistory } from "react-router";
+import io from "socket.io-client";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 export default function EditQuestions({ qes }) {
-  //const socket = io(ENDPOINT);
+  const socket = io(ENDPOINT);
   const [open, setOpen] = React.useState(false);
-  const [currentClass, err] = useSelector(selectedClasses);
   const history = useHistory();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const [error] = useState({ visible: false, message: "" });
   const dispatch = useDispatch();
-  const [Images, setImages] = useState([]);
-  const [up, setUp] = useState(0);
 
+  
+
+  const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
     if (newImages === null) {
       qes.Filee.forEach((element) => {
         setImages(element);
       });
     } else {
-      //alert("hi");
-      setUp(1);
       setImages(newImages);
     }
   };
   const documentData = JSON.parse(localStorage.getItem("user"));
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const formik = useFormik({
     initialValues: {
@@ -73,11 +59,16 @@ export default function EditQuestions({ qes }) {
         }
         const res = await AddquestionsApi.putQuestions(values, qes._id);
         
-        setEnableUpload(true);
-        history.push("/FAQ/"+qes._id);
+        if (Images.length != 0) {
+          setEnableUpload(true);
+        }
+        updateImages([]);
+        if (res.ok === 1) {
+          setEnableUpload(false);
+        }        history.push("/FAQ/"+qes._id);
 
-        //  dispatch(fetchQuestions(currentClass._id));
-        //   socket.emit("send_question", "message");
+          dispatch(fetchQuestions(currentClass._id));
+          socket.emit("send_question", "message");
       } catch (error) {
         alert(error);
       }

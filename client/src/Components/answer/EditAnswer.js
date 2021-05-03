@@ -24,7 +24,6 @@ export default function EditAnswer(props) {
     setOpen(false);
   };
 
-  const [error] = useState({ visible: false, message: "" });
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
@@ -58,8 +57,13 @@ export default function EditAnswer(props) {
         }
 
         const res = await AddAnswersApi.putAnswers(values, answer._id);
-        setEnableUpload(true);
-
+        if (Images.length != 0) {
+          setEnableUpload(true);
+        }
+        updateImages([]);
+        if (res.ok === 1) {
+          setEnableUpload(false);
+        }
         dispatch(fetchAnswers(answer.Question._id));
       } catch (error) {
         alert(error);
@@ -94,26 +98,24 @@ export default function EditAnswer(props) {
               content="Edit"
               icon="edit"
               color="red"
+
             />
-            <Button color="black" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
+            <Button color="black" onClick={() => setOpen(false) }>
+              Cancel
+            </Button>
           </div>
           <div style={{ display: "flex" }}>
             <div style={{ marginLeft: "5%" }}>
-            <FileUploadEdit
-            refreshFunction={updateImages}
-            listfile={answer.Filee}
-            Enbale={enableUpload}
-          />
+              <FileUploadEdit
+                refreshFunction={updateImages}
+                listfile={answer.Filee}
+                Enbale={enableUpload}
+              />
             </div>
           </div>
-         
         </Form>
       </Modal.Content>
-      <Modal.Actions>
-        
-      </Modal.Actions>
+      <Modal.Actions></Modal.Actions>
     </Modal>
   );
 }

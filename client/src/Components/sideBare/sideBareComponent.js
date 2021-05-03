@@ -28,10 +28,13 @@ import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function SideBareComponent() {
   const socket = io(ENDPOINT);
-  const dispatchh = useDispatch();
-
-  const state = useSelector((state) => state.user.userUpdated);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchNotifications(user._id));
+  }, [dispatch]);
+  const state = useSelector((state) => state.user.userUpdated);
+  const [notifications, errr] = useSelector(selectNotifications);
+
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {}, [state]);
 
@@ -46,26 +49,24 @@ function SideBareComponent() {
       SetActiveItem(name);
     }
   };
-  useEffect(() => {
-    dispatch(fetchNotifications(user._id));
-  }, [dispatch]);
-  const [nbrNotif, setNbrNotif] = useState(0);
-  const [notifications, errr] = useSelector(selectNotifications);
+
+  const [nbrNotif, setNbrNotif] = useState(false);
 
   useEffect(() => {
-    let i = 0;
-    notifications.forEach((element) => {
-      if (!element.status) {
-        i += 1;
-        setNbrNotif(i);
-      }
-    });
+    let nn = notifications.filter(notif => notif.status!==true);
+if(nn.length!==0)
+{
+  setNbrNotif(true);
+}
+else{setNbrNotif(false);}
 
     socket.on("new-notification", (content) => {
-      setNbrNotif(nbrNotif + 1);
-
       content.forEach((i) => {
-        dispatch(fetchNotifications(i));
+        if (user._id === i) {
+          setNbrNotif(true);
+
+          dispatch(fetchNotifications(i));
+        }
       });
     });
     return () => {
@@ -75,15 +76,14 @@ function SideBareComponent() {
 
   const updatenotification = async (id_notif) => {
     try {
-      let i = 0;
       const res = await notificationsApi.putNotification(id_notif);
       dispatch(fetchNotifications(user._id));
-      notifications.forEach((element) => {
-        if (!element.status) {
-          i += 1;
-          setNbrNotif(i);
-        }
-      });
+      let nn = notifications.filter(notif => notif.status!==true);
+      if(nn.length!==0)
+      {
+        setNbrNotif(true);
+      }
+      else{setNbrNotif(false);}
     } catch (error) {
       alert(error);
     }
@@ -97,7 +97,7 @@ function SideBareComponent() {
             <Card.Header>
               {isAuth().name}
               {"  |  "}
-              {Number(nbrNotif) !== 0 && (
+              {nbrNotif && (
                 <Label circular color="red" empty></Label>
               )}
 
