@@ -13,6 +13,8 @@ import {
   List,
   Divider,
   Dropdown,
+  Segment,
+  Step,
 } from "semantic-ui-react";
 import { isAuth, signout } from "../../helpers/auth";
 import moment from "moment";
@@ -53,12 +55,12 @@ function SideBareComponent() {
   const [nbrNotif, setNbrNotif] = useState(false);
 
   useEffect(() => {
-    let nn = notifications.filter(notif => notif.status!==true);
-if(nn.length!==0)
-{
-  setNbrNotif(true);
-}
-else{setNbrNotif(false);}
+    let nn = notifications.filter((notif) => notif.status !== true);
+    if (nn.length !== 0) {
+      setNbrNotif(true);
+    } else {
+      setNbrNotif(false);
+    }
 
     socket.on("new-notification", (content) => {
       content.forEach((i) => {
@@ -78,12 +80,12 @@ else{setNbrNotif(false);}
     try {
       const res = await notificationsApi.putNotification(id_notif);
       dispatch(fetchNotifications(user._id));
-      let nn = notifications.filter(notif => notif.status!==true);
-      if(nn.length!==0)
-      {
+      let nn = notifications.filter((notif) => notif.status !== true);
+      if (nn.length !== 0) {
         setNbrNotif(true);
+      } else {
+        setNbrNotif(false);
       }
-      else{setNbrNotif(false);}
     } catch (error) {
       alert(error);
     }
@@ -97,9 +99,7 @@ else{setNbrNotif(false);}
             <Card.Header>
               {isAuth().name}
               {"  |  "}
-              {nbrNotif && (
-                <Label circular color="red" empty></Label>
-              )}
+              {nbrNotif && <Label circular color="red" empty></Label>}
 
               <Dropdown icon="bell outline" scrolling>
                 <Dropdown.Menu>
@@ -189,6 +189,20 @@ else{setNbrNotif(false);}
                       )}
                     </div>
                   ))}
+                  <Step.Group size="mini" widths="seven">
+                    <Step>
+                      <Icon name="bell" />
+                      <Step.Content>
+                        <Step.Title>ALL</Step.Title>
+                      </Step.Content>
+                    </Step>
+
+                    <Step active>
+                      <Step.Content>
+                        <Step.Title>Notifications</Step.Title>
+                      </Step.Content>
+                    </Step>
+                  </Step.Group>
                 </Dropdown.Menu>
               </Dropdown>
             </Card.Header>
