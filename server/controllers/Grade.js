@@ -57,14 +57,36 @@ console.log(newGrade);
 },
   getTaskByStudent : (req,res,next) =>{
     try {
+      const id = req.query.idClass;
         console.log("cc");
+       
       //Grade.find({creator : req.query.idUser,cour :req.query.idClass }).then((task) => res.json(task));
-      Grade.find({student : req.query.idUser})
+      const grade = Grade.find({student : req.query.idUser})
       //.populate({ path: 'task', cour: req.query.idClass })
-      .populate('task')
+      .  populate({
+        path: "task", // populate blogs
+        populate: {
+           path: "cour" ,
+           
+     
+        }
+     })
+     //.populate('task')
       .populate('student')
       
-      .then((grade)=>res.json(grade));
+      .
+      then((grade)=>{
+        const grades = [];
+
+       grade.forEach(element => {
+         if(id.localeCompare(element.task.cour._id)===0){
+          
+              grades.push(element);
+         }
+        
+        })
+
+      res.json(grades)});
         
     } catch (error) {
         res.status(404).json({message : error.message});
