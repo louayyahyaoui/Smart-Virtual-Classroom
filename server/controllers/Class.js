@@ -45,7 +45,7 @@ module.exports = {
         await ClassModel.aggregate([
           {
             $match: {
-              classStatus: "Active",
+              classStatus: req.params.status,
               $or: [
                 {
                   classUsers: {
@@ -99,7 +99,7 @@ module.exports = {
       let newLevel = await ClassModel.aggregate([
         {
           $match: {
-            classStatus: "Active",
+            classStatus: req.params.status,
             $or: [
               {
                 classUsers: {
@@ -294,6 +294,22 @@ module.exports = {
       res.status(201).json({
         statue: true,
         message: " Class Archived Succefully",
+        result: data,
+      });
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  updateClassArchive: async (req, res) => {
+    try {
+      // const updateClass = new ClassModel(req.body);
+      const data = await ClassModel.update(
+        { _id: req.params.id },
+        { classStatus: "Active" }
+      );
+      res.status(201).json({
+        statue: true,
+        message: " Class Actived Succefully",
         result: data,
       });
     } catch (error) {
