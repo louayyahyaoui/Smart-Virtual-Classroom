@@ -41,55 +41,49 @@ module.exports = {
   },
   ClassByDateYear: async (req, res) => {
     try {
-      res.status(200).json(
-        await ClassModel.aggregate([
-          {
-            $match: {
-              classStatus: req.params.status,
-              $or: [
-                {
-                  classUsers: {
-                    $in: [mongoose.Types.ObjectId(req.params.id)],
-                  },
+      const newLevel =await ClassModel.aggregate([
+        {
+          $match: {
+            classStatus: req.params.status,
+            $or: [
+              {
+                classUsers: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
                 },
-                {
-                  classOwner: {
-                    $in: [mongoose.Types.ObjectId(req.params.id)],
-                  },
+              },
+              {
+                classOwner: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
                 },
-              ],
-            },
+              },
+            ],
           },
-          {
-            $unwind: "$className",
-          },
-          {
-            $group: {
-              _id: { $year: "$classDatePost" },
-              classObjet: {
-                $push: {
-                  className: "$className",
-                  classDescription: "$classDescription",
-                  classSection: "$classSection",
-                  classDatePost: "$classDatePost",
-                  classOwner: "$classOwner",
-                  classUsers: "$classUsers",
-                  classLevel: "$classLevel",
-                  classColor: "$classColor",
-                  classStatus: "$classStatus",
-                  _id: "$_id",
-                },
+        },
+        {
+          $unwind: "$className",
+        },
+        {
+          $group: {
+            _id: { $year: "$classDatePost" },
+            classObjet: {
+              $push: {
+                className: "$className",
+                classDescription: "$classDescription",
+                classSection: "$classSection",
+                classDatePost: "$classDatePost",
+                classOwner: "$classOwner",
+                classUsers: "$classUsers",
+                classLevel: "$classLevel",
+                classColor: "$classColor",
+                classStatus: "$classStatus",
+                _id: "$_id",
               },
             },
           },
-
-          {
-            $sort: {
-              year: -1,
-            },
-          },
-        ])
-      );
+        },
+      ])
+      const Final= newLevel.sort(function(a, b){return a._id - b._id});
+      res.status(200).json(Final);
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
@@ -136,18 +130,9 @@ module.exports = {
             },
           },
         },
-        {
-          $sort: {
-            classLevel: -1,
-          },
-        },
       ]);
-      res.status(200).json(
-        await ClassModel.populate(newLevel, {
-          path: "classOwner",
-          model: "Student",
-        })
-      );
+      const Final= newLevel.sort(function(a, b){return a._id - b._id});
+      res.status(200).json(Final);
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
