@@ -9,7 +9,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 export default function FormTask({task}) {
 
-  const [Images, setImages] = useState([]);
+  const [Images, setImages] = useState(task.listQuestion);
+  let listFile;
   const [enableUpload, setEnableUpload] = useState(false);
   const [successMessage, SetSuccessMessage] = useState("");
   const [errorMessage, SetErrorMessage] = useState("");
@@ -17,29 +18,23 @@ export default function FormTask({task}) {
   const [up, setUp] = useState(0);
 
   const updateImages = (newImages) => {
-    if (newImages === null) {
-      task.listQuestion.forEach((element) => {
-        setImages(element);
-      });
-    } else {
-      setImages(Images.concat(newImages));
-    }
+ 
+
+    setImages(newImages);
+
+
   };
+  const uploadfile =()=>{
+    setEnableUpload(true);
+  }
     const [taskEdit , setTaskEdit] = useState(task);
     
 
     const  dispatch = useDispatch();
    
-   /* const handleUpdate = (e) =>{
-        e.preventDefault();
-      //  setTaskEdit(taskEdit.listQuestion = Images)
-        setEnableUpload(true)
-       console.log(Images);
-        console.log(taskEdit.listQuestion);
-        dispatch(updateTask(taskEdit)).then(()=>{
-            dispatch(getTaskByTeacher({"idUser":taskEdit.creator,"idClass":taskEdit.cour}))
-        });
-    }*/
+ 
+    const d = new Date(task.endDate,);
+    const initialDateValue = d;
     const formik = useFormik({
       initialValues: {
         _id : task._id,
@@ -48,9 +43,9 @@ export default function FormTask({task}) {
         theme: task.theme,
         cour : task.cour,
         typeTask: task.typeTask,
-        listQuestion: [],
+        listQuestion:Images,
         listStudents: task.listStudents,
-        endDate: task.endDate,
+        endDate: initialDateValue,
         creator: task.creator,
 
       },
@@ -59,16 +54,13 @@ export default function FormTask({task}) {
       onSubmit: async (values) => {
        
         try {
-          console.log("cc");
-          console.log(Images);
-          if(Images.length !==0 )
-         { values.listQuestion = Images;
-          alert("images : here : "+values.listQuestion);
-        }
-        else{
-          values.listQuestion = task.listQuestion;
-        }
-        setEnableUpload(true)
+         
+      
+            values.listQuestion = Images;
+         
+           
+  
+        
         console.log(values);
         const res = await dispatch(updateTask(values)).then(()=>{
           dispatch(getTaskByTeacher({"idUser":task.creator,"idClass":task.cour}));
@@ -116,7 +108,7 @@ export default function FormTask({task}) {
         <Form.TextArea
           label="Description"
           type="TextArea"
-       
+       required
           name="description"
          
         
@@ -124,7 +116,16 @@ export default function FormTask({task}) {
             formik.handleChange}
             value={formik.values.description}
         />
-         
+             <Form.Field>
+                  <label>Due</label>
+                  <SemanticDatepicker
+                  required
+                   value={formik.values.endDate}
+                   onChange={(e, data) =>
+                    (formik.values.endDate= data.value )
+                  }
+                  />
+                </Form.Field>
                  
           { task.typeTask === "File" ? (  <FileUploadEdit
           refreshFunction={updateImages}
@@ -134,10 +135,11 @@ export default function FormTask({task}) {
        
       
           <br/>
-               <Button type="submit" color="red" content="Update Task"  floated="right"  icon="checkmark" / >
+               <Button type="submit" color="red" disabled={formik.values.title ==="" || formik.values.description=== "" || formik.values.endDate===null }
+               content="Update Task"  floated="right"  icon="checkmark" / >
         
            </Form>
-
+          <Button onClick={uploadfile} icon="upload" color="grey" content=" Confirm "/>
            <br/>
         <br/>
     

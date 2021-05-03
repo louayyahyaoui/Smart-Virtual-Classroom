@@ -93,22 +93,24 @@ export default function TaskFileDetail() {
                       <Grid.Row>
                       <List horizontal>
                         {!task.task.listQuestion ? (
-                          <> <p>vide</p></>
+                          <> <p></p></>
                         ) : (
                           
                           task.task.listQuestion.map((file, index) =>
                          <>
                           <List.Item key={index}>
    
-   {(() => {
-                    switch (file.split(".").pop()) {
+                      {( () => {
+                     var f =   file + '';
+                       f.split(".").pop();
+                    switch (file.toString().split(".").pop()) {
                       case "pdf":
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
                             {" "}
-                            <Icon name="file pdf" color="red" size="huge" />
+                            <Icon name="file pdf" color="red" size="massive" />
                           </a>
                         );
                       case "docx":
@@ -116,7 +118,7 @@ export default function TaskFileDetail() {
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
-                            <Icon name="file word" color="blue" size="huge" />
+                            <Icon name="file word" color="blue" size="massive" />
                           </a>
                         );
                       case "pptx":
@@ -127,7 +129,7 @@ export default function TaskFileDetail() {
                             <Icon
                               name="file powerpoint"
                               color="red"
-                              size="huge"
+                              size="massive"
                             />
                           </a>
                         );
@@ -139,7 +141,7 @@ export default function TaskFileDetail() {
                             <Icon
                               name="file excel outline"
                               color="green"
-                              size="huge"
+                              size="massive"
                             />
                           </a>
                         );
@@ -148,7 +150,7 @@ export default function TaskFileDetail() {
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
-                            <Icon name="zip" size="huge" />
+                            <Icon name="zip" size="massive" />
                           </a>
                         );
                       case "js":
@@ -156,7 +158,7 @@ export default function TaskFileDetail() {
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
-                            <Icon name="js" color="yellow" size="huge" />
+                            <Icon name="js" color="yellow" size="massive" />
                           </a>
                         );
                       case "php":
@@ -164,7 +166,7 @@ export default function TaskFileDetail() {
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
-                            <Icon name="zip" color="blue" size="huge" />
+                            <Icon name="zip" color="blue" size="massive" />
                           </a>
                         );
                       case "txt":
@@ -172,7 +174,7 @@ export default function TaskFileDetail() {
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                           >
-                            <Icon name="file text" size="huge" color="blue" />
+                            <Icon name="file text" size="massive" color="blue" />
                           </a>
                         );
 
@@ -184,8 +186,8 @@ export default function TaskFileDetail() {
                             <img
                               style={{
                                 minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
+                                width: "250px",
+                                height: "100px",
                               }}
                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                               alt={`scan`}
@@ -200,8 +202,8 @@ export default function TaskFileDetail() {
                             <img
                               style={{
                                 minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
+                                width: "250px",
+                                height: "100px",
                               }}
                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                               alt={`scan`}
@@ -216,8 +218,8 @@ export default function TaskFileDetail() {
                             <img
                               style={{
                                 minWidth: "50px",
-                                width: "50px",
-                                height: "50px",
+                                width: "250px",
+                                height: "100px",
                               }}
                               src={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
                               alt={`scan`}
@@ -226,11 +228,11 @@ export default function TaskFileDetail() {
                         );
 
                       default:
-                        return <Icon name="File" color="Black" size="huge" />;
+                        return <Icon name="File" color="Black" size="massive" />;
                     }
                   })()}
 
-                  <p>{file.split("_").pop()}</p>
+                  <p>{file.toString().split("_").pop()}</p>
                   </List.Item>
                          </>
                           )

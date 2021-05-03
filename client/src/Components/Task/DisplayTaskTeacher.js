@@ -52,7 +52,7 @@ export default function DisplayTaskTeacher() {
   };
   useEffect(() => {
     dispatch(getTaskByTeacher(taskDetail));
-  }, [dispatch]);
+  }, []);
   return (
     <>
       <Divider hidden />
@@ -110,7 +110,7 @@ export default function DisplayTaskTeacher() {
                       <Grid.Column>
                           <Statistic color="black">
                             <Statistic.Value>
-                             { task.listStudents.length+1}
+                             {task._id !="" ?  (task.listStudents.length) :(0)}
                             </Statistic.Value>
                             <Statistic.Label>Students</Statistic.Label>
                           </Statistic>

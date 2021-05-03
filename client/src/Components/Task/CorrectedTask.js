@@ -2,18 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Card, Feed, Header, Icon, Image, Input, Label, List, Segment } from 'semantic-ui-react'
+import { assignGradeToStudent } from '../../redux/slices/Grade'
 import { getCorrectedTask, getDetailTask } from '../../redux/slices/Task'
 
 export default function CorrectedTask(props) {
+const zero = 0;
+  const dispatch = useDispatch();
 
-
+  const assignGrade = (id) => {
+    
+    dispatch(assignGradeToStudent({ _id: id, grade:null })).then(() => {
+      dispatch(getDetailTask(id));
+    });
+  };
 
     return (
         <div>
              <Card.Group>
              { !props.correctTasks ? (<div></div>)  : (
              props.correctTasks.map((task,index) =>
-            task.grade!=null ? (
+               
+            task.grade!=null ? ( 
     <Card key={index} color='grey' raised>
  
      
@@ -160,7 +169,9 @@ export default function CorrectedTask(props) {
                               <Label.Detail>{task.grade}</Label.Detail>
         
        
-      </Label>
+      </Label> <Button color="red" size='mini' floated onClick={() => assignGrade(task._id)}>
+                    Cancel
+                  </Button>
         </>) : (<> <h5>Quiz</h5>  <br/>   <Label   color="red" icon>
         <Icon name='clipboard check' />
                               <Label.Detail>{task.grade}</Label.Detail>

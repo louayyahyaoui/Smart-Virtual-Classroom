@@ -93,7 +93,7 @@ export default function ModalTaskFile(props) {
     };
     const clicConfirmCancel = () => {
     
-     setCancel(false);
+      SetSuccessMessage("");
      setOpenModel(false);
      
     };
@@ -108,7 +108,7 @@ export default function ModalTaskFile(props) {
           if (index !== -1) {
             
         
-            tasks.listStudents.push(itemselect);
+            tasks.listStudents.concat(itemselect);
           }
         
           
@@ -129,6 +129,7 @@ export default function ModalTaskFile(props) {
     
      
     };
+    
     const clicConfirmAssign = () => {
       setTask(
         currentClass.classUsers.forEach((itemselect) => {
@@ -138,30 +139,44 @@ export default function ModalTaskFile(props) {
           );
           if (index !== -1) {
             
-        
             tasks.listStudents.push(itemselect);
+           // tasks.listStudents.push(itemselect);
           }
-        
+         
           
         })
       );
       setTask(tasks.theme = selectedSeance.value);
      // setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
+      setSelected([]);
+      setSelectedSeance(null)
       setEnableUpload(true);
+      setOpen(false);
       dispatch(assignTask(tasks)).then(()=>{
-        dispatch(getTaskByTeacher(taskDetail));
         setEnableUpload(false);
+        dispatch(getTaskByTeacher(taskDetail));
+        
+        setTask({
+   
+          title : "",
+          description : "",
+          theme : "",
+          cour : currentClass._id,
+          typeTask : "File",
+     
+          listQuestion : [],
+          listStudents : [],
+          endDate : null,
+          creator : isAuth()._id
+       
+      })
         SetSuccessMessage("Assgin Task successfully !");
         
       
       });
-      setOpen(false);
-      setTimeout(() => {
-        SetSuccessMessage("")
-        setOpenModel(false);
-        
-      }, 1000);
+     
+    
   
       
     };
@@ -191,6 +206,9 @@ export default function ModalTaskFile(props) {
       const handleOpen = ()=>{
         setOpenModel(true);
       }
+
+
+      
     return (
         <div>
                <Modal
@@ -228,7 +246,8 @@ export default function ModalTaskFile(props) {
                   <Form.Input
                     label="Title"
                     required
-                   
+                  
+                    value={tasks.title}
                     onChange={(e) =>
                       setTask({ ...tasks, title: e.target.value })
                     }
@@ -240,7 +259,7 @@ export default function ModalTaskFile(props) {
                   <TextArea
                   required
                     label="Description"
-              
+              value={tasks.description}
                     onChange={(e) =>
                       setTask({ ...tasks, description: e.target.value })
                     }
@@ -300,27 +319,20 @@ export default function ModalTaskFile(props) {
        
         <Modal.Actions>
      
-        <Button color="black"      floated="right" onClick={() => clicCancel()}>Back</Button>
-        <Confirm
-         size="tiny"
-          header="Cancel Add "
-          content="Are you sure?"
-      
-          open={cancel}
-          onCancel={clicCloseCancel}
-          onConfirm={clicConfirmCancel}
-        />
+        <Button color="black"      floated="right" onClick={clicConfirmCancel}>Back</Button>
+     
            
         <Button
           color="red"
           type="submit"
           onClick={() => clicOpensave()}
           //onClick={onSubmitSaveTask}
-       
+                    disabled={tasks.title ==="" || tasks.description=== "" || tasks.endDate===null || selectedSeance ===null || selected ===[]}
         >
           Save
         </Button>
         <Confirm
+        
           size="tiny"
           header="Save Task To Assign"
           content="Are you sure?"
@@ -336,6 +348,7 @@ export default function ModalTaskFile(props) {
           type="submit"
           // onClick={onSubmitAssignTask}
           onClick={() => clicOpen()}
+          disabled={tasks.title ==="" || tasks.description=== "" || tasks.endDate===null || selectedSeance ===null || selected ===[] }
         >
           Assign
         </Button>
