@@ -51,7 +51,7 @@ function SideBareComponent() {
   }, [dispatch]);
   const [nbrNotif, setNbrNotif] = useState(0);
   const [notifications, errr] = useSelector(selectNotifications);
- 
+
   useEffect(() => {
     let i = 0;
     notifications.forEach((element) => {
@@ -60,17 +60,18 @@ function SideBareComponent() {
         setNbrNotif(i);
       }
     });
+
     socket.on("new-notification", (content) => {
-      setNbrNotif(nbrNotif+1)
+      setNbrNotif(nbrNotif + 1);
 
       content.forEach((i) => {
-        
         dispatch(fetchNotifications(i));
       });
     });
-
-   
-  },[]);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const updatenotification = async (id_notif) => {
     try {
@@ -97,9 +98,7 @@ function SideBareComponent() {
               {isAuth().name}
               {"  |  "}
               {Number(nbrNotif) !== 0 && (
-                <Label circular color="red" empty>
-                  
-                </Label>
+                <Label circular color="red" empty></Label>
               )}
 
               <Dropdown icon="bell outline" scrolling>
