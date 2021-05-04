@@ -17,6 +17,7 @@ import StepsBar from "../Task/StepsBar";
 import TaskFileDetail from "../Task/TaskFileDetail";
 import EndQuiz from "../Quiz/EndQuiz";
 import DetailTask from "../Task/DetailTask";
+import ReminderTask from "../Task/ReminderTask";
 import QuestionComponent from "../question/QuestionComponent";
 import DetailsQuestion from "../question/DetailsQuestionComponent";
 import MemberComponent from "../Class/MemberComponent";
@@ -135,6 +136,7 @@ function Home() {
             <PrivateRoute path="/members" exact component={MemberComponent} />
           </Grid.Column>
           <Grid.Column width={3}>
+            <ReminderTask/>
             <TableSeance />
           </Grid.Column>
         </Grid.Row>

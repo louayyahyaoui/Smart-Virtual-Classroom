@@ -29,7 +29,7 @@ export default function ModalTask({task}) {
 
   const dispatch = useDispatch();
 
-  const [Images, setImages] = useState(task.listReponse);
+  const [Images, setImages] = useState([]);
   const [enableUpload, setEnableUpload] = useState(false);
 
   
