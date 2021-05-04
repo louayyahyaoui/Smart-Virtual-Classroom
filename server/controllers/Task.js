@@ -2,45 +2,32 @@ const mongoose = require("mongoose");
 const Grade = require("../models/Grade.js");
 const Task = require("../models/Task.js");
 
-
 module.exports = {
- 
   getStatOfTaskRemis: (req, res, next) => {
-  
     try {
       let id = mongoose.Types.ObjectId(req.params.id);
 
       console.log(id);
       Grade.aggregate([
         {
-          $match : { taskStatus : "Remis",
-          
-           task : id },
-          
-      },{
-        $group: {
+          $match: {
+            taskStatus: "Remis",
+
+            task: id,
+          },
+        },
+        {
+          $group: {
             _id: "$task",
             count: {
-                $sum: 1
-            }
-        }
-       /* {
-          count: {
-            "$sum": 1
-          }
-         // $count: "count",
-        }*/},
-      ]).then((grade) =>
-      { 
-        console.log(grade);
-        const nbr  =[{count : 0}];
-       /* if(!grade.legnth){
-          console.log(nbr);
-        res.json(nbr)}
-        else*/
-        res.json(grade)
-
-      
+              $sum: 1,
+            },
+          },
+        },
+      ]).then((grade) => {
+        if (typeof grade !== "undefined" && grade.length > 0) {
+          res.json(grade);
+        } else res.json([{ count: 0 }]);
       });
     } catch (error) {
       res.status(404).json({ message: error.message });
@@ -51,13 +38,13 @@ module.exports = {
       let id = mongoose.Types.ObjectId(req.params.id);
       Grade.aggregate([
         {
-          $match : { taskStatus : "Missing",
-          
-           task : id },
-          
-      },
+          $match: {
+            taskStatus: "Missing",
+
+            task: id,
+          },
+        },
         {
-         
           $count: "count",
         },
       ]).then((grade) => res.json(grade));
@@ -68,7 +55,7 @@ module.exports = {
   getDetailTaskStudens: (req, res, next) => {
     try {
       Grade.find({ task: req.params.id })
-      .populate("task")
+        .populate("task")
         .populate("student")
 
         .then((grade) => res.json(grade));
@@ -78,23 +65,21 @@ module.exports = {
   },
   getDetailTaskByStudent: (req, res, next) => {
     try {
-
       Grade.find({ _id: req.params.id })
-      .populate("task")
+        .populate("task")
         .then((grade) => res.json(grade));
-
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
   },
 
   getTaskByTeacher: (req, res, next) => {
-    
- 
     try {
-
-     // console.log(req.query.idClass);
-      Task.find({creator : req.query.idUser,cour :req.query.idClass }).then((task) => res.json(task));
+      // console.log(req.query.idClass);
+      Task.find({
+        creator: req.query.idUser,
+        cour: req.query.idClass,
+      }).then((task) => res.json(task));
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
@@ -127,14 +112,12 @@ module.exports = {
         });
         newgrade.save();
       });
-  
+
       Task.findByIdAndUpdate(task._id, newTask, {
         useFindAndModify: false,
-      }).then((task) => 
-      
-      Task.findOne({_id:task._id }).then((task) => res.json(task))
+      }).then((task) =>
+        Task.findOne({ _id: task._id }).then((task) => res.json(task))
       );
-     
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -159,13 +142,15 @@ module.exports = {
 
     try {
       newTask.save();
-      task.listStudents.forEach((element) => {
-        const newgrade = new Grade({
-          task: newTask._id,
-          student: element._id,
-        });
-        newgrade.save();
-      }).then((task) => res.json(task));
+      task.listStudents
+        .forEach((element) => {
+          const newgrade = new Grade({
+            task: newTask._id,
+            student: element._id,
+          });
+          newgrade.save();
+        })
+        .then((task) => res.json(task));
 
       res.status(201).json(newTask);
     } catch (error) {
@@ -198,16 +183,14 @@ module.exports = {
   },
 
   deleteTask: (req, res) => {
-    
     try {
       let id = mongoose.Types.ObjectId(req.params.id);
-      Grade.deleteMany({task : id }).exec(function(err, results) {
-       
-            console.log("ListGrades successfully removed.", results);
-
-    });
-      Task.findByIdAndDelete({_id : req.params.id}).then((task)=>   res.json(task));
-    
+      Grade.deleteMany({ task: id }).exec(function (err, results) {
+        console.log("ListGrades successfully removed.", results);
+      });
+      Task.findByIdAndDelete({ _id: req.params.id }).then((task) =>
+        res.json(task)
+      );
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
