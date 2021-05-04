@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Grade = require("../models/Grade.js");
 const Task = require("../models/Task.js");
 
@@ -7,56 +8,56 @@ module.exports = {
   getStatOfTaskRemis: (req, res, next) => {
   
     try {
+      let id = mongoose.Types.ObjectId(req.params.id);
+
+      console.log(id);
       Grade.aggregate([
         {
-          $match: {
-            taskStatus: {
-              $eq: "remis",
+          $match : { taskStatus : "Remis",
+          
+           task : id },
+          
+      },{
+        $group: {
+            _id: "$task",
+            count: {
+                $sum: 1
             }
-        
-        },
-        },
-        {
-        $group:
-     {
-      _id : "$task",
-      task : {
-        _id : $req.params.id
+        }
+       /* {
+          count: {
+            "$sum": 1
+          }
+         // $count: "count",
+        }*/},
+      ]).then((grade) =>
+      { 
+        console.log(grade);
+        const nbr  =[{count : 0}];
+       /* if(!grade.legnth){
+          console.log(nbr);
+        res.json(nbr)}
+        else*/
+        res.json(grade)
 
-      }
-      }
-    },
-    {
-      $count: "count",
-    },
-       
-      ]).then((grade) => res.json(grade));
+      
+      });
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
   },
   getStatOfTaskMissing: (req, res, next) => {
     try {
+      let id = mongoose.Types.ObjectId(req.params.id);
       Grade.aggregate([
         {
-          $match: {
-            task: {
-              $eq: req.params.id,
-            },
-            taskStatus: {
-              $eq: "missing",
-            },
+          $match : { taskStatus : "Missing",
           
-          },
-        },
-        {
-          $group:
-      {
-        _id : "$task"
-        }
+           task : id },
+          
       },
-       
         {
+         
           $count: "count",
         },
       ]).then((grade) => res.json(grade));
@@ -199,7 +200,12 @@ module.exports = {
   deleteTask: (req, res) => {
     
     try {
-    
+      let id = mongoose.Types.ObjectId(req.params.id);
+      Grade.deleteMany({task : id }).exec(function(err, results) {
+       
+            console.log("ListGrades successfully removed.", results);
+
+    });
       Task.findByIdAndDelete({_id : req.params.id}).then((task)=>   res.json(task));
     
     } catch (error) {
