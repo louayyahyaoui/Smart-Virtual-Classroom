@@ -97,7 +97,7 @@ export default function DisplayTaskTeacher() {
                     <Item.Description>{task.description}</Item.Description>
                   </Item.Content>
                 
-                  <Grid columns={1}>
+                  <Grid columns={6}>
               
                     <Grid.Row >
                    
@@ -135,7 +135,7 @@ export default function DisplayTaskTeacher() {
                     </Grid.Row>
 
                     <Grid.Row>
-                      <Grid.Column>
+                      <Grid.Column width={5}>
                         {task.status === "not assign" ? (
                           <>
                        

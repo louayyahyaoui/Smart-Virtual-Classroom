@@ -7,7 +7,7 @@ export const getNbrTasksRemis = createAsyncThunk(
   "Task/getNbrTasksRemis",
   async (id) => {
     const { data } = await axios.get(
-      `http://localhost:5000/task/StatTaskRemis/${id}`
+      `https://closer-server.herokuapp.com/task/StatTaskRemis/${id}`
     );
 
     return data;
@@ -17,7 +17,7 @@ export const getNbrTasksMissing = createAsyncThunk(
   "Task/getNbrTasksMissing",
   async (id) => {
     const { data } = await axios.get(
-      `http://localhost:5000/task/StatTaskMissing/${id}`
+      `https://closer-server.herokuapp.com/task/StatTaskMissing/${id}`
     );
 
     return data;

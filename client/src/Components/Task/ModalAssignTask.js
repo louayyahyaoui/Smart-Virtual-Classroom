@@ -13,6 +13,7 @@ export default function ModalAssignTask(props) {
       "idClass" : currentClass._id,
       
     }
+    console.log(props.task);
 
     const assign = () => {
       
