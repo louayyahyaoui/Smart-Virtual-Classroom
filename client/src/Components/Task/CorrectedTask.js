@@ -48,7 +48,7 @@ const zero = 0;
                           {task.listReponse.map((file, index) => (
                             <List.Item key={index}>
                             {(() => {
-                              switch (file.split(".").pop()) {
+                              switch (file.toString().split(".").pop()) {
                                 case "pdf":
                                   return (
                                     <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
@@ -158,7 +158,7 @@ const zero = 0;
                               }
                             })()}
           
-                            <p>{file.split("_").pop()}</p>
+                            <p>{file.toString().split("_").pop()}</p>
                           </List.Item>
                           ))}
                         </List>

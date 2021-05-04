@@ -1,0 +1,26 @@
+@use "../sizes" as *;
+
+// adduse
+
+$material-slider-handle-size: null !default;
+$material-slider-wrapper-height: null !default;
+$material-slider-tooltip-width: null !default;
+$material-slider-top-tooltip-margin: null !default;
+
+$material-slider-width: 14px !default;
+$material-slider-track-height: 4px !default;
+$material-slider-height: 28px !default;
+
+@if $size == "default" {
+  $material-slider-handle-size: 32px !default;
+  $material-slider-wrapper-height: 32px !default;
+  $material-slider-tooltip-width: 34px !default;
+  $material-slider-top-tooltip-margin: -5px !default;
+}
+
+@else if $size == "compact" {
+  $material-slider-handle-size: 26px !default;
+  $material-slider-wrapper-height: 26px !default;
+  $material-slider-tooltip-width: 28px !default;
+  $material-slider-top-tooltip-margin: -2px !default;
+}

@@ -1,0 +1,100 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.InputTagsContainerDefault = exports.handleRemoveDefault = exports.handleInsertDefault = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _InputTags = require('../interface/InputTags');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var handleInsertDefault = exports.handleInsertDefault = function handleInsertDefault(currentTags, insertTagIndex, newTag) {
+  return [].concat(_toConsumableArray(currentTags.slice(0, insertTagIndex)), [newTag], _toConsumableArray(currentTags.slice(insertTagIndex)));
+};
+
+var handleRemoveDefault = exports.handleRemoveDefault = function handleRemoveDefault(currentTags, removeTagIndex) {
+  return [].concat(_toConsumableArray(currentTags.slice(0, removeTagIndex)), _toConsumableArray(currentTags.slice(removeTagIndex + 1)));
+};
+
+var InputTagsContainerDefault = exports.InputTagsContainerDefault = function (_React$Component) {
+  _inherits(InputTagsContainerDefault, _React$Component);
+
+  function InputTagsContainerDefault() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, InputTagsContainerDefault);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InputTagsContainerDefault.__proto__ || Object.getPrototypeOf(InputTagsContainerDefault)).call.apply(_ref, [this].concat(args))), _this), _this.handleInsert = function (currentTags, insertTagIndex, newTag) {
+      var _this$props = _this.props,
+          handleInsertTag = _this$props.handleInsertTag,
+          handleUpdateTags = _this$props.handleUpdateTags;
+
+      var newTags = handleInsertTag(currentTags, insertTagIndex, newTag);
+      handleUpdateTags(newTags);
+    }, _this.handleRemove = function (currentTags, removeTagIndex) {
+      var _this$props2 = _this.props,
+          handleRemoveTag = _this$props2.handleRemoveTag,
+          handleUpdateTags = _this$props2.handleUpdateTags;
+
+      var newTags = handleRemoveTag(currentTags, removeTagIndex);
+      handleUpdateTags(newTags);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(InputTagsContainerDefault, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          tags = _props.tags,
+          otherProps = _objectWithoutProperties(_props, ['tags']);
+
+      return _react2.default.createElement(_InputTags.InputTags, _extends({
+        tags: tags,
+        handleInsert: this.handleInsert,
+        handleRemove: this.handleRemove
+      }, otherProps));
+    }
+  }]);
+
+  return InputTagsContainerDefault;
+}(_react2.default.Component);
+
+InputTagsContainerDefault.propTypes = {
+  tags: _propTypes2.default.arrayOf(_propTypes2.default.any).isRequired,
+  handleUpdateTags: _propTypes2.default.func.isRequired,
+  handleInsertTag: _propTypes2.default.func,
+  handleRemoveTag: _propTypes2.default.func
+};
+InputTagsContainerDefault.defaultProps = {
+  handleInsertTag: handleInsertDefault,
+  handleRemoveTag: handleRemoveDefault
+};

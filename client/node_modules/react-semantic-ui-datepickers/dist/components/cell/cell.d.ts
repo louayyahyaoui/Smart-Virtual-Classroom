@@ -1,0 +1,17 @@
+import React from 'react';
+import './cell.css';
+declare type CalendarCellProps = {
+    end?: boolean;
+    hovered?: boolean;
+    inRange?: boolean;
+    inverted?: boolean;
+    nextMonth?: boolean;
+    prevMonth?: boolean;
+    selectable?: boolean;
+    selected?: boolean;
+    start?: boolean;
+    today?: boolean;
+    title?: string;
+};
+declare const CalendarCell: React.FC<CalendarCellProps>;
+export default CalendarCell;

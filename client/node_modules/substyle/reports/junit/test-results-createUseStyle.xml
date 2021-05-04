@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="10" time="0.326">
+ <testsuite name="createUseStyle" timestamp="2020-04-24T12:36:22" hostname="localhost" time="0.326" errors="0" tests="10" skipped="0" disabled="0" failures="0">
+  <testcase classname="createUseStyle" name="should correctly apply default styles and derive class names" time="0.255" />
+  <testcase classname="createUseStyle" name="should merge styles provided by the user with default styles" time="0.004" />
+  <testcase classname="createUseStyle" name="should also work if a substyle instance is provided as `style`" time="0.006" />
+  <testcase classname="createUseStyle" name="should accept a function mapping props to default styles as first argument" time="0.002" />
+  <testcase classname="createUseStyle" name="should take a modifier selection function as second argument" time="0.021" />
+  <testcase classname="createUseStyle" name="should apply the selected modifiers also on the style supplied by the user" time="0.003" />
+  <testcase classname="createUseStyle" name="should give precedence to styles supplied by the user, regardless the modifiers specificity" time="0.002" />
+  <testcase classname="createUseStyle" name="should allow passing a getDependsOn function that is called with the props" time="0.02" />
+  <testcase classname="createUseStyle" name="should preserve previous default styles if none of the values returned by getDependsOn changes" time="0.001" />
+  <testcase classname="createUseStyle" name="should support providing a props decorator function via context" time="0.01" />
+ </testsuite>
+</testsuites>

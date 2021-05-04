@@ -1,0 +1,68 @@
+@mixin dx-base-validation($summary-color, $message-color, $message-bg-color) {
+  .dx-validationsummary-item {
+    color: $summary-color;
+  }
+
+  .dx-invalid-message > .dx-overlay-content {
+    color: $message-color;
+    background-color: $message-bg-color;
+  }
+}
+
+.dx-validationsummary-item {
+  cursor: pointer;
+}
+
+.dx-invalid-message {
+  &.dx-overlay {
+    position: relative;
+  }
+
+  &.dx-overlay-wrapper {
+    width: 100%;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  & > .dx-overlay-content {
+    display: inline-block;
+    border-width: 0;
+    padding: 10px;
+    font-size: 0.85em;
+    line-height: normal;
+    word-wrap: break-word;
+  }
+}
+
+.dx-state-focused.dx-invalid .dx-invalid-message-auto,
+.dx-invalid-message-visible.dx-invalid .dx-invalid-message-auto,
+.dx-lookup.dx-dropdowneditor-active .dx-invalid-message-auto,
+.dx-dropdownbox.dx-dropdowneditor-active .dx-invalid-message-auto,
+.dx-invalid-message.dx-invalid-message-always {
+  visibility: visible;
+}
+
+.dx-validationsummary-item-content {
+  border-bottom: 1px dashed;
+  display: inline-block;
+  line-height: normal;
+}
+
+@keyframes dx-valid-badge-frames {
+  from {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@mixin validation-badge-animation() {
+  opacity: 0;
+  transform: scale(0);
+  animation: dx-valid-badge-frames 0.3s cubic-bezier(1, 0.008, 0.565, 1.65) 0.1s 1 forwards;
+}
+

@@ -1,0 +1,175 @@
+exports[`custom suggestion`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`custom tag`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`custom tag and suggestion`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`local suggestions`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`no suggestions`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`remote suggestions`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;

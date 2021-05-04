@@ -24,9 +24,7 @@ export default function FormTask({task}) {
 
 
   };
-  const uploadfile =()=>{
-    setEnableUpload(true);
-  }
+
     const [taskEdit , setTaskEdit] = useState(task);
     
 
@@ -55,7 +53,7 @@ export default function FormTask({task}) {
        
         try {
          
-      
+          setEnableUpload(true);
             values.listQuestion = Images;
          
            
@@ -139,7 +137,7 @@ export default function FormTask({task}) {
                content="Update Task"  floated="right"  icon="checkmark" / >
         
            </Form>
-          <Button onClick={uploadfile} icon="upload" color="grey" content=" Confirm "/>
+       
            <br/>
         <br/>
     

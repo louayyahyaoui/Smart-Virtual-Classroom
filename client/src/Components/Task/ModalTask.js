@@ -29,7 +29,7 @@ export default function ModalTask({task}) {
 
   const dispatch = useDispatch();
 
-  const [Images, setImages] = useState([]);
+  const [Images, setImages] = useState(task.listReponse);
   const [enableUpload, setEnableUpload] = useState(false);
 
   
@@ -93,9 +93,7 @@ export default function ModalTask({task}) {
     setOpen(false);
   };
 
-useEffect(() => {
-  dispatch(getDetailByTaskByStudent(task._id));
-}, [task._id])
+
 
   return (
     <div>

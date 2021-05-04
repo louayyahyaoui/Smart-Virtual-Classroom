@@ -35,8 +35,7 @@ import ModalUpdateTask from "./ModalUpdateTask";
 export default function DisplayTaskTeacher() {
 
   const tasks = useSelector((state) => state.tasks.tasks);
-  const remis = useSelector((state) => state.tasks.nbrRemis);
-  const missing = useSelector((state) => state.tasks.nbrMissing);
+
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const dispatch = useDispatch();
   const taskDetail={
@@ -46,10 +45,7 @@ export default function DisplayTaskTeacher() {
   }
 
 
-  const getItemInfo = (id) => {
-    dispatch(getNbrTasksMissing(id));
-    dispatch(getNbrTasksRemis(id));
-  };
+ 
   useEffect(() => {
     dispatch(getTaskByTeacher(taskDetail));
   }, []);
@@ -101,40 +97,12 @@ export default function DisplayTaskTeacher() {
                     <Item.Description>{task.description}</Item.Description>
                   </Item.Content>
                 
-                  <Grid columns={6}>
+                  <Grid columns={1}>
               
                     <Grid.Row >
                    
-                      <Statistic.Group size="small">
-                        
-                      <Grid.Column>
-                          <Statistic color="black">
-                            <Statistic.Value>
-                             {task._id !="" ?  (task.listStudents.length) :(0)}
-                            </Statistic.Value>
-                            <Statistic.Label>Students</Statistic.Label>
-                          </Statistic>
-                        </Grid.Column>
-                        <Statistic color="red">
-                          <Statistic.Value>
-                            {getItemInfo.call(this, task._id)}
-                            {missing}
-                          </Statistic.Value>
-
-                          <Statistic.Label>Missing</Statistic.Label>
-                        </Statistic>
-               
-                        <Grid.Column>
-                          <Statistic color="green">
-                            <Statistic.Value>
-                              {getItemInfo.call(this, task._id)}
-                              {remis}
-                            </Statistic.Value>
-                            <Statistic.Label>Done</Statistic.Label>
-                          </Statistic>
-                        </Grid.Column>
-                      </Statistic.Group>
-                      <Grid.Column></Grid.Column>
+                
+                    
                       <Grid.Column>  
                        <Dropdown
                               fluid

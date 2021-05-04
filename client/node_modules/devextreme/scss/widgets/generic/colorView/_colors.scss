@@ -1,0 +1,84 @@
+@use "sass:color";
+@use "../sizes" as *;
+@use "../colors" as *;
+@use "../overlay/colors" as *;
+
+// adduse
+
+/**
+* $name 10. Overlay background
+* $type color
+*/
+$colorbox-overlay-bg: null !default;
+$colorbox-palette-cell-bg: null !default;
+$colorbox-preview-empty-bg: null !default;
+$colorview-handle-color: null !default;
+$colorview-handle-border-color: null !default;
+$colorview-border-color: $base-border-color !default;
+$colorview-label-color: $base-label-color !default;
+
+
+@if $color == "carmine" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCarie7UrToMc3QIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgHXJxUKOJqsbEAAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "contrast" {
+  $colorbox-overlay-bg: $base-bg !default;
+  $colorbox-palette-cell-bg: $base-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAb0lEQVQoU4XOAQrAIAgFUE+2Qd1pt9rJdghnOee3jBQR5KESb4OkHj6kZ1n5VnIuUJV5UUIpUkBGZmQASEQOAnGEYCCKrgAmQgJYCicDaSfalnNF7Id2zhGQAj8g+gmCiD4yAkSdZMBRJzkw1MkmXtMsiBZyxb08AAAAAElFTkSuQmCC") !default;
+  $colorview-handle-color: $base-inverted-bg !default;
+  $colorview-handle-border-color: color.change($base-border-color, $alpha: 0.2) !default;
+}
+
+@if $color == "dark" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCariS7CFN2qk3UIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgH1RfUiCvMOY4AAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "darkmoon" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCariS7CFN2qk3UIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgH1RfUiCvMOY4AAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "darkviolet" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCariS7CFN2qk3UIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgH1RfUiCvMOY4AAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "greenmist" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCarie7UrToMc3QIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgHXJxUKOJqsbEAAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "light" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCarie7UrToMc3QIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgHXJxUKOJqsbEAAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+
+@if $color == "softblue" {
+  $colorbox-overlay-bg: $overlay-content-bg !default;
+  $colorbox-palette-cell-bg: $colorbox-overlay-bg !default;
+  $colorbox-preview-empty-bg: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAQAAACRZI9xAAAAdElEQVQoU4XR0Q3AIAgFQCarie7UrToMc3QIiyIFFGNe5INcgETAegpQefFCCFPwYZI2qFA/M4EQMQAhKxJgiEcKHFFkwUQY3Q4sBAhUerYzkbaiTUk7Ije0dYoMyeYGi35igUeDzMCiTiKgaPx0BAR1csgHXJxUKOJqsbEAAAAASUVORK5CYII=") !default;
+  $colorview-handle-color: $base-bg !default;
+  $colorview-handle-border-color: color.change($base-inverted-bg, $alpha: 0.2) !default;
+}
+

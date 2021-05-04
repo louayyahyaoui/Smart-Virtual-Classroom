@@ -1,0 +1,587 @@
+exports[`create token by typing non empty string and clicking on something else`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        insert another
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`create token by typing non empty string and clicking suggestion`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`create token by typing non empty string and pressing comma`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        insert another
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`create token by typing non empty string and pressing enter`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        insert another
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`create token by typing non empty string and pressing enter for highlighted suggestion`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`create token by typing non empty string and pressing tab`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        insert another
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`delete token by backspacing when input is empty`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        delete me
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`delete token by clicking delete button`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        delete me
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`edit token by clicking on tag`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        edit me
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`hide suggestions list by typing non empty string and pressing escape`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`highlight next suggestion by typing non empty string and pressing down`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`highlight previous suggestion by typing non empty string and pressing up`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`move input to end by backspacing all content of middle tag and clicking elsewhere`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        start
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        edit me
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        end
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`show input placeholder by rendering`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add Tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add Tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`show suggestions list by typing non empty string`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`update input width by typing`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`update input width with a max setting by typing`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;

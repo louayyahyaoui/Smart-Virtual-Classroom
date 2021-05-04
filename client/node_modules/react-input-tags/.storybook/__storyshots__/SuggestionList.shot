@@ -1,0 +1,80 @@
+exports[`highlight suggestion by mousing over suggestion`] = `
+<ul
+  className="react-input-tags-suggestion-list">
+  <li
+    className="react-input-tags-suggestion highlighted"
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    apple
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    banana
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    cherry
+  </li>
+</ul>
+`;
+
+exports[`select suggestion by clicking suggestion`] = `
+<ul
+  className="react-input-tags-suggestion-list">
+  <li
+    className="react-input-tags-suggestion highlighted"
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    apple
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    banana
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    cherry
+  </li>
+</ul>
+`;
+
+exports[`show highlighted suggestion by rendering`] = `
+<ul
+  className="react-input-tags-suggestion-list">
+  <li
+    className="react-input-tags-suggestion highlighted"
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    apple
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    banana
+  </li>
+  <li
+    className="react-input-tags-suggestion "
+    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}>
+    cherry
+  </li>
+</ul>
+`;

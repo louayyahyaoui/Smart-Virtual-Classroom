@@ -1,0 +1,27 @@
+exports[`edit item by clicking text`] = `
+<span
+  className="react-input-tags-tag">
+  <span
+    onClick={[Function]}>
+    apple
+  </span>
+  <button
+    onClick={[Function]}>
+    X
+  </button>
+</span>
+`;
+
+exports[`remove item by clicking button`] = `
+<span
+  className="react-input-tags-tag">
+  <span
+    onClick={[Function]}>
+    apple
+  </span>
+  <button
+    onClick={[Function]}>
+    X
+  </button>
+</span>
+`;

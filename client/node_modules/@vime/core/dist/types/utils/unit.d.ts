@@ -1,0 +1,12 @@
+export declare const isNull: (input: any) => input is null;
+export declare const isUndefined: (input: any) => input is undefined;
+export declare const isNullOrUndefined: (input: any) => input is null | undefined;
+export declare const getConstructor: (input: any) => object | undefined;
+export declare const isObject: (input: any) => boolean;
+export declare const isNumber: (input: any) => input is number;
+export declare const isString: (input: any) => input is string;
+export declare const isBoolean: (input: any) => input is boolean;
+export declare const isFunction: (input: any) => input is Function;
+export declare const isArray: (input: any) => input is any[];
+export declare const isInstanceOf: (input: any, constructor: any) => boolean;
+export declare const isPrototypeOf: (input: any, object: any) => boolean;

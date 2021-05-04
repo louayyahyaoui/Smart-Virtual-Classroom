@@ -73,7 +73,7 @@ export default function UncorrectedTask(props) {
                             {task.listReponse.map((file, index) => (
                               <List.Item key={index}>
                                 {(() => {
-                                  switch (file.split(".").pop()) {
+                                  switch (file.toString().split(".").pop()) {
                                     case "pdf":
                                       return (
                                         <a
@@ -228,7 +228,7 @@ export default function UncorrectedTask(props) {
                                   }
                                 })()}
 
-                                <p>{file.split("_").pop()}</p>
+                                <p>{file.toString().split("_").pop()}</p>
                               </List.Item>
                             ))}
                           </List>

@@ -7,7 +7,7 @@ export const getNbrTasksRemis = createAsyncThunk(
   "Task/getNbrTasksRemis",
   async (id) => {
     const { data } = await axios.get(
-      `https://closer-server.herokuapp.com/task/StatTaskRemis/${id}`
+      `http://localhost:5000/task/StatTaskRemis/${id}`
     );
 
     return data;
@@ -17,7 +17,7 @@ export const getNbrTasksMissing = createAsyncThunk(
   "Task/getNbrTasksMissing",
   async (id) => {
     const { data } = await axios.get(
-      `https://closer-server.herokuapp.com/task/StatTaskMissing/${id}`
+      `http://localhost:5000/task/StatTaskMissing/${id}`
     );
 
     return data;
@@ -299,7 +299,11 @@ export const taskSlice = createSlice({
       state.status = "loading";
     },
     [getNbrTasksRemis.fulfilled]: (state, action) => {
-      if (action.payload.length > 0) state.nbrRemis = action.payload[0].count;
+      
+      if(action.payload.length)
+        state.nbrRemis = action.payload[0].count;
+      
+      console.log(state.nbrRemis);
     },
     [getNbrTasksRemis.rejected]: (state, action) => {
       state.status = "failed";
@@ -308,7 +312,8 @@ export const taskSlice = createSlice({
       state.status = "loading";
     },
     [getNbrTasksMissing.fulfilled]: (state, action) => {
-      if (action.payload.length > 0) state.nbrMissing = action.payload[0].count;
+      if (action.payload.length > 0) 
+      state.nbrMissing = action.payload[0].count;
     },
     [getNbrTasksMissing.rejected]: (state, action) => {
       state.status = "failed";

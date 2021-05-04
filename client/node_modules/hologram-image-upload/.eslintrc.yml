@@ -1,0 +1,17 @@
+parser: babel-eslint
+
+extends:
+  - airbnb
+
+globals:
+  console: false
+  document: false
+  window: false
+  Exception: false
+  WebSocket: false
+  Image: false
+  URL: false
+
+rules:
+  react/jsx-filename-extension: 'off'
+  react/prefer-stateless-function: 'warn'

@@ -75,7 +75,7 @@ function Header() {
                   buttonTriggerTitle="Add Task"
                   buttonSubmitTitle="Add"
                   buttonColor="red"
-                  icon="add"
+                  icon="ad"
                 />
                 <Link to="/AddTask">
                   <>

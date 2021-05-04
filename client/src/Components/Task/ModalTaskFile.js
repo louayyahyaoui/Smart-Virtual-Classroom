@@ -212,7 +212,7 @@ export default function ModalTaskFile(props) {
     return (
         <div>
                <Modal
-        trigger={<Dropdown.Item onClick={handleOpen} icon="file text" text="Add Task" />}
+        trigger={<Dropdown.Item onClick={handleOpen} icon="clipboard" text="Add Task" />}
         dimmer="inverted"
         size="tiny"
         closeIcon="close"

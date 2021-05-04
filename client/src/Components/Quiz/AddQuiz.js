@@ -233,10 +233,12 @@ const [selected, setSelected] = useState(null);
           </Segment>
         </Grid.Column>
       </Grid>
+      <br/>
       <Divider hidden></Divider>
       <Button color="red" type="submit" floated="right" onClick={event}>
         Next
       </Button>
+
     </div>
   );
 }

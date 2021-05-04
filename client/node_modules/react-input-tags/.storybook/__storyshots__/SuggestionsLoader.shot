@@ -1,0 +1,6 @@
+exports[`hide loader by rendering`] = `null`;
+
+exports[`show loader by rendering`] = `
+<div
+  className="react-input-tags-suggestions-loader" />
+`;

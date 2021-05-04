@@ -1,0 +1,27 @@
+import { isWritableProp, } from '../core/player/PlayerProps';
+const providerWritableProps = new Set([
+  'ready',
+  'playing',
+  'playbackReady',
+  'playbackStarted',
+  'playbackEnded',
+  'seeking',
+  'buffered',
+  'buffering',
+  'duration',
+  'viewType',
+  'mediaTitle',
+  'mediaType',
+  'currentSrc',
+  'currentPoster',
+  'playbackRates',
+  'playbackQualities',
+  'textTracks',
+  'currentTextTrack',
+  'isTextTrackVisible',
+  'audioTracks',
+  'currentAudioTrack',
+  'isPiPActive',
+  'isFullscreenActive',
+]);
+export const isProviderWritableProp = (prop) => isWritableProp(prop) || providerWritableProps.has(prop);

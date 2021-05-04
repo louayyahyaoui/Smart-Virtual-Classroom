@@ -1,0 +1,187 @@
+exports[`disable tabbing to input by rendering`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={-1}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`handle blur by clicking on input and clicking something else`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`handle change by typing in input`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`handle keydown by typing in input`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`mirror input style and update input width by rendering`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`show no placeholder by rendering`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    } />
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`show placeholder by rendering`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    }>
+    m
+  </span>
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder="m"
+    tabIndex={undefined}
+    type="text"
+    value="" />
+</span>
+`;
+
+exports[`show value by rendering`] = `
+<span>
+  <span
+    style={
+      Object {
+        "overflow": "scroll",
+        "position": "absolute",
+        "visibility": "hidden",
+        "whiteSpace": "pre",
+      }
+    }>
+    m
+  </span>
+  <input
+    className="react-input-tags-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder={undefined}
+    tabIndex={undefined}
+    type="text"
+    value="m" />
+</span>
+`;

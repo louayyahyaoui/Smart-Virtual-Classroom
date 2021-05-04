@@ -1,0 +1,137 @@
+// stylelint-disable selector-class-pattern
+
+@mixin dx-clearfix-mixin() {
+  &::before,
+  &::after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+@mixin gradient-linear($options) {
+  background-repeat: no-repeat;
+  background-image: linear-gradient($options);
+}
+
+@mixin gradient-radial-circle2($start-color, $start-position, $middle-color, $middle-position, $end-color, $end-position) {
+  background: $start-color;
+  background: radial-gradient(circle closest-side at center, $start-color $start-position, $middle-color $middle-position, $end-color $end-position);
+}
+
+@mixin gradient-radial-circle($start-color, $start-position, $end-color, $end-position) {
+  background: $start-color;
+  background: radial-gradient(circle closest-side at center, $start-color $start-position, $end-color $end-position);
+}
+
+/* flex */
+@mixin flex-container($direction: row, $wrap: wrap) {
+  display: flex;
+  flex-flow: $direction $wrap;
+}
+
+@mixin user-select($value: text) {
+  user-select: $value;
+
+  @if $value == none {
+    -webkit-touch-callout: none;
+  }
+}
+
+
+@mixin dx-overflow($x: hidden) {
+  overflow: $x;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin flip-horizontally() {
+  transform: scaleX(-1);
+}
+
+@mixin vertical-middle() {
+  height: 100%;
+
+  &::after {
+    height: 100%;
+    display: inline-block;
+    content: '';
+    vertical-align: middle;
+  }
+}
+
+@mixin hide-input-cursor() {
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin flexible-scrollable() {
+  > .dx-scrollable,
+  > .dx-treeview,
+  > .dx-treeview > .dx-scrollable {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 0;
+
+    > .dx-scrollable-wrapper,
+    > div > .dx-scrollable-wrapper {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      height: 0;
+
+      > .dx-scrollable-container {
+        height: auto;
+      }
+    }
+  }
+}
+
+@mixin disabled-widget-mixin($opacity) {
+  opacity: $opacity;
+
+  @include user-select(none);
+
+  cursor: default;
+}
+
+@mixin dx-base-typography-mixin(
+  $color,
+  $font-size,
+  $font-family,
+  $line-height
+) {
+  color: $color;
+  font-weight: normal;
+  font-size: $font-size;
+  font-family: $font-family;
+  line-height: $line-height;
+
+  input,
+  textarea {
+    font-family: $font-family;
+    line-height: $line-height;
+  }
+}
+
+@mixin dx-pending-indicator($indicator-size) {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -$indicator-size / 2;
+  width: $indicator-size;
+  height: $indicator-size;
+}
+
+$overlay-zindex: 1000;
+$max-integer: 2147483647;

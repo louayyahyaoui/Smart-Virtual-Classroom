@@ -1,0 +1,157 @@
+exports[`show placeholder by rendering`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        }>
+        Add Tag
+      </span>
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add Tag"
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`show tags by rendering`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        apple
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        banana
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        cherry
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`update suggestions by typing in input`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`update tags by creating, editing and deleting`] = `
+<div
+  className="react-input-tags-input-tags">
+  <div>
+    <span
+      className="react-input-tags-tag">
+      <span
+        onClick={[Function]}>
+        apple
+      </span>
+      <button
+        onClick={[Function]}>
+        X
+      </button>
+    </span>
+    <span>
+      <span
+        style={
+          Object {
+            "overflow": "scroll",
+            "position": "absolute",
+            "visibility": "hidden",
+            "whiteSpace": "pre",
+          }
+        } />
+      <input
+        className="react-input-tags-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder={undefined}
+        tabIndex={undefined}
+        type="text"
+        value="" />
+    </span>
+  </div>
+</div>
+`;

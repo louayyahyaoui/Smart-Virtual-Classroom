@@ -1,0 +1,14 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _createIcon = _interopRequireDefault(require("../util/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = (0, _createIcon["default"])('M14,11C12.34,11 11,9.66 11,8V4H7C5.9,4 5,4.9 5,6V19C5,20.1 5.9,21 7,21H16C17.1,21 18,20.1 18,19V11H14M12,8C12,9.1 12.9,10 14,10H17.59L12,4.41V8M7,3H12L19,10V19C19,20.66 17.66,22 16,22H7C5.34,22 4,20.66 4,19V6C4,4.34 5.34,3 7,3M9,19V17H7V16H9V14H10V16H12V17H10V19H9Z');
+
+exports["default"] = _default;

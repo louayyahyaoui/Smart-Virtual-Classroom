@@ -1,0 +1,184 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var visuallyHidden = require('@reach/visually-hidden');
+var utils = require('@reach/utils');
+var PropTypes = require('prop-types');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var PropTypes__default = /*#__PURE__*/_interopDefaultLegacy(PropTypes);
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+/*
+ * Singleton state is fine because you don't server render
+ * an alert (SRs don't read them on first load anyway)
+ */
+
+var keys = {
+  polite: -1,
+  assertive: -1
+};
+var elements = {
+  polite: {},
+  assertive: {}
+};
+var liveRegions = {
+  polite: null,
+  assertive: null
+};
+var renderTimer; ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Alert
+ *
+ * Screen-reader-friendly alert messages. In many apps developers add "alert"
+ * messages when network events or other things happen. Users with assistive
+ * technologies may not know about the message unless you develop for it.
+ *
+ * @see Docs https://reach.tech/alert
+ */
+
+var Alert = /*#__PURE__*/utils.forwardRefWithAs(function Alert(_ref, forwardedRef) {
+  var _ref$as = _ref.as,
+      Comp = _ref$as === void 0 ? "div" : _ref$as,
+      children = _ref.children,
+      _ref$type = _ref.type,
+      regionType = _ref$type === void 0 ? "polite" : _ref$type,
+      props = _objectWithoutPropertiesLoose(_ref, ["as", "children", "type"]);
+
+  var ownRef = React.useRef(null);
+  var ref = utils.useForkedRef(forwardedRef, ownRef);
+  var child = React.useMemo(function () {
+    return React.createElement(Comp, Object.assign({}, props, {
+      ref: ref,
+      "data-reach-alert": true
+    }), children);
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [children, props]);
+  useMirrorEffects(regionType, child, ownRef);
+  return child;
+});
+
+{
+  Alert.displayName = "Alert";
+  Alert.propTypes = {
+    children: PropTypes__default['default'].node,
+    type: /*#__PURE__*/PropTypes__default['default'].oneOf(["assertive", "polite"])
+  };
+} ////////////////////////////////////////////////////////////////////////////////
+
+
+function createMirror(type, doc) {
+  var key = ++keys[type];
+
+  var mount = function mount(element) {
+    if (liveRegions[type]) {
+      elements[type][key] = element;
+      renderAlerts();
+    } else {
+      var node = doc.createElement("div");
+      node.setAttribute("data-reach-live-" + type, "true");
+      liveRegions[type] = node;
+      doc.body.appendChild(liveRegions[type]);
+      mount(element);
+    }
+  };
+
+  var update = function update(element) {
+    elements[type][key] = element;
+    renderAlerts();
+  };
+
+  var unmount = function unmount() {
+    delete elements[type][key];
+    renderAlerts();
+  };
+
+  return {
+    mount: mount,
+    update: update,
+    unmount: unmount
+  };
+}
+
+function renderAlerts() {
+  if (renderTimer != null) {
+    window.clearTimeout(renderTimer);
+  }
+
+  renderTimer = window.setTimeout(function () {
+    Object.keys(elements).forEach(function (elementType) {
+      var regionType = elementType;
+      var container = liveRegions[regionType];
+
+      if (container) {
+        ReactDOM.render(React.createElement(visuallyHidden.VisuallyHidden, {
+          as: "div"
+        }, React.createElement("div", {
+          // The status role is a type of live region and a container whose
+          // content is advisory information for the user that is not
+          // important enough to justify an alert, and is often presented as
+          // a status bar. When the role is added to an element, the browser
+          // will send out an accessible status event to assistive
+          // technology products which can then notify the user about it.
+          // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_status_role
+          role: regionType === "assertive" ? "alert" : "status",
+          "aria-live": regionType
+        }, Object.keys(elements[regionType]).map(function (key) {
+          return React.cloneElement(elements[regionType][key], {
+            key: key,
+            ref: null
+          });
+        }))), liveRegions[regionType]);
+      }
+    });
+  }, 500);
+}
+
+function useMirrorEffects(regionType, element, ref) {
+  var prevType = utils.usePrevious(regionType);
+  var mirror = React.useRef(null);
+  var mounted = React.useRef(false);
+  React.useEffect(function () {
+    var ownerDocument = utils.getOwnerDocument(ref.current);
+
+    if (!mounted.current) {
+      mounted.current = true;
+      mirror.current = createMirror(regionType, ownerDocument);
+      mirror.current.mount(element);
+    } else if (prevType !== regionType) {
+      mirror.current && mirror.current.unmount();
+      mirror.current = createMirror(regionType, ownerDocument);
+      mirror.current.mount(element);
+    } else {
+      mirror.current && mirror.current.update(element);
+    }
+  }, [element, regionType, prevType, ref]);
+  React.useEffect(function () {
+    return function () {
+      mirror.current && mirror.current.unmount();
+    };
+  }, []);
+}
+
+exports.Alert = Alert;
+exports.default = Alert;
+//# sourceMappingURL=alert.cjs.development.js.map

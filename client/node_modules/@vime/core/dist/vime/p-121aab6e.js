@@ -1,0 +1,1 @@
+var o;!function(o){o.Audio="audio",o.Video="video",o.HLS="hls",o.Dash="dash",o.YouTube="youtube",o.Vimeo="vimeo",o.Dailymotion="dailymotion"}(o||(o={}));export{o as P}

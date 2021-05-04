@@ -1,0 +1,121 @@
+@use "sass:color";
+@use "colors" as *;
+@use "../colors" as *;
+@use "sizes" as *;
+@use "../sizes" as *;
+@use "../../base/icons" as *;
+@use "../list/sizes" as *;
+@use "../button/mixins" as *;
+@use "../button/colors" as *;
+@use "../button/sizes" as *;
+@use "mixins" as *;
+@use "../../base/toolbar";
+
+// adduse
+@use "../dropDownMenu";
+
+.dx-toolbar {
+  background-color: $toolbar-bg;
+  color: $toolbar-color;
+
+  @include dx-toolbar-sizing(
+    $generic-toolbar-height,
+    $generic-toolbar-padding,
+    $generic-toolbar-label-font-size,
+    $generic-toolbar-item-spacing
+  );
+
+  .dx-device-mobile & {
+    @include dx-toolbar-sizing(
+      $generic-mobile-toolbar-height,
+      $generic-mobile-toolbar-padding,
+      $generic-mobile-toolbar-label-font-size,
+      $generic-mobile-toolbar-item-spacing
+    );
+  }
+
+  &.dx-state-disabled {
+    opacity: 1;
+  }
+
+  &.dx-toolbar-compact {
+    .dx-button {
+      min-width: auto;
+    }
+  }
+}
+
+.dx-toolbar-after {
+  .dx-toolbar-item {
+    @include dx-toolbar-item-padding($generic-toolbar-item-spacing);
+  }
+
+  .dx-device-mobile & {
+    .dx-toolbar-item {
+      @include dx-toolbar-item-padding($generic-mobile-toolbar-item-spacing);
+    }
+  }
+}
+
+.dx-toolbar-background {
+  background-color: $toolbar-bg;
+}
+
+.dx-toolbar-menu-section {
+  border-bottom: 1px solid $base-border-color;
+
+  .dx-toolbar-hidden-button,
+  .dx-toolbar-item-auto-hide {
+    .dx-button-content {
+      padding: 0;
+    }
+  }
+
+  .dx-button-content {
+    padding: 4px;
+  }
+
+  .dx-toolbar-item-auto-hide {
+    padding: $generic-toolbar-item-spacing $generic-toolbar-item-spacing * 2;
+  }
+}
+
+.dx-toolbar-text-auto-hide .dx-button {
+  @include dx-button-onlyicon-sizing();
+}
+
+.dx-toolbar .dx-tab {
+  padding: 4px;
+}
+
+.dx-toolbar-button {
+  .dx-menu {
+    .dx-menu-item {
+      border: $generic-button-border-weight solid transparent;
+      border-radius: $button-border-radius;
+
+      .dx-menu-item-content {
+        padding-top: $generic-toolbar-menu-top-padding;
+        padding-bottom: $generic-toolbar-menu-bottom-padding;
+        line-height: 0;
+
+        .dx-menu-item-text {
+          line-height: normal;
+        }
+      }
+    }
+  }
+}
+
+.dx-toolbar-hidden-button-group {
+  margin-top: $generic-toolbar-item-spacing;
+  margin-bottom: $generic-toolbar-item-spacing;
+
+  .dx-buttongroup-wrapper {
+    .dx-buttongroup-item.dx-button {
+      .dx-button-content {
+        padding: $generic-toolbar-item-spacing 2 * $generic-toolbar-item-spacing;
+      }
+    }
+  }
+}

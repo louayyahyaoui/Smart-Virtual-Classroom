@@ -1,0 +1,1 @@
+const a=/\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i,m=/\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i,p=/\.(m3u8)($|\?)/i,i=/^application\/(x-mpegURL|vnd\.apple\.mpegURL)$/i,s=/\.(mpd)($|\?)/i;export{a,i as b,s as d,p as h,m as v}
