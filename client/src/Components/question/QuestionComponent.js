@@ -10,6 +10,7 @@ import {
   Message,
   Label,
   List,
+  Image,
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
@@ -87,11 +88,16 @@ export default function QuestionComponent(props) {
         </Label>
       </Link>
       {Number(questions.length) === 0 && (
-        <Segment raised color="black" size="huge">
-          <Header style={{ marginLeft: "35%" }} color="grey" size="huge">
-            No Question{" "}
+          <div>
+          
+          <Image
+            centered
+            size='large'
+            src={process.env.PUBLIC_URL + "/no-question.jpg"}  alt="no-question"          />
+            <Header as='h2' icon textAlign='center'>
+            <Header.Content>No Question founded</Header.Content>
           </Header>
-        </Segment>
+        </div>
       )}
 
       {questions.slice(0,loadmore).map((question, index) => (
