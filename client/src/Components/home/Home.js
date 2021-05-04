@@ -25,6 +25,7 @@ import Quiz from "../Quiz/Quiz";
 import QuestionByTags from "../question/QuestionByTags";
 import TaskQuizDetail from "../Task/TaskQuizDetail";
 import UserQuestion from "../question/UserQuestion";
+import NotificationComponent from "../notifications/NotificationComponent";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -131,6 +132,8 @@ function Home() {
               exact
               component={QuestionByTags}
             />
+                      <Route exact path="/Notifications" component={NotificationComponent} />
+
             <PrivateRoute path="/FAQ/:id" exact component={DetailsQuestion} />
             <PrivateRoute path="/members" exact component={MemberComponent} />
           </Grid.Column>

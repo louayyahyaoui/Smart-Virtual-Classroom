@@ -44,7 +44,7 @@ const Room = (props) => {
 
         socket.emit("BE-join-room", { roomId, userName: currentUser });
         socket.on("FE-user-join", (users) => {
-          console.log("users from room : "+users);
+         // console.log("users from room : "+users);
           setuserslist(users);
           // all users
           const peers = [];

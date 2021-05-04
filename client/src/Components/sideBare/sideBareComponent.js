@@ -189,6 +189,7 @@ function SideBareComponent() {
                       )}
                     </div>
                   ))}
+                  <Link to={"/Notifications"}>
                   <Step.Group size="mini" widths="seven">
                     <Step>
                       <Icon name="bell" />
@@ -203,6 +204,7 @@ function SideBareComponent() {
                       </Step.Content>
                     </Step>
                   </Step.Group>
+                  </Link>
                 </Dropdown.Menu>
               </Dropdown>
             </Card.Header>

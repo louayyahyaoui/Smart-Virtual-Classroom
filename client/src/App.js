@@ -21,6 +21,7 @@ import Main from "./Components/Main/Main";
 import Room from "./Components/Room/Room";
 import WhiteBoard from "./Components/container/WhiteBoard";
 import Page_404 from "./Components/home/404";
+import NotificationComponent from "./Components/notifications/NotificationComponent";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -149,7 +150,7 @@ function App() {
           />
           <Route exact path="/meet" component={Main} />
           <Route exact path="/MyPosts" component={Home} />
-
+          <Route exact path="/Notifications" component={Home} />
           <Route exact path="/room/:roomId" component={Room} />
           <PrivateRoute path="/private" exact component={Private} />
           <AdminRoute path="/admin" exact component={Admin} />

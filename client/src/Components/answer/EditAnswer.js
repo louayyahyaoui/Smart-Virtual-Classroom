@@ -61,6 +61,7 @@ export default function EditAnswer(props) {
           setEnableUpload(true);
         }
         updateImages([]);
+        console.log(res.ok)
         if (res.ok === 1) {
           setEnableUpload(false);
         }
