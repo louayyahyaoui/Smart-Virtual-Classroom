@@ -93,9 +93,7 @@ export default function ModalTask({task}) {
     setOpen(false);
   };
 
-useEffect(() => {
-  dispatch(getDetailByTaskByStudent(task._id));
-}, [task._id])
+
 
   return (
     <div>

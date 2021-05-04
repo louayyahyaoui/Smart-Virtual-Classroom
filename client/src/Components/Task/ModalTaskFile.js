@@ -99,7 +99,7 @@ export default function ModalTaskFile(props) {
     };
     const clicConfirm = () => {
 
-     setTask(
+      setTask(
         currentClass.classUsers.forEach((itemselect) => {
         
           const index = selected.findIndex(
@@ -107,10 +107,10 @@ export default function ModalTaskFile(props) {
           );
           if (index !== -1) {
             
-        
-            tasks.listStudents.concat(itemselect);
+            tasks.listStudents.push(itemselect);
+           // tasks.listStudents.push(itemselect);
           }
-        
+         
           
         })
       );
@@ -118,14 +118,31 @@ export default function ModalTaskFile(props) {
       setTask(tasks.theme = selectedSeance.value);
      // setTask(...tasks.listStudents = listStud);
       setTask(...tasks.listQuestion = Images);
+     
+      setSelected([]);
+      setSelectedSeance(null);
       setEnableUpload(true);
-      dispatch(postTasks(tasks)).then(()=>{
-        dispatch(getTaskByTeacher(taskDetail));
-        setEnableUpload(false);
-        SetSuccessMessage("Add Task successfully !")
-        setOpenModel(false);
-      });
       setOpensave(false);
+      dispatch(postTasks(tasks)).then(()=>{
+        setEnableUpload(false);
+        dispatch(getTaskByTeacher(taskDetail));
+        setTask({
+   
+          title : "",
+          description : "",
+          theme : "",
+          cour : currentClass._id,
+          typeTask : "File",
+     
+          listQuestion : [],
+          listStudents : [],
+          endDate : null,
+          creator : isAuth()._id
+       
+      })
+        SetSuccessMessage("Assgin Task successfully !");
+      });
+    
     
      
     };
@@ -212,7 +229,7 @@ export default function ModalTaskFile(props) {
     return (
         <div>
                <Modal
-        trigger={<Dropdown.Item onClick={handleOpen} icon="file text" text="Add Task" />}
+        trigger={<Dropdown.Item onClick={handleOpen} icon="clipboard" text="Add Task" />}
         dimmer="inverted"
         size="tiny"
         closeIcon="close"

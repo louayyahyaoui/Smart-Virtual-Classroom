@@ -53,7 +53,7 @@ export default function TaskFileDetail() {
           });
           console.log(task);
     
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -242,8 +242,7 @@ export default function TaskFileDetail() {
                     </Grid>
                     <br />
                   
-                    <Divider></Divider>
-                    <CommentComponent taskID={task._id} />
+                    <CommentComponent taskID={id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>

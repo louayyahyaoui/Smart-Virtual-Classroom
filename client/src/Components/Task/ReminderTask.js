@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card } from 'semantic-ui-react'
+import { Card, Header, Segment } from 'semantic-ui-react'
 import { isAuth } from '../../helpers/auth';
 import { getTasksById } from '../../redux/slices/Grade';
 
@@ -17,13 +17,7 @@ export default function ReminderTask() {
       
     }
    
-   /* for (var i = 0; i < grades.length; i++) {
-        if(grades[i].taskStatus==="Attribué"){
-            setReminder(true);
-            break;
-            }
-            
-      }*/
+ 
     
    
     
@@ -41,9 +35,20 @@ export default function ReminderTask() {
     return (
        
         <>
+           <Segment>
+           
+              <Header color="red" as="h3" textAlign="center">
+                TO DO
+              </Header>
+      
+          </Segment>
+
+       
+        <Card>
+        
             
-            <Card.Content>
-        <Card.Header>To Do </Card.Header>
+            <Card.Content header='TO DO' >
+       
    
        
 
@@ -54,9 +59,21 @@ export default function ReminderTask() {
                 </Card.Description>
         
         
-             
+                <Card.Description>
+              <p>All Done Good No Tasks Assign </p>
+                
+                </Card.Description>
+                <Card.Description>
+              <p>All Done Good No Tasks Assign </p>
+                
+                </Card.Description>
+                <Card.Description>
+              <p>All Done Good No Tasks Assign </p>
+                
+                </Card.Description>
       
       </Card.Content>
+      </Card>
         </>
     )
 }

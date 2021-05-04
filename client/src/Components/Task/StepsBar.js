@@ -64,22 +64,22 @@ console.log(step)
     return (
         <div>
               <Divider hidden/>
-    <Header  as='h2' content='Add Task' />
+    <Header  as='h2' content='Add Quiz' />
     
     <Divider />
     <Step.Group widths={3}>
     <Step completed={step===2 || step===3 || step===4} active={step===1}>
       <Icon name='newspaper' />
       <Step.Content>
-        <Step.Title>Info Task</Step.Title>
-        <Step.Description>Add Task Details ..</Step.Description>
+        <Step.Title>Info Quiz</Step.Title>
+        <Step.Description>Add Quiz Details ..</Step.Description>
       </Step.Content>
     </Step>
     <Step completed={step=== 3 || step ===4} active={step===2}>
       <Icon name='tasks' />
       <Step.Content>
-        <Step.Title>Task</Step.Title>
-        <Step.Description>Add Task Content ..</Step.Description>
+        <Step.Title>Quiz</Step.Title>
+        <Step.Description>Add Quiz Content ..</Step.Description>
       </Step.Content>
     </Step>
     <Step  active={step===3}completed={step=== 4}>

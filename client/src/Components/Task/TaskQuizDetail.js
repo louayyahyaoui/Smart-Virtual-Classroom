@@ -56,7 +56,7 @@ export default function TaskQuizDetail() {
           });
           console.log(task);
     
-  }, []);
+  }, [id]);
 const [openModal , setOpenModal] = useState(false);
   return (
     <div>
@@ -89,8 +89,9 @@ const [openModal , setOpenModal] = useState(false);
                     <Container>
                       <h6>{task.task.description}</h6>
                     </Container><br/>
-                    <Divider></Divider>
-                    <CommentComponent taskID={task._id} />
+                   <Divider hidden></Divider>
+                   <Divider hidden></Divider>
+                    <CommentComponent taskID={id} />
                   </Grid.Column>
                   <Grid.Column width={4}>
                     <Card>
