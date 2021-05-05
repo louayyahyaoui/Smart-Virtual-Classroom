@@ -37,8 +37,9 @@ export default function MissingTasks(props) {
                 <Item.Description>{task.task.description}</Item.Description>
                
                 </Item.Content>
-                <label color="green">  Status : {task.taskStatus}<br/>
-                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                <label color="green">  <h4>
+                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}<br/></span>
+                  </h4>
                   </label>
                 
                 

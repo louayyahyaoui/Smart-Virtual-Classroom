@@ -44,8 +44,12 @@ export default function AllTasksStudent(props) {
              
                 </Item.Content>
              
-                  <label color="green">  Status : {task.taskStatus}<br/>
-                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                  <label >  <h4>Status : {task.taskStatus}<br/>
+                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}<br/></span>
+                  {task.grade ===null ? ( <span> Not Corrected Yet</span> )  : (
+
+<span>    Grade : {task.grade}<br/></span>
+                  )}</h4>
                   </label>
                   
              

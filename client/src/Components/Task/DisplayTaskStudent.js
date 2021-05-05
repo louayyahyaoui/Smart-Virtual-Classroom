@@ -5,6 +5,7 @@ import { Button,Statistic, Icon, Divider, Item, Label,Header, Segment, Menu, Gri
 import { isAuth } from '../../helpers/auth';
 
 import { getTasksById } from '../../redux/slices/Grade';
+import { getNbrTasksAttribue } from '../../redux/slices/Task';
 import AllTasksStudent from './AllTasksStudent';
 import MissingTasks from './MissingTasks';
 import TasksAssign from './TasksAssign';
@@ -27,6 +28,7 @@ export default function DisplayTaskStudent() {
     useEffect(()=>{
      
         dispatch(getTasksById(taskDetail));
+        dispatch(getNbrTasksAttribue(taskDetail));
        
        
        },[])

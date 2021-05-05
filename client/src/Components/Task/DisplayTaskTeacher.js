@@ -48,6 +48,7 @@ export default function DisplayTaskTeacher() {
  
   useEffect(() => {
     dispatch(getTaskByTeacher(taskDetail));
+ 
   }, []);
   return (
     <>
@@ -97,13 +98,26 @@ export default function DisplayTaskTeacher() {
                     <Item.Description>{task.description}</Item.Description>
                   </Item.Content>
                 
-                  <Grid columns={6}>
-              
+                  <Grid columns={6} >
+                  <Grid.Row>
+                      <Grid.Column width={5}>
+                        {task.status === "not assign" ? (
+                          <>
+                       
+    <ModalAssignTask task={task}></ModalAssignTask>
+                          </>
+                        ) : (
+                      <></>
+                        )}
+                      </Grid.Column>
+                    
+                    </Grid.Row>
+                  </Grid>
                     <Grid.Row >
                    
                 
                     
-                      <Grid.Column>  
+                      <Grid.Column width={1}>  
                        <Dropdown
                               fluid
                               pointing
@@ -134,20 +148,7 @@ export default function DisplayTaskTeacher() {
                             </Dropdown></Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row>
-                      <Grid.Column width={5}>
-                        {task.status === "not assign" ? (
-                          <>
-                       
-    <ModalAssignTask task={task}></ModalAssignTask>
-                          </>
-                        ) : (
-                      <></>
-                        )}
-                      </Grid.Column>
-                    
-                    </Grid.Row>
-                  </Grid>
+          
                 </Item>
               </Item.Group>
             </Segment>
