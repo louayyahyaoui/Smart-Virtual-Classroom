@@ -162,7 +162,7 @@ const ENDPOINT = "https://closer-server.herokuapp.com/";
   return (
     <Container>
       <AddQuestion />
-      {Number(questions.length) === 0 && (
+      {questions.filter((q) => q._id === id).length===0 && (
           <div>
           
           <Image 
