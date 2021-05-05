@@ -1,12 +1,12 @@
 <!-- Logo -->
 <p align="center">
   <a href="https://closer-classroom.herokuapp.com/">
-    <img height="128" width="128" src="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1620185282927-closer.png?alt=media">
+    <img height="150" width="320" src="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1620185282927-closer.png?alt=media">
   </a>
 </p>
 
 <!-- Name -->
-<h1 align="center">
+<h1 align="center" >
   <a href="https://closer-classroom.herokuapp.com/">CLOSER Virtual Classroom</a>
 </h1>
 
