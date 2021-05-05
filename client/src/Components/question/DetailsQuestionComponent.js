@@ -21,6 +21,7 @@ import {
   Grid,
   Header,
   Icon,
+  Image,
   Label,
   List,
   Message,
@@ -161,7 +162,16 @@ const ENDPOINT = "https://closer-server.herokuapp.com/";
   return (
     <Container>
       <AddQuestion />
-
+      {Number(questions.length) === 0 && (
+          <div>
+          
+          <Image 
+          
+            centered
+            size='large'
+            src={process.env.PUBLIC_URL + "/no_questions.png"}  alt="no-question"          />
+        </div>
+      )}
       {questions
         .filter((q) => q._id === id)
         .map((question, index) => (
