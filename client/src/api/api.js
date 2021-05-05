@@ -17,6 +17,10 @@ export const notificationsApi = {
     const { data } = await api.put(`https://closer-server.herokuapp.com/notification/update/${id}`);
     return data;
   },
+  async deleteNotification(id) {
+    const { data } = await api.delete(`https://closer-server.herokuapp.com/notification/delete/${id}`);
+    return data;
+  },
 };
 export const questionsApi = {
   async getQuestions(id) {

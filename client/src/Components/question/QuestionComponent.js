@@ -90,13 +90,11 @@ export default function QuestionComponent(props) {
       {Number(questions.length) === 0 && (
           <div>
           
-          <Image
+          <Image 
+          
             centered
             size='large'
-            src={process.env.PUBLIC_URL + "/no-question.jpg"}  alt="no-question"          />
-            <Header as='h2' icon textAlign='center'>
-            <Header.Content>No Question founded</Header.Content>
-          </Header>
+            src={process.env.PUBLIC_URL + "/no_questions.png"}  alt="no-question"          />
         </div>
       )}
 
