@@ -198,7 +198,7 @@ const BottomBar = ({
           </div>
           Share Screen
         </ScreenButton>
-        <a href="http://localhost:3000/WhiteBoard" target="_blank"
+        <a href="https://closer-classroom.herokuapp.com/WhiteBoard" target="_blank"
                                       rel="noopener noreferrer" >
            <WhiteBoard>
            <div>
