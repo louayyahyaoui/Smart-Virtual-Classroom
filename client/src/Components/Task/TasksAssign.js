@@ -43,8 +43,9 @@ export default function TasksAssign(props) {
              
                 </Item.Content>
             
-                <label color="green">  Status : {task.taskStatus}<br/>
+                <label color="green"> <h4> 
                   <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                  </h4>
                   </label>
                 
              </Item>

@@ -40,8 +40,15 @@ export default function TasksRemis(props) {
                 <Item.Description>{task.task.description}</Item.Description>       
                 </Item.Content>
                
-                <label color="green">  Status : {task.taskStatus}<br/>
-                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}</span>
+                <label color="green"> <h4>
+                  <span className='cinema'> End Date : {moment(task.task.endDate).format("MMM Do ")}<br/>   </span>
+                  {task.grade ===null ? ( <span> Not Corrected Yet</span> )  : (
+
+<span>    Grade : {task.grade}<br/></span>
+                  )}
+               
+               </h4>
+               
                   </label>
              </Item>
              
