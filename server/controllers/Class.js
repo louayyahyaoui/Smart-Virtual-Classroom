@@ -15,6 +15,17 @@ module.exports = {
       res.status(404).json({ statue: false, message: error.message });
     }
   },
+  getUsers: async (req, res) => {
+    try {
+      res
+        .status(200)
+        .json(
+          await StudentModel.find({})
+        );
+    } catch (error) {
+      res.status(404).json({ statue: false, message: error.message });
+    }
+  },
   getClassById: async (req, res) => {
     try {
       res
@@ -30,55 +41,49 @@ module.exports = {
   },
   ClassByDateYear: async (req, res) => {
     try {
-      res.status(200).json(
-        await ClassModel.aggregate([
-          {
-            $match: {
-              classStatus: "Active",
-              $or: [
-                {
-                  classUsers: {
-                    $in: [mongoose.Types.ObjectId(req.params.id)],
-                  },
+      const newLevel =await ClassModel.aggregate([
+        {
+          $match: {
+            classStatus: req.params.status,
+            $or: [
+              {
+                classUsers: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
                 },
-                {
-                  classOwner: {
-                    $in: [mongoose.Types.ObjectId(req.params.id)],
-                  },
+              },
+              {
+                classOwner: {
+                  $in: [mongoose.Types.ObjectId(req.params.id)],
                 },
-              ],
-            },
+              },
+            ],
           },
-          {
-            $unwind: "$className",
-          },
-          {
-            $group: {
-              _id: { $year: "$classDatePost" },
-              classObjet: {
-                $push: {
-                  className: "$className",
-                  classDescription: "$classDescription",
-                  classSection: "$classSection",
-                  classDatePost: "$classDatePost",
-                  classOwner: "$classOwner",
-                  classUsers: "$classUsers",
-                  classLevel: "$classLevel",
-                  classColor: "$classColor",
-                  classStatus: "$classStatus",
-                  _id: "$_id",
-                },
+        },
+        {
+          $unwind: "$className",
+        },
+        {
+          $group: {
+            _id: { $year: "$classDatePost" },
+            classObjet: {
+              $push: {
+                className: "$className",
+                classDescription: "$classDescription",
+                classSection: "$classSection",
+                classDatePost: "$classDatePost",
+                classOwner: "$classOwner",
+                classUsers: "$classUsers",
+                classLevel: "$classLevel",
+                classColor: "$classColor",
+                classStatus: "$classStatus",
+                _id: "$_id",
               },
             },
           },
-
-          {
-            $sort: {
-              year: -1,
-            },
-          },
-        ])
-      );
+        },
+      ])
+      const Final= newLevel.sort(function(a, b){return a._id - b._id});
+      res.status(200).json(Final);
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
@@ -88,7 +93,7 @@ module.exports = {
       let newLevel = await ClassModel.aggregate([
         {
           $match: {
-            classStatus: "Active",
+            classStatus: req.params.status,
             $or: [
               {
                 classUsers: {
@@ -125,18 +130,9 @@ module.exports = {
             },
           },
         },
-        {
-          $sort: {
-            classLevel: -1,
-          },
-        },
       ]);
-      res.status(200).json(
-        await ClassModel.populate(newLevel, {
-          path: "classOwner",
-          model: "Student",
-        })
-      );
+      const Final= newLevel.sort(function(a, b){return a._id - b._id});
+      res.status(200).json(Final);
     } catch (error) {
       res.status(404).json({ statue: false, message: error.message });
     }
@@ -283,6 +279,22 @@ module.exports = {
       res.status(201).json({
         statue: true,
         message: " Class Archived Succefully",
+        result: data,
+      });
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  updateClassArchive: async (req, res) => {
+    try {
+      // const updateClass = new ClassModel(req.body);
+      const data = await ClassModel.update(
+        { _id: req.params.id },
+        { classStatus: "Active" }
+      );
+      res.status(201).json({
+        statue: true,
+        message: " Class Actived Succefully",
         result: data,
       });
     } catch (error) {

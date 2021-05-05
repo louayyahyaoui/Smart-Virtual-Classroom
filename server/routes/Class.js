@@ -15,10 +15,13 @@ const {
   getUserByid,
   CountActiveClass,
   updateClassActive,
+  updateClassArchive,
+  getUsers,
 } = require("../controllers/Class.js");
 router.get("/", getClass);
-router.get("/byyear/:id", ClassByDateYear);
-router.get("/bylevel/:id", ClassByLevel);
+router.get("/usersall/", getUsers);
+router.get("/byyear/:id/:status", ClassByDateYear);
+router.get("/bylevel/:id/:status", ClassByLevel);
 router.post("/", addClass);
 router.put("/:id", updateClass);
 router.delete("/:id", deleteClass);
@@ -26,6 +29,7 @@ router.delete("/", deleteAllClass);
 router.put("/:id/:email", addUserToClass);
 router.put("/r/:id/:email", removeUserFromClass);
 router.put("/update/archive/:id", updateClassActive);
+router.put("/update/active/:id", updateClassArchive);
 router.get("/email/:email", getUserByEmail);
 router.get("/:_id", getClassById);
 router.get("/userid/:_id", getUserByid);
