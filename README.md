@@ -8,7 +8,7 @@
 <!-- Name -->
 
 <h2 align="center" >
-  Learn whatever you want without leaving home.
+  Learn whatever you want :closed_book: without leaving home :wedding:.
 </h2>
 
 <!-- Badges -->
@@ -16,18 +16,18 @@
   
 </p>
 
-## Try it out
+## :computer: Try it out
 
 You can try out CLOSER at
 [`https://closer-classroom.herokuapp.com/`]https://closer-classroom.herokuapp.com/)
 
-## About Closer
+## :mega: About Closer
 
 Closer Smart Virtual Classroom is A collaborative web conferencing tool with an online whiteboard, 
 breakout rooms, and screen sharingcapabilities for teachers and tutors who want to conduct highly 
 interactive live online teaching sessions
 
-## Main Features
+## :rocket: Main Features
 
 - **Online whiteboard** : Share with your participants various types of learning resources on the whiteboard and discuss them during your live sessions. Engage your         participants in different collaborative activities using the tools for creating, editing and presenting learning content.
 - **Video-conference** : See and hear your up to 2 participants simultaneously and experience an interaction which is very similar to face-to-face training.
@@ -37,7 +37,7 @@ interactive live online teaching sessions
 - **Courses** : You can add a new course to the class, also u can Modify/Delete/Display it.
 
 
-## Installation & Usage
+## :wrench: Installation & Usage
 
 - Clone the HerokuServer branch and run "npm install"
 - Clone the closerV1.0 branch and run "npm install"
@@ -45,7 +45,7 @@ interactive live online teaching sessions
 - Run "npm run start" in the client directory
 - Enjoy ;)
 
-## Devoloped With MERN stack
+## :bulb: Devoloped With MERN stack
 
 <p align="center">
   <img height="50" src="https://www.alioze.com/wp-content/uploads/2016/11/react-js.png" />
