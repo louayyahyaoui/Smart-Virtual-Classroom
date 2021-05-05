@@ -39,7 +39,7 @@
 
 
 
-## Credit
+## :pencil: Credit
 
 Created by NoLimits Team and an amazing community of [contributors][20].
 
@@ -48,6 +48,10 @@ Made possible only by [@jlukic][32] authoring [Semantic UI][5].
 Blazing deployments by <a href="https://www.heroku.com"><img height="12" width="14" src="https://atomrace.com/blog/wp-content/uploads/2016/02/heroku-logo-trans.png" /> Heroku</a>.
 
 [20]: https://github.com/louayyahyaoui/Smart-Virtual-Classroom/graphs/contributors
+
+## :man_astronaut: Show your support
+
+Give a ⭐️ if this project helped you!
 
 
 
