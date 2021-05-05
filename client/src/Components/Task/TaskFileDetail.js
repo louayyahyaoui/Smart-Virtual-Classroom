@@ -108,6 +108,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             {" "}
                             <Icon name="file pdf" color="red" size="massive" />
@@ -117,6 +119,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon name="file word" color="blue" size="massive" />
                           </a>
@@ -125,6 +129,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon
                               name="file powerpoint"
@@ -137,6 +143,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon
                               name="file excel outline"
@@ -149,6 +157,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon name="zip" size="massive" />
                           </a>
@@ -157,6 +167,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon name="js" color="yellow" size="massive" />
                           </a>
@@ -165,6 +177,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon name="zip" color="blue" size="massive" />
                           </a>
@@ -173,6 +187,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Icon name="file text" size="massive" color="blue" />
                           </a>
@@ -182,6 +198,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <img
                               style={{
@@ -198,6 +216,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <img
                               style={{
@@ -214,6 +234,8 @@ export default function TaskFileDetail() {
                         return (
                           <a
                             href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <img
                               style={{
