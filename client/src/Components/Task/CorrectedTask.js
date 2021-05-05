@@ -51,20 +51,22 @@ const zero = 0;
                               switch (file.toString().split(".").pop()) {
                                 case "pdf":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                    target="_blank"
+                                    >
                                       {" "}
                                       <Icon name="file pdf" color="red" size="huge" />
                                     </a>
                                   );
                                 case "docx":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon name="file word" color="blue" size="huge" />
                                     </a>
                                   );
                                 case "pptx":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon
                                         name="file powerpoint"
                                         color="red"
@@ -74,7 +76,7 @@ const zero = 0;
                                   );
                                 case "xlsx":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon
                                         name="file excel outline"
                                         color="green"
@@ -84,32 +86,32 @@ const zero = 0;
                                   );
                                 case "zip":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon name="zip" size="huge" />
                                     </a>
                                   );
                                 case "js":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon name="js" color="yellow" size="huge" />
                                     </a>
                                   );
                                 case "php":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon name="zip" color="blue" size="huge" />
                                     </a>
                                   );
                                 case "txt":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
                                       <Icon name="file text" size="huge" color="blue" />
                                     </a>
                                   );
           
                                 case "jpg":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
           
                                     <img
                                       style={{
@@ -124,7 +126,7 @@ const zero = 0;
                                   );
                                 case "jpeg":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`} target="_blank">
           
                                     <img
                                       style={{
@@ -139,7 +141,7 @@ const zero = 0;
                                   );
                                 case "png":
                                   return (
-                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}>
+                                    <a href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}target="_blank">
           
                                     <img
                                       style={{

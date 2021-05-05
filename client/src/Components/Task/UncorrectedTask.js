@@ -78,6 +78,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           {" "}
                                           <Icon
@@ -91,6 +92,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="file word"
@@ -103,6 +105,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="file powerpoint"
@@ -115,6 +118,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="file excel outline"
@@ -127,6 +131,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon name="zip" size="huge" />
                                         </a>
@@ -135,6 +140,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="js"
@@ -147,6 +153,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="zip"
@@ -159,6 +166,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <Icon
                                             name="file text"
@@ -172,6 +180,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <img
                                             style={{
@@ -188,6 +197,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <img
                                             style={{
@@ -204,6 +214,7 @@ export default function UncorrectedTask(props) {
                                       return (
                                         <a
                                           href={`https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/${file}?alt=media`}
+                                          target="_blank"
                                         >
                                           <img
                                             style={{
