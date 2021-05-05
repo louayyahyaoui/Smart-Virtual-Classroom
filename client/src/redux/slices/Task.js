@@ -1,7 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const getNbrTasksAttribue = createAsyncThunk(
+  "Task/getNbrTasksAttribue",
+  async (taskDetail) => {
+    const { data } = await axios.get(
+     
+      `https://closer-server.herokuapp.com/task/StatTaskAttribue?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`,
+    );
 
+    return data;
+  }
+);
 
 export const getNbrTasksRemis = createAsyncThunk(
   "Task/getNbrTasksRemis",
@@ -190,6 +200,7 @@ export const taskSlice = createSlice({
   name: "Task",
   initialState: {
     tasks: [],
+    tasksAttribue: [],
     nbrRemis: 0,
     nbrMissing: 0,
     files: [],
@@ -332,6 +343,18 @@ export const taskSlice = createSlice({
       }
     },
     [assignAfterSave.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+
+
+    [getNbrTasksAttribue.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getNbrTasksAttribue.fulfilled]: (state, action) => {
+      
+      state.tasksAttribue = action.payload;
+    },
+    [getNbrTasksAttribue.rejected]: (state, action) => {
       state.status = "failed";
     },
   },
