@@ -19,7 +19,7 @@ import ModalConfirmDeleteCourses from "./ModalConfirmDeleteCour";
 //import { Player, ControlBar } from "video-react";
 import QierPlayer from "qier-player";
 import ReactPlayer from "react-player/lazy";
-import { Player, Video, DefaultUi } from "@vime/react";
+
 import { RetrieveCoursesByIdClass } from "../../redux/slices/Courses";
 
 import ModalCourses from "./ModalCourses";

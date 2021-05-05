@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Multiselect } from "multiselect-react-dropdown";
 import Select from "react-select";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 
@@ -18,14 +17,11 @@ import {
 import { useSelector } from "react-redux";
 import MultiSelect from "react-multi-select-component";
 
-
-
-
 export default function AddTask(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const seanceChosen = [];
-  const studentChosen =[] ;
+  const studentChosen = [];
   const seances = useSelector((state) => state.seance.seance);
   currentClass.classUsers.forEach((element) => {
     studentChosen.push({ label: element.name, value: element._id });
@@ -35,15 +31,11 @@ export default function AddTask(props) {
     seanceChosen.push({ label: element.titre, value: element });
   });
 
- 
   const [selectedSeance, setSelectedSeance] = useState(null);
 
   const [theme, setTheme] = useState(props.data.theme);
 
- 
   const [selected, setSelected] = useState([]);
- 
- 
 
   var step = 1;
 
@@ -62,22 +54,17 @@ export default function AddTask(props) {
   const event = () => {
     props.addTask(
       currentClass.classUsers.forEach((itemselect) => {
-      
         const index = selected.findIndex(
           (item) => item.value === itemselect._id
         );
         if (index !== -1) {
-          
-      
           tasks.listStudents.push(itemselect);
         }
-      
-        
       })
     );
-   // console.log(tasks.listStudents);
+    // console.log(tasks.listStudents);
     props.addTask((tasks.theme = selectedSeance.value));
-   // console.log(tasks.theme);
+    // console.log(tasks.theme);
     props.addTask(tasks);
 
     props.nextStep(step + 1);
@@ -138,14 +125,12 @@ export default function AddTask(props) {
                 options={seanceChosen}
               />
 
-        
               <Header
                 as="h5"
                 icon="check square outline"
                 content={" For Student  "}
               />
               <Form.Field required>
-               
                 <MultiSelect
                   options={studentChosen}
                   value={selected}

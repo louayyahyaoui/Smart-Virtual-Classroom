@@ -53,7 +53,6 @@ function FileUpload(props) {
     if (props.Enbale && endloader) {
       //save the Image we chose inside the Node Server
 
-
       SetLoader(true);
       const config = {
         header: { "content-type": "multipart/form-data" },
@@ -86,7 +85,7 @@ function FileUpload(props) {
 
   return (
     <div style={{ display: "flexwrap" }}>
-      <Dropzone    onDrop={onDrop} multiple={true} maxSize={800000000}>
+      <Dropzone onDrop={onDrop} multiple={true} maxSize={800000000}>
         {({ getRootProps, getInputProps }) => (
           <div
             style={{
@@ -98,7 +97,6 @@ function FileUpload(props) {
               justifyContent: "center",
             }}
             {...getRootProps()}
-          
           >
             <input {...getInputProps()} />
             <Label as="a" onClick={() => setetat("flex")}>
