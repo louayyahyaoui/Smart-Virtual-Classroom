@@ -143,13 +143,18 @@ export default function AddTask(props) {
         </Grid>
       </Segment>
       <Button
-        disabled={
-          step > 2 || (!tasks.title && !tasks.description && !tasks.typeTask)
-        }
+      disabled={
+        tasks.title === "" ||
+        tasks.description === "" ||
+        tasks.endDate === null ||
+        selectedSeance === null ||
+        selected === []
+      }
         type="submit"
         floated="right"
         color="red"
         onClick={event}
+       
       >
         Next
       </Button>

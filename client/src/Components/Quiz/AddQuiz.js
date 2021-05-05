@@ -142,9 +142,10 @@ const [selected, setSelected] = useState(null);
               {inputFields.map((inputField, index) => (
                 <div key={inputField.id}>
                   <Divider />
-                  <label>Question {index + 1}</label>
+                  <label>Question </label>{index + 1}
                   <Form.Group widths="equal" inline>
                     <Form.Input
+                     icon={<Icon name="question circle outline" />}
                       name="fquestion"
                       fluid
                       value={inputFields.fquestion}
@@ -152,14 +153,16 @@ const [selected, setSelected] = useState(null);
                         handleChangeInput(inputField.id, event)
                       }
                     />
-
+ 
                     <Form.Input
+                        icon={<Icon name="check circle outline" />}
                       name="fpoint"
                       value={inputFields.fquestion}
                       onChange={(event) =>
                         handleChangeInput(inputField.id, event)
                       }
                     />
+                   
                     <Button.Group>
                       <Button
                         size="mini"
@@ -177,7 +180,7 @@ const [selected, setSelected] = useState(null);
                   <label>A</label>
 
                   <Form.Input
-                    icon={<Icon name="check circle outline" />}
+                 
                     name="foptionA"
                     fluid
                     value={inputFields.foptionA}
@@ -235,7 +238,12 @@ const [selected, setSelected] = useState(null);
       </Grid>
       <br/>
       <Divider hidden></Divider>
-      <Button color="red" type="submit" floated="right" onClick={event}>
+      <Button color="red" type="submit" floated="right" onClick={event}
+      disabled={inputFields.correct_answer==="" || inputFields.fpoint==="" || inputFields.fquestion==="" || inputFields.foptionA===""
+    
+    || inputFields.foptionB==="" || inputFields.foptionC==="" || inputFields.foptionD==="" 
+  }
+      >
         Next
       </Button>
 

@@ -193,7 +193,7 @@ export default function ModalTaskFile(props) {
   };
 
   return (
-    <div>
+    <>
       <Modal
         trigger={
           <Dropdown.Item
@@ -359,6 +359,6 @@ export default function ModalTaskFile(props) {
           />
         </Modal.Actions>
       </Modal>
-    </div>
+    </>
   );
 }

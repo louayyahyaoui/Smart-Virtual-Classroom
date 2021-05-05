@@ -27,6 +27,7 @@ import QuestionByTags from "../question/QuestionByTags";
 import TaskQuizDetail from "../Task/TaskQuizDetail";
 import UserQuestion from "../question/UserQuestion";
 import NotificationComponent from "../notifications/NotificationComponent";
+import { isAuth } from "../../helpers/auth";
 
 const server = process.env.REACT_APP_API_URL || "";
 function Home() {
@@ -139,7 +140,8 @@ function Home() {
             <PrivateRoute path="/members" exact component={MemberComponent} />
           </Grid.Column>
           <Grid.Column width={3}>
-            <ReminderTask/>
+            {isAuth().role ==="Student" ? (   <ReminderTask/>) : (<></>)}
+         
             <TableSeance />
           </Grid.Column>
         </Grid.Row>
