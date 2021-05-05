@@ -392,7 +392,10 @@ exports.googleController = (req, res) => {
           error: "Google login failed. Try again",
         });
       }
-    });
+    }).catch((errrr)=>{
+      console.log(errrr);
+    }
+    )
 };
 
 exports.ChangePassword = (req, res) => {
