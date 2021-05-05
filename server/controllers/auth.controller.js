@@ -343,13 +343,13 @@ exports.resetPasswordController = (req, res) => {
   }
 };
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
+const client = new OAuth2Client('566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com');
 // Google Login
 exports.googleController = (req, res) => {
   const { idToken } = req.body;
 
   client
-    .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT })
+    .verifyIdToken({ idToken, audience: '566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com' })
     .then((response) => {
       console.log("GOOGLE LOGIN RESPONSE", response);
       const { email_verified, name, email, picture } = response.payload;
