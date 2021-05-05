@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card, Header, Segment } from 'semantic-ui-react'
+import { Card, Feed, Header, Image, Segment } from 'semantic-ui-react'
 import { isAuth } from '../../helpers/auth';
 import { getTasksById } from '../../redux/slices/Grade';
+import { getNbrTasksAttribue } from '../../redux/slices/Task';
 
 export default function ReminderTask() {
 
-    const grades = useSelector( state => state.grades.grades);
+    const tasks = useSelector( state => state.tasks.tasksAttribue);
     const [reminder , setReminder] =useState(false)
     const currentClass = JSON.parse(localStorage.getItem("idClass"));
     const taskDetail={
@@ -21,17 +22,17 @@ export default function ReminderTask() {
     
    
     
-      /*const dispatch = useDispatch();
+      const dispatch = useDispatch();
   
  
       useEffect(()=>{
        
-          dispatch(getTasksById(taskDetail));
+          dispatch(getNbrTasksAttribue(taskDetail));
         
          
          },[])
-       */
-         console.log(grades);
+       
+         console.log(tasks);
     return (
        
         <>
@@ -43,37 +44,34 @@ export default function ReminderTask() {
       
           </Segment>
 
+      <Card color="red">
+  
+    <Card.Content>
+    {tasks.length > 0 ? (<>
        
-        <Card>
-        
-            
-            <Card.Content header='TO DO' >
-       
-   
-       
+       {tasks.map((task)=>
 
+      <Feed>
+        <Feed.Event>
+          <Feed.Label               avatar image={process.env.PUBLIC_URL +  task.task.typeTask === "Quiz" ? "/quiz.jpg" : "/file.jpg"}  />
+          <Feed.Content>
           
- <Card.Description>
-                { reminder ? ( <p>Check Your Task List You Have Assign Task clic  <Link to="/TaskListStudent">ici</Link> </p>)  : ( <p>All Done Good No Tasks Assign </p>) }
-                
-                </Card.Description>
-        
-        
-                <Card.Description>
-              <p>All Done Good No Tasks Assign </p>
-                
-                </Card.Description>
-                <Card.Description>
-              <p>All Done Good No Tasks Assign </p>
-                
-                </Card.Description>
-                <Card.Description>
-              <p>All Done Good No Tasks Assign </p>
-                
-                </Card.Description>
-      
-      </Card.Content>
-      </Card>
+            <Feed.Summary >
+            <Link  to={task.task.typeTask === "Quiz" ? "/TaskQuizDetail/"+task._id : "/TaskFileDetail/"+task._id}>     
+              <h5>{task.task.title}</h5> 
+              </Link>
+            
+            </Feed.Summary>
+           
+          </Feed.Content>
+        </Feed.Event>
+
+      </Feed>
+        )}
+       
+        </>) : (<Feed.Event  > <h5>Good No Tasks </h5></Feed.Event>)}
+    </Card.Content>
+  </Card>
         </>
     )
 }
