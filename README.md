@@ -41,9 +41,7 @@
 
 ## :pencil: Credit
 
-Created by NoLimits Team and an amazing community of [contributors][20].
-
-Made possible only by [@jlukic][32] authoring [Semantic UI][5].
+Created by <a href="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1620185280095-logo%20nolimit.png?alt=media"><img height="17" width="25" src="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1620185280095-logo%20nolimit.png?alt=media" /> NoLimits</a> Team and an amazing community of [contributors][20].
 
 Blazing deployments by <a href="https://www.heroku.com"><img height="12" width="14" src="https://atomrace.com/blog/wp-content/uploads/2016/02/heroku-logo-trans.png" /> Heroku</a>.
 
