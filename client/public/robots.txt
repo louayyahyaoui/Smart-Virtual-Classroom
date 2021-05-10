@@ -1,3 +1,11 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+User-Agent: *
+Disallow:/public
+Disallow:/FAQ
+Disallow:/Courses
+Disallow:/class
+Disallow:/task
+Disallow:/login
+Disallow:/register
+allow:/home
+allow:/about
+Sitemap: http://www.closer-classroom.herokuapp.com/
