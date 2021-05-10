@@ -32,32 +32,22 @@
       Also closer guaranteed to the student not to miss a Also closer guaranteed to the student not to miss a session since all the lessons are recorded automatically and included in our server which is available 24 hours a day."
     />
     <!-- Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-K7EL93B1YB"
+    ></script>
     <script>
-      (function (i, s, o, g, r, a, m) {
-        i["GoogleAnalyticsObject"] = r;
-        (i[r] =
-          i[r] ||
-          function () {
-            (i[r].q = i[r].q || []).push(arguments);
-          }),
-          (i[r].l = 1 * new Date());
-        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m);
-      })(
-        window,
-        document,
-        "script",
-        "https://www.google-analytics.com/analytics.js",
-        "ga"
-      );
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      ga("create", "UA-XXXXX-Y", "auto");
-      ga("send", "pageview");
+      gtag("config", "G-K7EL93B1YB");
     </script>
     <!-- End Google Analytics -->
-    
+
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
       crossorigin="anonymous"
