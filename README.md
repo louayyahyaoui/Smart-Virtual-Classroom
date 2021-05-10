@@ -39,11 +39,12 @@ interactive live online teaching sessions
 
 ## :wrench: Installation & Usage
 
-- Clone the HerokuServer branch and run "npm install"
-- Clone the closerV1.0 branch and run "npm install"
-- Run "nodemon server.js" in the server directory
+- Clone the Master branch
+- Go to Client directory by typing "cd Client" and run "npm install"
+- Go to Server directory by typing "cd Server" and run "npm install"
+- Run "node server.js" in the server directory
 - Run "npm run start" in the client directory
-- Enjoy ;)
+- Go to http://localhost:3000 and Enjoy ;)
 
 ## :bulb: Devoloped With MERN stack
 
