@@ -8,4 +8,5 @@ Disallow:/login
 Disallow:/register
 allow:/home
 allow:/about
+allow:/
 Sitemap: http://www.closer-classroom.herokuapp.com/
