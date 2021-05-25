@@ -29,48 +29,48 @@ exports.registerController = (req, res) => {
         return res.status(400).json({
           errors: "Email is taken",
         });
-      }
-    });
+      } else {
+        const token = jwt.sign(
+          {
+            name,
+            email,
+            password,
+          },
+          process.env.JWT_ACCOUNT_ACTIVATION,
+          {
+            expiresIn: "15m",
+          }
+        );
 
-    const token = jwt.sign(
-      {
-        name,
-        email,
-        password,
-      },
-      process.env.JWT_ACCOUNT_ACTIVATION,
-      {
-        expiresIn: "15m",
-      }
-    );
-
-    const emailData = {
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: "Account activation link",
-      html: `
+        const emailData = {
+          from: process.env.EMAIL_FROM,
+          to: email,
+          subject: "Account activation link",
+          html: `
                 <h1>Please use the following to activate your account</h1>
                 <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
                 <hr />
                 <p>This email may containe sensetive information</p>
                 <p>${process.env.CLIENT_URL}</p>
             `,
-    };
+        };
 
-    sgMail
-      .send(emailData)
-      .then((sent) => {
-        console.log("sent");
-        return res.json({
-          message: `Email has been sent to ${email} `,
-        });
-      })
-      .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: `this is the error ${err}`,
-        });
-      });
+        sgMail
+          .send(emailData)
+          .then((sent) => {
+            console.log("sent");
+            return res.json({
+              message: `Email has been sent to ${email} `,
+            });
+          })
+          .catch((err) => {
+            return res.status(400).json({
+              success: false,
+              message: `this is the error ${err}`,
+            });
+          });
+      }
+    });
   }
 };
 
