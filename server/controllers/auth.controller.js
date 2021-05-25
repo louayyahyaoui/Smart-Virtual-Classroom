@@ -62,7 +62,7 @@ exports.registerController = (req, res) => {
       .then((sent) => {
         console.log("sent");
         return res.json({
-          message: `Email has been sent from ${process.env.EMAIL_FROM} to ${email} that contain the token :  ${token} and the url : ${process.env.CLIENT_URL}`,
+          message: `Email has been sent to ${email} `,
         });
       })
       .catch((err) => {
