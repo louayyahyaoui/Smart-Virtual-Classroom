@@ -4,9 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import { authenticate, isAuth } from "../../helpers/auth";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 
 const Activate = ({ match }) => {
+  let history = useHistory();
   const [formData, setFormData] = useState({
     name: "",
     token: "",
@@ -39,7 +40,7 @@ const Activate = ({ match }) => {
         });
 
         toast.success(res.data.message);
-        <Redirect to="/" />;
+        history.push("/login");
       })
       .catch((err) => {
         toast.error(err.response.data.errors);
