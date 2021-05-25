@@ -60,14 +60,15 @@ exports.registerController = (req, res) => {
     sgMail
       .send(emailData)
       .then((sent) => {
+        console.log("sent");
         return res.json({
-          message: `Email has been sent to ${email}`,
+          message: `Email has been sent from ${process.env.EMAIL_FROM} to ${email} that contain the token :  ${token} and the url : ${process.env.CLIENT_URL}`,
         });
       })
       .catch((err) => {
         return res.status(400).json({
           success: false,
-          errors: errorHandler(err),
+          message: `this is the error ${err}`,
         });
       });
   }
@@ -343,13 +344,19 @@ exports.resetPasswordController = (req, res) => {
   }
 };
 
-const client = new OAuth2Client('566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com');
+const client = new OAuth2Client(
+  "566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com"
+);
 // Google Login
 exports.googleController = (req, res) => {
   const { idToken } = req.body;
 
   client
-    .verifyIdToken({ idToken, audience: '566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com' })
+    .verifyIdToken({
+      idToken,
+      audience:
+        "566877938267-shbv3g3sbh5l108bb440k2ikl2prkptv.apps.googleusercontent.com",
+    })
     .then((response) => {
       console.log("GOOGLE LOGIN RESPONSE", response);
       const { email_verified, name, email, picture } = response.payload;
@@ -392,10 +399,10 @@ exports.googleController = (req, res) => {
           error: "Google login failed. Try again",
         });
       }
-    }).catch((errrr)=>{
+    })
+    .catch((errrr) => {
       console.log(errrr);
-    }
-    )
+    });
 };
 
 exports.ChangePassword = (req, res) => {
