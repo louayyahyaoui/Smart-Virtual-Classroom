@@ -29,7 +29,7 @@ function MemberComponent() {
   useEffect(() => {
     dispatch(fetchInvitationclassId(classinvit._id));
     dispatch(fetchUsers());
-  });
+  },[]);
   setTimeout(()=>{},200);
   const Remove = async (idclass, email) => {
     try {
@@ -52,6 +52,7 @@ function MemberComponent() {
       alert(error);
     }
   };
+  console.log(members);
 
   return (
     <div>
@@ -96,6 +97,8 @@ function MemberComponent() {
           </Header.Subheader>
         </div>
       </Segment>
+      { typeof members !== undefined && members !== null && members.length !== null && members.length > 0  ? (
+        <div>
       <Header as="h2" icon textAlign="center">
         <Icon name="add user" size="big" />
         Pending Accounts
@@ -135,6 +138,10 @@ function MemberComponent() {
           </Header.Subheader>
         </div>
       </Segment>
+      </div>
+       ): (
+        <></>
+      )}
     </div>
   );
 }

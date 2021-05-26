@@ -34,7 +34,7 @@ export default function AddUserToClassComponent(props) {
     });
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      let verif1=true,verif2=true;
+      let verif1=true,verif2=true,verif3=true;
         for (let index11 = 0; index11 < classinvit.classUsers.length; index11++) {
         if(classinvit.classUsers[index11]._id===element)
         {
@@ -47,10 +47,13 @@ export default function AddUserToClassComponent(props) {
         {
           verif2=false;
           break;
-        }
-      
+        }  
       }
-      if(verif1 && verif2){
+      console.log(classinvit.classOwner._id===element);
+      if( classinvit.classOwner._id===element )
+        verif3=false;
+
+      if(verif1 && verif2 && verif3 ){
       if (data.length > 0) {
 
         const dataField = {
