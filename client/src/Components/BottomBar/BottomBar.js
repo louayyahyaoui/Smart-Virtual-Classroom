@@ -103,11 +103,11 @@ const BottomBar = ({
       console.log(res.data);
     });
   }, [mediaBlob]);
- 
+
   return (
     <Bar>
       <Left>
-      <ListUsers  userlistromm={listuserRoom}/>
+        <ListUsers userlistromm={listuserRoom} />
         <CameraButton onClick={toggleCameraAudio} data-switch="video">
           <div>
             {userVideoAudio.video ? (
@@ -141,7 +141,6 @@ const BottomBar = ({
           </div>
           Audio
         </CameraButton>
-
       </Left>
       <Center>
         <ChatButton onClick={clickChat}>
@@ -154,7 +153,7 @@ const BottomBar = ({
           <div>
             <FaIcon className="fas fa-play-circle"></FaIcon>
           </div>
-          Start
+          Record
         </StartButton>
         {/* Modal of info when record has been stoped */}
         <Modal
@@ -198,21 +197,22 @@ const BottomBar = ({
           </div>
           Share Screen
         </ScreenButton>
-        <a href="https://closer-classroom.herokuapp.com/WhiteBoard" target="_blank"
-                                      rel="noopener noreferrer" >
-           <WhiteBoard>
-           <div>
-            <FaIcon
-              className={'fas fa-chalkboard-teacher'}
-            ></FaIcon>
-          </div>
-          WhiteBoard
-        </WhiteBoard>
+        <a
+          href="https://closer-classroom.herokuapp.com/WhiteBoard"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <WhiteBoard>
+            <div>
+              <FaIcon className={"fas fa-chalkboard-teacher"}></FaIcon>
+            </div>
+            WhiteBoard
+          </WhiteBoard>
         </a>
       </Center>
 
       <Right>
-        <StopButton onClick={goToBack}>Stop</StopButton>
+        <StopButton onClick={goToBack}>Quit</StopButton>
       </Right>
     </Bar>
   );
@@ -237,20 +237,20 @@ const Left = styled.div`
   margin-left: 15px;
 `;
 const WhiteBoard = styled.div`
-width: 75px;
-border: none;
-font-size: 0.9375rem;
-padding: 5px;
+  width: 75px;
+  border: none;
+  font-size: 0.9375rem;
+  padding: 5px;
 
-:hover {
-  background-color: #77b7dd;
-  cursor: pointer;
-  border-radius: 15px;
-}
+  :hover {
+    background-color: grey;
+    cursor: pointer;
+    border-radius: 15px;
+  }
 
-* {
-  pointer-events: none;
-}
+  * {
+    pointer-events: none;
+  }
 `;
 const Center = styled.div`
   flex: 1;
@@ -267,7 +267,7 @@ const ChatButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: #77b7dd;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -283,7 +283,7 @@ const StartButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: #77b7dd;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -300,7 +300,7 @@ const StopRecordButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: #77b7dd;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -317,13 +317,13 @@ const ScreenButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: #77b7dd;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
 
   .sharing {
-    color: #ee2560;
+    color: black;
   }
 `;
 
@@ -343,7 +343,7 @@ const StopButton = styled.div`
   border-radius: 15px;
 
   :hover {
-    background-color: #f25483;
+    background-color: black;
     cursor: pointer;
   }
 `;
@@ -356,7 +356,7 @@ const CameraButton = styled.div`
   padding: 5px;
 
   :hover {
-    background-color: #77b7dd;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -366,11 +366,11 @@ const CameraButton = styled.div`
   }
 
   .fa-microphone-slash {
-    color: #ee2560;
+    color: black;
   }
 
   .fa-video-slash {
-    color: #ee2560;
+    color: black;
   }
 `;
 
@@ -383,7 +383,7 @@ const SwitchMenu = styled.div`
   z-index: 1;
 
   :hover {
-    background-color: #476d84;
+    background-color: grey;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -404,7 +404,7 @@ const SwitchList = styled.div`
   position: absolute;
   top: -115px;
   left: 80px;
-  background-color: #4ea1d3;
+  background-color: grey;
   color: white;
   padding-top: 5px;
   padding-right: 10px;
@@ -418,7 +418,7 @@ const SwitchList = styled.div`
     margin-bottom: 5px;
 
     :not(:last-child):hover {
-      background-color: #77b7dd;
+      background-color: grey;
       cursor: pointer;
     }
   }

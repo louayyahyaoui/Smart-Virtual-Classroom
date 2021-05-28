@@ -293,10 +293,10 @@ function SideBareComponent() {
             </Menu>
           </Card.Content>
           <Card.Content extra>
-            <a>
+            {/* <a>
               <Icon name="group" />
               <Main></Main>
-            </a>
+            </a> */}
           </Card.Content>
         </Card>
       </Grid>

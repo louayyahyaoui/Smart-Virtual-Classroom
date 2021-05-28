@@ -6,6 +6,8 @@ import VideoCard from "../Video/VideoCard";
 import BottomBar from "../BottomBar/BottomBar";
 import Chat from "../Chat/Chat";
 import ScreenRecord from "../coursesAndSeances/ScreenRecord";
+import { Label } from "semantic-ui-react";
+import { isAuth } from "../../helpers/auth";
 
 const Room = (props) => {
   const currentUser = sessionStorage.getItem("user");
@@ -44,7 +46,7 @@ const Room = (props) => {
 
         socket.emit("BE-join-room", { roomId, userName: currentUser });
         socket.on("FE-user-join", (users) => {
-         // console.log("users from room : "+users);
+          // console.log("users from room : "+users);
           setuserslist(users);
           // all users
           const peers = [];
@@ -110,14 +112,15 @@ const Room = (props) => {
         socket.on("FE-user-leave", ({ userId, userName }) => {
           const peerIdx = findPeer(userId);
           peerIdx.peer.destroy();
-         
+
           setPeers((users) => {
             users = users.filter((user) => user.peerID !== peerIdx.peer.peerID);
             setuserslist(users);
             return [...users];
           });
-          console.log("ici users list AFTER LEAVE : "+JSON.stringify(userslist))
-
+          console.log(
+            "ici users list AFTER LEAVE : " + JSON.stringify(userslist)
+          );
         });
       });
 
@@ -233,11 +236,13 @@ const Room = (props) => {
       let audioSwitch = preList["localUser"].audio;
 
       if (target === "video") {
-        const userVideoTrack = userVideoRef.current.srcObject.getVideoTracks()[0];
+        const userVideoTrack =
+          userVideoRef.current.srcObject.getVideoTracks()[0];
         videoSwitch = !videoSwitch;
         userVideoTrack.enabled = videoSwitch;
       } else {
-        const userAudioTrack = userVideoRef.current.srcObject.getAudioTracks()[0];
+        const userAudioTrack =
+          userVideoRef.current.srcObject.getAudioTracks()[0];
         audioSwitch = !audioSwitch;
 
         if (userAudioTrack) {
@@ -331,7 +336,23 @@ const Room = (props) => {
               className={`width-peer${peers.length > 8 ? "" : peers.length}`}
             >
               {userVideoAudio["localUser"].video ? null : (
-                <UserName>{currentUser}</UserName>
+                <>
+                  <Avatar>
+                    <img
+                      src={isAuth().picture}
+                      style={{
+                        margin: "10px",
+
+                        width: "12%",
+                        height: "12%",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </Avatar>
+                  <br />
+                  <br />
+                  <UserName>{currentUser}</UserName>
+                </>
               )}
               <FaIcon className="fas fa-expand" />
               <MyVideo
@@ -426,8 +447,9 @@ const VideoBox = styled.div`
 
 const UserName = styled.div`
   position: absolute;
-  font-size: calc(20px + 5vmin);
+  font-size: calc(10px + 3vmin);
   z-index: 1;
+  margin-top: 35%;
 `;
 
 const FaIcon = styled.i`
@@ -435,6 +457,16 @@ const FaIcon = styled.i`
   position: absolute;
   right: 15px;
   top: 15px;
+`;
+
+const Avatar = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //font-size: calc(20px + 5vmin);
+
+  z-index: 1;
 `;
 
 export default Room;

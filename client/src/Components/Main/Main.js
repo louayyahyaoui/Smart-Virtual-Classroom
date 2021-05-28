@@ -1,29 +1,25 @@
-import React, { useRef, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import socket from '../../socket';
+import React, { useRef, useState, useEffect } from "react";
+import styled from "styled-components";
+import socket from "../../socket";
 import { useHistory } from "react-router-dom";
-
-
-
+import { Icon, Menu } from "semantic-ui-react";
 const Main = (props) => {
   const history = useHistory();
   const [err, setErr] = useState(false);
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState("");
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const currentUser = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-
-    socket.on('FE-error-user-exist', ({ error }) => {
+    socket.on("FE-error-user-exist", ({ error }) => {
       if (!error) {
-        
         const roomName = currentClass._id;
         const userName = currentUser.name;
 
-        sessionStorage.setItem('user', userName);
+        sessionStorage.setItem("user", userName);
         history.push(`/room/${roomName}`);
       } else {
         setErr(error);
-        setErrMsg('User name already exist');
+        setErrMsg("User name already exist");
       }
     });
   }, [props.history]);
@@ -34,17 +30,16 @@ const Main = (props) => {
 
     if (!roomName || !userName) {
       setErr(true);
-      setErrMsg('Enter Room Name or User Name');
+      setErrMsg("Enter Room Name or User Name");
     } else {
-      socket.emit('BE-check-user', { roomId: roomName, userName });
+      socket.emit("BE-check-user", { roomId: roomName, userName });
     }
   }
 
   return (
-
-
-      <JoinButton onClick={clickJoin}> Join Meet </JoinButton>
-
+    <>
+      <JoinButton onClick={clickJoin}> Meet </JoinButton>
+    </>
   );
 };
 
@@ -56,8 +51,8 @@ const JoinButton = styled.label`
   border: none;
   border-radius: 15px;
   color: #d8e9ef;
-  background-color: grey;
- 
+  background-color: black;
+  margin-left: 30%;
 
   :hover {
     background-color: red;

@@ -1,14 +1,48 @@
-import { React, useState } from "react";
-import { Dropdown, Grid, Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Dropdown, Grid, Icon, Menu } from "semantic-ui-react";
+import { Link, useHistory } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
 import { isAuth } from "../../helpers/auth";
 import ModalTaskFile from "../Task/ModalTaskFile";
-
-function Header() {
+import Main from "../Main/Main";
+import socket from "../../socket";
+function Header(props) {
   const [activeItem, setActiveItem] = useState("Stream");
   const handleItemClick = (e, { name }) => setActiveItem(name);
+
+  const history = useHistory();
+  const [err, setErr] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const currentClass = JSON.parse(localStorage.getItem("idClass"));
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    socket.on("FE-error-user-exist", ({ error }) => {
+      if (!error) {
+        const roomName = currentClass._id;
+        const userName = currentUser.name;
+
+        sessionStorage.setItem("user", userName);
+        history.push(`/room/${roomName}`);
+      } else {
+        setErr(error);
+        setErrMsg("User name already exist");
+      }
+    });
+  }, [props.history]);
+
+  function clickJoin() {
+    const roomName = currentClass._id;
+    const userName = currentUser.name;
+
+    if (!roomName || !userName) {
+      setErr(true);
+      setErrMsg("Enter Room Name or User Name");
+    } else {
+      socket.emit("BE-check-user", { roomId: roomName, userName });
+    }
+  }
   return (
     <>
       <Menu pointing secondary>
@@ -46,7 +80,19 @@ function Header() {
             onClick={handleItemClick}
           />
         </Link>
-      
+
+        <Menu.Item
+          name="Meet"
+          icon="video camera"
+          active={activeItem === "Meet"}
+          onClick={clickJoin}
+        ></Menu.Item>
+
+        {/* <a>
+          <Icon name="group" />
+          <Main></Main>
+        </a> */}
+
         {isAuth().role === "Teacher" ? (
           <Menu.Item position="right">
             <Dropdown floating className="icon" icon="add circle">
@@ -70,7 +116,7 @@ function Header() {
                   buttonColor="red"
                   icon="add"
                 />
-                  <ModalTaskFile
+                <ModalTaskFile
                   headerTitle="Add Task"
                   buttonTriggerTitle="Add Task"
                   buttonSubmitTitle="Add"
