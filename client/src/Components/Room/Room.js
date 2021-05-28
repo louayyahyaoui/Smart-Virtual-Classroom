@@ -200,6 +200,8 @@ const Room = (props) => {
         key={index}
       >
         {writeUserName(peer.userName)}
+        {writeImageUser(peer.userName)}
+
         <FaIcon className="fas fa-expand" />
         <VideoCard key={index} peer={peer} number={arr.length} />
       </VideoBox>
@@ -210,6 +212,27 @@ const Room = (props) => {
     if (userVideoAudio.hasOwnProperty(userName)) {
       if (!userVideoAudio[userName].video) {
         return <UserName key={userName}>{userName}</UserName>;
+      }
+    }
+  }
+
+  function writeImageUser(userName, index) {
+    if (userVideoAudio.hasOwnProperty(userName)) {
+      if (!userVideoAudio[userName].video) {
+        return (
+          <Avatar>
+            <img
+              src={isAuth().picture}
+              style={{
+                margin: "10px",
+
+                width: "12%",
+                height: "12%",
+                borderRadius: "50%",
+              }}
+            />
+          </Avatar>
+        );
       }
     }
   }
