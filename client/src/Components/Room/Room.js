@@ -11,6 +11,8 @@ import { isAuth } from "../../helpers/auth";
 
 const Room = (props) => {
   const currentUser = sessionStorage.getItem("user");
+  const userImage = sessionStorage.getItem("userImage");
+
   const [peers, setPeers] = useState([]);
   const [userslist, setuserslist] = useState([]);
 
@@ -220,9 +222,9 @@ const Room = (props) => {
     if (userVideoAudio.hasOwnProperty(userName)) {
       if (!userVideoAudio[userName].video) {
         return (
-          <Avatar>
+          <Avatar key={userName}>
             <img
-              src={isAuth().picture}
+              src={userImage}
               style={{
                 margin: "10px",
 
@@ -362,7 +364,7 @@ const Room = (props) => {
                 <>
                   <Avatar>
                     <img
-                      src={isAuth().picture}
+                      src={userImage}
                       style={{
                         margin: "10px",
 

@@ -22,8 +22,11 @@ function Header(props) {
       if (!error) {
         const roomName = currentClass._id;
         const userName = currentUser.name;
+        const userImage = currentUser.picture;
 
         sessionStorage.setItem("user", userName);
+        sessionStorage.setItem("userImage", userImage);
+
         history.push(`/room/${roomName}`);
       } else {
         setErr(error);
