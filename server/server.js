@@ -133,8 +133,8 @@ io.on("connection", (socket) => {
     // Socket Join RoomName
     socket.join(roomId);
     socketList[socket.id] = { userName, Image, video: true, audio: true };
-    const uu = [{ userId: socket.id, info: socketList[socket.id] }];
-    socket.broadcast.to(roomId).emit("FE-user-join", uu);
+   // const uu = [{ userId: socket.id, info: socketList[socket.id] }];
+    //socket.broadcast.to(roomId).emit("FE-user-join", uu);
     console.log(
       `this is the user ${userName} and this is the picture ${Image}`
     );
