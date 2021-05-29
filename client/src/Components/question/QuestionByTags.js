@@ -26,9 +26,9 @@ import EditQuestions from "./EditQuestionComponent";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
 
 export default function QuestionByTags(props) {
-  const socket = io(ENDPOINT);
   const { tag } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const dispatch = useDispatch();

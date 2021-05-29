@@ -28,8 +28,9 @@ import io from "socket.io-client";
 import { notificationsApi } from "../../api/api";
 import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
+
 function SideBareComponent() {
-  const socket = io(ENDPOINT);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchNotifications(user._id));
