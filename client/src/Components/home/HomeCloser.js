@@ -39,59 +39,7 @@ const { MediaContextProvider, Media } = createMedia({
  * components for such things.
  */
 
-const omar_links = (
-  <>
-    <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
-      <Icon name="facebook" color="blue" />
-    </a>
-    <a href="https://www.linkedin.com/in/jmai-omar-611b56206/" target="_blanc">
-      <Icon name="linkedin" color="blue" />
-    </a>
-    <a href="https://mail.google.com/mail/" target="_blanc">
-      <Icon name="mail" />
-    </a>
-  </>
-);
-const imagee = <Image src={omarimg} size="small" circular />;
-const hamza_links = (
-  <>
-    <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
-      <Icon name="facebook" color="blue" />
-    </a>
-    <a href="https://www.linkedin.com/in/jmai-omar-611b56206/" target="_blanc">
-      <Icon name="linkedin" color="blue" />
-    </a>
-    <a href="https://mail.google.com/mail/" target="_blanc">
-      <Icon name="mail" />
-    </a>
-  </>
-);
-const sofien_links = (
-  <>
-    <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
-      <Icon name="facebook" color="blue" />
-    </a>
-    <a href="https://www.linkedin.com/in/jmai-omar-611b56206/" target="_blanc">
-      <Icon name="linkedin" color="blue" />
-    </a>
-    <a href="https://mail.google.com/mail/" target="_blanc">
-      <Icon name="mail" />
-    </a>
-  </>
-);
-const louay_links = (
-  <>
-    <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
-      <Icon name="facebook" color="blue" />
-    </a>
-    <a href="https://www.linkedin.com/in/jmai-omar-611b56206/" target="_blanc">
-      <Icon name="linkedin" color="blue" />
-    </a>
-    <a href="https://mail.google.com/mail/" target="_blanc">
-      <Icon name="mail" />
-    </a>
-  </>
-);
+
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     <Header
