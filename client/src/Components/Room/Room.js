@@ -46,25 +46,31 @@ const Room = (props) => {
         userVideoRef.current.srcObject = stream;
         userStream.current = stream;
 
-        socket.emit("BE-join-room", { roomId, userName: currentUser });
+        socket.emit("BE-join-room", {
+          roomId,
+          userName: currentUser,
+          Image: userImage,
+        });
         socket.on("FE-user-join", (users) => {
           // console.log("users from room : "+users);
           setuserslist(users);
           // all users
           const peers = [];
           users.forEach(({ userId, info }) => {
-            let { userName, video, audio } = info;
+            let { userName, Image, video, audio } = info;
 
             if (userName !== currentUser) {
               const peer = createPeer(userId, socket.id, stream);
 
               peer.userName = userName;
               peer.peerID = userId;
+              peer.Image = userImage;
 
               peersRef.current.push({
                 peerID: userId,
                 peer,
                 userName,
+                Image,
               });
               peers.push(peer);
 
@@ -81,18 +87,20 @@ const Room = (props) => {
         });
         //
         socket.on("FE-receive-call", ({ signal, from, info }) => {
-          let { userName, video, audio } = info;
+          let { userName, Image, video, audio } = info;
           const peerIdx = findPeer(from);
 
           if (!peerIdx) {
             const peer = addPeer(signal, from, stream);
 
             peer.userName = userName;
+            peer.Image = Image;
 
             peersRef.current.push({
               peerID: from,
               peer,
               userName: userName,
+              Image: Image,
             });
             setPeers((users) => {
               return [...users, peer];
@@ -202,7 +210,8 @@ const Room = (props) => {
         key={index}
       >
         {writeUserName(peer.userName)}
-        {writeImageUser(peer.userName)}
+
+        {writeImageUser(peer.userName, peer.Image)}
 
         <FaIcon className="fas fa-expand" />
         <VideoCard key={index} peer={peer} number={arr.length} />
@@ -218,13 +227,14 @@ const Room = (props) => {
     }
   }
 
-  function writeImageUser(userName, index) {
+  function writeImageUser(userName, Image, index) {
     if (userVideoAudio.hasOwnProperty(userName)) {
       if (!userVideoAudio[userName].video) {
+        console.log(Image);
         return (
           <Avatar key={userName}>
             <img
-              src={userImage}
+              src={Image}
               style={{
                 margin: "10px",
 
@@ -364,7 +374,7 @@ const Room = (props) => {
                 <>
                   <Avatar>
                     <img
-                      src={userImage}
+                      src={Image}
                       style={{
                         margin: "10px",
 
