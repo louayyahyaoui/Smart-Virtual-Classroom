@@ -133,6 +133,9 @@ io.on("connection", (socket) => {
     // Socket Join RoomName
     socket.join(roomId);
     socketList[socket.id] = { userName, Image, video: true, audio: true };
+    console.log(
+      `this is the user ${userName} and this is the picture ${Image}`
+    );
 
     // Set User List
     io.sockets.in(roomId).clients((err, clients) => {
