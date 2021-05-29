@@ -21,9 +21,10 @@ import "react-tagsinput/react-tagsinput.css";
 import io from "socket.io-client";
 import { selectedClasses } from "../../redux/slices/classsline";
 import { useHistory } from "react-router-dom";
-const socket = io(ENDPOINT);
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
+
 function AddQuestion() {
   const history = useHistory();
 
