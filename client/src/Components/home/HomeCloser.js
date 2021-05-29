@@ -9,6 +9,7 @@ import whiteboardimg from "../../assests/whiteboard.PNG";
 import stream from "../../assests/stream.PNG";
 import course from "../../assests/course.PNG";
 import omarimg from "../../assests/omar.jpg";
+import screenshare from "../../assests/screenshare.PNG";
 
 import {
   Button,
@@ -326,7 +327,7 @@ const HomepageLayout = () => (
       <div style={{ marginBottom: "10%" }}>
         <Grid>
           <Grid.Column width={4}>
-            <Image src={whiteboardimg} />
+            <Image src={screenshare} />
           </Grid.Column>
           <Grid.Column width={9}>
             <Header as="h3" style={{ fontSize: "2em" }}>
@@ -359,7 +360,7 @@ const HomepageLayout = () => (
       <div style={{ marginBottom: "10%" }}>
         <Grid>
           <Grid.Column width={4}>
-            <Image src={whiteboardimg} />
+            <Image src={stream} />
           </Grid.Column>
           <Grid.Column width={9}>
             <Header as="h3" style={{ fontSize: "2em" }}>
@@ -387,7 +388,7 @@ const HomepageLayout = () => (
             </p>
           </Grid.Column>
           <Grid.Column width={3}>
-            <Image src={whiteboardimg} />
+            <Image src={course} />
           </Grid.Column>
         </Grid>
       </div>
