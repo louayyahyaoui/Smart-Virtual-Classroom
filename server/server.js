@@ -129,10 +129,10 @@ io.on("connection", (socket) => {
   /**
    * Join Room
    */
-  socket.on("BE-join-room", ({ roomId, userName }) => {
+  socket.on("BE-join-room", ({ roomId, userName, ImageUser }) => {
     // Socket Join RoomName
     socket.join(roomId);
-    socketList[socket.id] = { userName, video: true, audio: true };
+    socketList[socket.id] = { userName, ImageUser, video: true, audio: true };
 
     // Set User List
     io.sockets.in(roomId).clients((err, clients) => {
