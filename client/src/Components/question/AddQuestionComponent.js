@@ -21,6 +21,7 @@ import "react-tagsinput/react-tagsinput.css";
 import io from "socket.io-client";
 import { selectedClasses } from "../../redux/slices/classsline";
 import { useHistory } from "react-router-dom";
+const socket = io(ENDPOINT);
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
 function AddQuestion() {
@@ -67,7 +68,6 @@ function AddQuestion() {
         setEnableUpload(true);
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
-        const socket = io(ENDPOINT);
         socket.emit("send_question", "message");
         setTags([]);
         values.Title = "";
