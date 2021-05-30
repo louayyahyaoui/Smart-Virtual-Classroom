@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import whiteboardimg from "../../assests/whiteboard.PNG";
-import vedioconf from "../../assests/vedioconf.PNG";
+import vedioconf from "../../assests/vedioconf.png";
 import share from "../../assests/share.jpg";
 import conf from "../../assests/conf.PNG";
 import stream from "../../assests/stream.PNG";
