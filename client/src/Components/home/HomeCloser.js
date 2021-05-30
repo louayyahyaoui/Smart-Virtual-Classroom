@@ -6,9 +6,17 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import whiteboardimg from "../../assests/whiteboard.PNG";
+import vedioconf from "../../assests/vedioconf.PNG";
+import share from "../../assests/share.jpg";
+import conf from "../../assests/conf.PNG";
 import stream from "../../assests/stream.PNG";
 import course from "../../assests/course.PNG";
 import omarimg from "../../assests/omar.jpg";
+import sofienimg from "../../assests/sofien.jpg";
+import louayimg from "../../assests/louay.jpg";
+import hamzaimg from "../../assests/hamza.jpg";
+
+
 import screenshare from "../../assests/screenshare.PNG";
 
 import {
@@ -320,14 +328,14 @@ const HomepageLayout = () => (
             </p>
           </Grid.Column>
           <Grid.Column width={3}>
-            <Image src={whiteboardimg} />
+            <Image src={vedioconf} />
           </Grid.Column>
         </Grid>
       </div>
       <div style={{ marginBottom: "10%" }}>
         <Grid>
           <Grid.Column width={4}>
-            <Image src={screenshare} />
+            <Image src={share} />
           </Grid.Column>
           <Grid.Column width={9}>
             <Header as="h3" style={{ fontSize: "2em" }}>
@@ -353,7 +361,7 @@ const HomepageLayout = () => (
             </p>
           </Grid.Column>
           <Grid.Column width={3}>
-            <Image src={whiteboardimg} />
+            <Image src={conf} />
           </Grid.Column>
         </Grid>
       </div>
@@ -408,35 +416,57 @@ const HomepageLayout = () => (
       <Grid columns="equal" stackable>
         <Grid.Row textAlign="center">
           <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-            <Image src={omarimg} size="small" circular centered />
-            <Header as="h2">jmai omar</Header>
+            <Image src={sofienimg} size="small" circular centered />
+            <Header as="h2">Sofien Argoubi</Header>
 
-            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+            <a href="mailto:sofien.argoubi@esprit.tn" target="_blanc">sofien.argoubi@esprit.tn</a>
 
-            <h4 style={{ color: "gray" }}>developer</h4>
+            <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
               4th year engineering student, <strong>TWIN </strong>specialty (Web
               and Internet Technologies)
             </p>
-            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+            <a href="https://www.facebook.com/neifos.argoubi/" target="_blanc">
               <Icon name="facebook" color="blue" />
             </a>
             <a
-              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              href="https://www.linkedin.com/in/sofien-argoubi-b7154b184/"
               target="_blanc"
             >
               <Icon name="linkedin " color="blue" />
             </a>
-            <a href="https://mail.google.com/mail/" target="_blanc">
+            <a href="mailto:sofien.argoubi@esprit.tn" target="_blanc">
               <Icon name="mail outline"  color="red"/>
             </a>
           </Grid.Column>
           <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+            <Image src={louayimg} size="small" circular centered />
+            <Header as="h2">Louay Yahyaoui</Header>
+            <a href="mailto:louay.yahyaoui@esprit.tn" target="_blanc">louay.yahyaoui@esprit.tn</a>
+
+            <h4 style={{ color: "gray" }}>Developer</h4>
+            <p>
+              4th year engineering student, <strong>TWIN </strong>specialty (Web
+              and Internet Technologies)
+            </p>
+            <a href="https://www.facebook.com/louay.yahyaoui.12" target="_blanc">
+              <Icon name="facebook" color="blue" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/louay-yahyaoui-esprit/"
+              target="_blanc"
+            >
+              <Icon name="linkedin " color="blue" />
+            </a>
+            <a href="mailto:louay.yahyaoui@esprit.tn" target="_blanc">
+              <Icon name="mail outline"  color="red"/>
+            </a>
+          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
             <Image src={omarimg} size="small" circular centered />
-            <Header as="h2">jmai omar</Header>
+            <Header as="h2">Omar Jmai</Header>
             <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
 
-            <h4 style={{ color: "gray" }}>developer</h4>
+            <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
               4th year engineering student, <strong>TWIN </strong>specialty (Web
               and Internet Technologies)
@@ -454,47 +484,25 @@ const HomepageLayout = () => (
               <Icon name="mail outline"  color="red"/>
             </a>
           </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-            <Image src={omarimg} size="small" circular centered />
-            <Header as="h2">jmai omar</Header>
-            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+            <Image src={hamzaimg} size="small" circular centered />
+            <Header as="h2">Hamza Ennour</Header>
+            <a href="mailto:hamza.ennour@esprit.tn" target="_blanc">hamza.ennour@esprit.tn</a>
 
-            <h4 style={{ color: "gray" }}>developer</h4>
+            <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
               4th year engineering student, <strong>TWIN </strong>specialty (Web
               and Internet Technologies)
             </p>
-            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+            <a href="https://www.facebook.com/hamzaa.ennour" target="_blanc">
               <Icon name="facebook" color="blue" />
             </a>
             <a
-              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              href="https://www.linkedin.com/in/hamza-ennour-b348311b8/"
               target="_blanc"
             >
               <Icon name="linkedin " color="blue" />
             </a>
-            <a href="https://mail.google.com/mail/" target="_blanc">
-              <Icon name="mail outline"  color="red"/>
-            </a>
-          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-            <Image src={omarimg} size="small" circular centered />
-            <Header as="h2">jmai omar</Header>
-            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
-
-            <h4 style={{ color: "gray" }}>developer</h4>
-            <p>
-              4th year engineering student, <strong>TWIN </strong>specialty (Web
-              and Internet Technologies)
-            </p>
-            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
-              <Icon name="facebook" color="blue" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
-              target="_blanc"
-            >
-              <Icon name="linkedin " color="blue" />
-            </a>
-            <a href="https://mail.google.com/mail/" target="_blanc">
+            <a href="mailto:hamza.ennour@esprit.tn" target="_blanc">
               <Icon name="mail outline"  color="red"/>
             </a>
           </Grid.Column>
