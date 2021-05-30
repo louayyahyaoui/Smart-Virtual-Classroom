@@ -8,14 +8,15 @@ import Chat from "../Chat/Chat";
 import ScreenRecord from "../coursesAndSeances/ScreenRecord";
 import { Label } from "semantic-ui-react";
 import { isAuth } from "../../helpers/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 const Room = (props) => {
-  const currentUser = sessionStorage.getItem("user");
-  const userImage = sessionStorage.getItem("userImage");
-
+  const currentUser = JSON.parse(sessionStorage.getItem("user"));
+  const userImage = JSON.parse(sessionStorage.getItem("userImage"));
+  console.log(currentUser);
+  const FirstLoader= { info :{currentUser:currentUser,userImage:userImage}}
   const [peers, setPeers] = useState([]);
-  const [userslist, setuserslist] = useState([]);
-
+  const [userslist, setuserslist] = useState([{userId:socket.id,info:{userName:currentUser,Image:userImage,video:true,audio:true}}]);
   const [userVideoAudio, setUserVideoAudio] = useState({
     localUser: { video: true, audio: true },
   });
@@ -45,24 +46,30 @@ const Room = (props) => {
       .then((stream) => {
         userVideoRef.current.srcObject = stream;
         userStream.current = stream;
-
-        socket.emit("BE-join-room", {
-          roomId,
-          userName: currentUser,
-          Image: userImage,
-        });
+        
+        socket.emit("BE-join-room", { roomId, userName: currentUser,Image: userImage });
         socket.on("FE-user-join", (users) => {
-          // console.log("users from room : "+users);
-          setuserslist(users);
+          toast.dark("Someone Has joined the meet");
+           console.log("users from room : ");
+           console.log(users);
+           setuserslist(users);
           // all users
           const peers = [];
-          users.forEach(({ userId, info }) => {
-            let { userName, Image, video, audio } = info;
 
+          users.forEach((us) => {
+            if(us.info!==undefined){
+            console.log(us.info.userName);
+            //let { userName,Image, video, audio } = info;
+            let userName = us.info.userName;
+            let Image= us.info.Image;
+            let video = us.info.video;
+            let audio =us.info.audio;
+            let userId =us.userId;
             if (userName !== currentUser) {
               const peer = createPeer(userId, socket.id, stream);
 
               peer.userName = userName;
+              peer.Image = Image;
               peer.peerID = userId;
               peer.Image = userImage;
 
@@ -81,20 +88,25 @@ const Room = (props) => {
                 };
               });
             }
+          }
           });
 
           setPeers(peers);
         });
         //
         socket.on("FE-receive-call", ({ signal, from, info }) => {
-          let { userName, Image, video, audio } = info;
+          //let { userName, video, audio } = info;
           const peerIdx = findPeer(from);
-
+          let userName = info.userName;
+          let Image= info.Image;
+          let video = info.video;
+          let audio =info.audio;
           if (!peerIdx) {
             const peer = addPeer(signal, from, stream);
 
             peer.userName = userName;
             peer.Image = Image;
+            peer.peerID = peerIdx;
 
             peersRef.current.push({
               peerID: from,
@@ -119,18 +131,21 @@ const Room = (props) => {
           peerIdx.peer.signal(signal);
         });
 
-        socket.on("FE-user-leave", ({ userId, userName }) => {
+        socket.on("FE-user-leave", ({ userId, userName,Image }) => {
           const peerIdx = findPeer(userId);
           peerIdx.peer.destroy();
-
+          toast.dark("Someone Has left the meet");
           setPeers((users) => {
             users = users.filter((user) => user.peerID !== peerIdx.peer.peerID);
-            setuserslist(users);
+            //setuserslist(users);
+            //console.log(users);
             return [...users];
           });
+          
           console.log(
             "ici users list AFTER LEAVE : " + JSON.stringify(userslist)
           );
+          setuserslist(userslist);
         });
       });
 
@@ -201,50 +216,45 @@ const Room = (props) => {
   function findPeer(id) {
     return peersRef.current.find((p) => p.peerID === id);
   }
+  console.log("peeeeeeeeee");
+  console.log(peers);
 
   function createUserVideo(peer, index, arr) {
+    console.log("peeeeeeeer !");
+    console.log(peer);
     return (
       <VideoBox
         className={`width-peer${peers.length > 8 ? "" : peers.length}`}
         onClick={expandScreen}
         key={index}
       >
-        {writeUserName(peer.userName)}
-
-        {writeImageUser(peer.userName, peer.Image)}
-
+        {writeUserName(peer.userName,peer.Image,index)}
         <FaIcon className="fas fa-expand" />
         <VideoCard key={index} peer={peer} number={arr.length} />
       </VideoBox>
     );
   }
 
-  function writeUserName(userName, index) {
-    if (userVideoAudio.hasOwnProperty(userName)) {
-      if (!userVideoAudio[userName].video) {
-        return <UserName key={userName}>{userName}</UserName>;
-      }
-    }
-  }
-
-  function writeImageUser(userName, Image, index) {
+  function writeUserName(userName,Image, index) {
     if (userVideoAudio.hasOwnProperty(userName)) {
       if (!userVideoAudio[userName].video) {
         console.log(Image);
         return (
-          <Avatar key={userName}>
+          <>
+          <Avatar key={index}>
             <img
               src={Image}
               style={{
                 margin: "10px",
-
                 width: "12%",
                 height: "12%",
                 borderRadius: "50%",
               }}
             />
           </Avatar>
-        );
+          <UserName key={index}>{userName}</UserName>
+          </>
+        ); 
       }
     }
   }
@@ -362,6 +372,16 @@ const Room = (props) => {
   };
 
   return (
+    <>
+    <ToastContainer position="bottom-left"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover />
     <AppContainer>
       <RoomContainer onClick={clickBackground}>
         <VideoAndBarContainer>
@@ -417,9 +437,10 @@ const Room = (props) => {
             listuserRoom={userslist}
           />
         </VideoAndBarContainer>
-        <Chat display={displayChat} roomId={roomId} />
+        <Chat display={displayChat} roomId={roomId} listuserRoom={userslist} />
       </RoomContainer>
     </AppContainer>
+    </>
   );
 };
 const AppContainer = styled.div`

@@ -24,8 +24,8 @@ function Header(props) {
         const userName = currentUser.name;
         const userImage = currentUser.picture;
 
-        sessionStorage.setItem("user", userName);
-        sessionStorage.setItem("userImage", userImage);
+        sessionStorage.setItem("user", JSON.stringify(userName));
+        sessionStorage.setItem("userImage", JSON.stringify(userImage));
 
         history.push(`/room/${roomName}`);
       } else {

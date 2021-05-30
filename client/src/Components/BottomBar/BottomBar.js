@@ -6,7 +6,7 @@ import axios from "axios";
 import { isAuth } from "../../helpers/auth";
 import { AddCourses } from "../../redux/slices/Courses";
 
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Dropdown, Header, Icon, Modal } from "semantic-ui-react";
 import ListUsers from "./ListUsers";
 
 const BottomBar = ({
@@ -20,7 +20,10 @@ const BottomBar = ({
   showVideoDevices,
   setShowVideoDevices,
   listuserRoom,
+  display,
+  roomId,
 }) => {
+  console.log(listuserRoom);
   const handleToggle = useCallback(
     (e) => {
       setShowVideoDevices((state) => !state);
@@ -107,7 +110,14 @@ const BottomBar = ({
   return (
     <Bar>
       <Left>
-        <ListUsers userlistromm={listuserRoom} />
+        <ChatButton onClick={clickChat}>
+          <div>
+            <FaIcon className="fas fa-comments"></FaIcon>
+          </div>
+          Chat
+        </ChatButton>
+      </Left>
+      <Center>
         <CameraButton onClick={toggleCameraAudio} data-switch="video">
           <div>
             {userVideoAudio.video ? (
@@ -131,6 +141,13 @@ const BottomBar = ({
         <SwitchMenu onClick={handleToggle}>
           <i className="fas fa-angle-up"></i>
         </SwitchMenu>
+
+        <StopButton onClick={goToBack}>
+          <div>
+            <FaIcon className={"fas fa-phone-slash"}></FaIcon>
+          </div>
+          Quit
+        </StopButton>
         <CameraButton onClick={toggleCameraAudio} data-switch="audio">
           <div>
             {userVideoAudio.audio ? (
@@ -141,78 +158,85 @@ const BottomBar = ({
           </div>
           Audio
         </CameraButton>
-      </Left>
-      <Center>
-        <ChatButton onClick={clickChat}>
-          <div>
-            <FaIcon className="fas fa-comments"></FaIcon>
-          </div>
-          Chat
-        </ChatButton>
-        <StartButton onClick={startRecording} disabled={status === "recording"}>
-          <div>
-            <FaIcon className="fas fa-play-circle"></FaIcon>
-          </div>
-          Record
-        </StartButton>
-        {/* Modal of info when record has been stoped */}
-        <Modal
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
-          open={open}
-          trigger={
-            <StopRecordButton
-              onClick={stopRecording}
-              disabled={status !== "recording"}
-            >
-              <div>
-                <FaIcon className="fas fa-stop-circle"></FaIcon>
-              </div>
-              Stop
-            </StopRecordButton>
-          }
-        >
-          <Header icon="record" content="Information about Record Session" />
-          <Modal.Content>
-            <p>
-              After this session got recorded it will be added automatically as
-              a new courses in your class timeline and it will take as a title
-              "Recorded Session of today"
-            </p>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color="red" onClick={() => setOpen(false)}>
-              <Icon name="remove" /> ok
-            </Button>
-          </Modal.Actions>
-        </Modal>
-
-        {/* Modal of info when record has been stoped */}
-
-        <ScreenButton onClick={clickScreenSharing}>
-          <div>
-            <FaIcon
-              className={`fas fa-desktop ${screenShare ? "sharing" : ""}`}
-            ></FaIcon>
-          </div>
-          Share Screen
-        </ScreenButton>
-        <a
-          href="https://closer-classroom.herokuapp.com/WhiteBoard"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <WhiteBoard>
-            <div>
-              <FaIcon className={"fas fa-chalkboard-teacher"}></FaIcon>
-            </div>
-            WhiteBoard
-          </WhiteBoard>
-        </a>
       </Center>
 
       <Right>
-        <StopButton onClick={goToBack}>Quit</StopButton>
+        <Dropdown
+          fluid
+          pointing
+          direction="left"
+          className="icon"
+          icon="ellipsis vertical"
+        >
+          <Dropdown.Menu>
+            <a
+              href="https://closer-classroom.herokuapp.com/WhiteBoard"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WhiteBoard>
+     
+                  <FaIcon className={"fas fa-chalkboard-teacher"}></FaIcon>
+             
+                WhiteBoard
+              </WhiteBoard>
+            </a>
+            <ScreenButton onClick={clickScreenSharing}>
+              
+                <FaIcon
+                  className={`fas fa-desktop ${screenShare ? "sharing" : ""}`}
+                ></FaIcon>
+              
+              Share Screen
+            </ScreenButton>
+            <StartButton
+              onClick={startRecording}
+              disabled={status === "recording"}
+            >
+              
+                <FaIcon className="fas fa-play-circle"></FaIcon>
+            
+              Record
+            </StartButton>
+            {/* Modal of info when record has been stoped */}
+
+            <Modal
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+              open={open}
+              trigger={
+                <StopRecordButton
+                  onClick={stopRecording}
+                  disabled={status !== "recording"}
+                >
+                  
+                    <FaIcon className="fas fa-stop-circle"></FaIcon>
+                 
+                  Stop
+                </StopRecordButton>
+              }
+            >
+              <Header
+                icon="record"
+                content="Information about Record Session"
+              />
+              <Modal.Content>
+                <p>
+                  After this session got recorded it will be added automatically
+                  as a new courses in your class timeline and it will take as a
+                  title "Recorded Session of today"
+                </p>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button color="red" onClick={() => setOpen(false)}>
+                  <Icon name="remove" /> ok
+                </Button>
+              </Modal.Actions>
+            </Modal>
+
+            {/* Modal of info when record has been stoped */}
+          </Dropdown.Menu>
+        </Dropdown>
       </Right>
     </Bar>
   );
@@ -234,11 +258,12 @@ const Left = styled.div`
   display: flex;
   align-items: center;
 
-  margin-left: 15px;
+  margin-left: 10px;
 `;
 const WhiteBoard = styled.div`
   width: 75px;
   border: none;
+  color: black;
   font-size: 0.9375rem;
   padding: 5px;
 
@@ -279,6 +304,7 @@ const ChatButton = styled.div`
 const StartButton = styled.div`
   width: 75px;
   border: none;
+  color: black;
   font-size: 0.9375rem;
   padding: 5px;
 
@@ -296,6 +322,7 @@ const StartButton = styled.div`
 const StopRecordButton = styled.div`
   width: 75px;
   border: none;
+  color: black;
   font-size: 0.9375rem;
   padding: 5px;
 
@@ -313,6 +340,7 @@ const StopRecordButton = styled.div`
 const ScreenButton = styled.div`
   width: auto;
   border: none;
+  color: black;
   font-size: 0.9375rem;
   padding: 5px;
 
@@ -334,17 +362,18 @@ const FaIcon = styled.i`
 
 const StopButton = styled.div`
   width: 75px;
-  height: 30px;
   border: none;
   font-size: 0.9375rem;
-  line-height: 30px;
-  margin-right: 15px;
-  background-color: grey;
-  border-radius: 15px;
+  padding: 5px;
 
   :hover {
-    background-color: black;
+    background-color: grey;
     cursor: pointer;
+    border-radius: 15px;
+  }
+
+  * {
+    pointer-events: none;
   }
 `;
 
@@ -379,7 +408,7 @@ const SwitchMenu = styled.div`
   position: absolute;
   width: 20px;
   top: 7px;
-  left: 80px;
+  left: 720px;
   z-index: 1;
 
   :hover {
