@@ -236,8 +236,8 @@ const Room = (props) => {
   }
 
   function writeUserName(userName,Image, index) {
-    if (userVideoAudio.hasOwnProperty(userName)) {
-      if (!userVideoAudio[userName].video) {
+    if (userVideoAudio.hasOwnProperty(userName)&& userVideoAudio.hasOwnProperty(Image)) {
+      if (!userVideoAudio[userName].video && !userVideoAudio[Image].video) {
         console.log(Image);
         return (
           <>
@@ -394,7 +394,7 @@ pauseOnHover />
                 <>
                   <Avatar>
                     <img
-                      src={Image}
+                      src={userImage}
                       style={{
                         margin: "10px",
 
