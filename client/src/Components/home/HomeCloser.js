@@ -16,7 +16,6 @@ import sofienimg from "../../assests/sofien.jpg";
 import louayimg from "../../assests/louay.jpg";
 import hamzaimg from "../../assests/hamza.jpg";
 
-
 import screenshare from "../../assests/screenshare.PNG";
 
 import {
@@ -48,7 +47,7 @@ const { MediaContextProvider, Media } = createMedia({
  * components for such things.
  */
 
-
+const documentData = JSON.parse(localStorage.getItem("user"));
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     <Header
@@ -72,12 +71,21 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? "0.5em" : "1.5em",
       }}
     />
-    <Link to="/class">
-      <Button negative size="huge">
-        Get Started
-        <Icon name="right arrow" />
-      </Button>
-    </Link>
+    {documentData ? (
+      <Link to="/class">
+        <Button negative size="huge">
+          Get Started
+          <Icon name="right arrow" />
+        </Button>
+      </Link>
+    ) : (
+      <Link to="/login">
+        <Button negative size="huge">
+          Get Started
+          <Icon name="right arrow" />
+        </Button>
+      </Link>
+    )}
   </Container>
 );
 
@@ -98,7 +106,7 @@ class DesktopContainer extends Component {
   render() {
     const { children } = this.props;
     const { fixed } = this.state;
-
+    const documentData = JSON.parse(localStorage.getItem("user"));
     return (
       <Media greaterThan="mobile">
         <Visibility
@@ -132,21 +140,27 @@ class DesktopContainer extends Component {
                 </Menu.Item>
 
                 <Menu.Item position="right">
-                  <Link to="/login">
-                    <Button as="a" inverted={!fixed}>
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link to="/register">
-                    <Button
-                      as="a"
-                      inverted={!fixed}
-                      negative={fixed}
-                      style={{ marginLeft: "0.5em" }}
-                    >
-                      Sign Up
-                    </Button>
-                  </Link>
+                  {documentData ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Link to="/login">
+                        <Button as="a" inverted={!fixed}>
+                          Log in
+                        </Button>
+                      </Link>
+                      <Link to="/register">
+                        <Button
+                          as="a"
+                          inverted={!fixed}
+                          negative={fixed}
+                          style={{ marginLeft: "0.5em" }}
+                        >
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </Menu.Item>
               </Container>
             </Menu>
@@ -258,33 +272,33 @@ ResponsiveContainer.propTypes = {
 const HomepageLayout = () => (
   <ResponsiveContainer>
     <Segment raised color="red">
-    <Grid container stackable verticalAlign="middle">
-      <Grid.Row>
-        <Grid.Column width={8}>
-          <Header as="h3" style={{ fontSize: "2em" }}>
-            Virtual Classroom
-          </Header>
-          <p style={{ fontSize: "1.33em" }}>
-            Closer Smart Virtual Classroom is A collaborative web conferencing
-            tool with an <span>online whiteboard</span>,{" "}
-            <span>breakout rooms</span>, and <span>screen sharing</span>
-            capabilities for teachers and tutors who want to conduct highly
-            interactive live online teaching sessions
-          </p>
-        </Grid.Column>
-        <Grid.Column floated="right" width={6}>
-          <Image
-            bordered
-            rounded
-            size="large"
-            alt="closer.png"
-            title="Logo Closer"
-            src={process.env.PUBLIC_URL + "/closer.png"}
-          />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-    </Segment>  
+      <Grid container stackable verticalAlign="middle">
+        <Grid.Row>
+          <Grid.Column width={8}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Virtual Classroom
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Closer Smart Virtual Classroom is A collaborative web conferencing
+              tool with an <span>online whiteboard</span>,{" "}
+              <span>breakout rooms</span>, and <span>screen sharing</span>
+              capabilities for teachers and tutors who want to conduct highly
+              interactive live online teaching sessions
+            </p>
+          </Grid.Column>
+          <Grid.Column floated="right" width={6}>
+            <Image
+              bordered
+              rounded
+              size="large"
+              alt="closer.png"
+              title="Logo Closer"
+              src={process.env.PUBLIC_URL + "/closer.png"}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
     <Container>
       <Divider
         as="h4"
@@ -419,7 +433,9 @@ const HomepageLayout = () => (
             <Image src={sofienimg} size="small" circular centered />
             <Header as="h2">Sofien Argoubi</Header>
 
-            <a href="mailto:sofien.argoubi@esprit.tn" target="_blanc">sofien.argoubi@esprit.tn</a>
+            <a href="mailto:sofien.argoubi@esprit.tn" target="_blanc">
+              sofien.argoubi@esprit.tn
+            </a>
 
             <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
@@ -436,20 +452,25 @@ const HomepageLayout = () => (
               <Icon name="linkedin " color="blue" />
             </a>
             <a href="mailto:sofien.argoubi@esprit.tn" target="_blanc">
-              <Icon name="mail outline"  color="red"/>
+              <Icon name="mail outline" color="red" />
             </a>
           </Grid.Column>
           <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
             <Image src={louayimg} size="small" circular centered />
             <Header as="h2">Louay Yahyaoui</Header>
-            <a href="mailto:louay.yahyaoui@esprit.tn" target="_blanc">louay.yahyaoui@esprit.tn</a>
+            <a href="mailto:louay.yahyaoui@esprit.tn" target="_blanc">
+              louay.yahyaoui@esprit.tn
+            </a>
 
             <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
               4th year engineering student, <strong>TWIN </strong>specialty (Web
               and Internet Technologies)
             </p>
-            <a href="https://www.facebook.com/louay.yahyaoui.12" target="_blanc">
+            <a
+              href="https://www.facebook.com/louay.yahyaoui.12"
+              target="_blanc"
+            >
               <Icon name="facebook" color="blue" />
             </a>
             <a
@@ -459,12 +480,15 @@ const HomepageLayout = () => (
               <Icon name="linkedin " color="blue" />
             </a>
             <a href="mailto:louay.yahyaoui@esprit.tn" target="_blanc">
-              <Icon name="mail outline"  color="red"/>
+              <Icon name="mail outline" color="red" />
             </a>
-          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+          </Grid.Column>
+          <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
             <Image src={omarimg} size="small" circular centered />
             <Header as="h2">Omar Jmai</Header>
-            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+            <a href="https://mail.google.com/mail/" target="_blanc">
+              omar.jmai@esprit.tn
+            </a>
 
             <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
@@ -481,12 +505,15 @@ const HomepageLayout = () => (
               <Icon name="linkedin " color="blue" />
             </a>
             <a href="https://mail.google.com/mail/" target="_blanc">
-              <Icon name="mail outline"  color="red"/>
+              <Icon name="mail outline" color="red" />
             </a>
-          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+          </Grid.Column>
+          <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
             <Image src={hamzaimg} size="small" circular centered />
             <Header as="h2">Hamza Ennour</Header>
-            <a href="mailto:hamza.ennour@esprit.tn" target="_blanc">hamza.ennour@esprit.tn</a>
+            <a href="mailto:hamza.ennour@esprit.tn" target="_blanc">
+              hamza.ennour@esprit.tn
+            </a>
 
             <h4 style={{ color: "gray" }}>Developer</h4>
             <p>
@@ -503,7 +530,7 @@ const HomepageLayout = () => (
               <Icon name="linkedin " color="blue" />
             </a>
             <a href="mailto:hamza.ennour@esprit.tn" target="_blanc">
-              <Icon name="mail outline"  color="red"/>
+              <Icon name="mail outline" color="red" />
             </a>
           </Grid.Column>
         </Grid.Row>
