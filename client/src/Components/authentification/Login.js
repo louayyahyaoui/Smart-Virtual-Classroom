@@ -109,7 +109,7 @@ const Login = ({ history }) => {
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">
-              Sign In for Clozer
+              Sign In for Closer
             </h1>
             <div className="w-full flex-1 mt-8 text-indigo-500">
               <div className="flex flex-col items-center">
@@ -120,16 +120,17 @@ const Login = ({ history }) => {
                   cookiePolicy={"single_host_origin"}
                   render={(renderProps) => (
                     <button
-                    style={{backgroundColor:"#FF9595"}}
+                    style={{backgroundColor:"dodgerblue	"}}
 
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                     >
-                      <div className=" p-2 rounded-full ">
-                        <i className="fab fa-google " />
+                      <div className=" p-2  " style={{backgroundColor:"white"}}>
+                        <i class="fab fa-google"                    
+/>
                       </div>
-                      <span className="ml-4">Sign In with Google</span>
+                      <span className="ml-4" style={{color:"white"}} >Sign In with Google</span>
                     </button>
                   )}
                 ></GoogleLogin>
@@ -139,21 +140,21 @@ const Login = ({ history }) => {
                   callback={responseFacebook}
                   render={(renderProps) => (
                     <button
-                    style={{backgroundColor:"#FF9595"}}
+                    style={{backgroundColor:"royalblue	"}}
 
                       onClick={renderProps.onClick}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                     >
-                      <div className=" p-2 rounded-full ">
-                        <i className="fab fa-facebook" />
+                      <div className=" p-2  " style={{backgroundColor:"white"}}>
+                        <i className="fab fa-facebook" style={{color:"blue"}} />
                       </div>
-                      <span className="ml-4">Sign In with Facebook</span>
+                      <span className="ml-4" style={{color:"white"}}>Sign In with Facebook</span>
                     </button>
                   )}
                 />
 
                 <a
-                                    style={{backgroundColor:"#FF9595"}}
+                                    style={{backgroundColor:"#DCDCDC"}}
 
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"

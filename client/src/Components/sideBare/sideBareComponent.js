@@ -95,7 +95,7 @@ function SideBareComponent() {
     <>
       <Grid stackable>
         <Card stackable>
-          <Image src={isAuth().picture} wrapped ui={false} />
+          <Image src={isAuth().picture} wrapped ui={false}  />
           <Card.Content>
             <Card.Header>
               {isAuth().name}
