@@ -85,6 +85,7 @@ const Room = (props) => {
                 return {
                   ...preList,
                   [peer.userName]: { video, audio },
+                  [peer.Image]: { video, audio },
                 };
               });
             }
@@ -121,6 +122,7 @@ const Room = (props) => {
               return {
                 ...preList,
                 [peer.userName]: { video, audio },
+                [peer.Image]: { video, audio },
               };
             });
           }
@@ -162,6 +164,7 @@ const Room = (props) => {
         return {
           ...preList,
           [peerIdx.userName]: { video, audio },
+          [peerIdx.Image]: { video, audio },
         };
       });
     });
@@ -236,22 +239,11 @@ const Room = (props) => {
   }
 
   function writeUserName(userName,Image, index) {
-    if (userVideoAudio.hasOwnProperty(userName)) {
+    if (userVideoAudio.hasOwnProperty(userName)&& userVideoAudio.hasOwnProperty(Image)) {
       if (!userVideoAudio[userName].video) {
         console.log(Image);
         return (
-          <>
-          <Avatar key={index}>
-            <img
-              src={Image}
-              style={{
-                margin: "10px",
-                width: "12%",
-                height: "12%",
-                borderRadius: "50%",
-              }}
-            />
-          </Avatar>
+          <> 
           <UserName key={index}>{userName}</UserName>
           </>
         ); 
@@ -392,20 +384,6 @@ pauseOnHover />
             >
               {userVideoAudio["localUser"].video ? null : (
                 <>
-                  <Avatar>
-                    <img
-                      src={Image}
-                      style={{
-                        margin: "10px",
-
-                        width: "14%",
-                        height: "14%",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  </Avatar>
-                  <br />
-                  <br />
                   <UserName>{currentUser}</UserName>
                 </>
               )}
@@ -526,3 +504,16 @@ const Avatar = styled.div`
 `;
 
 export default Room;
+/*
+<Avatar key={index}>
+            <img
+              src={Image}
+              style={{
+                margin: "10px",
+                width: "12%",
+                height: "12%",
+                borderRadius: "50%",
+              }}
+            />
+          </Avatar>
+          */
