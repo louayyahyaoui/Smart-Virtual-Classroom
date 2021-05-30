@@ -19,8 +19,9 @@ import { useHistory } from "react-router";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
+
 export default function EditQuestions({ qes }) {
-  const socket = io(ENDPOINT);
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
   const dispatch = useDispatch();

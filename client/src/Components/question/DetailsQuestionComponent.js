@@ -35,9 +35,10 @@ import EditAnswer from "../answer/EditAnswer";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
+
   function DetailsQuestion(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  const socket = io(ENDPOINT);
 
   const documentData = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");

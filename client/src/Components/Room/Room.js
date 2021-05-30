@@ -71,6 +71,7 @@ const Room = (props) => {
               peer.userName = userName;
               peer.Image = Image;
               peer.peerID = userId;
+              peer.Image = userImage;
 
               peersRef.current.push({
                 peerID: userId,
@@ -111,6 +112,7 @@ const Room = (props) => {
               peerID: from,
               peer,
               userName: userName,
+              Image: Image,
             });
             setPeers((users) => {
               return [...users, peer];
@@ -236,6 +238,7 @@ const Room = (props) => {
   function writeUserName(userName,Image, index) {
     if (userVideoAudio.hasOwnProperty(userName)) {
       if (!userVideoAudio[userName].video) {
+        console.log(Image);
         return (
           <>
           <Avatar key={index}>
@@ -391,7 +394,7 @@ pauseOnHover />
                 <>
                   <Avatar>
                     <img
-                      src={userImage}
+                      src={Image}
                       style={{
                         margin: "10px",
 

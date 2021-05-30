@@ -27,11 +27,11 @@ import io from "socket.io-client";
 import { AddquestionsApi } from "../../api/api";
 
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
 
 export default function QuestionComponent(props) {
   const { idd } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
-  const socket = io(ENDPOINT);
 
   const dispatch = useDispatch();
   useEffect(() => {

@@ -5,8 +5,15 @@ import { createMedia } from "@artsy/fresnel";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import whiteboardimg from "../../assests/whiteboard.PNG";
+import stream from "../../assests/stream.PNG";
+import course from "../../assests/course.PNG";
+import omarimg from "../../assests/omar.jpg";
+import screenshare from "../../assests/screenshare.PNG";
+
 import {
   Button,
+  Card,
   Container,
   Divider,
   Grid,
@@ -32,6 +39,8 @@ const { MediaContextProvider, Media } = createMedia({
  * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
  * components for such things.
  */
+
+
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     <Header
@@ -55,10 +64,12 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? "0.5em" : "1.5em",
       }}
     />
-    <Button negative size="huge">
-      Get Started
-      <Icon name="right arrow" />
-    </Button>
+    <Link to="/class">
+      <Button negative size="huge">
+        Get Started
+        <Icon name="right arrow" />
+      </Button>
+    </Link>
   </Container>
 );
 
@@ -104,8 +115,13 @@ class DesktopContainer extends Component {
                 <Menu.Item as="a" active>
                   Home
                 </Menu.Item>
-                <Menu.Item as="a">Features</Menu.Item>
-                <Menu.Item as="a">About Us</Menu.Item>
+
+                <Menu.Item as="a">
+                  <a href="#featuresSection">Features </a>
+                </Menu.Item>
+                <Menu.Item as="a">
+                  <a href="#aboutSection">About Us</a>
+                </Menu.Item>
 
                 <Menu.Item position="right">
                   <Link to="/login">
@@ -233,112 +249,258 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: "8em 0em" }} vertical>
-      <Grid container stackable verticalAlign="middle">
-        <Grid.Row>
-          <Grid.Column width={8}>
+    <Segment raised color="red">
+    <Grid container stackable verticalAlign="middle">
+      <Grid.Row>
+        <Grid.Column width={8}>
+          <Header as="h3" style={{ fontSize: "2em" }}>
+            Virtual Classroom
+          </Header>
+          <p style={{ fontSize: "1.33em" }}>
+            Closer Smart Virtual Classroom is A collaborative web conferencing
+            tool with an <span>online whiteboard</span>,{" "}
+            <span>breakout rooms</span>, and <span>screen sharing</span>
+            capabilities for teachers and tutors who want to conduct highly
+            interactive live online teaching sessions
+          </p>
+        </Grid.Column>
+        <Grid.Column floated="right" width={6}>
+          <Image
+            bordered
+            rounded
+            size="large"
+            alt="closer.png"
+            title="Logo Closer"
+            src={process.env.PUBLIC_URL + "/closer.png"}
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+    </Segment>  
+    <Container>
+      <Divider
+        as="h4"
+        className="header"
+        horizontal
+        style={{ margin: "3em 0em", textTransform: "uppercase" }}
+      >
+        <a href="#" id="featuresSection">
+          Main Features
+        </a>
+      </Divider>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={4}>
+            <Image src={whiteboardimg} />
+          </Grid.Column>
+          <Grid.Column width={9}>
             <Header as="h3" style={{ fontSize: "2em" }}>
-              Virtual Classroom
+              Online whiteboard
             </Header>
             <p style={{ fontSize: "1.33em" }}>
-              Closer Smart Virtual Classroom is A collaborative web conferencing
-              tool with an <span>online whiteboard</span>, <span>breakout rooms</span>, and <span>screen sharing</span>
-              capabilities for teachers and tutors who want to conduct highly
-              interactive live online teaching sessions
+              Share with your participants various types of learning resources
+              on the <span>whiteboard</span> and discuss them during your{" "}
+              <span>live sessions</span>. Engage your participants in different
+              collaborative activities using the tools for creating, editing and
+              presenting learning content.
+            </p>{" "}
+          </Grid.Column>
+        </Grid>
+      </div>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={9}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Video-conference
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              See and hear your up to 2 participants simultaneously and
+              experience an interaction which is very similar to face-to-face
+              training.
             </p>
           </Grid.Column>
-          <Grid.Column floated="right" width={6}>
-            <Image
-              bordered
-              rounded
-              size="large"
-              alt="closer.png"
-              title="Logo Closer"
-              src={process.env.PUBLIC_URL + "/closer.png"}
-            />
+          <Grid.Column width={3}>
+            <Image src={whiteboardimg} />
+          </Grid.Column>
+        </Grid>
+      </div>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={4}>
+            <Image src={screenshare} />
+          </Grid.Column>
+          <Grid.Column width={9}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Screen-sharing
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Demonstrate additional software and multimedia applications by{" "}
+              <span>sharing your screen </span> with the participants.
+            </p>
+          </Grid.Column>
+        </Grid>
+      </div>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={9}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Recording
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Monitor the work of the tutors in your organisation, analyse your
+              own performance or encourage your learner to revise the learning
+              content by watching the past sessions’ interactive playback.
+            </p>
+          </Grid.Column>
+          <Grid.Column width={3}>
+            <Image src={whiteboardimg} />
+          </Grid.Column>
+        </Grid>
+      </div>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={4}>
+            <Image src={stream} />
+          </Grid.Column>
+          <Grid.Column width={9}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Post to the class stream
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Posts information or a question that you add to the class stream,
+              Comment response to a post or comment, Reply response to a comment
+              that mentions the person who made that comment, Mention classmates
+              or teacher in your post and finally upload file in your post (PDF,
+              Picture …).
+            </p>
+          </Grid.Column>
+        </Grid>
+      </div>
+      <div style={{ marginBottom: "10%" }}>
+        <Grid>
+          <Grid.Column width={9}>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Courses
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              You can add a new course to the <span>class</span>, also u can
+              Modify/Delete/Display it.
+            </p>
+          </Grid.Column>
+          <Grid.Column width={3}>
+            <Image src={course} />
+          </Grid.Column>
+        </Grid>
+      </div>
+    </Container>
+
+    <Divider
+      as="h4"
+      className="header"
+      horizontal
+      style={{ margin: "3em 0em", textTransform: "uppercase" }}
+    >
+      <a href="#" id="aboutSection">
+        About us
+      </a>
+    </Divider>
+    <Container>
+      <Grid columns="equal" stackable>
+        <Grid.Row textAlign="center">
+          <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+            <Image src={omarimg} size="small" circular centered />
+            <Header as="h2">jmai omar</Header>
+
+            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+
+            <h4 style={{ color: "gray" }}>developer</h4>
+            <p>
+              4th year engineering student, <strong>TWIN </strong>specialty (Web
+              and Internet Technologies)
+            </p>
+            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+              <Icon name="facebook" color="blue" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              target="_blanc"
+            >
+              <Icon name="linkedin " color="blue" />
+            </a>
+            <a href="https://mail.google.com/mail/" target="_blanc">
+              <Icon name="mail outline"  color="red"/>
+            </a>
+          </Grid.Column>
+          <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+            <Image src={omarimg} size="small" circular centered />
+            <Header as="h2">jmai omar</Header>
+            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+
+            <h4 style={{ color: "gray" }}>developer</h4>
+            <p>
+              4th year engineering student, <strong>TWIN </strong>specialty (Web
+              and Internet Technologies)
+            </p>
+            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+              <Icon name="facebook" color="blue" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              target="_blanc"
+            >
+              <Icon name="linkedin " color="blue" />
+            </a>
+            <a href="https://mail.google.com/mail/" target="_blanc">
+              <Icon name="mail outline"  color="red"/>
+            </a>
+          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+            <Image src={omarimg} size="small" circular centered />
+            <Header as="h2">jmai omar</Header>
+            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+
+            <h4 style={{ color: "gray" }}>developer</h4>
+            <p>
+              4th year engineering student, <strong>TWIN </strong>specialty (Web
+              and Internet Technologies)
+            </p>
+            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+              <Icon name="facebook" color="blue" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              target="_blanc"
+            >
+              <Icon name="linkedin " color="blue" />
+            </a>
+            <a href="https://mail.google.com/mail/" target="_blanc">
+              <Icon name="mail outline"  color="red"/>
+            </a>
+          </Grid.Column><Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+            <Image src={omarimg} size="small" circular centered />
+            <Header as="h2">jmai omar</Header>
+            <a href="https://mail.google.com/mail/" target="_blanc">omar.jmai@esprit.tn</a>
+
+            <h4 style={{ color: "gray" }}>developer</h4>
+            <p>
+              4th year engineering student, <strong>TWIN </strong>specialty (Web
+              and Internet Technologies)
+            </p>
+            <a href="https://www.facebook.com/omarjmai.jmai/" target="_blanc">
+              <Icon name="facebook" color="blue" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jmai-omar-611b56206/"
+              target="_blanc"
+            >
+              <Icon name="linkedin " color="blue" />
+            </a>
+            <a href="https://mail.google.com/mail/" target="_blanc">
+              <Icon name="mail outline"  color="red"/>
+            </a>
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Segment>
-
-    <Segment style={{ padding: "8em 0em" }} vertical>
-      <Container text>
-        <Divider
-          as="h4"
-          className="header"
-          horizontal
-          style={{ margin: "3em 0em", textTransform: "uppercase" }}
-        >
-          <a href="#">Main Features</a>
-        </Divider>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Online whiteboard
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          Share with your participants various types of learning resources on
-          the <span>whiteboard</span>  and discuss them during your <span>live sessions</span>. Engage your
-          participants in different collaborative activities using the tools for
-          creating, editing and presenting learning content.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Video-conference
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          See and hear your up to 2 participants simultaneously and experience
-          an interaction which is very similar to face-to-face training.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Screen-sharing
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          Demonstrate additional software and multimedia applications by <span>sharing
-          your screen </span> with the participants.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Recording
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          Monitor the work of the tutors in your organisation, analyse your own
-          performance or encourage your learner to revise the learning content
-          by watching the past sessions’ interactive playback.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Post to the class stream
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          Posts information or a question that you add to the class stream,
-          Comment response to a post or comment, Reply response to a comment
-          that mentions the person who made that comment, Mention classmates or
-          teacher in your post and finally upload file in your post (PDF,
-          Picture …).
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-          Courses
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-          You can add a new course to the <span>class</span>, also u can
-          Modify/Delete/Display it.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-      </Container>
-    </Segment>
+    </Container>
 
     <Segment inverted vertical style={{ padding: "5em 0em" }}>
       <Container>
@@ -360,7 +522,10 @@ const HomepageLayout = () => (
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <p>© 2020-2021 <span>Closer</span> is owned and operated by NoLimits</p>
+              <p>
+                © 2020-2021 <span>Closer</span> is owned and operated by
+                NoLimits
+              </p>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -13,6 +13,8 @@ import "react-tagsinput/react-tagsinput.css";
 import { useHistory } from "react-router";
 import io from "socket.io-client";
 const ENDPOINT = "https://closer-server.herokuapp.com/";
+const socket = io(ENDPOINT);
+
 function AddPost() {
   const history = useHistory();
 
@@ -57,7 +59,6 @@ function AddPost() {
         setEnableUpload(true);
         const res = await AddquestionsApi.postQuestions(values);
         dispatch(addQuestion(res));
-        const socket = io(ENDPOINT);
         socket.emit("send_question", "message");
         setTags([]);
         values.Title = "";
