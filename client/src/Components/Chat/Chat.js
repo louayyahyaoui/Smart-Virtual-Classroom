@@ -1,68 +1,104 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
-import socket from '../../socket';
-
-const Chat = ({ display, roomId }) => {
-  const currentUser = sessionStorage.getItem('user');
+import { Center } from "devextreme-react/map";
+import React, { useEffect, useState, useRef } from "react";
+import { Grid, Tab } from "semantic-ui-react";
+import styled from "styled-components";
+import socket from "../../socket";
+import ListUsers from "../BottomBar/ListUsers";
+import './style.css'
+const Chat = ({ display, roomId, listuserRoom }) => {
+  console.log(listuserRoom);
+  const currentUser = JSON.parse(sessionStorage.getItem("user"));
   const [msg, setMsg] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef();
-  
+
   useEffect(() => {
-    socket.on('FE-receive-message', ({ msg, sender }) => {
+    socket.on("FE-receive-message", ({ msg, sender }) => {
       setMsg((msgs) => [...msgs, { sender, msg }]);
     });
   }, []);
 
   // Scroll to Bottom of Message List
-  useEffect(() => {scrollToBottom()}, [msg])
+  useEffect(() => {
+    scrollToBottom();
+  }, [msg]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth'});
-  }
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const sendMessage = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       const msg = e.target.value;
 
       if (msg) {
-        socket.emit('BE-send-message', { roomId, msg, sender: currentUser });
-        inputRef.current.value = '';
+        socket.emit("BE-send-message", { roomId, msg, sender: currentUser });
+        inputRef.current.value = "";
       }
     }
   };
-
+  const panes = [
+    {
+      menuItem: "Chat Room",
+      render: () => (
+        <Area>
+          <Tab.Pane attached={false} style={{ height: "100%" }}>
+            <TopHeader>Chat Room</TopHeader>
+            <ChatArea>
+              <MessageList>
+                {msg &&
+                  msg.map(({ sender, msg }, idx) => {
+                    if (sender !== currentUser) {
+                      return (
+                        <Message key={idx}>
+                          <strong>{sender}</strong>
+                          <p>{msg}</p>
+                        </Message>
+                      );
+                    } else {
+                      return (
+                        <UserMessage key={idx}>
+                          <strong>{sender}</strong>
+                          <p>{msg}</p>
+                        </UserMessage>
+                      );
+                    }
+                  })}
+                <div
+                  style={{ float: "left", clear: "both" }}
+                  ref={messagesEndRef}
+                />
+              </MessageList>
+            </ChatArea>
+            <BottomInput
+              ref={inputRef}
+              onKeyUp={sendMessage}
+              placeholder="Enter your message"
+            />
+          </Tab.Pane>
+        </Area>
+      ),
+    },
+    {
+      menuItem: "List Participants",
+      render: () => (
+        <Tab.Pane attached={false}>
+          <ListUsers userlistromm={listuserRoom} />
+        </Tab.Pane>
+      ),
+    },
+  ];
   return (
-    <ChatContainer className={display ? '' : 'width0'}>
-      <TopHeader>Group Chat Room</TopHeader>
-      <ChatArea>
-        <MessageList>
-          {msg &&
-            msg.map(({ sender, msg }, idx) => {
-              if (sender !== currentUser) {
-                return (
-                  <Message key={idx}>
-                    <strong>{sender}</strong>
-                    <p>{msg}</p>
-                  </Message>
-                );
-              } else {
-                return (
-                  <UserMessage key={idx}>
-                    <strong>{sender}</strong>
-                    <p>{msg}</p>
-                  </UserMessage>
-                );
-              }
-            })}
-            <div style={{float:'left', clear: 'both'}} ref={messagesEndRef} />
-        </MessageList>
-      </ChatArea>
-      <BottomInput
-        ref={inputRef}
-        onKeyUp={sendMessage}
-        placeholder="Enter your message"
-      />
+    <ChatContainer className={display ? "" : "width0"}>
+      <Tab
+        menu={{
+          secondary: true,
+          pointing: true,
+          color: "red",
+          className: "center-cont",
+        }}
+        panes={panes}
+      />    
     </ChatContainer>
   );
 };
@@ -75,9 +111,8 @@ const ChatContainer = styled.div`
   background-color: white;
   transition: all 0.5s ease;
   overflow: hidden;
-  color:black;
+  color: black;
 `;
-
 const TopHeader = styled.div`
   width: 100%;
   margin-top: 15px;
@@ -90,11 +125,14 @@ const ChatArea = styled.div`
   width: 100%;
   height: 83%;
   max-height: 83%;
-  color:black;
+  color: black;
   overflow-x: hidden;
   overflow-y: auto;
 `;
-
+const Area = styled.div`
+  width: 100%;
+  height: 670px;
+`;
 const MessageList = styled.div`
   display: flex;
   width: 100%;

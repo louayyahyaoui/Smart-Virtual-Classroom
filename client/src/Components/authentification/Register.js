@@ -76,7 +76,7 @@ const Register = () => {
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">
-              Sign Up for Clozer
+              Sign Up for Closer
             </h1>
 
             <form
