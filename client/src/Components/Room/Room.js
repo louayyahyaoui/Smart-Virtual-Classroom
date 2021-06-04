@@ -14,9 +14,14 @@ const Room = (props) => {
   const currentUser = JSON.parse(sessionStorage.getItem("user"));
   const userImage = JSON.parse(sessionStorage.getItem("userImage"));
   console.log(currentUser);
-  const FirstLoader= { info :{currentUser:currentUser,userImage:userImage}}
+
   const [peers, setPeers] = useState([]);
-  const [userslist, setuserslist] = useState([{userId:socket.id,info:{userName:currentUser,Image:userImage,video:true,audio:true}}]);
+  const sessionID = socket.id;
+  const FirstLoader = {
+    userId: sessionID,
+    info: { userName: currentUser, Image: userImage, video: true, audio: true },
+  };
+  const [userslist, setuserslist] = useState([FirstLoader]);
   const [userVideoAudio, setUserVideoAudio] = useState({
     localUser: { video: true, audio: true },
   });
@@ -29,6 +34,13 @@ const Room = (props) => {
   const screenTrackRef = useRef();
   const userStream = useRef();
   const roomId = props.match.params.roomId;
+
+  const PeerConfig = {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:global.stun.twilio.com:3478?transport=udp" },
+    ],
+  };
 
   useEffect(() => {
     // Get Video Devices
@@ -46,50 +58,54 @@ const Room = (props) => {
       .then((stream) => {
         userVideoRef.current.srcObject = stream;
         userStream.current = stream;
-        
-        socket.emit("BE-join-room", { roomId, userName: currentUser,Image: userImage });
+
+        socket.emit("BE-join-room", {
+          roomId,
+          userName: currentUser,
+          Image: userImage,
+        });
         socket.on("FE-user-join", (users) => {
           toast.dark("Someone Has joined the meet");
-           console.log("users from room : ");
-           console.log(users);
-           setuserslist(users);
+          console.log("users from room : ");
+          console.log(users);
+          setuserslist(users);
           // all users
           const peers = [];
 
           users.forEach((us) => {
-            if(us.info!==undefined){
-            console.log(us.info.userName);
-            //let { userName,Image, video, audio } = info;
-            let userName = us.info.userName;
-            let Image= us.info.Image;
-            let video = us.info.video;
-            let audio =us.info.audio;
-            let userId =us.userId;
-            if (userName !== currentUser) {
-              const peer = createPeer(userId, socket.id, stream);
+            if (us.info !== undefined) {
+              console.log(us.info.userName);
+              //let { userName,Image, video, audio } = info;
+              let userName = us.info.userName;
+              let Image = us.info.Image;
+              let video = us.info.video;
+              let audio = us.info.audio;
+              let userId = us.userId;
+              if (userName !== currentUser) {
+                const peer = createPeer(userId, socket.id, stream);
 
-              peer.userName = userName;
-              peer.Image = Image;
-              peer.peerID = userId;
-              peer.Image = userImage;
+                peer.userName = userName;
+                peer.Image = Image;
+                peer.peerID = userId;
+                peer.Image = userImage;
 
-              peersRef.current.push({
-                peerID: userId,
-                peer,
-                userName,
-                Image,
-              });
-              peers.push(peer);
+                peersRef.current.push({
+                  peerID: userId,
+                  peer,
+                  userName,
+                  Image,
+                });
+                peers.push(peer);
 
-              setUserVideoAudio((preList) => {
-                return {
-                  ...preList,
-                  [peer.userName]: { video, audio },
-                  [peer.Image]: { video, audio },
-                };
-              });
+                setUserVideoAudio((preList) => {
+                  return {
+                    ...preList,
+                    [peer.userName]: { video, audio },
+                    [peer.Image]: { video, audio },
+                  };
+                });
+              }
             }
-          }
           });
 
           setPeers(peers);
@@ -99,9 +115,9 @@ const Room = (props) => {
           //let { userName, video, audio } = info;
           const peerIdx = findPeer(from);
           let userName = info.userName;
-          let Image= info.Image;
+          let Image = info.Image;
           let video = info.video;
-          let audio =info.audio;
+          let audio = info.audio;
           if (!peerIdx) {
             const peer = addPeer(signal, from, stream);
 
@@ -133,7 +149,7 @@ const Room = (props) => {
           peerIdx.peer.signal(signal);
         });
 
-        socket.on("FE-user-leave", ({ userId, userName,Image }) => {
+        socket.on("FE-user-leave", ({ userId, userName, Image }) => {
           const peerIdx = findPeer(userId);
           peerIdx.peer.destroy();
           toast.dark("Someone Has left the meet");
@@ -143,17 +159,19 @@ const Room = (props) => {
             //console.log(users);
             return [...users];
           });
-          
+
           console.log(
             "ici users list AFTER LEAVE : " + JSON.stringify(userslist)
           );
           setuserslist(userslist);
         });
       });
-
+    // socket.emit("BE-toggle-camera-audio", ({ roomId:roomId, switchTarget: userVideoAudio }) => {
+    //   console.log(userVideoAudio);
+    // });
     socket.on("FE-toggle-camera", ({ userId, switchTarget }) => {
       const peerIdx = findPeer(userId);
-
+      console.log(userVideoAudio);
       setUserVideoAudio((preList) => {
         let video = preList[peerIdx.userName].video;
         let audio = preList[peerIdx.userName].audio;
@@ -164,7 +182,6 @@ const Room = (props) => {
         return {
           ...preList,
           [peerIdx.userName]: { video, audio },
-          [peerIdx.Image]: { video, audio },
         };
       });
     });
@@ -177,7 +194,8 @@ const Room = (props) => {
 
   function createPeer(userId, caller, stream) {
     const peer = new Peer({
-      initiator: true,
+      initiator: false,
+      config: PeerConfig,
       trickle: false,
       stream,
     });
@@ -231,22 +249,25 @@ const Room = (props) => {
         onClick={expandScreen}
         key={index}
       >
-        {writeUserName(peer.userName,peer.Image,index)}
+        {writeUserName(peer.userName, peer.Image, index)}
         <FaIcon className="fas fa-expand" />
         <VideoCard key={index} peer={peer} number={arr.length} />
       </VideoBox>
     );
   }
 
-  function writeUserName(userName,Image, index) {
-    if (userVideoAudio.hasOwnProperty(userName)&& userVideoAudio.hasOwnProperty(Image)) {
+  function writeUserName(userName, Image, index) {
+    if (
+      userVideoAudio.hasOwnProperty(userName) &&
+      userVideoAudio.hasOwnProperty(Image)
+    ) {
       if (!userVideoAudio[userName].video) {
         console.log(Image);
         return (
-          <> 
-          <UserName key={index}>{userName}</UserName>
+          <>
+            <UserName key={index}>{userName}</UserName>
           </>
-        ); 
+        );
       }
     }
   }
@@ -288,7 +309,18 @@ const Room = (props) => {
           userStream.current.getAudioTracks()[0].enabled = audioSwitch;
         }
       }
-
+      const peerIdx = findPeer(userslist[0].userId);
+      const FirstLoader = {
+        userId: userslist[0].userId,
+        info: {
+          userName: currentUser,
+          Image: userImage,
+          video: videoSwitch,
+          audio: audioSwitch,
+        },
+      };
+      setuserslist([FirstLoader]);
+      console.log(audioSwitch);
       return {
         ...preList,
         localUser: { video: videoSwitch, audio: audioSwitch },
@@ -296,6 +328,7 @@ const Room = (props) => {
     });
 
     socket.emit("BE-toggle-camera-audio", { roomId, switchTarget: target });
+    console.log(userVideoAudio);
   };
 
   const clickScreenSharing = () => {
@@ -365,59 +398,65 @@ const Room = (props) => {
 
   return (
     <>
-    <ToastContainer position="bottom-left"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover />
-    <AppContainer>
-      <RoomContainer onClick={clickBackground}>
-        <VideoAndBarContainer>
-          <VideoContainer>
-            {/* Current User Video */}
-            <VideoBox
-              className={`width-peer${peers.length > 8 ? "" : peers.length}`}
-            >
-              {userVideoAudio["localUser"].video ? null : (
-                <>
-                  <UserName>{currentUser}</UserName>
-                </>
-              )}
-              <FaIcon className="fas fa-expand" />
-              <MyVideo
-                onClick={expandScreen}
-                ref={userVideoRef}
-                muted
-                autoPlay
-                playInline
-              ></MyVideo>
-            </VideoBox>
-            {/* Joined User Vidoe */}
-            {peers &&
-              peers.map((peer, index, arr) =>
-                createUserVideo(peer, index, arr)
-              )}
-          </VideoContainer>
-          <BottomBar
-            clickScreenSharing={clickScreenSharing}
-            clickChat={clickChat}
-            goToBack={goToBack}
-            toggleCameraAudio={toggleCameraAudio}
-            userVideoAudio={userVideoAudio["localUser"]}
-            screenShare={screenShare}
-            videoDevices={videoDevices}
-            showVideoDevices={showVideoDevices}
-            setShowVideoDevices={setShowVideoDevices}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <AppContainer>
+        <RoomContainer onClick={clickBackground}>
+          <VideoAndBarContainer>
+            <VideoContainer>
+              {/* Current User Video */}
+              <VideoBox
+                className={`width-peer${peers.length > 8 ? "" : peers.length}`}
+              >
+                {userVideoAudio["localUser"].video ? null : (
+                  <>
+                    <UserName>{currentUser}</UserName>
+                  </>
+                )}
+                <FaIcon className="fas fa-expand" />
+                <MyVideo
+                  onClick={expandScreen}
+                  ref={userVideoRef}
+                  muted
+                  autoPlay
+                  playInline
+                ></MyVideo>
+              </VideoBox>
+              {/* Joined User Vidoe */}
+              {peers &&
+                peers.map((peer, index, arr) =>
+                  createUserVideo(peer, index, arr)
+                )}
+            </VideoContainer>
+            <BottomBar
+              clickScreenSharing={clickScreenSharing}
+              clickChat={clickChat}
+              goToBack={goToBack}
+              toggleCameraAudio={toggleCameraAudio}
+              userVideoAudio={userVideoAudio["localUser"]}
+              screenShare={screenShare}
+              videoDevices={videoDevices}
+              showVideoDevices={showVideoDevices}
+              setShowVideoDevices={setShowVideoDevices}
+              listuserRoom={userslist}
+            />
+          </VideoAndBarContainer>
+          <Chat
+            display={displayChat}
+            roomId={roomId}
             listuserRoom={userslist}
           />
-        </VideoAndBarContainer>
-        <Chat display={displayChat} roomId={roomId} listuserRoom={userslist} />
-      </RoomContainer>
-    </AppContainer>
+        </RoomContainer>
+      </AppContainer>
     </>
   );
 };
