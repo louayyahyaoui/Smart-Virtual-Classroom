@@ -48,7 +48,8 @@ module.exports = {
 console.log(newGrade);
     try {
             
-        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "Remis",$push :{listReponse : newGrade.listReponse}})   
+        Grade.updateOne({_id : newGrade.id} ,{grade : newGrade.grade,taskStatus : "Remis",$push :{listReponse : newGrade.listReponse}})  
+    
         .then((grade)=>res.json(grade));
  
      } catch (error) {
