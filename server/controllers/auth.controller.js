@@ -162,7 +162,7 @@ exports.registerController = (req, res) => {
                   <td data-bgcolor="bg-module" bgcolor="#eaeced">
                   <table class="flexible" width="600" align="center" style="margin:0 auto;" cellpadding="0" cellspacing="0">
                     <tr>
-                    <td class="img-flex"><img src="images/closer.png" style="vertical-align:top;" width="600" height="306" alt="" /></td>
+                    <td class="img-flex"><img src="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1623185146071-closer.png?alt=media" style="vertical-align:top;" width="600" height="306" alt="" /></td>
                     </tr>
                     <tr>
                     <td data-bgcolor="bg-block" class="holder" style="padding:58px 60px 52px;" bgcolor="#f9f9f9">
@@ -515,7 +515,7 @@ exports.forgotPasswordController = (req, res) => {
                   <td data-bgcolor="bg-module" bgcolor="#eaeced">
                   <table class="flexible" width="600" align="center" style="margin:0 auto;" cellpadding="0" cellspacing="0">
                     <tr>
-                    <td class="img-flex"><img src="images/closer.png" style="vertical-align:top;" width="600" height="306" alt="" /></td>
+                    <td class="img-flex"><img src="https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1623185146071-closer.png?alt=media" style="vertical-align:top;" width="600" height="306" alt="" /></td>
                     </tr>
                     <tr>
                     <td data-bgcolor="bg-block" class="holder" style="padding:58px 60px 52px;" bgcolor="#f9f9f9">
