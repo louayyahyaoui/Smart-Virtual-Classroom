@@ -141,3 +141,35 @@ exports.updateProfileController = (req, res) => {
     }
   );
 };
+
+exports.GetPictureOfUser = (req, res) => {
+  const name = req.body.username;
+  console.log(name);
+
+  User.findOne({ name: name })
+    .then((result) => {
+      console.log("this is result " + result);
+      res.json(result.picture);
+    })
+
+    .catch((err) => {
+      console.log("false1");
+      res
+        .status(500)
+        .json({ success: false, msg: `Something went wrong. ${err}` });
+      return;
+    });
+};
+
+exports.test = (req, res) => {
+  const name = req.body.username;
+  User.findOne({ name: name }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+
+    res.json(user);
+  });
+};

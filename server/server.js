@@ -129,10 +129,15 @@ io.on("connection", (socket) => {
   /**
    * Join Room
    */
-  socket.on("BE-join-room", ({ roomId, userName }) => {
+  socket.on("BE-join-room", ({ roomId, userName, Image }) => {
     // Socket Join RoomName
     socket.join(roomId);
-    socketList[socket.id] = { userName, video: true, audio: true };
+    socketList[socket.id] = { userName, Image, video: true, audio: true };
+    const uu = { userId: socket.id, info: socketList[socket.id] };
+    socket.broadcast.to(roomId).emit("FE-user-join", uu);
+    console.log(
+      `this is the user ${userName} and this is the picture ${Image}`
+    );
 
     // Set User List
     io.sockets.in(roomId).clients((err, clients) => {
