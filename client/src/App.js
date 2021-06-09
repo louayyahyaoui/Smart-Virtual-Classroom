@@ -1,27 +1,38 @@
-import React from "react";
+import React ,{Suspense} from "react";
 import en from "javascript-time-ago/locale/en";
 import ru from "javascript-time-ago/locale/ru";
 import TimeAgo from "javascript-time-ago";
-import Login from "./Components/authentification/Login";
-import Register from "./Components/authentification/Register";
-import Activate from "./Components/authentification/Activate";
-import Private from "./Components/authentification/Private";
-import Admin from "./Components/authentification/Admin";
-import ForgetPassword from "./Components/authentification/ForgetPassword";
-import ResetPassword from "./Components/authentification/ResetPassword";
+
+
+
 import PrivateRoute from "./Routes/PrivateRoute";
 import AdminRoute from "./Routes/AdminRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Home from "./Components/home/Home";
-import HomeCloser from "./Components/home/HomeCloser";
-import HomeClass from "./Components/home/HomeClass";
+
+
 import "./material.css";
-import Main from "./Components/Main/Main";
-import Room from "./Components/Room/Room";
-import WhiteBoard from "./Components/container/WhiteBoard";
-import Page_404 from "./Components/home/404";
-import NotificationComponent from "./Components/notifications/NotificationComponent";
+import Loader from "./Components/home/Loader";
+
+
+
+
+const Register = React.lazy(() => import('./Components/authentification/Register'));
+const Login = React.lazy(() => import('./Components/authentification/Login'));
+
+const Page_404 = React.lazy(() => import('./Components/home/404'));
+const WhiteBoard = React.lazy(() => import('./Components/container/WhiteBoard'));
+const Room = React.lazy(() => import('./Components/Room/Room'));
+const Main = React.lazy(() => import('./Components/Main/Main'));
+const HomeClass = React.lazy(() => import('./Components/home/HomeClass'));
+const HomeCloser = React.lazy(() => import('./Components/home/HomeCloser'));
+const Home = React.lazy(() => import('./Components/home/Home'));
+const Activate = React.lazy(() => import('./Components/authentification/Activate'));
+const ResetPassword = React.lazy(() => import('./Components/authentification/ResetPassword'));
+const ForgetPassword = React.lazy(() => import('./Components/authentification/ForgetPassword'));
+const Admin = React.lazy(() => import('./Components/authentification/Admin'));
+const Private = React.lazy(() => import('./Components/authentification/Private'));
+
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -29,6 +40,10 @@ TimeAgo.addLocale(ru);
 function App() {
   return (
     <div>
+      <Suspense fallback={<>
+
+     <Loader/>
+      </>}>
       <BrowserRouter>
         <Switch>
          
@@ -157,6 +172,7 @@ function App() {
           <Redirect to="/404" />
         </Switch>
       </BrowserRouter>
+      </Suspense>
     </div>
   );
 }

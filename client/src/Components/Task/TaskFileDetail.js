@@ -8,6 +8,7 @@ import {
   Card,
   Container,
   Divider,
+  Feed,
   Grid,
   Header,
   Icon,
@@ -91,6 +92,7 @@ export default function TaskFileDetail() {
                     </Container><br/>
                     <Grid>
                       <Grid.Row>
+     
                       <List horizontal>
                         {!task.task.listQuestion ? (
                           <> <p></p></>

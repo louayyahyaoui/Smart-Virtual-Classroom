@@ -271,10 +271,13 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment raised color="red">
+     
       <Grid container stackable verticalAlign="middle">
+   
         <Grid.Row>
+      
           <Grid.Column width={8}>
+          <Divider hidden={true}> </Divider>
             <Header as="h3" style={{ fontSize: "2em" }}>
               Virtual Classroom
             </Header>
@@ -298,7 +301,7 @@ const HomepageLayout = () => (
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Segment>
+     
     <Container>
       <Divider
         as="h4"

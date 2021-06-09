@@ -104,13 +104,25 @@ const Login = ({ history }) => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       {isAuth() ? <Redirect to="/" /> : null}
-      <ToastContainer />
+   
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">
-              Sign In for Closer
+              Sign In for
             </h1>
+            <img     src={process.env.PUBLIC_URL + "/closer.png"} style={{width:"63%"}}/>
             <div className="w-full flex-1 mt-8 text-indigo-500">
               <div className="flex flex-col items-center">
                 <GoogleLogin
@@ -127,8 +139,7 @@ const Login = ({ history }) => {
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                     >
                       <div className=" p-2  " style={{backgroundColor:"white"}}>
-                        <i class="fab fa-google"                    
-/>
+                        <i class="fab fa-google"/>
                       </div>
                       <span className="ml-4" style={{color:"white"}} >Sign In with Google</span>
                     </button>
@@ -153,17 +164,17 @@ const Login = ({ history }) => {
                   )}
                 />
 
-                <a
+                <Link
                                     style={{backgroundColor:"#DCDCDC"}}
 
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
-                  href="/register"
+                  to="/register"
                   target="_self"
                 >
-                  <i className="fas fa-user-plus fa 1x w-6  -ml-2 text-indigo-500" />
+                  <i className="fas fa-user-plus fa 1x w-6  -ml-2 text-indigo-500" style={{color:"red"}}/>
                   <span className="ml-4">Sign Up</span>
-                </a>
+                </Link>
               </div>
               <div className="my-12 border-b text-center">
                 <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
