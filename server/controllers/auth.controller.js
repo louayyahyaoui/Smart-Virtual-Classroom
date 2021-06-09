@@ -522,7 +522,7 @@ exports.forgotPasswordController = (req, res) => {
                       <table width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td data-color="title" data-size="size title" data-min="25" data-max="45" data-link-color="link title color" data-link-style="text-decoration:none; color:#292c34;" class="title" align="center" style="font:35px/38px Arial, Helvetica, sans-serif; color:#292c34; padding:0 0 24px;">
-                        Rest Password
+                        Reset Password
                         </td>
                       </tr>
                       <tr>
@@ -537,7 +537,7 @@ exports.forgotPasswordController = (req, res) => {
                         <table width="134" align="center" style="margin:0 auto;" cellpadding="0" cellspacing="0">
                           <tr>
                           <td data-bgcolor="bg-button" data-size="size button" data-min="10" data-max="16" class="btn" align="center" style="font:12px/14px Arial, Helvetica, sans-serif; color:#f8f9fb; text-transform:uppercase; mso-padding-alt:12px 10px 10px; border-radius:2px;" bgcolor="#ed3636">
-                            <a target="_blank" style="text-decoration:none; color:#ffffff; display:block; padding:12px 10px 10px;" href="${process.env.CLIENT_URL}/users/password/reset/${token}">Rest Password</a>
+                            <a target="_blank" style="text-decoration:none; color:#ffffff; display:block; padding:12px 10px 10px;" href="${process.env.CLIENT_URL}/users/password/reset/${token}">Reset Password</a>
                           </td>
                           </tr>
                         </table>
@@ -561,8 +561,8 @@ exports.forgotPasswordController = (req, res) => {
             </table>
             </body>
           </html>
-                  
-                `,
+             
+            `,
         };
         console.log(token);
 
