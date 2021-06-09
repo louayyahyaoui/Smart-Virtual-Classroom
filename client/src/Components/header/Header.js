@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Dropdown, Grid, Icon, Menu } from "semantic-ui-react";
+import { Dropdown, FeedLabel, Grid, Icon, Menu } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
@@ -48,7 +48,8 @@ function Header(props) {
   }
   return (
     <>
-      <Menu pointing secondary>
+      <Menu pointing  color="red" >
+    
         <Link to="/stream">
           <Menu.Item
             name="Stream"
@@ -57,6 +58,8 @@ function Header(props) {
             onClick={handleItemClick}
           />
         </Link>
+        
+
         <Link to="/FAQ">
           <Menu.Item
             name="FAQ"

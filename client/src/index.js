@@ -12,7 +12,7 @@ import Maintenance from "./Components/home/Maintenance";
 ReactDOM.render(
 
   <Provider store={store}>
-    <Maintenance />
+    <App />
   </Provider>,
   document.getElementById("root")
 );

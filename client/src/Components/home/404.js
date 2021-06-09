@@ -6,6 +6,10 @@ import styled from "styled-components";
 export default function Page_404() {
   return (
     <div>
+
+
+
+ 
       <ErrorPage>
         <ErrorHeader></ErrorHeader>
         <Image centered src={process.env.PUBLIC_URL + "/404.jpg"}  alt="Sad computer" /><br/>

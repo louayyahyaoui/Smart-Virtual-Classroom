@@ -18,7 +18,7 @@ const Room = (props) => {
   const [peers, setPeers] = useState([]);
   const sessionID = socket.id;
   const FirstLoader = {
-    userId: sessionID,
+    userId: undefined,
     info: { userName: currentUser, Image: userImage, video: true, audio: true },
   };
   const [userslist, setuserslist] = useState([FirstLoader]);
