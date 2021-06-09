@@ -101,7 +101,7 @@ function Header(props) {
 
         {isAuth().role === "Teacher" ? (
           <Menu.Item position="right">
-            <Dropdown floating className="icon" icon="add circle">
+            <Dropdown floating className="icon" icon="add circle"  direction="left">
               <Dropdown.Menu>
                 <Dropdown.Header
                   icon="mouse pointer"

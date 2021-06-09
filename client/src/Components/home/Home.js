@@ -468,12 +468,9 @@ export default function MiniDrawer() {
         </div>
         <Divider />
 
-        <List>
-          <ListItem button>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText> {classinvit ? <TableSeance /> : <></>}</ListItemText>
-          </ListItem>
-        </List>
+       
+             {classinvit ? <TableSeance /> : <></>}
+          
       </Drawer>
     </div>
   );
