@@ -454,7 +454,7 @@ export default function MiniDrawer() {
         anchor="right"
         open={open_right}
         classes={{
-          paper: classes_left.drawerPaper,
+          paper: classes_left.drawerPaper, 
         }}
       >
         <div className={classes_left.drawerHeader}>

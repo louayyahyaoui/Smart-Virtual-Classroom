@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@artsy/fresnel": "^1.3.1",
-    
-  
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -17,24 +17,17 @@
     "dotenv": "^8.2.0",
     "file-type": "^16.3.0",
     "formik": "^2.2.6",
-    
-    
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "qier-player": "^1.3.1",
     "react": "^17.0.1",
-   
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.2",
     "react-dropzone-uploader": "^2.11.0",
     "react-facebook-login": "^4.1.1",
-   
-    
     "react-google-login": "^5.2.2",
     "react-input-emoji": "^3.1.0",
-    
-    
     "react-multi-select-component": "^4.0.1",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.2",
@@ -42,7 +35,6 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
     "react-semantic-ui-datepickers": "^2.13.0",
-  
     "react-tagsinput": "^3.19.0",
     "react-textarea-autosize": "^8.3.2",
     "react-time-ago": "^6.2.2",
