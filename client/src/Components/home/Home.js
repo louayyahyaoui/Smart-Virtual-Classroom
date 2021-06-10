@@ -19,7 +19,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import Header from "../header/Header";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import ListCoursesBySeance from "../coursesAndSeances/ListCoursesBySeance";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -43,7 +43,7 @@ import QuestionByTags from "../question/QuestionByTags";
 import TaskQuizDetail from "../Task/TaskQuizDetail";
 import UserQuestion from "../question/UserQuestion";
 import NotificationComponent from "../notifications/NotificationComponent";
-import { isAuth } from "../../helpers/auth";
+import { isAuth, signout } from "../../helpers/auth";
 import TableCourses from "../coursesAndSeances/TableCourses";
 import GetAllClassComponent from "../Class/GetAllClassComponent";
 import GetAllArchivedClassComponent from "../Class/GetAllArchivedClassComponent";
@@ -229,7 +229,13 @@ export default function MiniDrawer() {
     setOpenRight(false);
   };
   const trigger = <Avatar src={isAuth().picture} />;
-
+  const handleItemClick = () => {
+ 
+    signout(() => {
+      toast.error("Signout Successfully");
+    });
+ 
+};
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -251,7 +257,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ marginLeft: "+85%" }}>
+          <div style={{ marginLeft: "+87%" }}>
             <Dropdown trigger={trigger} pointing="top right" icon={null}>
               <Dropdown.Menu>
                 <Dropdown.Header content={isAuth().email} />
@@ -271,19 +277,13 @@ export default function MiniDrawer() {
                 </Link>
                 <Dropdown.Divider />
 
-                <Link
-                  to={"/class/" + isAuth()._id}
-                  style={{ color: "black", fontSize: "15px" }}
-                >
-                  <Dropdown.Item text="Settings" icon="settings" />
-                </Link>
-                <Dropdown.Divider />
+                
 
                 <Link
-                  to={"/login/" + isAuth()._id}
+                  to={"/login"}
                   style={{ color: "black", fontSize: "15px" }}
                 >
-                  <Dropdown.Item text="Sign Out" icon="sign out" />
+                  <Dropdown.Item text="Sign Out" icon="sign out" onClick={handleItemClick} />
                 </Link>
               </Dropdown.Menu>
             </Dropdown>
@@ -312,7 +312,9 @@ export default function MiniDrawer() {
           }),
         }}
       >
+        
         <div className={classes.toolbar}>
+        <img src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -320,10 +322,11 @@ export default function MiniDrawer() {
               <ChevronLeftIcon />
             )}
           </IconButton>
+    
         </div>
 
         <Divider />
-        <List style={{ marginTop: "+50%" }}>
+        <List >
           <Link to="/class">
             <ListItem button key="Dashboard">
               <ListItemIcon>
@@ -363,11 +366,7 @@ export default function MiniDrawer() {
             component={GetAllArchivedClassComponent}
           />
           <PrivateRoute path="/schedule" exact component={CalendarComponent} />
-          <PrivateRoute
-            path="/updateProfile/:id"
-            exact
-            component={UpdateProfile}
-          />
+         
         </div>
         <Route
           path="/TaskList"

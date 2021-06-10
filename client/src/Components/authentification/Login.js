@@ -84,7 +84,7 @@ const Login = ({ history }) => {
             isAuth() && isAuth().role === "Teacher"
               ? history.push("/class")
               : history.push("/class");
-         //   toast.success(`Hey ${res.data.user.name}, Welcome back!`);
+            //   toast.success(`Hey ${res.data.user.name}, Welcome back!`);
           });
         })
         .catch((err) => {
@@ -95,7 +95,7 @@ const Login = ({ history }) => {
             textChange: "Sign In",
           });
           console.log(err.response);
-        //  toast.error(err.response.data.errors);
+          //  toast.error(err.response.data.errors);
         });
     } else {
       toast.error("Please fill all fields");
@@ -104,7 +104,7 @@ const Login = ({ history }) => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       {isAuth() ? <Redirect to="/" /> : null}
-   
+
       <ToastContainer
         position="bottom-left"
         autoClose={5000}
@@ -122,7 +122,7 @@ const Login = ({ history }) => {
             <h1 className="text-2xl xl:text-3xl font-extrabold">
               Sign In for
             </h1>
-            <img     src={process.env.PUBLIC_URL + "/closer.png"} style={{width:"63%"}}/>
+            <img src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
             <div className="w-full flex-1 mt-8 text-indigo-500">
               <div className="flex flex-col items-center">
                 <GoogleLogin
@@ -132,16 +132,16 @@ const Login = ({ history }) => {
                   cookiePolicy={"single_host_origin"}
                   render={(renderProps) => (
                     <button
-                    style={{backgroundColor:"dodgerblue	"}}
+                      style={{ backgroundColor: "dodgerblue	" }}
 
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                     >
-                      <div className=" p-2  " style={{backgroundColor:"white"}}>
-                        <i class="fab fa-google"/>
+                      <div className=" p-2  " style={{ backgroundColor: "white" }}>
+                        <i class="fab fa-google" />
                       </div>
-                      <span className="ml-4" style={{color:"white"}} >Sign In with Google</span>
+                      <span className="ml-4" style={{ color: "white" }} >Sign In with Google</span>
                     </button>
                   )}
                 ></GoogleLogin>
@@ -151,29 +151,27 @@ const Login = ({ history }) => {
                   callback={responseFacebook}
                   render={(renderProps) => (
                     <button
-                    style={{backgroundColor:"royalblue"}}
+                      style={{ backgroundColor: "royalblue" }}
 
                       onClick={renderProps.onClick}
                       className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                     >
-                      <div className=" p-2  " style={{backgroundColor:"white"}}>
-                        <i className="fab fa-facebook" style={{color:"blue"}} />
+                      <div className=" p-2  " style={{ backgroundColor: "white" }}>
+                        <i className="fab fa-facebook" style={{ color: "blue" }} />
                       </div>
-                      <span className="ml-4" style={{color:"white"}}>Sign In with Facebook</span>
+                      <span className="ml-4" style={{ color: "white" }}>Sign In with Facebook</span>
                     </button>
                   )}
                 />
 
                 <Link
-                                    style={{backgroundColor:"#DCDCDC"}}
-
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-           bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
+                                    bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                   to="/register"
                   target="_self"
                 >
-                  <i className="fas fa-user-plus fa 1x w-6  -ml-2 text-indigo-500" style={{color:"red"}}/>
-                  <span className="ml-4">Sign Up</span>
+                  <i className="fas fa-user-plus fa 1x w-6  -ml-2 text-indigo-500" style={{ color: "red" }} />
+                  <span className="ml-4"  style={{ color: "red" }}>Sign Up</span>
                 </Link>
               </div>
               <div className="my-12 border-b text-center">
@@ -201,8 +199,8 @@ const Login = ({ history }) => {
                 />
                 <button
                   type="submit"
-                      style={{backgroundColor:"red"}}
-                      className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  style={{ backgroundColor: "red" }}
+                  className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                 >
                   <i className="fas fa-sign-in-alt  w-6  -ml-2" />
                   <span className="ml-3">Sign In</span>

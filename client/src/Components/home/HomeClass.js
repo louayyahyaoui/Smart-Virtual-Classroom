@@ -37,11 +37,12 @@ import DetailsQuestion from "../question/DetailsQuestionComponent";
 import MemberComponent from "../Class/MemberComponent";
 import PrivateRoute from "../../Routes/PrivateRoute";
 import Quiz from "../Quiz/Quiz";
+import { toast } from "react-toastify";
 import QuestionByTags from "../question/QuestionByTags";
 import TaskQuizDetail from "../Task/TaskQuizDetail";
 import UserQuestion from "../question/UserQuestion";
 import NotificationComponent from "../notifications/NotificationComponent";
-import { isAuth } from "../../helpers/auth";
+import { isAuth, signout } from "../../helpers/auth";
 import TableCourses from "../coursesAndSeances/TableCourses";
 import GetAllClassComponent from "../Class/GetAllClassComponent";
 import GetAllArchivedClassComponent from "../Class/GetAllArchivedClassComponent";
@@ -225,6 +226,13 @@ export default function MiniDrawer() {
   const handleDrawerCloseRight = () => {
     setOpenRight(false);
   };
+  const handleItemClick = () => {
+ 
+    signout(() => {
+      toast.error("Signout Successfully");
+    });
+ 
+};
   const trigger = <Avatar src={isAuth().picture} style={{float:"right"}}/>;
   return (
     <div className={classes.root}>
@@ -267,21 +275,12 @@ export default function MiniDrawer() {
                 <Dropdown.Item text="Account" icon="user" />
               </Link>
               <Dropdown.Divider />
-
               <Link
-                to={"/class/" + isAuth()._id}
-                style={{ color: "black", fontSize: "15px" }}
-              >
-                <Dropdown.Item text="Settings" icon="settings" />
-              </Link>
-              <Dropdown.Divider />
-
-              <Link
-                to={"/login/" + isAuth()._id}
-                style={{ color: "black", fontSize: "15px" }}
-              >
-                <Dropdown.Item text="Sign Out" icon="sign out" />
-              </Link>
+                  to={"/login"}
+                  style={{ color: "black", fontSize: "15px" }}
+                >
+                  <Dropdown.Item text="Sign Out" icon="sign out" onClick={handleItemClick} />
+                </Link>
             </Dropdown.Menu>
           </Dropdown>
           </div>
@@ -310,6 +309,7 @@ export default function MiniDrawer() {
         }}
       >
         <div className={classes.toolbar}>
+        <img src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -320,7 +320,7 @@ export default function MiniDrawer() {
         </div>
 
         <Divider />
-        <List style={{marginTop:"+50%"}}>
+        <List >
           <Link to="/class">
             <ListItem button key="Dashboard">
               <ListItemIcon>
@@ -413,11 +413,6 @@ export default function MiniDrawer() {
           render={(props) => <ListCoursesBySeance {...props} />}
         />
         <Suspense fallback={<h1>Loading data ...</h1>}></Suspense>
-        <Route
-          path="/updateProfile/:id"
-          exact
-          render={(props) => <UpdateProfile {...props} />}
-        />
         <Route
           path="/detailCourses/:id"
           exact
