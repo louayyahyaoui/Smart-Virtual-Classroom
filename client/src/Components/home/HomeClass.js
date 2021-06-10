@@ -256,7 +256,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
 
-          <div style={{marginLeft:"+85%"}}>
+          <div style={{marginLeft:"+87%"}}>
           <Dropdown trigger={trigger} pointing="top right" icon={null}>
             <Dropdown.Menu>
               <Dropdown.Header content={isAuth().email} />
