@@ -1,5 +1,5 @@
 import { Grid, Image, Label, Segment, Button, Card } from "semantic-ui-react";
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import {
   fetchActiveClass,
   fetchRequestClass,
@@ -88,49 +88,3 @@ export default function InvitationClassComonent() {
   );
 }
 
-/*
- <div>
-      <fieldset className={classes.fieldsets}>
-        <legend>&nbsp; Class Invitation  &nbsp;</legend>
-        
-        {classinvit?.map((co, i) => (
-          <div key={i}>
-           
-        <Card className={classes.root}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                R 
-              </Avatar>
-            }
-           
-            title={co.classOb.classOwner.firstName}
-            subheader={co.classOb.classDatePost}
-          />
-          { <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        /> }
-
-        <CardContent>
-        <Typography variant="body2" component="h2">
-        {co.classOb.className}
-        </Typography>
-        <Typography variant="body2" component="h4">
-        {co.classOb.classSection}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {co.classOb.classDescription}
-        </Typography>
-      </CardContent>
-       <CardActions disableSpacing>
-      <Button color="primary">Accept</Button>
-      <Button color="secondary">Decline</Button>
-    </CardActions>
-    </Card>
-    </div>
-     ))}  
-  </fieldset>
-</div>
-*/

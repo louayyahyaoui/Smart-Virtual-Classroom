@@ -47,7 +47,7 @@ export default function AddClassComponent() {
   let error = { visible: false, message: "" };
   let [color, setClassColor] = useState();
   const selectedClass = (data) => {
-    console.log(data.target.innerText);
+   
     setClassColor(data.target.innerText);
   };
   const formik = useFormik({
@@ -90,7 +90,7 @@ export default function AddClassComponent() {
         };
 
          const res = await AddclassApi.addClass(data);
-        console.log(res);
+      
         dis({ type: "CLOSE_MODAL" });
         dispatch(fetchclass(documentData.role, documentData._id,"Active"));
         dispatch(fetchActiveClass(documentData._id));

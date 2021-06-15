@@ -13,16 +13,16 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { AddquestionsApi } from "../../api/api";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import FileUpload from "../../utlis/FileUpload";
 import { addQuestion } from "../../redux/slices/questionslice";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import io from "socket.io-client";
-import { selectedClasses } from "../../redux/slices/classsline";
+
 import { useHistory } from "react-router-dom";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = `${process.env.REACT_APP_API_URL}`;
 const socket = io(ENDPOINT);
 
 function AddQuestion() {
@@ -32,7 +32,7 @@ function AddQuestion() {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
   const [open, setOpen] = React.useState(false);
-  const [error] = useState({ visible: false, message: "" });
+  
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
@@ -41,7 +41,7 @@ function AddQuestion() {
     
    
   };
-  //inpput tags
+
   const [tags, setTags] = useState([]);
   const handleChange = (tag) => {
     setTags(tag);
@@ -60,7 +60,7 @@ function AddQuestion() {
     onSubmit: async (values) => {
       try {
         
-       // alert("images"+Images)
+     
       
         values.Filee = Images;
         values.Writerq._id = documentData._id;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form,  } from "semantic-ui-react";
-//import { useHistory } from "react-router-dom";
+import { Button, Modal, Form } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import {
   fetchInvitationclass,
@@ -34,61 +33,57 @@ export default function AddUserToClassComponent(props) {
     });
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      let verif1=true,verif2=true,verif3=true;
-        for (let index11 = 0; index11 < classinvit.classUsers.length; index11++) {
-        if(classinvit.classUsers[index11]._id===element)
-        {
-          verif1=false;
+      let verif1 = true,
+        verif2 = true,
+        verif3 = true;
+      for (let index11 = 0; index11 < classinvit.classUsers.length; index11++) {
+        if (classinvit.classUsers[index11]._id === element) {
+          verif1 = false;
           break;
         }
       }
       for (let index22 = 0; index22 < props.members.length; index22++) {
-        if(props.members[index22].userOb._id===element )
-        {
-          verif2=false;
+        if (props.members[index22].userOb._id === element) {
+          verif2 = false;
           break;
-        }  
-      }
-      console.log(classinvit.classOwner._id===element);
-      if( classinvit.classOwner._id===element )
-        verif3=false;
-
-      if(verif1 && verif2 && verif3 ){
-      if (data.length > 0) {
-
-        const dataField = {
-          status: "Invitation",
-          classOb: classinvit._id,
-          userOb: element,
-        };
-        try {
-          await ClassInvitationApi.AddClassInvitation(dataField);
-          handleClose()
-          dispatch(fetchInvitationclass(documentData._id));
-          dispatch(fetchInvitationclassId(classinvit._id));
-        } catch (err) {
-          error = {
-            visible: true,
-            message: JSON.stringify(err.errors, null, 2),
-          };
         }
       }
-    }
-    else
-    console.log("error");
+      
+      if (classinvit.classOwner._id === element) verif3 = false;
+
+      if (verif1 && verif2 && verif3) {
+        if (data.length > 0) {
+          const dataField = {
+            status: "Invitation",
+            classOb: classinvit._id,
+            userOb: element,
+          };
+          try {
+            await ClassInvitationApi.AddClassInvitation(dataField);
+            handleClose();
+            dispatch(fetchInvitationclass(documentData._id));
+            dispatch(fetchInvitationclassId(classinvit._id));
+          } catch (err) {
+            error = {
+              visible: true,
+              message: JSON.stringify(err.errors, null, 2),
+            };
+          }
+        }
+      } else console.log("error");
     }
   };
 
   return (
     <div>
-      
-
-      <Modal trigger={<Button
-        circular
-        content="Add User"
-        icon="add"
-        onClick={handleOpen}
-      />} open={modalOpen} onClose={handleClose} dimmer="inverted">
+      <Modal
+        trigger={
+          <Button circular content="Add User" icon="add" onClick={handleOpen} />
+        }
+        open={modalOpen}
+        onClose={handleClose}
+        dimmer="inverted"
+      >
         <Modal.Header>Add User To Class</Modal.Header>
         <Modal.Content>
           <Form>

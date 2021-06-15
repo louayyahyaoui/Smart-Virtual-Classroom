@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
 import styled from "styled-components";
 import socket from "../../socket";
 import { useHistory } from "react-router-dom";
-import { Icon, Menu } from "semantic-ui-react";
+
 const Main = (props) => {
   const history = useHistory();
   const [err, setErr] = useState(false);

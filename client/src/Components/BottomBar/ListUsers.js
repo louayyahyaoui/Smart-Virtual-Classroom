@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-  Dropdown,
-  Feed,
+
   Grid,
   Icon,
   Image,
-  Menu,
-  Segment,
+ 
 } from "semantic-ui-react";
 
 function ListUsers(props) {

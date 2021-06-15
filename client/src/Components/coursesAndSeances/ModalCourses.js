@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Feed, Icon, Modal } from "semantic-ui-react";
+import { Dropdown, Modal } from "semantic-ui-react";
 import FormCourses from "./FormCourses";
 
 function ModalCourses(props) {
@@ -20,7 +20,7 @@ function ModalCourses(props) {
             onCoursesAdded={props.onCoursesAdded}
             onCoursesUpdated={props.onCoursesUpdated}
             server={props.server}
-            //socket={this.props.socket}
+           
           />
         </Modal.Content>
       </Modal>

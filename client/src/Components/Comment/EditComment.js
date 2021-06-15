@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon, Modal, Button, Form, TextArea } from "semantic-ui-react";
 import { CommentsApi } from "../../api/api";
 import * as Yup from "yup";
-import InputEmoji from "react-input-emoji";
 import {
   fetchCommentsCourse,
   fetchCommentsTask,
@@ -13,22 +12,12 @@ import {
 function EditComment(props) {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+ 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCommentsCourse(props.courseID));
   }, [dispatch]);
-  const [commentss, er] = useSelector(selectComments);
-  const [text, setText] = useState("");
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
+ 
   const formik = useFormik({
     initialValues: {
       Body: " " + props.comment.Body,

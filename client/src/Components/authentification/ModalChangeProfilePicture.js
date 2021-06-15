@@ -24,10 +24,9 @@ function ModalChangeProfilePicture(props) {
     var formData = new FormData();
     SetLoader(true);
     formData.append("multiple_resources", picture);
-    console.log("this is pic");
-    console.log(picture);
+   
     dispatch(UpdateProfilePicture(formData)).then((response) => {
-      console.log(response);
+     
       SetLoader(false);
       setOpen(false);
     });

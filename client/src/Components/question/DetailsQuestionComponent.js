@@ -18,7 +18,7 @@ import {
   Dropdown,
   Feed,
   Form,
-  Grid,
+
   Header,
   Icon,
   Image,
@@ -26,7 +26,7 @@ import {
   List,
   Message,
   Segment,
-  TextArea,
+
 } from "semantic-ui-react";
 import AddQuestion from "./AddQuestionComponent";
 import FileUpload from "../../utlis/FileUpload";
@@ -34,7 +34,7 @@ import EditQuestions from "./EditQuestionComponent";
 import EditAnswer from "../answer/EditAnswer";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = `${process.env.REACT_APP_API_URL}/`;
 const socket = io(ENDPOINT);
 
   function DetailsQuestion(props) {
@@ -52,14 +52,14 @@ const socket = io(ENDPOINT);
 
   const id = props.match.params.id;
   useEffect(() => {
-    socket.on("new-answer", (content) => {
+    socket.on("new-answer", () => {
       dispatch(fetchAnswers(id));
     });
     return () => {
       socket.disconnect();
     };
   }, []);
-  const [questions, errr] = useSelector(selectQuestions);
+  const [questions] = useSelector(selectQuestions);
   useEffect(() => {
     dispatch(fetchAnswers(id));
   }, [dispatch]);
@@ -68,7 +68,7 @@ const socket = io(ENDPOINT);
     Owner: [],
     Question: { _id: "" + id },
   });
-  const [questionAndanswer, er] = useSelector(selectAnswer);
+  const [questionAndanswer] = useSelector(selectAnswer);
   const formik = useFormik({
     initialValues: {
       Body: " ",
@@ -121,15 +121,11 @@ const socket = io(ENDPOINT);
   const updateImages = (newImages) => {
     setImages(newImages);
   };
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  /*const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };*/
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+
+ 
   const deletee = async () => {
     try {
       const res = await AddquestionsApi.deleteQuestions(id);

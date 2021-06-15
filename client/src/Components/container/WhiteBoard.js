@@ -1,5 +1,5 @@
 import React from 'react';
-import Board from '../board/Board';
+import Board from '../board/Board.js';
 
 
 import './style.css';

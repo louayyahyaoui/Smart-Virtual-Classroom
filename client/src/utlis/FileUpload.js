@@ -1,13 +1,13 @@
-import { set } from "js-cookie";
+
 import React, { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
-import { Icon, Segment, Loader, Tab, Dimmer, Label } from "semantic-ui-react";
-import { array } from "yup/lib/locale";
+import { Icon, Segment, Loader, Dimmer, Label } from "semantic-ui-react";
+
 import { AddquestionsApi } from "../api/api";
 
 function FileUpload(props) {
   const arr = [];
-  const [enablee, setUploadfilee] = useState(props.Enbale);
+
   const [loader, SetLoader] = useState(false);
   const [endloader, SetEndLoader] = useState(true);
   useEffect(() => {
@@ -28,11 +28,9 @@ function FileUpload(props) {
   var [fd, setfd] = useState(new FormData());
 
   const onDrop = (files) => {
-    const file = [];
+    
     let formData = new FormData();
-    const config = {
-      header: { "content-type": "multipart/form-data" },
-    };
+   
     files.forEach((f) => {
       formData.append("files", f);
 
@@ -43,15 +41,12 @@ function FileUpload(props) {
     setfd(formData);
     setImages(arr);
 
-    /*formData.append("files", files[i]);
-    fd = formData;
-    setfd(formData);
-   */
+   
   };
 
   useEffect(async () => {
     if (props.Enbale && endloader) {
-      //save the Image we chose inside the Node Server
+    
 
       SetLoader(true);
       const config = {

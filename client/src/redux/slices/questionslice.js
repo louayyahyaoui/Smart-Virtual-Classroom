@@ -68,8 +68,7 @@ export const selectOne = (state) => {
   return [state.questions.selectedQuestions, state.questions.errors];
 };
 export const selectOneQuestion = (id, state) => {
-  console.log("state: " + state);
-  console.log("id: " + id);
+ 
 
   return [
     state.questions.find((item) => item._id === id),

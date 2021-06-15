@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
-import Dropzone from "react-dropzone-uploader";
+
 import "react-dropzone-uploader/dist/styles.css";
 import { Button, Divider } from 'semantic-ui-react';
-import axios from "axios"
-import { addUploadFile, uploadFile } from '../../redux/slices/Task';
-import { useDispatch } from 'react-redux';
+
 import FileUpload from '../../utlis/FileUpload';
 
 export default function TaskFile(props) {
@@ -43,7 +41,7 @@ export default function TaskFile(props) {
  
         props.nextStep(step+1);
         setEnableUpload(true);
-        console.log(enableUpload);
+    
 
       }
  

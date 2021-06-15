@@ -1,17 +1,12 @@
 import React from "react";
-//import { Button, Modal, Form, Input, TextArea } from "semantic-ui-react";
-//import { useFormik } from "formik";
-//import * as Yup from "yup";
-import { useState } from "react";
-import { Scheduler, Editing, Resource } from "devextreme-react/scheduler";
+
+import { Scheduler, Resource } from "devextreme-react/scheduler";
 import { resourcesData } from "../../api/data";
 import CustomStore from "devextreme/data/custom_store";
 import notify from "devextreme/ui/notify";
 import Appointment from "./Appointment";
-import AppointmentTooltip from "./AppointmentTooltip";
 
 import "whatwg-fetch";
-
 
 function handleErrors(response) {
   if (!response.ok) throw Error(response.statusText);
@@ -21,7 +16,7 @@ const documentData = JSON.parse(localStorage.getItem("user"));
 const schedulerDataSource = {
   store: new CustomStore({
     load: () => {
-      return fetch("https://closer-server.herokuapp.com/scheduler/")
+      return fetch(`${process.env.REACT_APP_API_URL}/scheduler/`)
         .then(handleErrors)
         .then((response) => response.json());
     },
@@ -36,7 +31,7 @@ const schedulerDataSource = {
         allDay: values.allDay,
         postOwner: documentData._id,
       };
-      return fetch("https://closer-server.herokuapp.com/scheduler/", {
+      return fetch(`${process.env.REACT_APP_API_URL}/scheduler/`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -47,14 +42,14 @@ const schedulerDataSource = {
         .then((response) => response.json());
     },
     remove: (key) => {
-      return fetch(`https://closer-server.herokuapp.com/scheduler/${key._id}`, {
+      return fetch(`${process.env.REACT_APP_API_URL}/scheduler/${key._id}`, {
         method: "DELETE",
       })
         .then(handleErrors)
         .then((response) => response.json());
     },
     update: (key, values) => {
-      return fetch(`https://closer-server.herokuapp.com/scheduler/${key._id}`, {
+      return fetch(`${process.env.REACT_APP_API_URL}/scheduler/${key._id}`, {
         method: "PUT",
         body: JSON.stringify(values),
         headers: {
@@ -68,27 +63,24 @@ const schedulerDataSource = {
   }),
 };
 export default function CalendarComponent() {
-  let allows ={ };
-  if (documentData.role==="Student") {
-    allows ={
+  let allows = {};
+  if (documentData.role === "Student") {
+    allows = {
       allowAdding: false,
       allowDeleting: false,
       allowResizing: false,
       allowDragging: false,
       allowUpdating: false,
-    }
-  }
-  else if (documentData.role==="Teacher")
-  {
-    allows ={
+    };
+  } else if (documentData.role === "Teacher") {
+    allows = {
       allowAdding: true,
       allowDeleting: true,
       allowResizing: true,
       allowDragging: true,
       allowUpdating: true,
-    }
+    };
   }
- 
 
   const showToast = (event, value, type) => {
     notify(`${event} "${value}" task`, type, 800);
@@ -102,9 +94,7 @@ export default function CalendarComponent() {
     showToast("Updated", e.appointmentData.result.text, "info");
   };
 
- /* const showDeletedToast = (e) => {
-    showToast("Deleted", e.appointmentData.result.text, "warning");
-  };*/
+  
   const views = ["day", "week", "month", "agenda"];
   return (
     <div>
@@ -117,7 +107,7 @@ export default function CalendarComponent() {
         onAppointmentAdded={showAddedToast}
         onAppointmentUpdated={showUpdatedToast}
         appointmentComponent={Appointment}
-        //onAppointmentDeleted={showDeletedToast}
+       
       >
         <Resource
           fieldExpr="sectionId"
@@ -131,4 +121,4 @@ export default function CalendarComponent() {
   );
 }
 
-//<Editing allowUpdating={allowAddingg} allowAdding={true} allowDeleting={true} />     appointmentTooltipComponent={AppointmentTooltip}
+

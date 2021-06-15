@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
-
   Header,
   Icon,
   Segment,
@@ -14,52 +13,48 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
 import { isAuth } from "../../helpers/auth";
-import {  AddquestionsApi } from "../../api/api";
+import { AddquestionsApi } from "../../api/api";
 import AddQuestion from "./AddQuestionComponent";
 import {
-
-    fetchQuestionsByTags, selectQuestions,
-
+  fetchQuestionsByTags,
+  selectQuestions,
 } from "../../redux/slices/questionslice";
 import { Link, useParams } from "react-router-dom";
 import EditQuestions from "./EditQuestionComponent";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
-const socket = io(ENDPOINT);
+const ENDPOINT =`${process.env.REACT_APP_API_URL}/`;
 
-export default function QuestionByTags(props) {
+
+export default function QuestionByTags() {
   const { tag } = useParams();
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchQuestionsByTags(currentClass._id,tag));
+    dispatch(fetchQuestionsByTags(currentClass._id, tag));
   }, [dispatch]);
 
- 
- 
   const documentData = JSON.parse(localStorage.getItem("user"));
- 
-  const [questions, errr] = useSelector(selectQuestions);
-  
+
+  const [questions] = useSelector(selectQuestions);
+
   const deletee = async (idq) => {
     try {
       const res = await AddquestionsApi.deleteQuestions(idq);
-      dispatch(fetchQuestionsByTags(currentClass._id,tag));
+      dispatch(fetchQuestionsByTags(currentClass._id, tag));
     } catch (error) {
       alert(error);
     }
   };
-  const [loadmore, setloadmore] = useState(5)
-  const [enableLoadMore, setenableLoadMore] = useState(true)
-  const morQuestion =  (nb) => {
-        setloadmore(loadmore +5)
-        console.log(questions.length)
-        if(questions.length-loadmore<=0 )
-        {
-          setenableLoadMore(false)
-        }
-    };
+  const [loadmore, setloadmore] = useState(5);
+  const [enableLoadMore, setenableLoadMore] = useState(true);
+  const morQuestion = (nb) => {
+    setloadmore(loadmore + 5);
+    console.log(questions.length);
+    if (questions.length - loadmore <= 0) {
+      setenableLoadMore(false);
+    }
+  };
   return (
     <Container fluid>
       <AddQuestion floated="right" />
@@ -70,7 +65,7 @@ export default function QuestionByTags(props) {
           image
           style={{ marginLeft: "60%", height: "34px" }}
         >
-          <img src={isAuth().picture} />
+          <img alt="user-picture" src={isAuth().picture} />
           Your
           <Label.Detail>Posts</Label.Detail>
         </Label>
@@ -83,7 +78,7 @@ export default function QuestionByTags(props) {
         </Segment>
       )}
 
-      {questions.slice(0,loadmore).map((question, index) => (
+      {questions.slice(0, loadmore).map((question, index) => (
         <Segment key={index} raised color="grey">
           {question.Writerq._id === documentData._id && (
             <Dropdown floated="right" icon="ellipsis vertical">
@@ -253,8 +248,11 @@ export default function QuestionByTags(props) {
           </Feed.Extra>
           <div style={{ marginTop: "3%", marginBottom: "3%" }}>
             {question.Hashtags.map((hashtag, index) => (
-              <Link to={"/tags/" + currentClass._id + "/" + hashtag} key={index}>
-                <Label  color="grey" as="a" tag>
+              <Link
+                to={"/tags/" + currentClass._id + "/" + hashtag}
+                key={index}
+              >
+                <Label color="grey" as="a" tag>
                   #{hashtag}
                 </Label>
               </Link>
@@ -266,15 +264,18 @@ export default function QuestionByTags(props) {
               <h6 style={{ textAlign: "center" }}>See more</h6>
             </Link>
           </Segment>
-   
-
         </Segment>
-        
       ))}
-             {enableLoadMore &&(
-          <Segment raised color="grey" textAlign='center' onClick={()=>morQuestion(5)}>Load more.</Segment>
-
-     )}
+      {enableLoadMore && (
+        <Segment
+          raised
+          color="grey"
+          textAlign="center"
+          onClick={() => morQuestion(5)}
+        >
+          Load more.
+        </Segment>
+      )}
     </Container>
   );
 }

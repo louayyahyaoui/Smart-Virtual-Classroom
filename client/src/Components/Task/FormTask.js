@@ -1,21 +1,21 @@
-import moment from 'moment';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+
+import React, {  useState } from 'react'
+import { useDispatch } from 'react-redux';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import { Button, Form, Message } from 'semantic-ui-react';
-import { getTaskByTeacher, taskSlice, updateTask } from '../../redux/slices/Task';
+import { getTaskByTeacher, updateTask } from '../../redux/slices/Task';
 import FileUploadEdit from '../../utlis/FileUploadEdit';
-import * as Yup from "yup";
+
 import { useFormik } from "formik";
 export default function FormTask({task}) {
 
   const [Images, setImages] = useState(task.listQuestion);
-  let listFile;
+
   const [enableUpload, setEnableUpload] = useState(false);
   const [successMessage, SetSuccessMessage] = useState("");
   const [errorMessage, SetErrorMessage] = useState("");
 
-  const [up, setUp] = useState(0);
+
 
   const updateImages = (newImages) => {
  
@@ -25,7 +25,7 @@ export default function FormTask({task}) {
 
   };
 
-    const [taskEdit , setTaskEdit] = useState(task);
+
     
 
     const  dispatch = useDispatch();
@@ -59,13 +59,13 @@ export default function FormTask({task}) {
            
   
         
-        console.log(values);
+     
         const res = await dispatch(updateTask(values)).then(()=>{
           dispatch(getTaskByTeacher({"idUser":task.creator,"idClass":task.cour}));
           SetSuccessMessage("Update Task successfully !")
       });
         } catch (error) {
-          SetErrorMessage("Semothing Wrrong Check Your Data Please  !")
+          SetErrorMessage("Semothing went Wrong Check Your Data Please  !")
           alert(error);
         }
       },
@@ -141,7 +141,7 @@ export default function FormTask({task}) {
            <br/>
         <br/>
     
-        <br /> {/* Yikes! Deal with Semantic UI React! */}
+        <br /> 
      
         </div>
     )

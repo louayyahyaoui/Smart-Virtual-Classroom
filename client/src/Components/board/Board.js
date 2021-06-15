@@ -6,7 +6,7 @@ import './style.css';
 class Board extends React.Component {
 
     timeout;
-    socket = io.connect("https://closer-server.herokuapp.com");
+    socket = io.connect(`${process.env.REACT_APP_API_URL}`);
 
     ctx;
     isDrawing = false;

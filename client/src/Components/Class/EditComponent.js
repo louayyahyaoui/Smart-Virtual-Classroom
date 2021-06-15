@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Dropdown, Feed, Icon, Modal } from "semantic-ui-react";
-import { DeleteSeance } from "../../redux/slices/Seance";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button, Dropdown,Modal } from "semantic-ui-react";
+
 import { Form, Input, TextArea } from "semantic-ui-react";
-import { addClasss, updateClasss,fetchclass } from "../../redux/slices/classsline";
+import { fetchclass } from "../../redux/slices/classsline";
 import { AddclassApi } from "../../api/api";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -32,7 +32,7 @@ export default function ArchieveClassComponent(props) {
   const handleClose = (e) => SetModalOpen(false);
   let [color, setClassColor] = useState();
   const selectedClass = (data) => {
-    console.log(data.target.innerText);
+  
     setClassColor(data.target.innerText);
   };
   color = props.classes.classColor;
@@ -59,7 +59,7 @@ export default function ArchieveClassComponent(props) {
       classDescription: Yup.string().required(),
     }),
     onSubmit: async (formData) => {
-      console.log(formData);
+      
       try {
         const lvl = formData.classSection.substring(0, 1);
         if (color === undefined) color = "red";
@@ -74,7 +74,7 @@ export default function ArchieveClassComponent(props) {
           classStatus: "Active",
         };
         const res = await AddclassApi.updateClass(props.classes._id, data);
-        console.log(res);
+       
         dispatch(fetchclass(documentData.role, documentData._id,"Active"));
         handleClose();
       } catch (err) {

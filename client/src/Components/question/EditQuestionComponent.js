@@ -18,7 +18,7 @@ import FileUploadEdit from "../../utlis/FileUploadEdit";
 import { useHistory } from "react-router";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = `${process.env.REACT_APP_API_URL}/`;
 const socket = io(ENDPOINT);
 
 export default function EditQuestions({ qes }) {
@@ -54,7 +54,7 @@ export default function EditQuestions({ qes }) {
       try {
         if (Images.length !== 0) {
           values.Filee = Images;
-         // alert("images : here : " + values.Filee);
+         
         } else {
           values.Filee = qes.Filee;
         }

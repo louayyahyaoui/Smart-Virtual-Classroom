@@ -1,12 +1,12 @@
-import { Center } from "devextreme-react/map";
+
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, Tab } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import styled from "styled-components";
 import socket from "../../socket";
 import ListUsers from "../BottomBar/ListUsers";
 import './style.css'
 const Chat = ({ display, roomId, listuserRoom }) => {
-  console.log(listuserRoom);
+ 
   const currentUser = JSON.parse(sessionStorage.getItem("user"));
   const [msg, setMsg] = useState([]);
   const messagesEndRef = useRef(null);

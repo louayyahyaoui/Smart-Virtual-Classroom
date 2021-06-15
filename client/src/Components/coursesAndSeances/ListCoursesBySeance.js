@@ -11,8 +11,7 @@ import {
   Icon,
   Image,
   Label,
-  LabelDetail,
-  Progress,
+
   Segment,
 } from "semantic-ui-react";
 import { RetrieveCoursesByIdSeance } from "../../redux/slices/Courses";
@@ -31,7 +30,7 @@ function ListCoursesBySeance() {
 
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
-    const louay = activeIndex;
+    
 
     const newIndex = activeIndex === index ? -1 : index;
     setActiveIndex(newIndex);
@@ -350,14 +349,7 @@ function ListCoursesBySeance() {
                                     </Grid.Column>
                                   </div>
                                 ) : (
-                                  // <a href={files} target="_blank" rel="noopener noreferrer">
-                                  //   <img
-                                  //     src={files}
-                                  //     width="300px"
-                                  //     style={{ margin: "2px" }}
-                                  //     alt=""
-                                  //   />
-                                  // </a>
+                                 
                                   <a
                                     href={files.url}
                                     target="_blank"

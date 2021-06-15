@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import authSvg from "../../assests/login.svg";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { authenticate, isAuth } from "../../helpers/auth";
+import {  isAuth } from "../../helpers/auth";
 import { Link, Redirect } from "react-router-dom";
 
 const Register = () => {
@@ -55,7 +55,7 @@ const Register = () => {
               picture: "",
               textChange: "Sign Up",
             });
-            console.log(err.response);
+            
             toast.error(err.response.data.errors);
           });
       } else {
@@ -86,7 +86,7 @@ const Register = () => {
             <h1 className="text-2xl xl:text-3xl font-extrabold">
               Sign Up for 
             </h1>
-            <img     src={process.env.PUBLIC_URL + "/closer.png"} style={{width:"63%"}}/>
+            <img  alt="Closer-Logo"   src={process.env.PUBLIC_URL + "/closer.png"} style={{width:"63%"}}/>
 
             <form
               className="w-full flex-1 mt-8 text-indigo-500"

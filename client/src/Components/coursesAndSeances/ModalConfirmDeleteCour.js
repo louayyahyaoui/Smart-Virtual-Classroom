@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button, Feed, Icon, Modal } from "semantic-ui-react";
 import { DeleteCourses } from "../../redux/slices/Courses";
 
@@ -14,10 +14,9 @@ function ModalConfirmDeleteCour(props) {
     let params = e.target.getAttribute("coursesid");
 
     dispatch(DeleteCourses(params))
-      .then((response) => {
+      .then(() => {
         handleClose();
-        //props.onCoursesDeleted(response.data.result);
-        //this.props.socket.emit("delete", response.data.result);
+      
       })
       .catch((err) => {
         handleClose();
@@ -28,9 +27,7 @@ function ModalConfirmDeleteCour(props) {
     <div>
       <Modal
         trigger={
-          // <Button onClick={this.handleOpen} color={this.props.buttonColor}>
-          //   {this.props.buttonTriggerTitle}
-          // </Button>
+          
 
           <Feed.Like onClick={handleOpen}>
             <Icon onClick={handleOpen} name="trash" /> Remove

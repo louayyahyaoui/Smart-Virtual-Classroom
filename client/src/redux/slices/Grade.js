@@ -6,9 +6,9 @@ export const rendreTask = createAsyncThunk("Task/rendreTask", async (grade) => {
     `https://closer-server.herokuapp.com/grade/rendreTask/`,
     grade
   ).then((response) => {
-    console.log(response);
+   
     const data = response.data;
-    console.log(data);
+   
     return data;
   });
 
@@ -23,7 +23,7 @@ export const getDetailByTaskByStudent = createAsyncThunk(
     ).then((response) => {
 
       const data = response.data;
-      console.log(data);
+     
       return data;
     });
   
@@ -158,7 +158,7 @@ export const gradeSlice = createSlice({
       state.status = "loading";
     },
     [getListQuestionTasksById.fulfilled]: (state, action) => {
-      //console.log(action.payload);
+      
       state.listQuestion = action.payload[0].task.listQuestion;
     },
     [getListQuestionTasksById.rejected]: (state, action) => {
@@ -168,7 +168,7 @@ export const gradeSlice = createSlice({
       state.status = "loading";
     },
     [getDetailByTaskByStudent.fulfilled]: (state, action) => {
-      //console.log( action.payload);
+    
       state.grades = action.payload;
       state.status = "success";
     },

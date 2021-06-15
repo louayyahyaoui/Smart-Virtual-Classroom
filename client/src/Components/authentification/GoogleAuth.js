@@ -5,14 +5,14 @@ import axios from "axios";
 const Google = ({ informParent = (f) => f, clientId, apiUrl }) => {
   console.log(clientId);
   const responseGoogle = (response) => {
-    console.log(response);
+    
     axios({
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}/api/google-login`,
       data: { idToken: response.tokenId },
     })
       .then((response) => {
-        console.log("GOOGLE SIGNIN SUCCESS", response);
+       
         // inform parent component
         informParent(response);
       })

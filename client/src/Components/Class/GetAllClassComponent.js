@@ -7,7 +7,7 @@ import {
   Header,
   Icon,
 } from "semantic-ui-react";
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   fetchclass,
   selectclass,
@@ -32,17 +32,17 @@ export default function GetAllClassComponent() {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(fetchclass(documentData.role, documentData._id,"Active"));
+    dispatch(fetchclass(documentData.role, documentData._id, "Active"));
     dispatch(fetchActiveClass(documentData._id));
     dispatch(fetchRequestClass(documentData._id));
-  },[dispatch]);
+  }, [dispatch]);
   const aff = (id) => {
     if (documentData.role === "Teacher") return "Level " + id + "th";
     else if (documentData.role === "Student") return "Year " + id;
   };
   const selectClass = async (classSelected) => {
     const res = await getclassApi.getclassById(classSelected);
-    console.log(res.classOwner);
+
     localStorage.setItem("idClass", JSON.stringify(res));
     history.push("/stream");
   };
@@ -68,12 +68,10 @@ export default function GetAllClassComponent() {
           </Header>
           <div style={{ textAlign: "center" }}>
             <Label circular color="green">
-            {active.length === 0  ? (
-            <div >0</div>
+              {active.length === 0 ? (
+                <div>0</div>
               ) : (
-                active?.map((b, ii) => (
-                  <div key={ii}> {b.active_class}</div>
-                ))
+                active?.map((b, ii) => <div key={ii}> {b.active_class}</div>)
               )}
             </Label>
           </div>
@@ -86,12 +84,10 @@ export default function GetAllClassComponent() {
           </Header>
           <div style={{ textAlign: "center" }}>
             <Label style={{ textAlign: "center" }} circular color="grey">
-            {request.length === 0  ? (
-            <div >0</div>
+              {request.length === 0 ? (
+                <div>0</div>
               ) : (
-                request?.map((b, ii) => (
-                  <div key={ii}> {b.request_class}</div>
-                ))
+                request?.map((b, ii) => <div key={ii}> {b.request_class}</div>)
               )}
             </Label>
           </div>

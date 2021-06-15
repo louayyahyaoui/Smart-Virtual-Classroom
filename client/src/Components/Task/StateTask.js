@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import React from 'react'
+
 import { Grid, Statistic } from 'semantic-ui-react'
-import {  getNbrTasksMissing, getNbrTasksRemis } from '../../redux/slices/Task';
+
 
 export default function StateTask(props) {
  

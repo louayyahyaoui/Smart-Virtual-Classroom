@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Button, Dropdown, Modal } from 'semantic-ui-react';
-import { isAuth } from '../../helpers/auth';
+
 import { deleteTask } from '../../redux/slices/Task';
 
 export default function ModalConfirmDeleteTask(props) {
 
     const [modalOpen, SetModalOpen] = useState(false);
-    const currentClass = JSON.parse(localStorage.getItem("idClass"));
+ 
   const dispatch = useDispatch();
-  const taskDetail={
-    "idUser":isAuth()._id,
-    "idClass" : currentClass._id,
-    
-  }
+ 
   
     const handleOpen = (e) => SetModalOpen(true);
     const handleClose = (e) => SetModalOpen(false);
@@ -22,7 +18,7 @@ export default function ModalConfirmDeleteTask(props) {
       let params = e.target.getAttribute("taskid");
  
       dispatch(deleteTask(params));
-      console.log("kamlt");
+      
       handleClose();
   
         

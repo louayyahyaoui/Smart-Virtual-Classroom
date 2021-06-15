@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getList, updateSeance, addSeance } from "../../api/SeanceApi";
+
 
 export const RetrieveSeances = createAsyncThunk("/Seance", async () => {
   const { data } = await axios.get(
@@ -17,11 +17,7 @@ export const AddSeance = createAsyncThunk(
       .post("https://closer-server.herokuapp.com/seance/", seance)
 
       .then((response) => {
-        console.log("this is response");
-        console.log(response);
-        console.log("this is data");
-        console.log(response.data);
-        //console.log(response);
+        
         const data = response.data;
 
         // assign data
@@ -40,11 +36,7 @@ export const GetSeancesById = createAsyncThunk(
       .get("https://closer-server.herokuapp.com/seance/" + seanceId)
 
       .then((response) => {
-        console.log("this is response");
-        console.log(response);
-        console.log("this is data");
-        console.log(response.data);
-        //console.log(response);
+        
         const data = response.data;
 
         // assign data
@@ -65,11 +57,7 @@ export const GetSeancesByIdClass = createAsyncThunk(
       )
 
       .then((response) => {
-        console.log("this is response");
-        console.log(response);
-        console.log("this is data");
-        console.log(response.data);
-        //console.log(response);
+       
         const data = response.data;
 
         // assign data
@@ -90,11 +78,7 @@ export const EditSeances = createAsyncThunk(
       .put("https://closer-server.herokuapp.com/seance/" + seance._id, seance)
 
       .then((response) => {
-        console.log("this is response");
-        console.log(response);
-        console.log("this is data");
-        console.log(response.data);
-        //console.log(response);
+       
         const data = response.data;
 
         // assign data
@@ -114,11 +98,7 @@ export const DeleteSeance = createAsyncThunk(
       .delete("https://closer-server.herokuapp.com/seance/" + seanceId)
 
       .then((response) => {
-        console.log("this is response");
-        console.log(response);
-        console.log("this is data");
-        console.log(response.data);
-        //console.log(response);
+       
         const data = response.data;
 
         // assign data
@@ -179,34 +159,7 @@ export const SeanceSlice = createSlice({
       state.seance = seances;
     },
 
-    // AddSeance: (state, action) => {
-    //   state.seance.push(action.payload);
-    // },
-    // GetSeancesById: (state, action) => {
-    //   state.seanceById = action.payload;
-    // },
-    // DeleteSeance: (state, action) => {
-    //   let seance = action.payload;
-    //   let seances = state.seance.slice();
-    //   seances = seances.filter((u) => {
-    //     return u._id !== seance._id;
-    //   });
-    //   state.seances = seances;
-    // },
-    // EditSeances: (state, action) => {
-    //   let seance = action.payload;
-    //   let seances = state.seance.slice();
-    //   for (let i = 0, n = seances.length; i < n; i++) {
-    //     if (seances[i]._id === seance._id) {
-    //       seances[i].idCour = seance.idCour;
-    //       seances[i].titre = seance.titre;
-    //       seances[i].description = seance.description;
-
-    //       break; // Stop this loop, we found it!
-    //     }
-    //   }
-    //   state.seance = seances;
-    // },
+   
   },
 });
 

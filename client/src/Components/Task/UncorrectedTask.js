@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
   Button,
   Card,
   Feed,
-  Grid,
-  Header,
+
   Icon,
   Image,
   Input,
   List,
-  Loader,
-  Segment,
+
 } from "semantic-ui-react";
-import { isAuth } from "../../helpers/auth";
+
 import { assignGradeToStudent } from "../../redux/slices/Grade";
 import { getDetailTask } from "../../redux/slices/Task";
-import CorrectedTask from "./CorrectedTask";
+
 
 export default function UncorrectedTask(props) {
   const { id } = useParams();
-  const [grade, setGrade] = useState();
-  const [_id, setIdTask] = useState();
+
   const [objgrade, setObjGrade] = useState({ _id: null, grade: null });
 
   const submitGrade = (e, data) => {
     setObjGrade({ _id: data, grade: e.target.value });
 
-    console.log(objgrade);
+ 
   };
   const dispatch = useDispatch();
 
@@ -39,7 +36,7 @@ export default function UncorrectedTask(props) {
       dispatch(getDetailTask(id));
     });
   };
-  console.log(props.uncorrectTasks);
+  
 
   useEffect(() => {
     dispatch(getDetailTask(id));

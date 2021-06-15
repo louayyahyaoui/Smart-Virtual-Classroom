@@ -12,7 +12,6 @@ import {
   List,
   Loader,
   Message,
-  Table,
 } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,8 +30,7 @@ function FormCoursesEdit(props) {
   const seances = useSelector((state) => state.seance.seance);
   const [titre, SetTitre] = useState("");
   const [description, SetDescription] = useState("");
-  const [idSance, SetIdSeance] = useState(2);
-  const [dateCreation, SetDateCreation] = useState(Date.now());
+
   const [multiple_resources, SetMultiple_resources] = useState([]);
   const [formClassName, SetFormClassName] = useState("");
   const [formSuccessMessage, SetFormSuccessMessage] = useState("");
@@ -58,12 +56,9 @@ function FormCoursesEdit(props) {
 
   useEffect(() => {
     const test = dispatch(GetCoursesById(coursesId)).then((response) => {
-      console.log(response);
       SetTitre(response.payload.titre);
       SetDescription(response.payload.description);
       SetSelectedItem(response.payload.idSeance);
-
-      console.log(multiple_resources);
     });
     console.log(test);
   }, [dispatch]);
@@ -78,16 +73,14 @@ function FormCoursesEdit(props) {
   };
 
   const handleSubmit = (e) => {
-    console.log("this is test");
-    console.log(Resources);
     dispatch(
       UpdateCourses(coursesId, titre, description, Resources, selectedItem)
     )
       .then((response) => {
         const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-        console.log(CurrentClass._id);
+
         dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
-        console.log(response);
+
         SetFormClassName("success");
         SetFormSuccessMessage(response.msg);
       })
@@ -105,16 +98,13 @@ function FormCoursesEdit(props) {
   };
 
   const handleRemoveUpload = (e, res) => {
-    console.log(selectedItem);
-
-    console.log(res);
+  
     dispatch(DeleteResources(res));
-    console.log("Trigger remove photo");
-    console.log(Resources);
+   
   };
 
   const handleChangeStatus = async ({ meta, file }, status) => {
-    console.log(status, meta, file);
+
 
     if (status === "done") {
       SetLoader(true);
@@ -127,11 +117,10 @@ function FormCoursesEdit(props) {
         )
         .then((response) => {
           SetLoader(false);
-          console.log(response.data.result.reqFiles[0]);
+        
           dispatch(UpdateResources(response.data.result.reqFiles[0]));
         });
-      console.log("Trigger update photo");
-      console.log(Resources);
+     
     }
     if (status === "removed") {
       let multiple_resource = multiple_resources.slice();
@@ -143,7 +132,7 @@ function FormCoursesEdit(props) {
   };
 
   const handleChangeSelect = async (e) => {
-    console.log(e.target.value);
+  
     await SetSelectedItem(e.target.value);
     await console.log(selectedItem);
   };

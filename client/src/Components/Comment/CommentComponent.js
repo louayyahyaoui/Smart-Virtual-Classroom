@@ -6,8 +6,7 @@ import {
   Form,
   Header,
   Icon,
-  Image,
-  Label,
+
 } from "semantic-ui-react";
 import {
   fetchCommentsCourse,
@@ -32,7 +31,7 @@ function CommentComponent(props) {
       dispatch(fetchCommentsTask(props.taskID));
     }
   }, [dispatch]);
-  const [commentss, er] = useSelector(selectComments);
+  const [commentss] = useSelector(selectComments);
   const [text, setText] = useState("");
   function handleOnEnter(text) {
     console.log("enter", text);

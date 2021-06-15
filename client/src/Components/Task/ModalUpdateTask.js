@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button, Dropdown, Feed, Icon, Modal } from 'semantic-ui-react'
-import AddTask from './AddTask'
+import { Button, Dropdown, Modal } from 'semantic-ui-react'
+
 import FormTask from './FormTask'
 
 export default function ModalUpdateTask(props) {

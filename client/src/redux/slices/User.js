@@ -10,7 +10,7 @@ export const UpdateProfilePicture = createAsyncThunk(
       "https://closer-server.herokuapp.com/courses/api/upload",
       resources
     );
-    console.log(promise.data.result.reqFiles);
+  
     return promise.data.result.reqFiles[0].url;
   }
 );

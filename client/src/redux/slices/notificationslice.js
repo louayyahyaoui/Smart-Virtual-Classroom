@@ -27,7 +27,7 @@ export const fetchNotifications = (id) => async (dispatch) => {
   const res = notificationsApi.getNotification(id);
 
   res.then((data) => {
-    console.log(data)
+  
     dispatch(setNotifications(data));
   });
 };

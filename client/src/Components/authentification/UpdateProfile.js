@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Checkbox,
   Divider,
   Form,
   Grid,
-  GridColumn,
   Header,
   Icon,
-  Image,
   Message,
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import ModalChangeProfilePicture from "./ModalChangeProfilePicture";
 import axios from "axios";
-import { getCookie, isAuth, setLocalStorage } from "../../helpers/auth";
+import { isAuth, setLocalStorage } from "../../helpers/auth";
 import { getUserById, UpdateUserState } from "../../redux/slices/User";
 import { useParams } from "react-router";
 import ModalChangePassword from "./ModalChangePassword";
@@ -33,7 +30,7 @@ function UpdateProfile() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserById(id)).then((res) => {
-      console.log(res.payload);
+     
       setName(res.payload.name);
       setEmail(res.payload.email);
       if (res.payload.bio) {
@@ -61,7 +58,7 @@ function UpdateProfile() {
   };
   const handleGithubChange = (e) => {
     setGithub(e.target.value);
-    console.log(Resources);
+   
   };
 
   const updateProfile = () => {
@@ -79,14 +76,14 @@ function UpdateProfile() {
         }
       )
       .then((res) => {
-        console.log(res.data);
+       
         dispatch(UpdateUserState());
         setLocalStorage("user", res.data.result);
         setFormSuccessMessage("Your profile was updated successfully !");
         SetFormClassName("success");
       })
       .catch((err) => {
-        console.log(err);
+       
         setFormSuccessMessage("Something went wrong !!");
         SetFormClassName("warning");
       });

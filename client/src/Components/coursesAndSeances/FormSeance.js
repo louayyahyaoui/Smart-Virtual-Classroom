@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Form, Message } from "semantic-ui-react";
 import {
   AddSeance,
   EditSeances,
   GetSeancesById,
-  updateById,
+  
 } from "../../redux/slices/Seance";
 
 function FormSeance(props) {
@@ -24,9 +24,9 @@ function FormSeance(props) {
 
   useEffect(() => {
     if (seanceId) {
-      console.log(seanceId);
+   
       dispatch(GetSeancesById(seanceId)).then((response) => {
-        console.log(response);
+       
         SetTitre(response.payload.titre);
         SetDescription(response.payload.description);
       });
@@ -41,11 +41,10 @@ function FormSeance(props) {
   };
 
   const handleSubmit = (e) => {
-    // Prevent browser refresh
+    
     e.preventDefault();
 
-    // Acknowledge that if the user id is provided, we're updating via PUT
-    // Otherwise, we're creating a new data via POST
+    
     if (seanceId) {
       const seance = {
         titre: titre,
@@ -80,7 +79,7 @@ function FormSeance(props) {
         idClass: CurrentClass._id,
         dateCreation: dateCreation,
       };
-      console.log(seance);
+   
       dispatch(AddSeance(seance))
         .then((response) => {
           SetFormClassName("success");

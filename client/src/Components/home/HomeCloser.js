@@ -1,6 +1,3 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/no-multi-comp */
-
 import { createMedia } from "@artsy/fresnel";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
@@ -16,11 +13,8 @@ import sofienimg from "../../assests/sofien.jpg";
 import louayimg from "../../assests/louay.jpg";
 import hamzaimg from "../../assests/hamza.jpg";
 
-import screenshare from "../../assests/screenshare.PNG";
-
 import {
   Button,
-  Card,
   Container,
   Divider,
   Grid,
@@ -42,10 +36,7 @@ const { MediaContextProvider, Media } = createMedia({
   },
 });
 
-/* Heads up!
- * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
- * components for such things.
- */
+
 
 const documentData = JSON.parse(localStorage.getItem("user"));
 const HomepageHeading = ({ mobile }) => (
@@ -93,10 +84,7 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
 };
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
+
 class DesktopContainer extends Component {
   state = {};
 
@@ -271,37 +259,34 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-     
-      <Grid container stackable verticalAlign="middle">
-   
-        <Grid.Row>
-      
-          <Grid.Column width={8}>
+    <Grid container stackable verticalAlign="middle">
+      <Grid.Row>
+        <Grid.Column width={8}>
           <Divider hidden={true}> </Divider>
-            <Header as="h3" style={{ fontSize: "2em" }}>
-              Virtual Classroom
-            </Header>
-            <p style={{ fontSize: "1.33em" }}>
-              Closer Smart Virtual Classroom is A collaborative web conferencing
-              tool with an <span>online whiteboard</span>,{" "}
-              <span>breakout rooms</span>, and <span>screen sharing</span>
-              capabilities for teachers and tutors who want to conduct highly
-              interactive live online teaching sessions
-            </p>
-          </Grid.Column>
-          <Grid.Column floated="right" width={6}>
-            <Image
-              bordered
-              rounded
-              size="large"
-              alt="closer.png"
-              title="Logo Closer"
-              src={process.env.PUBLIC_URL + "/closer.png"}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-     
+          <Header as="h3" style={{ fontSize: "2em" }}>
+            Virtual Classroom
+          </Header>
+          <p style={{ fontSize: "1.33em" }}>
+            Closer Smart Virtual Classroom is A collaborative web conferencing
+            tool with an <span>online whiteboard</span>,{" "}
+            <span>breakout rooms</span>, and <span>screen sharing</span>
+            capabilities for teachers and tutors who want to conduct highly
+            interactive live online teaching sessions
+          </p>
+        </Grid.Column>
+        <Grid.Column floated="right" width={6}>
+          <Image
+            bordered
+            rounded
+            size="large"
+            alt="closer.png"
+            title="Logo Closer"
+            src={process.env.PUBLIC_URL + "/closer.png"}
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+
     <Container>
       <Divider
         as="h4"

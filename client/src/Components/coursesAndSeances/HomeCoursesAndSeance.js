@@ -3,17 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RetrieveSeances } from "../../redux/slices/Seance";
 import { RetrieveCourses } from "../../redux/slices/Courses";
 import {
-  Button,
-  Card,
+  
   Grid,
   Header,
-  Icon,
-  Image,
+
   Menu,
   Segment,
 } from "semantic-ui-react";
 import ModalSeance from "./ModalSeance";
-import uploader from "./uploader";
+
 import TableCourses from "./TableCourses";
 import TableSeance from "./TableSeance";
 import ModalCourses from "./ModalCourses";
@@ -21,23 +19,23 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useParams,
+
 } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import FormSeance from "./FormSeance";
+
 import ListCoursesBySeance from "./ListCoursesBySeance";
 import CoursesDetail from "./CoursesDetail";
 
-const server = process.env.REACT_APP_API_URL || "";
+
 function HomeCoursesAndSeance() {
   const seances = useSelector((state) => state.seance.seance);
   const courses = useSelector((state) => state.courses.seance);
   console.log(seances);
   console.log(courses);
   const [activeItem, setActiveItem] = useState();
-  const [listSeances, setListSeance] = useState(seances);
-  const [listCourses, setListCourses] = useState(courses);
+  const [listSeances] = useState(seances);
+  const [listCourses] = useState(courses);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(RetrieveSeances());

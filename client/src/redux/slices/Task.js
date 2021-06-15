@@ -36,7 +36,7 @@ export const getNbrTasksMissing = createAsyncThunk(
 export const getTaskByTeacher = createAsyncThunk(
   "Task/getTaskByTeacher",
   async (taskDetail) => {
-    console.log(taskDetail);
+
     const { data } = await axios.get(
       `https://closer-server.herokuapp.com/task/teacher?idUser=${taskDetail.idUser}&idClass=${taskDetail.idClass}`,
     );
@@ -91,7 +91,7 @@ export const addUploadFile = createAsyncThunk(
       "https://closer-server.herokuapp.com/task/uploadFile",
       formData
     );
-    console.log(response.data);
+  
 
     return response.data;
   }
@@ -101,11 +101,7 @@ export const uploadFile = createAsyncThunk("Task/uploadFile", async (files) => {
   const promise = await axios
     .post("https://closer-server.herokuapp.com/task/uploadFile", files)
     .then((response) => {
-      console.log("this is response");
-      console.log(response);
-      console.log("this is data");
-      console.log(response.data);
-      //console.log(response);
+    
       const data = response.data;
 
       // assign data
@@ -120,7 +116,7 @@ export const uploadFile = createAsyncThunk("Task/uploadFile", async (files) => {
 export const assignAfterSave = createAsyncThunk(
   "Task/assignAfterSave",
   async (task) => {
-    console.log(task);
+ 
     const promise = await axios.post(
       `https://closer-server.herokuapp.com/task/assignAfterSave/`,
       task
@@ -146,13 +142,13 @@ export const updateTaskStatus = createAsyncThunk(
   }
 );
 export const updateTask = createAsyncThunk("Task/UpdateTask", async (task) => {
-  // console.log(task)
+  
   const promise = await axios.put(
     `https://closer-server.herokuapp.com/task/${task._id}`,
     task
   ).then((response) => {
     const data = response.data;
-    console.log(data);
+  
     return data;
   });
 
@@ -190,8 +186,7 @@ export const UpdateResources = createAsyncThunk(
   "Task/UpdateResources",
 
   async (resources) => {
-    //CoursesSlice.state.Resources.push(resources);
-    console.log(resources);
+  
     return resources;
   }
 );
@@ -231,7 +226,7 @@ export const taskSlice = createSlice({
       state.files.push(action.payload);
     },
     [addUploadFile.fulfilled]: (state, action) => {
-      console.log(action.payload);
+     
       state.filesL.push(action.payload);
     },
     [DeleteResources.fulfilled]: (state, action) => {
@@ -314,7 +309,7 @@ export const taskSlice = createSlice({
       if(action.payload.length)
         state.nbrRemis = action.payload[0].count;
       
-      console.log(state.nbrRemis);
+     
     },
     [getNbrTasksRemis.rejected]: (state, action) => {
       state.status = "failed";

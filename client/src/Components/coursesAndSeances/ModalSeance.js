@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Feed, Icon, Modal } from "semantic-ui-react";
+import { Dropdown,  Modal } from "semantic-ui-react";
 import FormSeance from "./FormSeance";
 
 function ModalSeance(props) {

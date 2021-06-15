@@ -1,14 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, Divider, Grid, Header, Icon, Image, Input, Menu } from 'semantic-ui-react'
-import { assignGradeToStudent } from '../../redux/slices/Grade';
+import {  Divider, Grid, Header, Menu } from 'semantic-ui-react'
+
 import {  getDetailTask, getNbrTasksMissing, getNbrTasksRemis } from '../../redux/slices/Task';
 import CorrectedTask from './CorrectedTask';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  
+ 
   useParams,
  
 } from "react-router-dom";
@@ -26,10 +25,8 @@ export default function DetailTask() {
     const tasks = useSelector( state => state.tasks.tasks)
    
   
-    const submitGrade = (e) =>{
- 
-    }
-    console.log(tasks);
+    
+
     const  dispatch = useDispatch();
    
     useEffect(() => {

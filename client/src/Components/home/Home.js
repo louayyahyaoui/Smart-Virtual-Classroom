@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
+
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -15,10 +15,9 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+
 import Header from "../header/Header";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import {  Link, Route } from "react-router-dom";
 import { toast } from "react-toastify";
 import ListCoursesBySeance from "../coursesAndSeances/ListCoursesBySeance";
 
@@ -33,7 +32,7 @@ import StepsBar from "../Task/StepsBar";
 import TaskFileDetail from "../Task/TaskFileDetail";
 import EndQuiz from "../Quiz/EndQuiz";
 import DetailTask from "../Task/DetailTask";
-import ReminderTask from "../Task/ReminderTask";
+
 import QuestionComponent from "../question/QuestionComponent";
 import DetailsQuestion from "../question/DetailsQuestionComponent";
 import MemberComponent from "../Class/MemberComponent";
@@ -53,7 +52,7 @@ import ViewComfyIcon from "@material-ui/icons/ViewComfy";
 import TodayIcon from "@material-ui/icons/Today";
 
 import ArchiveIcon from "@material-ui/icons/Archive";
-import { Dropdown, Image } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+   
     ...theme.mixins.toolbar,
   },
   content: {
@@ -155,7 +154,7 @@ const useStyles_left = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    
     ...theme.mixins.toolbar,
     justifyContent: "flex-start",
   },
@@ -182,7 +181,7 @@ export default function MiniDrawer() {
 
   const classes = useStyles();
   const theme = useTheme();
-  const theme_right = useTheme();
+ 
   const classinvit = JSON.parse(localStorage.getItem("idClass"));
   const [open, setOpen] = React.useState(false);
   const [typeSidebarRight, setTypeSidebarRight] = React.useState("");
@@ -197,9 +196,9 @@ export default function MiniDrawer() {
     } else {
       setTypeSidebarRight("persistent");
     }
-    // Handler to call on window resize
+   
     function handleResize() {
-      // Set window width/height to state
+    
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -207,7 +206,7 @@ export default function MiniDrawer() {
     }
     window.addEventListener("resize", handleResize);
     handleResize();
-    // Remove event listener on cleanup
+    
     console.log("****size window : " + windowSize.width);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -314,7 +313,7 @@ export default function MiniDrawer() {
       >
         
         <div className={classes.toolbar}>
-        <img src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
+        <img alt="closer-logo" src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />

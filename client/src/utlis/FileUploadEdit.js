@@ -4,7 +4,6 @@ import {
   Icon,
   Segment,
   Loader,
-  Tab,
   Dimmer,
   Message,
   Label,
@@ -30,16 +29,11 @@ function FileUploadEdit(props) {
   var [fd, setfd] = useState(new FormData());
 
   const onDrop = (files) => {
-    const file = [];
     let formData = new FormData();
-    const config = {
-      header: { "content-type": "multipart/form-data" },
-    };
-    console.log(files);
+
     files.forEach((f) => {
       formData.append("files", f);
 
-      console.log(formData.getAll("files"));
       arr.push(f.name);
       props.refreshFunction([...Images, f.name]);
     });
@@ -48,13 +42,7 @@ function FileUploadEdit(props) {
     setImages(arr);
   };
   useEffect(async () => {
-    // console.log(fd.getAll("files"));
-    if (props.Enbale && endloader ) {
-      //save the Image we chose inside the Node Server
-
-console.log(props.Enbale);
-console.log(endloader);
-
+    if (props.Enbale && endloader) {
       SetLoader(true);
       SetEndLoader(false);
 
@@ -68,13 +56,12 @@ console.log(endloader);
           if (response.data) {
             setImages(response.data);
             props.refreshFunction([...Images, response.data]);
-
           } else {
-            alert("Failed to save the File in Server");
+            
           }
         }
       );
-      console.log(res);
+   
     }
   });
 
@@ -96,7 +83,7 @@ console.log(endloader);
             style={{
               width: "40px",
               height: "40px",
-              //   border: "1px solid lightgray",
+              
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

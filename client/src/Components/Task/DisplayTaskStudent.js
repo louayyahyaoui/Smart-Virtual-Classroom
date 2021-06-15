@@ -1,7 +1,7 @@
 import React ,{useEffect, useState} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 
-import { Button,Statistic, Icon, Divider, Item, Label,Header, Segment, Menu, Grid } from 'semantic-ui-react';
+import {  Divider, Header, Menu, Grid } from 'semantic-ui-react';
 import { isAuth } from '../../helpers/auth';
 
 import { getTasksById } from '../../redux/slices/Grade';
@@ -22,9 +22,9 @@ export default function DisplayTaskStudent() {
     "idClass" : currentClass._id,
     
   }
-  console.log(grades)
+ 
     const dispatch = useDispatch();
-  console.log(grades);
+ 
     useEffect(()=>{
      
         dispatch(getTasksById(taskDetail));

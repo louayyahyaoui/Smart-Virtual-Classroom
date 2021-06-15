@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  Step,
+
   Icon,
   Button,
   Label,
@@ -18,17 +18,15 @@ import {
 import { assignTask, postTasks } from "../../redux/slices/Task";
 import moment from "moment";
 
-import ReactPlayer from "react-player";
-import FileUpload from "../../utlis/FileUpload";
 import FileUploadEdit from "../../utlis/FileUploadEdit";
 export default function SendTask(props) {
-  const [activeIndex, setActiveIndex] = useState();
+
   const dispatch = useDispatch();
  
  
   const [Images, setImages] = useState(props.data.listQuestion);
 
-  const [enableUpload, setEnableUpload] = useState(false);
+
  
 const updateImages = (newImages) => {
 
@@ -37,13 +35,12 @@ const updateImages = (newImages) => {
  
 };
   var step = 3;
-  console.log("cc");
-  console.log(props.data);
+
   const [cancel, setCancel] = useState(false);
   const [open, setOpen] = useState(false);
   const [opensave, setOpensave] = useState(false);
 
-  const [close, setClose] = useState(false);
+
   const clicCancel = () => {
     setCancel(true);
   };
@@ -54,8 +51,7 @@ const updateImages = (newImages) => {
     setOpensave(true);
   };
   const clicConfirmCancel = () => {
-    //dispatch(postTasks(props.data));
-   // props.nextStep(step + 1);
+
    setCancel(false);
   };
   const clicConfirm = () => {

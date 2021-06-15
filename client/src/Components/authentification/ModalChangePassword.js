@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Feed,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Modal,
-} from "semantic-ui-react";
+import { Button, Form, Header, Message, Modal } from "semantic-ui-react";
 import { isAuth } from "../../helpers/auth";
 import { ChangePassword } from "../../redux/slices/User";
 
@@ -43,10 +35,10 @@ function ModalChangePassword(pops) {
         newPassword: newPass,
       };
 
-      console.log(obj);
+      
       dispatch(ChangePassword(obj))
         .then((response) => {
-          console.log(response);
+       
           if (
             response.payload.msg ===
             "Password Successfully Changed! you can login with your new password"

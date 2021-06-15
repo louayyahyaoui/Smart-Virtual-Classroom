@@ -5,18 +5,16 @@ import socket from "../../socket";
 import VideoCard from "../Video/VideoCard";
 import BottomBar from "../BottomBar/BottomBar";
 import Chat from "../Chat/Chat";
-import ScreenRecord from "../coursesAndSeances/ScreenRecord";
-import { Label } from "semantic-ui-react";
-import { isAuth } from "../../helpers/auth";
+
 import { ToastContainer, toast } from "react-toastify";
 
 const Room = (props) => {
   const currentUser = JSON.parse(sessionStorage.getItem("user"));
   const userImage = JSON.parse(sessionStorage.getItem("userImage"));
-  console.log(currentUser);
+
 
   const [peers, setPeers] = useState([]);
-  const sessionID = socket.id;
+
   const FirstLoader = {
     userId: undefined,
     info: { userName: currentUser, Image: userImage, video: true, audio: true },
@@ -34,13 +32,6 @@ const Room = (props) => {
   const screenTrackRef = useRef();
   const userStream = useRef();
   const roomId = props.match.params.roomId;
-
-  const PeerConfig = {
-    iceServers: [
-      { urls: "stun:stun.l.google.com:19302" },
-      { urls: "stun:global.stun.twilio.com:3478?transport=udp" },
-    ],
-  };
 
   useEffect(() => {
     // Get Video Devices
@@ -66,15 +57,14 @@ const Room = (props) => {
         });
         socket.on("FE-user-join", (users) => {
           toast.dark("Someone Has joined the meet");
-          console.log("users from room : ");
-          console.log(users);
+        
           setuserslist(users);
           // all users
           const peers = [];
 
           users.forEach((us) => {
             if (us.info !== undefined) {
-              console.log(us.info.userName);
+            
               //let { userName,Image, video, audio } = info;
               let userName = us.info.userName;
               let Image = us.info.Image;
@@ -155,23 +145,18 @@ const Room = (props) => {
           toast.dark("Someone Has left the meet");
           setPeers((users) => {
             users = users.filter((user) => user.peerID !== peerIdx.peer.peerID);
-            //setuserslist(users);
-            //console.log(users);
+
             return [...users];
           });
 
-          console.log(
-            "ici users list AFTER LEAVE : " + JSON.stringify(userslist)
-          );
+         
           setuserslist(userslist);
         });
       });
-    // socket.emit("BE-toggle-camera-audio", ({ roomId:roomId, switchTarget: userVideoAudio }) => {
-    //   console.log(userVideoAudio);
-    // });
+    
     socket.on("FE-toggle-camera", ({ userId, switchTarget }) => {
       const peerIdx = findPeer(userId);
-      console.log(userVideoAudio);
+    
       setUserVideoAudio((preList) => {
         let video = preList[peerIdx.userName].video;
         let audio = preList[peerIdx.userName].audio;
@@ -195,7 +180,7 @@ const Room = (props) => {
   function createPeer(userId, caller, stream) {
     const peer = new Peer({
       initiator: false,
-      config: PeerConfig,
+
       trickle: false,
       stream,
     });
@@ -237,12 +222,10 @@ const Room = (props) => {
   function findPeer(id) {
     return peersRef.current.find((p) => p.peerID === id);
   }
-  console.log("peeeeeeeeee");
-  console.log(peers);
+
 
   function createUserVideo(peer, index, arr) {
-    console.log("peeeeeeeer !");
-    console.log(peer);
+  
     return (
       <VideoBox
         className={`width-peer${peers.length > 8 ? "" : peers.length}`}
@@ -262,7 +245,7 @@ const Room = (props) => {
       userVideoAudio.hasOwnProperty(Image)
     ) {
       if (!userVideoAudio[userName].video) {
-        console.log(Image);
+      
         return (
           <>
             <UserName key={index}>{userName}</UserName>
@@ -320,7 +303,7 @@ const Room = (props) => {
         },
       };
       setuserslist([FirstLoader]);
-      console.log(audioSwitch);
+     
       return {
         ...preList,
         localUser: { video: videoSwitch, audio: audioSwitch },
@@ -328,7 +311,7 @@ const Room = (props) => {
     });
 
     socket.emit("BE-toggle-camera-audio", { roomId, switchTarget: target });
-    console.log(userVideoAudio);
+    
   };
 
   const clickScreenSharing = () => {
@@ -543,16 +526,3 @@ const Avatar = styled.div`
 `;
 
 export default Room;
-/*
-<Avatar key={index}>
-            <img
-              src={Image}
-              style={{
-                margin: "10px",
-                width: "12%",
-                height: "12%",
-                borderRadius: "50%",
-              }}
-            />
-          </Avatar>
-          */

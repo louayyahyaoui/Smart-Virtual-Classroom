@@ -21,10 +21,10 @@ function ModalCoursesEdit(props) {
             buttonSubmitTitle={props.buttonSubmitTitle}
             buttonColor={props.buttonColor}
             coursesId={props.coursesId}
-            //onCoursesAdded={this.props.onCoursesAdded}
+            
             onCoursesUpdated={props.onCoursesUpdated}
             server={props.server}
-            //socket={this.props.socket}
+           
           />
         </Modal.Content>
       </Modal>

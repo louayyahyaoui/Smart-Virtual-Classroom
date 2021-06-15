@@ -14,22 +14,12 @@ export default function StepsBar() {
  
 
   const classs = JSON.parse(localStorage.getItem("idClass"));
-  /* save data quiz */
-  const [quiz , setQuiz] = useState({
-    id : "",
-    fquestion : "",
-    foptionA : "",
-    foptionB : "",
-    foptionC : "",
-    foptionD : "",
-    fpoint : "",
 
-
-})
+  
 
 
 
-  /* save task data to upload late or update  */
+
   const [task , setTask] = useState({
    
     title : "",
@@ -43,17 +33,11 @@ export default function StepsBar() {
     creator : isAuth()._id
  
 });
-console.log("step : ")
-console.log(task);
+
  
   const [step, setStep] = useState(1);
-console.log(step)
-  const handleNextStep = ()=>{
- 
-    setStep(step+1)
-   
-   
-  }
+
+
   
   const handleBackStep = ()=>{
     

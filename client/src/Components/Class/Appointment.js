@@ -6,7 +6,7 @@ function getSectionById(id) {
   return Query(resourcesData).filter(['id', id]).toArray()[0];
 }
 export default function Appointment(model) {
-  const documentData = JSON.parse(localStorage.getItem("user"));
+  
   const { appointmentData } = model.data;
  const dd = getSectionById(appointmentData.sectionId) || {};
   return (

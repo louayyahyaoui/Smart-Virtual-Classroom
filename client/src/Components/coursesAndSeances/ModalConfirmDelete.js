@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Dropdown, Feed, Icon, Modal } from "semantic-ui-react";
+import { useState } from "react";
+import { useDispatch} from "react-redux";
+import { Button, Dropdown, Modal } from "semantic-ui-react";
 import { DeleteSeance } from "../../redux/slices/Seance";
 
 function ModalConfirmDelete(props) {
@@ -14,10 +14,9 @@ function ModalConfirmDelete(props) {
     let params = e.target.getAttribute("seanceid");
 
     dispatch(DeleteSeance(params))
-      .then((response) => {
+      .then(() => {
         handleClose();
-        //props.onSeanceDeleted(response.data.result);
-        //this.props.socket.emit("delete", response.data.result);
+       
       })
       .catch((err) => {
         handleClose();

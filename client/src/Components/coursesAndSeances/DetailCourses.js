@@ -3,24 +3,23 @@ import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
-import ScreenRecord from "./ScreenRecord";
+
 import QierPlayer from "qier-player";
 
 import {
-  Button,
-  Comment,
+
   Container,
   Divider,
-  Form,
+  
   Grid,
   Header,
   Icon,
-  Label,
+
 } from "semantic-ui-react";
-import { isAuth } from "../../helpers/auth";
+
 import { GetCoursesById } from "../../redux/slices/Courses";
 import CommentComponent from "../Comment/CommentComponent";
-import CommentChat from "./CommentChat";
+
 
 function DetailCourses() {
   const { id } = useParams();

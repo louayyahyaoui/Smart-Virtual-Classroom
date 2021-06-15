@@ -6,14 +6,12 @@ import Dropzone from "react-dropzone-uploader";
 import {
   Button,
   Dimmer,
-  Dropdown,
   Form,
   Header,
   Loader,
   Message,
-  Select,
 } from "semantic-ui-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddCourses,
@@ -22,10 +20,10 @@ import {
 import TextareaAutosize from "react-textarea-autosize";
 
 import { useParams } from "react-router";
-import { isAuth, signout } from "../../helpers/auth";
+import { isAuth } from "../../helpers/auth";
 import { notificationsApi } from "../../api/api";
 import io from "socket.io-client";
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = `${process.env.REACT_APP_API_URL}`;
 
 function FormCourses(props) {
   const socket = io(ENDPOINT);
@@ -33,8 +31,7 @@ function FormCourses(props) {
   const { id } = useParams();
   const [titre, SetTitre] = useState("");
   const [description, SetDescription] = useState("");
-  const [idSance, SetIdSeance] = useState(2);
-  const [dateCreation, SetDateCreation] = useState(Date.now());
+
   const [multiple_resources, SetMultiple_resources] = useState([]);
   const [formClassName, SetFormClassName] = useState("");
   const [formSuccessMessage, SetFormSuccessMessage] = useState("");
@@ -68,17 +65,14 @@ function FormCourses(props) {
   const handleChangeSelect = async (e) => {
     console.log(e.target.value);
     await SetSelectedItem(e.target.value);
-    await console.log(selectedItem);
   };
   const handleTitreChanges = (e) => {
-    console.log(id);
     SetTitre(e.target.value);
   };
   const handleDescriptionChanges = (e) => {
     SetDescription(e.target.value);
   };
   const AddCourse = (e) => {
-    console.log(members);
     e.preventDefault();
     const idOwner = isAuth()._id;
     SetLoader(true);
@@ -94,18 +88,16 @@ function FormCourses(props) {
     )
       .then((response) => {
         SetLoader(false);
-        console.log(response);
+
         notif.Owner = members;
         notif.Course = response.result._id;
         const res2 = notificationsApi.addNotification(notif);
         socket.emit("add-new-notification", members);
 
-        console.log(response);
-
         const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-        console.log(CurrentClass._id);
+
         dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
-        console.log(response);
+
         SetFormClassName("success");
         SetFormSuccessMessage(response.msg);
       })
@@ -123,8 +115,6 @@ function FormCourses(props) {
   };
 
   const handleChangeStatus = ({ meta, file }, status) => {
-    console.log(status, meta, file);
-
     if (status === "done") {
       SetMultiple_resources(multiple_resources.concat(file));
     }

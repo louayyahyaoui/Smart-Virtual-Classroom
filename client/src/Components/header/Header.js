@@ -1,19 +1,19 @@
 import { React, useEffect, useState } from "react";
-import { Dropdown, FeedLabel, Grid, Icon, Menu } from "semantic-ui-react";
+import { Dropdown,Menu } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import ModalCourses from "../coursesAndSeances/ModalCourses";
 import ModalSeance from "../coursesAndSeances/ModalSeance";
 import { isAuth } from "../../helpers/auth";
 import ModalTaskFile from "../Task/ModalTaskFile";
-import Main from "../Main/Main";
+
 import socket from "../../socket";
 function Header(props) {
   const [activeItem, setActiveItem] = useState("Stream");
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
   const history = useHistory();
-  const [err, setErr] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
+  const [ setErr] = useState(false);
+  const [ setErrMsg] = useState("");
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -94,10 +94,7 @@ function Header(props) {
           onClick={clickJoin}
         ></Menu.Item>
 
-        {/* <a>
-          <Icon name="group" />
-          <Main></Main>
-        </a> */}
+       
 
         {isAuth().role === "Teacher" ? (
           <Menu.Item position="right">

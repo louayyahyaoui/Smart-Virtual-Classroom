@@ -2,12 +2,11 @@ import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import useMediaRecorder from "@wmik/use-media-recorder";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+
 import { isAuth } from "../../helpers/auth";
 import { AddCourses } from "../../redux/slices/Courses";
 
 import { Button, Dropdown, Header, Icon, Modal } from "semantic-ui-react";
-import ListUsers from "./ListUsers";
 
 const BottomBar = ({
   clickChat,
@@ -20,8 +19,6 @@ const BottomBar = ({
   showVideoDevices,
   setShowVideoDevices,
   listuserRoom,
-  display,
-  roomId,
 }) => {
   console.log(listuserRoom);
   const handleToggle = useCallback(
@@ -51,11 +48,10 @@ const BottomBar = ({
   }
 
   let {
-    error,
     status,
     mediaBlob,
     stopRecording,
-    getMediaStream,
+
     startRecording,
   } = useMediaRecorder({
     recordScreen: true,
@@ -74,7 +70,7 @@ const BottomBar = ({
       return;
     }
 
-    console.log(mediaBlob);
+    
     const idSeance = "";
     const today = Date.now();
     const titre =
@@ -103,7 +99,7 @@ const BottomBar = ({
         idClass
       )
     ).then((res) => {
-      console.log(res.data);
+      
     });
   }, [mediaBlob]);
 
@@ -175,27 +171,21 @@ const BottomBar = ({
               rel="noopener noreferrer"
             >
               <WhiteBoard>
-     
-                  <FaIcon className={"fas fa-chalkboard-teacher"}></FaIcon>
-             
+                <FaIcon className={"fas fa-chalkboard-teacher"}></FaIcon>
                 WhiteBoard
               </WhiteBoard>
             </a>
             <ScreenButton onClick={clickScreenSharing}>
-              
-                <FaIcon
-                  className={`fas fa-desktop ${screenShare ? "sharing" : ""}`}
-                ></FaIcon>
-              
+              <FaIcon
+                className={`fas fa-desktop ${screenShare ? "sharing" : ""}`}
+              ></FaIcon>
               Share Screen
             </ScreenButton>
             <StartButton
               onClick={startRecording}
               disabled={status === "recording"}
             >
-              
-                <FaIcon className="fas fa-play-circle"></FaIcon>
-            
+              <FaIcon className="fas fa-play-circle"></FaIcon>
               Record
             </StartButton>
             {/* Modal of info when record has been stoped */}
@@ -209,9 +199,7 @@ const BottomBar = ({
                   onClick={stopRecording}
                   disabled={status !== "recording"}
                 >
-                  
-                    <FaIcon className="fas fa-stop-circle"></FaIcon>
-                 
+                  <FaIcon className="fas fa-stop-circle"></FaIcon>
                   Stop
                 </StopRecordButton>
               }

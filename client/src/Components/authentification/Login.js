@@ -13,7 +13,7 @@ const Login = ({ history }) => {
     password1: "",
     textChange: "Sign In",
   });
-  const { email, password1, textChange } = formData;
+  const { email, password1 } = formData;
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
   };
@@ -24,7 +24,7 @@ const Login = ({ history }) => {
         idToken: tokenId,
       })
       .then((res) => {
-        console.log(res.data);
+       
         informParent(res);
       })
       .catch((error) => {
@@ -46,7 +46,7 @@ const Login = ({ history }) => {
         accessToken,
       })
       .then((res) => {
-        console.log(res.data);
+        
         informParent(res);
       })
       .catch((error) => {
@@ -54,17 +54,17 @@ const Login = ({ history }) => {
       });
   };
   const responseGoogle = (response) => {
-    console.log(response);
+    
     sendGoogleToken(response.tokenId);
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
+   
     sendFacebookToken(response.userID, response.accessToken);
   };
 
   const handleSubmit = (e) => {
-    console.log(`${process.env.REACT_APP_API_URL}/api/login`);
+   
     e.preventDefault();
     if (email && password1) {
       setFormData({ ...formData, textChange: "Submitting" });
@@ -84,7 +84,7 @@ const Login = ({ history }) => {
             isAuth() && isAuth().role === "Teacher"
               ? history.push("/class")
               : history.push("/class");
-            //   toast.success(`Hey ${res.data.user.name}, Welcome back!`);
+               toast.success(`Hey ${res.data.user.name}, Welcome back!`);
           });
         })
         .catch((err) => {
@@ -95,7 +95,7 @@ const Login = ({ history }) => {
             textChange: "Sign In",
           });
           console.log(err.response);
-          //  toast.error(err.response.data.errors);
+            toast.error(err.response.data.errors);
         });
     } else {
       toast.error("Please fill all fields");

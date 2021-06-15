@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 import Select from "react-select";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
@@ -8,10 +8,9 @@ import {
   Button,
   Form,
   Grid,
-  Rail,
-  Segment,
+
   TextArea,
-  Label,
+
   Modal,
   Confirm,
   Header,
@@ -25,16 +24,13 @@ import {
   getTaskByTeacher,
   postTasks,
 } from "../../redux/slices/Task";
-import { AddquestionsApi } from "../../api/api";
-import { addQuestion } from "../../redux/slices/questionslice";
+
 import MultiSelect from "react-multi-select-component";
 
 export default function ModalTaskFile(props) {
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
-  //const [classCurr , setClassCurr] = useState([]);
-  // setClassCurr(currentClass.classUsers)
-  //const currentClass = JSON.parse(localStorage.getItem("idClass"));
+
   const seances = useSelector((state) => state.seance.seance);
   const studentChosen = [];
   const seanceChosen = [];
@@ -42,15 +38,15 @@ export default function ModalTaskFile(props) {
   currentClass.classUsers.forEach((element) => {
     studentChosen.push({ label: element.name, value: element._id });
   });
-  console.log(studentChosen);
+
   seances.forEach((element) => {
     seanceChosen.push({ label: element.titre, value: element });
   });
-  const [cancel, setCancel] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [opensave, setOpensave] = useState(false);
 
-  const [close, setClose] = useState(false);
+
 
   const [successMessage, SetSuccessMessage] = useState("");
   const [errorMessage, SetErrorMessage] = useState("");
@@ -79,9 +75,7 @@ export default function ModalTaskFile(props) {
   };
 
   const dispatch = useDispatch();
-  const clicCancel = () => {
-    setCancel(true);
-  };
+  
   const clicOpen = () => {
     setOpen(true);
   };
@@ -100,13 +94,13 @@ export default function ModalTaskFile(props) {
         );
         if (index !== -1) {
           tasks.listStudents.push(itemselect);
-          // tasks.listStudents.push(itemselect);
+        
         }
       })
     );
-    console.log(selectedSeance);
+   
     setTask((tasks.theme = selectedSeance.value));
-    // setTask(...tasks.listStudents = listStud);
+  
     setTask(...(tasks.listQuestion = Images));
 
     setSelected([]);
@@ -140,12 +134,12 @@ export default function ModalTaskFile(props) {
         );
         if (index !== -1) {
           tasks.listStudents.push(itemselect);
-          // tasks.listStudents.push(itemselect);
+         
         }
       })
     );
     setTask((tasks.theme = selectedSeance.value));
-    // setTask(...tasks.listStudents = listStud);
+    
     setTask(...(tasks.listQuestion = Images));
     setSelected([]);
     setSelectedSeance(null);
@@ -172,16 +166,13 @@ export default function ModalTaskFile(props) {
   };
   const clicClose = () => {
     setOpen(false);
-    // setOpenModel(false);
+
   };
   const clicClosesave = () => {
     setOpensave(false);
-    // setOpenModel(false);
+
   };
-  const clicCloseCancel = () => {
-    setCancel(false);
-    // setOpenModel(false);
-  };
+  
 
   const [enableUpload, setEnableUpload] = useState(false);
   const [Images, setImages] = useState([]);

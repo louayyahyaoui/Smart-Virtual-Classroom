@@ -4,14 +4,14 @@ import Select from "react-select";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 
 import {
-  Dropdown,
+
   Button,
   Form,
   Grid,
-  Rail,
+
   Segment,
   TextArea,
-  Label,
+  
   Header,
 } from "semantic-ui-react";
 import { useSelector } from "react-redux";
@@ -33,7 +33,7 @@ export default function AddTask(props) {
 
   const [selectedSeance, setSelectedSeance] = useState(null);
 
-  const [theme, setTheme] = useState(props.data.theme);
+  
 
   const [selected, setSelected] = useState([]);
 
@@ -62,9 +62,9 @@ export default function AddTask(props) {
         }
       })
     );
-    // console.log(tasks.listStudents);
+    
     props.addTask((tasks.theme = selectedSeance.value));
-    // console.log(tasks.theme);
+    
     props.addTask(tasks);
 
     props.nextStep(step + 1);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -12,42 +12,29 @@ import {
   Grid,
   Header,
   Icon,
-  Image,
-  Label,
-  List,
+  
   Message,
   Modal,
 } from "semantic-ui-react";
 import { getDetailByTaskByStudent, rendreTask } from "../../redux/slices/Grade";
 import CommentComponent from "../Comment/CommentComponent";
-import ModalTask from "./ModalTask";
 
 export default function TaskQuizDetail() {
   const { id } = useParams();
   const state = useSelector((state) => state.grades.grades);
-  //const files = useSelector((state) => state.tasks.files);
+ 
   const [task ,setTask] = useState(state[0]);
 
   const grade = {
     id: id,
     taskStatus: "remis",
-  //  listReponse: files,
+
   };
 
 
   const dispatch = useDispatch();
-  const submitTask = () => {
-    console.log("grade : ");
-    console.log(grade);
-  
-    dispatch(rendreTask(grade)).then(() => {
-      dispatch(getDetailByTaskByStudent(id)).then((response)=>{
-     
-  setTask(response.payload[0]);
-      });
-    });
-  };
- // console.log(task);
+
+
   useEffect(() => {
     
     dispatch(getDetailByTaskByStudent(id)).then((response)=>{

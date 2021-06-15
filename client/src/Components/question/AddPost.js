@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, TextArea, Segment } from "semantic-ui-react";
+import { Button, Form,  TextArea, Segment } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -12,7 +12,7 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { useHistory } from "react-router";
 import io from "socket.io-client";
-const ENDPOINT = "https://closer-server.herokuapp.com/";
+const ENDPOINT = `${process.env.REACT_APP_API_URL}`;
 const socket = io(ENDPOINT);
 
 function AddPost() {
@@ -21,8 +21,8 @@ function AddPost() {
   const documentData = JSON.parse(localStorage.getItem("user"));
   const currentClass = JSON.parse(localStorage.getItem("idClass"));
 
-  const [open, setOpen] = React.useState(false);
-  const [error] = useState({ visible: false, message: "" });
+ 
+
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
   const updateImages = (newImages) => {
@@ -31,7 +31,7 @@ function AddPost() {
     
    
   };
-  //inpput tags
+
   const [tags, setTags] = useState([]);
   const handleChange = (tag) => {
     setTags(tag);
@@ -50,7 +50,7 @@ function AddPost() {
     onSubmit: async (values) => {
       try {
         
-       // alert("images"+Images)
+      
       
         values.Filee = Images;
         values.Writerq._id = documentData._id;

@@ -3,35 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactTimeAgo from "react-time-ago/commonjs/ReactTimeAgo";
 import {
   Accordion,
-  Button,
-  Dimmer,
-  Dropdown,
   Feed,
   Grid,
   Header,
-  Icon,
   Image,
   Segment,
 } from "semantic-ui-react";
 import ModalCoursesEdit from "./ModalCoursesEdit";
 import ModalConfirmDeleteCourses from "./ModalConfirmDeleteCour";
 
-//import { Player, ControlBar } from "video-react";
 import QierPlayer from "qier-player";
 import ReactPlayer from "react-player/lazy";
 
 import { RetrieveCoursesByIdClass } from "../../redux/slices/Courses";
 
-import ModalCourses from "./ModalCourses";
 import { Link } from "react-router-dom";
-import { GetSeancesByIdClass } from "../../redux/slices/Seance";
+
 import { isAuth } from "../../helpers/auth";
 
-//import { Image } from "semantic-ui-react";
-function TableCourses(props) {
+function TableCourses() {
   const courses = useSelector((state) => state.courses.courses);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-  console.log(courses);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
@@ -41,7 +34,6 @@ function TableCourses(props) {
 
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
-    const louay = activeIndex;
 
     const newIndex = activeIndex === index ? -1 : index;
     setActiveIndex(newIndex);
@@ -342,14 +334,6 @@ function TableCourses(props) {
                                     </Grid.Column>
                                   </div>
                                 ) : (
-                                  // <a href={files} target="_blank" rel="noopener noreferrer">
-                                  //   <img
-                                  //     src={files}
-                                  //     width="300px"
-                                  //     style={{ margin: "2px" }}
-                                  //     alt=""
-                                  //   />
-                                  // </a>
                                   <a
                                     href={files.url}
                                     target="_blank"

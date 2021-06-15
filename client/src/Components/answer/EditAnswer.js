@@ -6,8 +6,7 @@ import { useFormik } from "formik";
 import { AddAnswersApi } from "../../api/api";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchQuestions } from "../../redux/slices/questionslice";
-import FileUpload from "../../utlis/FileUpload";
+
 import { fetchAnswers } from "../../redux/slices/answerslice";
 import FileUploadEdit from "../../utlis/FileUploadEdit";
 
@@ -16,13 +15,7 @@ export default function EditAnswer(props) {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const dispatch = useDispatch();
   const [Images, setImages] = useState([]);
