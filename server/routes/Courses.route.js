@@ -11,7 +11,7 @@ router = express.Router();
 // Create new storage instance with Firebase project credentials
 const storages = new Storage({
   projectId: "smart-closer",
-  keyFilename: process.env.FIREBASE_CREDENTIALS,
+  keyFilename: JSON.stringify(process.env.FIREBASE_CREDENTIALS),
   
 });
 
