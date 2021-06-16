@@ -77,7 +77,10 @@ class SimpleForm extends Component {
                 floating={true}
                 opened={false}
                     botAvatar={CloserIcon}
+                    
+                    userAvatar={isAuth() && (isAuth().picture)}
                     recognitionEnable={true}
+                    recognitionLang="en"
                     speechSynthesis={{ enable: true, lang: 'en' }}
                 
 
@@ -132,7 +135,9 @@ class SimpleForm extends Component {
                         },
                         {
                             id: 'review',
-                            component: <Chatbot />,
+                            component: <Chatbot recognitionEnable={true}
+                            recognitionLang="en"
+                            speechSynthesis={{ enable: true, lang: 'en' }} />,
                             asMessage: true,
                             trigger: 'update',
                         },
