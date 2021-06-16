@@ -8,15 +8,10 @@ const { Storage } = require("@google-cloud/storage");
 const perf = require("execution-time")();
 router = express.Router();
 
-const fs = require('fs');
-const path = require('path');
-const gTokenPath = path.join(`${__dirname}/gToken.json`);
-fs.writeFileSync(gTokenPath , process.env.FIREBASE_CREDENTIALS);
-
 // Create new storage instance with Firebase project credentials
 const storages = new Storage({
   projectId: "smart-closer",
-  keyFilename: gTokenPath,
+  keyFilename: "./smart-closer-firebase-adminsdk-75ops-25473d0d1e.json",
   
 });
 
