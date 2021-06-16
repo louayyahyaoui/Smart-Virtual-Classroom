@@ -11,18 +11,8 @@ router = express.Router();
 // Create new storage instance with Firebase project credentials
 const storages = new Storage({
   projectId: "smart-closer",
-  //keyFilename: "./smart-closer-firebase-adminsdk-75ops-25473d0d1e.json",
-  type: "service_account",
-  project_id: "smart-closer",
-  private_key_id: "25473d0d1e3f565c9a4adff6ee27a492a80c5bc5",
-  private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDCUvDLgZ2VVuC/\nhSF89PYhuOThhiF1yp2qySc+fnRUjvWjitfNblBNzGEoHvQxP/ksNX0YWEavPsCd\nvBlXs/j37Rnf1bKZvAEd1q6rA0GTYZJ+fibccjwKlSfIaqDcQams9hPS5ngsBYf8\neewmKUgHoNtELUi3qqYGk4Mq9nxcGuzYZ3gtS6S+FvbWgDCaxf0Z881lSSyQUI4n\nc8nbDvDnJDNchR+6JpaFAcA2kjzK9bez2Zr2E+hF4I1EWYO/gApOvgtU0UHoixBr\nm9yO3RtSbdiX8vquDueCaui/rM77G9jJ7X1Yc1UFM3DePU8DzBjUzB5xjdWQLM1p\nzXjSU15zAgMBAAECggEAM66HaDiCxrMidw1bSLaFt5ZLGUfpIkDPChsRmuda3Rpg\nbiyBFJvgM7DFrjv9ShPvmzhmmtDvi7Au3kSmoNK2xomCtitJouWDjoIIVmc5S49J\nvOakQ0EGgvIEcKMbQTkdfWi9APxWva6C6j0q90NHau/3IPzCOEbkfR9CZWzEymHP\nW9IOBnaD6YOsxcgwNyQ8FpGxIUZPAOWmhhPxrfFsMEKnCSCCNZmbQGh9ujv1KxsJ\nZqX7S/tMczEylLhFQycqY5qQyhMfTFkaMLI09fxplgu/MPB9OlgxLjXGMxHYFJYv\ng1GD7r21ezVC3aMmnItLtn0qQGnApgRwjdjOvHhcYQKBgQD7TUr/PLVs0zc8N81J\nRZpJ8LUaTvwSmswBKFeAZ2RcD8u14yxBXDdY3G6ZRtQKDxwtyouT5gm/YQZv2250\n4+/y/7q0VCPMu0vFuP5rtzcOf/gUbLbSM6EXRV+txo98I0MVgoL2Y00YUZtSyUqf\n56F9/tcSTjYOaVeM24z6qhdR+wKBgQDF9PToNA1qS2ezMjRFBK11fe9r/H02hdrr\ntFDXetjQrpc3H/8FdoYYtHmuqoL1Uz5f2fr09+oTiAiHt8bPW7BSXqfch8XZDu09\nkflUZ6b/EWtwB6M7NP7uXvUidlaHTMiEZShT5pW16s7A1WGKTt5Qqv+kCl/XIodB\nDQNL/vJz6QKBgG5Lskrr/kTRP0DyzOsH3XvuZc4yNHiF8FvhtOXqeyXc2O/v0RCu\nxKv/s5sadx4jG58Ncs1q/YQ9tXGKwaQUFtB0ZSGYfE3zNoKFe0UTmNqIV/2+6U7A\n0kdAb4n5yCgX4e2i5o/1bXTq/F0Nc+9S3pJKM2MZaKhSm9Z61hl+ZdXZAoGAS8Uo\nHN0XqXD1X2y+/w/8SPWMN/wr/TudAQ1CyEe4R6AcNzhjB7dHOpuR295eRAK55Dxu\nR2fBS/qMsU4RpfsFcXHTtKCvhRamjiOamMkX7ZfAVOBHhXkSfzEPiUJcemtUcQC7\nP+oJsdkPjFXggO0RQTVCpopmBtWriaWudl8+dEkCgYEAyX5IfITdkASzqaRPl8Oi\n8sJnHgspOzKqWaFN5L+v52h+bSX54jf5eMratpPIS/dGTB7aUb48xddwyasx3yP1\n9wqRUovZXOEi+aHXsP3PAI/sL3IutjK7Es4VkIOaiDGp9kWkNgi2m7cCcAIOU7aM\np48UaHFn+aBHCk5TmLlp1jw=\n-----END PRIVATE KEY-----\n",
-  client_email: "firebase-adminsdk-75ops@smart-closer.iam.gserviceaccount.com",
-  client_id: "107165032061139070654",
-  auth_uri: "https://accounts.google.com/o/oauth2/auth",
-  token_uri: "https://oauth2.googleapis.com/token",
-  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-75ops%40smart-closer.iam.gserviceaccount.com"
-
+  keyFilename: process.env.FIREBASE_CREDENTIALS,
+ 
 });
 
 // Create a bucket associated to Firebase storage bucket
