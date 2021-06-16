@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Image } from 'semantic-ui-react';
 
 import styled from "styled-components";
+import Chatbot from '../ChatBot/Chatbot';
 export default function Page_404() {
   return (
     <div>
@@ -24,6 +25,8 @@ export default function Page_404() {
             </Link>
         </ErrorMessage>
       </ErrorPage>
+
+      
     </div>
   );
 }

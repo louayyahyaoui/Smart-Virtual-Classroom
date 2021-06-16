@@ -35,6 +35,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
     "react-semantic-ui-datepickers": "^2.13.0",
+    "react-simple-chatbot": "^0.6.1",
     "react-tagsinput": "^3.19.0",
     "react-textarea-autosize": "^8.3.2",
     "react-time-ago": "^6.2.2",
