@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
+import SemanticDatepicker from "react-semantic-ui-datepickers";
+
 import {
   Button,
+  Dimmer,
   Divider,
   Form,
   Grid,
   Header,
   Icon,
   Message,
+  Radio,
+  Loader,
+  Segment,
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import ModalChangeProfilePicture from "./ModalChangeProfilePicture";
@@ -15,10 +21,17 @@ import { isAuth, setLocalStorage } from "../../helpers/auth";
 import { getUserById, UpdateUserState } from "../../redux/slices/User";
 import { useParams } from "react-router";
 import ModalChangePassword from "./ModalChangePassword";
+import Dropzone from "react-dropzone-uploader";
+import ModalUploadCV from "./ModalUploadCV";
 
 function UpdateProfile() {
+  const resume = useSelector((state) => state.user.resume);
   const { id } = useParams();
   const [name, setName] = useState("");
+  const [sexe, SetSexe] = useState("");
+  const [UserCV,setUserCv]= useState("");
+  const [address, SetAddress] = useState("");
+  const [birthday, SetBirthday] = useState(Date.now());
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
@@ -27,10 +40,12 @@ function UpdateProfile() {
   const [formClassName, SetFormClassName] = useState("");
   const Resources = useSelector((state) => state.user.Resources);
   const userById = useSelector((state) => state.user.UserById);
+  const [loader, SetLoader] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
+    
+
     dispatch(getUserById(id)).then((res) => {
-     
       setName(res.payload.name);
       setEmail(res.payload.email);
       if (res.payload.bio) {
@@ -42,13 +57,39 @@ function UpdateProfile() {
       if (res.payload.GithubUrl) {
         setGithub(res.payload.GithubUrl);
       }
+     
+        setUserCv(res.payload.cv);
+      
+      
+      if (res.payload.address) {
+        SetAddress(res.payload.address);
+      }
+      if (res.payload.sexe) {
+        SetSexe(res.payload.sexe);
+      }
+      if (res.payload.birthday) {
+        SetBirthday(res.payload.birthday);
+      }
+
+      
     });
+    console.log(resume);
+;
+    if (resume !== "") {
+      console.log("dkhaalna");
+      setUserCv(resume);
+      console.log(UserCV)
+    }
+  }, [resume]);
 
-    console.log(userById);
-  }, []);
-
+  const handleSexeChange = (e, { value }) => {
+    SetSexe(value);
+  };
   const handleNameChange = (e) => {
     setName(e.target.value);
+  };
+  const handleAddressChange = (e) => {
+    SetAddress(e.target.value);
   };
   const handleBioChange = (e) => {
     setBio(e.target.value);
@@ -58,10 +99,13 @@ function UpdateProfile() {
   };
   const handleGithubChange = (e) => {
     setGithub(e.target.value);
-   
   };
 
   const updateProfile = () => {
+    SetLoader(true);
+    
+ 
+
     axios
       .put(
         `${process.env.REACT_APP_API_URL}/api/user/updateProfile/${
@@ -73,21 +117,30 @@ function UpdateProfile() {
           linkedInUrl: linkedIn,
           GithubUrl: github,
           picture: Resources,
+          sexe: sexe,
+          address: address,
+          cv: resume,
+          birthday: birthday,
         }
       )
       .then((res) => {
-       
+        SetLoader(false);
         dispatch(UpdateUserState());
         setLocalStorage("user", res.data.result);
         setFormSuccessMessage("Your profile was updated successfully !");
         SetFormClassName("success");
+
       })
       .catch((err) => {
-       
         setFormSuccessMessage("Something went wrong !!");
         SetFormClassName("warning");
       });
   };
+
+  const d = new Date(birthday);
+  const initialDateValue = d;
+
+
   return (
     <div>
       <Header as="h1" dividing>
@@ -164,6 +217,164 @@ function UpdateProfile() {
                 value={github}
                 onChange={handleGithubChange}
               />
+
+              <Form.Input
+                label="Address"
+                type="text"
+                icon="address book"
+                iconPosition="right"
+                placeholder={"Your Address here ..."}
+                name="Address"
+                maxLength="40"
+                value={address}
+                onChange={handleAddressChange}
+              />
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column width={8}>
+                  <Form.Field>
+                Selected Gender: <b>{sexe}</b>
+              </Form.Field>
+             
+              <Form.Group>
+              <Form.Field inline >
+                <Radio
+                  label="Male"
+                  name="radioGroup"
+                  value="Male"
+                  checked={sexe === "Male"}
+                  onChange={handleSexeChange}
+                />
+              </Form.Field>
+
+              <Form.Field inline >
+                
+                <Radio 
+                  label="Female"
+                  name="radioGroup"
+                  value="Female"
+                  checked={sexe === "Female"}
+                  onChange={handleSexeChange}
+                />
+              </Form.Field>
+       
+              </Form.Group>
+
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                  <Form.Field>
+                <label>Birthday</label>
+                <SemanticDatepicker required 
+                
+                value={birthday === null ?(birthday):(initialDateValue)}
+                  onChange={(e, data) => SetBirthday(data.value )}
+                  
+                />
+              </Form.Field>
+                  </Grid.Column>
+
+                </Grid.Row>
+              </Grid>
+
+              <Grid>
+        <Grid.Column width={13}>
+          <Segment attached='top'>
+            Upload your resume here , to help us 
+          </Segment>
+          <ModalUploadCV></ModalUploadCV>
+        </Grid.Column>
+        <Grid.Column width={3}>
+
+
+
+
+          {UserCV === "" && resume ==="" ? (<></>):(
+             resume !== "" ? (
+              <div>
+              <a
+                href={resume}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div>
+                  <Grid.Column width={3}>
+                    <img
+                      src={
+                        process.env.PUBLIC_URL +
+                        "/files-type/" +
+                        "pdf" +
+                        ".png"
+                      }
+                      style={{
+                        margin: "10px",
+                        height: "100px",
+                        width: "100px",
+                      }}
+                      alt=""
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    <Grid.Row>
+                      <Header as="h4" color="red">
+                        Your Resume
+                      </Header>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Header as="h4" color="grey">
+                        PDF File
+                      </Header>
+                    </Grid.Row>
+                  </Grid.Column>
+                </div>
+              </a>
+            </div>
+             ):(
+              <div>
+              <a
+                href={UserCV}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div>
+                  <Grid.Column width={3}>
+                    <img
+                      src={
+                        process.env.PUBLIC_URL +
+                        "/files-type/" +
+                        "pdf" +
+                        ".png"
+                      }
+                      style={{
+                        margin: "10px",
+                        height: "100px",
+                        width: "100px",
+                      }}
+                      alt=""
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={3}>
+                    <Grid.Row>
+                      <Header as="h4" color="red">
+                        Your Resume
+                      </Header>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Header as="h4" color="grey">
+                        PDF File
+                      </Header>
+                    </Grid.Row>
+                  </Grid.Column>
+                </div>
+              </a>
+            </div>
+             )
+          )}
+       
+        </Grid.Column>
+        
+      </Grid>
+              
+             
             </Form>
             <br />
             <br />

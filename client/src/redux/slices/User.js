@@ -15,6 +15,19 @@ export const UpdateProfilePicture = createAsyncThunk(
   }
 );
 
+export const UploadResume = createAsyncThunk(
+  "users/UploadResume",
+
+  async (resume) => {
+    const promise = await axios.post(
+      "https://closer-server.herokuapp.com/courses/api/upload",
+      resume
+    );
+  
+    return promise.data.result.reqFiles[0].url;
+  }
+);
+
 export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
   const { data } = await axios.get(
     "https://closer-server.herokuapp.com/api/getUserById/" + id
@@ -47,11 +60,15 @@ export const UserSlice = createSlice({
     UserById: null,
     statusChangePassword: null,
     userUpdated: false,
+    resume: ""
   },
 
   extraReducers: {
     [UpdateProfilePicture.fulfilled]: (state, action) => {
       state.Resources = action.payload;
+    },
+    [UploadResume.fulfilled]: (state, action) => {
+      state.resume = action.payload;
     },
     [getUserById.fulfilled]: (state, action) => {
       state.UserById = action.payload;
