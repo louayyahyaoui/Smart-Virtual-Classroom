@@ -19,7 +19,7 @@ const Room = (props) => {
     userId: undefined,
     info: { userName: currentUser, Image: userImage, video: true, audio: true },
   };
-  const [userslist, setuserslist] = useState([FirstLoader]);
+  const [userslist, setuserslist] = useState([]);
   const [userVideoAudio, setUserVideoAudio] = useState({
     localUser: { video: true, audio: true },
   });
@@ -50,14 +50,9 @@ const Room = (props) => {
         userVideoRef.current.srcObject = stream;
         userStream.current = stream;
 
-        socket.emit("BE-join-room", {
-          roomId,
-          userName: currentUser,
-          Image: userImage,
-        });
+        socket.emit("BE-join-room");
         socket.on("FE-user-join", (users) => {
           toast.dark("Someone Has joined the meet");
-        
           setuserslist(users);
           // all users
           const peers = [];
