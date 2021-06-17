@@ -4,6 +4,8 @@ import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
 import CloserIcon from "../../assests/Closer-ico.ico";
 import { isAuth } from '../../helpers/auth';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 const theme = {
     background: '#f5f8fb',
     fontFamily: 'Helvetica Neue',
@@ -16,26 +18,29 @@ const theme = {
     userFontColor: '#4a4a4a',
 };
 class Chatbot extends Component {
+
     constructor(props) {
         super(props);
 
         this.state = {
             name: '',
-            gender: '',
-            age: '',
-         
+            email: '',
+            password: '',
+
         };
+
+
     }
 
     componentWillMount() {
         const { steps } = this.props;
-        const { name, gender, age } = steps;
+        const { name, email, password } = steps;
 
-        this.setState({ name, gender, age });
+        this.setState({ name, email, password });
     }
 
     render() {
-        const { name, gender, age } = this.state;
+        const { name, email, password } = this.state;
         return (
             <div style={{ width: '100%' }}>
                 <h3>Summary</h3>
@@ -46,12 +51,12 @@ class Chatbot extends Component {
                             <td>{name.value}</td>
                         </tr>
                         <tr>
-                            <td>Gender</td>
-                            <td>{gender.value}</td>
+                            <td>email</td>
+                            <td>{email.value}</td>
                         </tr>
                         <tr>
-                            <td>Age</td>
-                            <td>{age.value}</td>
+                            <td>password</td>
+                            <td>{password.value}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -69,64 +74,153 @@ Chatbot.defaultProps = {
 };
 
 class SimpleForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            namee: '',
+            emaill: '',
+            passwordd: '',
+
+        };
+
+    }
+    componentDidMount() {
+        console.log("hi didmout !!!")
+        this.handleEnd = this.handleEnd.bind(this);
+    }
+   
+    handleEnd({ steps, values }) {
+
+        
+     
+       
+        /*axios
+            .post(`${process.env.REACT_APP_API_URL}/api/register`, {
+                name,
+                email,
+                password,
+            })
+            .then((res) => {
+
+                console.log(res)
+                toast.success("hey");
+            })
+            .catch((err) => {
+
+                console.log(err)
+                toast.error(err.response.data.errors);
+            });*/
+    }
+
+
+
     render() {
+        let { namee, emaill, passwordd } = this.state;
         return (
-           
+
             <ThemeProvider theme={theme}>
+
                 <ChatBot
-                floating={true}
-                opened={false}
+                   floating={true}
+                    opened={false}
                     botAvatar={CloserIcon}
-                    
+
                     userAvatar={isAuth() && (isAuth().picture)}
                     recognitionEnable={true}
                     recognitionLang="en"
                     speechSynthesis={{ enable: true, lang: 'en' }}
-                
 
+                    handleEnd={this.handleEnd}
                     steps={[
                         {
                             id: '1',
-                            message: 'What is your name?',
+                            message: 'What is your full-name?',
                             trigger: 'name',
                         },
                         {
                             id: 'name',
                             user: true,
                             trigger: '3',
+                            validator: (value) => {
+                                if (!(value)) {
+                                    return 'name required !';
+                                }
+                                namee = value;
+                                return true;
+                            },
                         },
                         {
                             id: '3',
-                            message: 'Hi {previousValue}! What is your gender?',
-                            trigger: 'gender',
+                            message: 'Hi {previousValue}! What is your email?',
+                            trigger: 'end-message',
                         },
                         {
-                            id: 'gender',
-                            options: [
-                                { value: 'male', label: 'Male', trigger: '5' },
-                                { value: 'female', label: 'Female', trigger: '5' },
-                            ],
+                            id: 'email',
+
+                            user: true,
+                            trigger: '5',
+                            validator: (value) => {
+                                if (!(value)) {
+                                    return 'email required !';
+                                } else if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value))) {
+                                    return 'email invalid (exmp@exmp.exmp) ! ';
+                                }
+                                this.email = value;
+                                return true;
+                            },
+
                         },
                         {
                             id: '5',
-                            message: 'How old are you?',
-                            trigger: 'age',
+                            message: 'Choose a password?',
+                            trigger: 'password',
+
                         },
                         {
-                            id: 'age',
+                            id: 'password',
+                            user: true,
+                            trigger: '6',
+                            validator: (value) => {
+                                if (!(value)) {
+                                    return 'password required !';
+                                } else if (!(/[A-Z]/.test(value))) {
+                                    return 'password must start with capital lettre  ! ';
+                                } else if (!(/[0-9]/.test(value))) {
+                                    return 'password must contain a number  ! ';
+                                } else if (!(value.length >= 8)) {
+                                    return 'password length must be greater than 7 caracters  ! ';
+                                }
+                                this.password = value;
+                                return true;
+                            },
+
+                        },
+                        {
+                            id: '6',
+                            message: 'Confirm your password?',
+                            trigger: 'passwordC',
+                        },
+                        {
+                            id: 'passwordC',
                             user: true,
                             trigger: '7',
                             validator: (value) => {
-                                if (isNaN(value)) {
-                                    return 'value must be a number';
-                                } else if (value < 0) {
-                                    return 'value must be positive';
-                                } else if (value > 120) {
-                                    return `${value}? Come on!`;
+                                if (!(value)) {
+                                    return 'password required !';
+                                } else if (!(/[A-Z]/.test(value))) {
+                                    return 'password must start with capital lettre  ! ';
+                                } else if (!(/[0-9]/.test(value))) {
+                                    return 'password must contain a number  ! ';
+                                } else if (!(value.length >= 8)) {
+                                    return 'password length must be greater than 7 caracters  ! ';
+                                }
+                                else if ((value !== this.password)) {
+                                    return `confirm password didnt match`;
                                 }
 
                                 return true;
                             },
+
                         },
                         {
                             id: '7',
@@ -136,8 +230,8 @@ class SimpleForm extends Component {
                         {
                             id: 'review',
                             component: <Chatbot recognitionEnable={true}
-                            recognitionLang="en"
-                            speechSynthesis={{ enable: true, lang: 'en' }} />,
+                                recognitionLang="en"
+                                speechSynthesis={{ enable: true, lang: 'en' }} />,
                             asMessage: true,
                             trigger: 'update',
                         },
@@ -162,28 +256,30 @@ class SimpleForm extends Component {
                             id: 'update-fields',
                             options: [
                                 { value: 'name', label: 'Name', trigger: 'update-name' },
-                                { value: 'gender', label: 'Gender', trigger: 'update-gender' },
-                                { value: 'age', label: 'Age', trigger: 'update-age' },
+                                { value: 'email', label: 'email', trigger: 'update-email' },
+                                { value: 'password', label: 'password', trigger: 'update-password' },
                             ],
                         },
                         {
                             id: 'update-name',
-                            update: 'name',
+                            update: 'namee',
                             trigger: '7',
                         },
                         {
-                            id: 'update-gender',
-                            update: 'gender',
+                            id: 'update-email',
+                            update: 'emaill',
                             trigger: '7',
                         },
                         {
-                            id: 'update-age',
-                            update: 'age',
+                            id: 'update-password',
+                            update: 'passwordd',
                             trigger: '7',
                         },
+
                         {
                             id: 'end-message',
-                            message: 'Thanks! Your data was submitted successfully!',
+
+                            message: 'Thanks! Your data was submitted successfully! please verify your email :)',
                             end: true,
                         },
                     ]}
