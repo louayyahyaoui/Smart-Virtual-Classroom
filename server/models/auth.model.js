@@ -53,7 +53,7 @@ const userScheama = new mongoose.Schema(
     },
     birthday: {
       type: Date,
-      
+      default: null,
     },
     picture: {
       type: String,

@@ -110,7 +110,7 @@ exports.updateProfileController = (req, res) => {
     birthday: req.body.birthday,
     cv: req.body.cv,
   };
-  console.log(updatedProfile);
+  console.log(req.body.cv);
 
   User.findOneAndUpdate({ _id: req.params.id }, updatedProfile, {}).then(
     (oldResult) => {
