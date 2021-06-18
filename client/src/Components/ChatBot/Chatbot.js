@@ -118,7 +118,7 @@ class SimpleForm extends Component {
           speechSynthesis={{ enable: true, lang: "en" }}
           handleEnd={this.handleEnd}
           steps={
-            isAuth()
+            !isAuth()
               ? [
                   {
                     id: "1",
@@ -287,7 +287,7 @@ class SimpleForm extends Component {
                     end: true,
                   },
                 ]
-              : !isAuth()([
+              : ([
                   {
                     id: "end-message",
                     message:
