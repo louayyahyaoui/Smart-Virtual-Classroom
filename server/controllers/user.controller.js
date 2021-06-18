@@ -105,6 +105,10 @@ exports.updateProfileController = (req, res) => {
     picture: req.body.picture,
     linkedInUrl: req.body.linkedInUrl,
     GithubUrl: req.body.GithubUrl,
+    sexe: req.body.sexe,
+    address: req.body.address,
+    birthday: req.body.birthday,
+    cv: req.body.cv,
   };
   console.log(updatedProfile);
 
@@ -127,6 +131,10 @@ exports.updateProfileController = (req, res) => {
               role: result.role,
               salt: result.salt,
               email: result.email,
+              sexe: result.sexe,
+              address:result.address,
+              cv: result.cv,
+              birthday: result.birthday,
             },
           });
         })

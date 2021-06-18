@@ -39,6 +39,22 @@ const userScheama = new mongoose.Schema(
       type: String,
       default: "Teacher",
     },
+    sexe: {
+      type: String,
+      
+    },
+    address: {
+      type: String,
+      
+    },
+    cv: {
+      type: String,
+      
+    },
+    birthday: {
+      type: Date,
+      
+    },
     picture: {
       type: String,
       default:
