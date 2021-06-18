@@ -54,7 +54,11 @@ import TodayIcon from "@material-ui/icons/Today";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import { Dropdown } from "semantic-ui-react";
 const drawerWidth = 240;
-
+const flexContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  padding: 0,
+};
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -256,7 +260,33 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ marginLeft: "+87%" }}>
+          <List style={flexContainer}>
+          <Link to="/class" >
+            <ListItem button key="Dashboard" style={{color:"white"}}>
+              <ListItemIcon style={{color:"white"}}>
+                <ViewComfyIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+          </Link>
+          <Link to="/archiveclass">
+            <ListItem button key="Archived" style={{color:"white"}}>
+              <ListItemIcon style={{color:"white"}}> 
+                <ArchiveIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Archived" />
+            </ListItem>
+          </Link>
+          <Link to="/schedule">
+            <ListItem button key="Routine" style={{color:"white"}}>
+              <ListItemIcon style={{color:"white"}}>
+                <TodayIcon />
+              </ListItemIcon>
+              <ListItemText primary="Routine" />
+            </ListItem>
+          </Link>
+        </List>
+          <div style={{ marginLeft: "+60%" }}>
             <Dropdown trigger={trigger} pointing="top right" icon={null}>
               <Dropdown.Menu>
                 <Dropdown.Header content={isAuth().email} />
@@ -311,6 +341,7 @@ export default function MiniDrawer() {
           }),
         }}
       >
+    
         
         <div className={classes.toolbar}>
         <img alt="closer-logo" src={process.env.PUBLIC_URL + "/closer.png"} style={{ width: "63%" }} />
@@ -325,32 +356,9 @@ export default function MiniDrawer() {
         </div>
 
         <Divider />
-        <List >
-          <Link to="/class">
-            <ListItem button key="Dashboard">
-              <ListItemIcon>
-                <ViewComfyIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
-          <Link to="/archiveclass">
-            <ListItem button key="Archived">
-              <ListItemIcon>
-                <ArchiveIcon />
-              </ListItemIcon>
-              <ListItemText primary="Archived" />
-            </ListItem>
-          </Link>
-          <Link to="/schedule">
-            <ListItem button key="Routine">
-              <ListItemIcon>
-                <TodayIcon />
-              </ListItemIcon>
-              <ListItemText primary="Routine" />
-            </ListItem>
-          </Link>
-        </List>
+
+        <TableSeance/>
+       
         <Divider />
       </Drawer>
       <main className={classes.content}>
@@ -445,31 +453,7 @@ export default function MiniDrawer() {
         <PrivateRoute path="/members" exact component={MemberComponent} />
       </main>
 
-      <Drawer
-      
-        className={classes_left.drawer}
-        variant={typeSidebarRight}
-        anchor="right"
-        open={open_right}
-        classes={{
-          paper: classes_left.drawerPaper, 
-        }}
-      >
-        <div className={classes_left.drawerHeader}>
-          <IconButton onClick={handleDrawerCloseRight}>
-            {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-
-       
-             {classinvit ? <TableSeance /> : <></>}
-          
-      </Drawer>
+    
     </div>
   );
 }
