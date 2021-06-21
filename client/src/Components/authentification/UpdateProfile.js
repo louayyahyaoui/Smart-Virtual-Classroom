@@ -21,7 +21,7 @@ import { isAuth, setLocalStorage } from "../../helpers/auth";
 import { getUserById, UpdateUserState } from "../../redux/slices/User";
 import { useParams } from "react-router";
 import ModalChangePassword from "./ModalChangePassword";
-import Dropzone from "react-dropzone-uploader";
+
 import ModalUploadCV from "./ModalUploadCV";
 
 function UpdateProfile() {
@@ -39,7 +39,7 @@ function UpdateProfile() {
   const [formSuccessMessage, setFormSuccessMessage] = useState("");
   const [formClassName, SetFormClassName] = useState("");
   const Resources = useSelector((state) => state.user.Resources);
-  const userById = useSelector((state) => state.user.UserById);
+
   const [loader, SetLoader] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -73,12 +73,12 @@ function UpdateProfile() {
 
       
     });
-    console.log(resume);
+   
 ;
     if (resume !== "") {
-      console.log("dkhaalna");
+    
       setUserCv(resume);
-      console.log(UserCV)
+     
     }
   }, [resume]);
 
@@ -288,7 +288,7 @@ function UpdateProfile() {
 
 
 
-          {UserCV === "" && UserCV === null && resume ==="" ? (<></>):(
+          {UserCV === ""  && resume ==="" ? (<></>):(
              resume !== "" ? (
               <div>
               <a
