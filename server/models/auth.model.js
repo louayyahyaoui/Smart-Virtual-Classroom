@@ -47,7 +47,11 @@ const userScheama = new mongoose.Schema(
       type: String,
       
     },
-    
+    cv: {
+      type: String,
+      default:"",
+      
+    },
     birthday: {
       type: Date,
       default: null,
