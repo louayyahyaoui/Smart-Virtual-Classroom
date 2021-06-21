@@ -288,7 +288,7 @@ function UpdateProfile() {
 
 
 
-          {UserCV === "" && resume ==="" ? (<></>):(
+          {UserCV === "" && UserCV === null && resume ==="" ? (<></>):(
              resume !== "" ? (
               <div>
               <a
