@@ -1,4 +1,5 @@
 const User = require("../models/auth.model");
+const ResumeParser = require('resume-parser');
 const expressJwt = require("express-jwt");
 multer = require("multer");
 
@@ -120,7 +121,7 @@ exports.updateProfileController = (req, res) => {
           ResumeParser
           .parseResumeUrl(result.cv) //input file, output dir
           .then((res) => {
-            console.log(res.summary);
+            console.log(res);
           });
                    res.json({
             success: true,

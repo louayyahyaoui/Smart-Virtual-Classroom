@@ -2,7 +2,6 @@ const express = require("express");
 const morgan = require("morgan");
 require("./config/db");
 const fs = require('fs');
-const ResumeParser = require('resume-parser');
 const bodyParser = require("body-parser");
 const SeanceController = require("./routes/SeanceController");
 const courses_route = require("./routes/Courses.route");
