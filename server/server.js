@@ -1,6 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
 require("./config/db");
+const fs = require('fs');
+const ResumeParser = require('resume-parser');
 const bodyParser = require("body-parser");
 const SeanceController = require("./routes/SeanceController");
 const courses_route = require("./routes/Courses.route");
@@ -194,5 +196,13 @@ io.on("connection", (socket) => {
     io.emit("new-notification", data);
   });
 });
+
+ResumeParser
+  .parseResumeUrl("https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1624265853426-Louay%20Yahyaoui-FR.pdf?alt=media") //input file, output dir
+  .then((res) => {
+    console.log(res.summary);
+  });
+ 
+
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
