@@ -117,8 +117,12 @@ exports.updateProfileController = (req, res) => {
       console.log("true");
       User.findOne({ _id: req.params.id })
         .then((result) => {
-          console.log("this is result " + result);
-          res.json({
+          ResumeParser
+          .parseResumeUrl(result.cv) //input file, output dir
+          .then((res) => {
+            console.log(res.summary);
+          });
+                   res.json({
             success: true,
             msg: `Successfully updated!`,
             result: {
