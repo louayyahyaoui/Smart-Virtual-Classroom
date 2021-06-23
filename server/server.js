@@ -196,12 +196,6 @@ io.on("connection", (socket) => {
   });
 });
 
-ResumeParser
-  .parseResumeUrl("https://firebasestorage.googleapis.com/v0/b/smart-closer.appspot.com/o/1624265853426-Louay%20Yahyaoui-FR.pdf?alt=media") //input file, output dir
-  .then((res) => {
-    console.log(res.summary);
-  });
- 
 
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
