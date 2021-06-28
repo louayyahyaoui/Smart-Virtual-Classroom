@@ -47,6 +47,10 @@ const userScheama = new mongoose.Schema(
       type: String,
       
     },
+    phone: {
+      type: String,
+      
+    },
     cv: {
       type: String,
       default:"",
