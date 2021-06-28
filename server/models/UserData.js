@@ -17,7 +17,7 @@ var UserDataSchema = new mongoose.Schema({
     type: [String],
   },
   langues: {
-    type: [Object],
+    type: [String],
   },
   projects: {
     type: [Object],
@@ -31,7 +31,7 @@ var UserDataSchema = new mongoose.Schema({
   autre: {
     type: [Object],
   },
-}
+},
 {
     timestamps: true,
   }

@@ -1,6 +1,15 @@
 const User = require("../models/auth.model");
-const ResumeParser = require('resume-parser');
+const UserData = require("../models/UserData");
+
+const ResumeParser = require("resume-parser");
 const expressJwt = require("express-jwt");
+const {
+  parseEducation,
+  experienceParse,
+  skillsParse,
+  interestParse,
+  languageParse,
+} = require("./ResumeParse");
 multer = require("multer");
 
 const DIR = "./uploads/file";
@@ -98,7 +107,58 @@ exports.updateController = (req, res) => {
     });
   });
 };
+// function getDate(d) {
+//   var day, month, year;
 
+//   result = d.match("[0-9]{2}([-/ .])[0-9]{2}[-/ .][0-9]{4}");
+//   if (null != result) {
+//     dateSplitted = result[0].split(result[1]);
+//     day = dateSplitted[0];
+//     month = dateSplitted[1];
+//     year = dateSplitted[2];
+//   }
+//   result = d.match("[0-9]{4}([-/ .])[0-9]{2}[-/ .][0-9]{2}");
+//   if (null != result) {
+//     dateSplitted = result[0].split(result[1]);
+//     day = dateSplitted[2];
+//     month = dateSplitted[1];
+//     year = dateSplitted[0];
+//   }
+
+//   if (month > 12) {
+//     aux = day;
+//     day = month;
+//     month = aux;
+//   }
+
+//   return year + "/" + month + "/" + day;
+// }
+// const countOccurences = (string, word) => {
+//   return string.split(word).length - 1;
+// };
+// const findIndex = (data) => {
+//   return data === "" && countOccurences(data, "-") === 0
+//     ? ""
+//     : countOccurences(data, "-") < 2
+//     ? data.substring(0, data.indexOf("-"))
+//     : findIndex(data.substring(0, data.indexOf("-")));
+// };
+// const educationArray = (edu) => {
+//   const arr = [];
+//   console.log(findIndex(edu));
+//   /*
+//     arr.push(findIndex(edu))
+//     //console.log(arr)
+//     const indexedCaracter = edu.indexOf('\n')
+//     if (edu.indexOf('-') === -1) 
+//     edu = '' 
+//     else {
+//     edu = edu.substring(indexedCaracter, edu.length)
+//     arr.push(edu)
+    
+//   }*/
+//   return arr;
+// };
 exports.updateProfileController = (req, res) => {
   let updatedProfile = {
     name: req.body.name,
@@ -111,19 +171,36 @@ exports.updateProfileController = (req, res) => {
     birthday: req.body.birthday,
     cv: req.body.cv,
   };
-  console.log(req.body.cv);
 
   User.findOneAndUpdate({ _id: req.params.id }, updatedProfile, {}).then(
     (oldResult) => {
-      console.log("true");
       User.findOne({ _id: req.params.id })
         .then((result) => {
-          ResumeParser
-          .parseResumeUrl(result.cv) //input file, output dir
-          .then((res) => {
-            console.log(res);
-          });
-                   res.json({
+          ResumeParser.parseResumeUrl(result.cv) //input file, output dir
+            .then((res) => {
+              const education = parseEducation(res.education);
+              const experience = experienceParse(res.experience);
+              const skills = skillsParse(res.skills);
+              const languages = languageParse(res.languages);
+              const interests = interestParse(res.interests);
+            
+
+              const data = new UserData({
+                idUser: result._id,
+                formation: education,
+                experiences: experience,
+                skills: skills,
+                langues: languages,
+                interets: interests,
+              });
+              try {
+                data.save();
+                //  res.status(201).json(data);
+              } catch (error) {
+                res.status(400).json({ message: error.message });
+              }
+            });
+          res.json({
             success: true,
             msg: `Successfully updated!`,
             result: {
@@ -137,7 +214,7 @@ exports.updateProfileController = (req, res) => {
               salt: result.salt,
               email: result.email,
               sexe: result.sexe,
-              address:result.address,
+              address: result.address,
               cv: result.cv,
               birthday: result.birthday,
             },
