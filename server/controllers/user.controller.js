@@ -177,6 +177,7 @@ exports.updateProfileController = (req, res) => {
     GithubUrl: req.body.GithubUrl,
     sexe: req.body.sexe,
     address: req.body.address,
+    phone: req.body.phone,
     birthday: req.body.birthday,
     cv: req.body.cv,
   };
@@ -223,6 +224,7 @@ exports.updateProfileController = (req, res) => {
               email: result.email,
               sexe: result.sexe,
               address: result.address,
+              phone: result.address,
               cv: result.cv,
               birthday: result.birthday,
             },
