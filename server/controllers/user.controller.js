@@ -107,58 +107,67 @@ exports.updateController = (req, res) => {
     });
   });
 };
-// function getDate(d) {
-//   var day, month, year;
 
-//   result = d.match("[0-9]{2}([-/ .])[0-9]{2}[-/ .][0-9]{4}");
-//   if (null != result) {
-//     dateSplitted = result[0].split(result[1]);
-//     day = dateSplitted[0];
-//     month = dateSplitted[1];
-//     year = dateSplitted[2];
-//   }
-//   result = d.match("[0-9]{4}([-/ .])[0-9]{2}[-/ .][0-9]{2}");
-//   if (null != result) {
-//     dateSplitted = result[0].split(result[1]);
-//     day = dateSplitted[2];
-//     month = dateSplitted[1];
-//     year = dateSplitted[0];
-//   }
+///// User Data Update Fields //////
 
-//   if (month > 12) {
-//     aux = day;
-//     day = month;
-//     month = aux;
-//   }
+// Update Skills in USERDATA
+exports.updateUserDataSkills = (req, res) => {
+  let skills = req.body.skills;
 
-//   return year + "/" + month + "/" + day;
-// }
-// const countOccurences = (string, word) => {
-//   return string.split(word).length - 1;
-// };
-// const findIndex = (data) => {
-//   return data === "" && countOccurences(data, "-") === 0
-//     ? ""
-//     : countOccurences(data, "-") < 2
-//     ? data.substring(0, data.indexOf("-"))
-//     : findIndex(data.substring(0, data.indexOf("-")));
-// };
-// const educationArray = (edu) => {
-//   const arr = [];
-//   console.log(findIndex(edu));
-//   /*
-//     arr.push(findIndex(edu))
-//     //console.log(arr)
-//     const indexedCaracter = edu.indexOf('\n')
-//     if (edu.indexOf('-') === -1)
-//     edu = ''
-//     else {
-//     edu = edu.substring(indexedCaracter, edu.length)
-//     arr.push(edu)
+  UserData.findOneAndUpdate({ idUser: req.params.id }, { skills: skills })
+    .then(() => {
+      UserData.findOne({ idUser: req.params.id }).then((UserFound)=>{
+        res.status(201).json(UserFound);
+      })
+     
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ success: false, msg: `Something went wrong. ${err}` });
+    });
+};
+// Update Languages in USERDATA
 
-//   }*/
-//   return arr;
-// };
+exports.updateUserDataLanguages = (req, res) => {
+  let languages = req.body.languages;
+
+  UserData.findOneAndUpdate({ idUser: req.params.id }, { langues: languages })
+    .then(() => {
+      UserData.findOne({ idUser: req.params.id }).then((UserFound)=>{
+        res.status(201).json(UserFound);
+      })
+     
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ success: false, msg: `Something went wrong. ${err}` });
+    });
+};
+
+// Update Interestes in USERDATA
+
+exports.updateUserDataInterestes = (req, res) => {
+  let interes = req.body.interes;
+
+  UserData.findOneAndUpdate({ idUser: req.params.id }, { interets: interes })
+    .then(() => {
+      UserData.findOne({ idUser: req.params.id }).then((UserFound)=>{
+        res.status(201).json(UserFound);
+      })
+     
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ success: false, msg: `Something went wrong. ${err}` });
+    });
+};
+
+
+///// User Data Update Fields //////
+
 exports.updateProfileController = (req, res) => {
   let updatedProfile = {
     name: req.body.name,
@@ -178,7 +187,6 @@ exports.updateProfileController = (req, res) => {
         .then((result) => {
           ResumeParser.parseResumeUrl(result.cv) //input file, output dir
             .then((res) => {
-            
               const education = parseEducation(res.education);
               const experience = experienceParse(res.experience);
               const skills = skillsParse(res.skills);
