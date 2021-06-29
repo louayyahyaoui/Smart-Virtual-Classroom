@@ -698,6 +698,15 @@ exports.googleController = (req, res) => {
           } else {
             let password = email + process.env.JWT_SECRET;
             user = new User({ name, email, password, picture });
+            const dataUser = new UserData({
+              idUser: data._id,
+              formation: [],
+              experiences: [],
+              skills: [],
+              langues: [],
+              interets: [],
+            });
+            dataUser.save();
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR GOOGLE LOGIN ON USER SAVE", err);
@@ -808,6 +817,15 @@ exports.facebookController = (req, res) => {
                   error: "User signup failed with facebook",
                 });
               }
+              const dataUser = new UserData({
+                idUser: data._id,
+                formation: [],
+                experiences: [],
+                skills: [],
+                langues: [],
+                interets: [],
+              });
+              dataUser.save();
               const token = jwt.sign(
                 { _id: data._id },
                 process.env.JWT_SECRET,
