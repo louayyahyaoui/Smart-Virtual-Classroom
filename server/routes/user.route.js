@@ -22,5 +22,5 @@ router.get("/getImage", GetPictureOfUser);
 router.put("/user/updateProfile/:id", updateProfileController);
 router.put("/admin/update", requireSignin, adminMiddleware, updateController);
 //USER Data
-router.get("/getuserdata/:id", getUserData);
+router.get("/ /:id", getUserData);
 module.exports = router;
