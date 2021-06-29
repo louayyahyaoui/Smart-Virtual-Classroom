@@ -10,6 +10,7 @@ const expressJWT = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 const sgMail = require("@sendgrid/mail");
 const crypto = require("crypto");
+const UserData = require("../models/UserData");
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.registerController = (req, res) => {
@@ -258,6 +259,15 @@ exports.activationController = (req, res) => {
               errors: errorHandler(err),
             });
           } else {
+            const data = new UserData({
+              idUser: user._id,
+              formation: [],
+              experiences: [],
+              skills: [],
+              langues: [],
+              interets: [],
+            });
+            data.save();
             return res.json({
               success: true,
               message: user,
