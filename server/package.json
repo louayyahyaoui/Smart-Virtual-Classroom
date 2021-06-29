@@ -24,6 +24,7 @@
     "express-jwt": "^6.0.0",
     "express-rate-limit": "^5.2.6",
     "express-validator": "^6.9.2",
+    "generate-unique-id": "^2.0.1",
     "google-auth-library": "^7.0.2",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",

@@ -1,4 +1,5 @@
 const UserData = require("../models/UserData");
+const generateUniqueId = require('generate-unique-id');
 
 module.exports = {
   parseEducation: (myeducation) => {
@@ -7,8 +8,10 @@ module.exports = {
     array = myeducation.split(",");
 
     for (let i = 0; i < 3; i++) {
+      const idEducation = generateUniqueId();
       let str = "" + array[i];
       let edu = {
+        id:idEducation,
         dateDebut: "",
         dateEnd: "",
         description: "",
@@ -29,7 +32,7 @@ module.exports = {
     }
     return education;
   },
-  experienceParse: (str) => {
+  experienceParse: (str,idexperience) => {
     x = Array.from(new Set(str.split("Stage")));
     ///console.log(title)
     experience = [];
@@ -37,8 +40,11 @@ module.exports = {
     array = x;
     let ii = str.match(/\d+/).index;
     for (let i = 0; i < array.length; i++) {
+      const idexperience = generateUniqueId();
+
       let strrr = "" + array[i];
       let edu = {
+        id:idexperience,
         dateDebut: "",
         dateFin: "",
         title: "",
@@ -48,7 +54,6 @@ module.exports = {
       //console.log(strrr)
       if (strrr.match(/\d+/) !== null) {
         let title = strrr.substring(0, strrr.match(/\d+/).index);
-
         let dateedebut = strrr.substring(
           strrr.match(/\d+/).index,
           strrr.indexOf("-")
@@ -109,43 +114,37 @@ module.exports = {
       /// console.log(id)
       const data = await UserData.find({ idUser: id }).then((element) => {
         element.forEach((e) => {
-
           e.experiences.forEach((exp) => {
             exp.dateDebut = new Date("01".concat("/", exp.dateDebut));
-            if(exp.dateFin!==undefined)
-           { 
-               if (exp.dateFin.trim() === "Present") {
-              exp.dateFin = new Date();
-            }
-            else {
+            if (exp.dateFin !== undefined) {
+              if (exp.dateFin.trim() === "Present") {
+                exp.dateFin = new Date();
+              } else {
                 exp.dateFin = new Date("01".concat("/", exp.dateFin));
               }
-        }
-        else{
-            exp.dateFin=null
-        }
-
-
+            } else {
+              exp.dateFin = null;
+            }
           });
           e.formation.forEach((edu) => {
             edu.dateDebut = new Date("01".concat("/", edu.dateDebut));
-            if(edu.dateEnd!==undefined)
-           { if (edu.dateEnd.trim() === "Present") {
-              edu.dateEnd = new Date();
-            }
-            else {
+            if (edu.dateEnd !== undefined) {
+              if (edu.dateEnd.trim() === "Present") {
+                edu.dateEnd = new Date();
+              } else {
                 edu.dateEnd = new Date("01".concat("/", edu.dateEnd));
               }
-        }else { edu.dateEnd=null}
+            } else {
+              edu.dateEnd = null;
+            }
           });
-      
+
           return res.status(200).json({
             status: 200,
             data: e,
             message: "Succesfully UserDatas Retrieved",
-          });});
-
-        
+          });
+        });
       });
     } catch (error) {
       return res.status(400).json({ status: 400, message: error.message });

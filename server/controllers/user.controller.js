@@ -150,12 +150,12 @@ exports.updateController = (req, res) => {
 //     arr.push(findIndex(edu))
 //     //console.log(arr)
 //     const indexedCaracter = edu.indexOf('\n')
-//     if (edu.indexOf('-') === -1) 
-//     edu = '' 
+//     if (edu.indexOf('-') === -1)
+//     edu = ''
 //     else {
 //     edu = edu.substring(indexedCaracter, edu.length)
 //     arr.push(edu)
-    
+
 //   }*/
 //   return arr;
 // };
@@ -178,12 +178,12 @@ exports.updateProfileController = (req, res) => {
         .then((result) => {
           ResumeParser.parseResumeUrl(result.cv) //input file, output dir
             .then((res) => {
+            
               const education = parseEducation(res.education);
               const experience = experienceParse(res.experience);
               const skills = skillsParse(res.skills);
               const languages = languageParse(res.languages);
               const interests = interestParse(res.interests);
-            
 
               const data = new UserData({
                 idUser: result._id,
