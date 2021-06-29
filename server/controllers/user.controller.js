@@ -224,7 +224,7 @@ exports.updateProfileController = (req, res) => {
               email: result.email,
               sexe: result.sexe,
               address: result.address,
-              phone: result.address,
+              phone: result.phone,
               cv: result.cv,
               birthday: result.birthday,
             },
