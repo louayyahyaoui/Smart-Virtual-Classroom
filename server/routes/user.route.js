@@ -32,5 +32,5 @@ router.put("/user/updateUserDataInterestes/:id", updateUserDataInterestes);
 
 router.put("/admin/update", requireSignin, adminMiddleware, updateController);
 //USER Data
-router.get("/ /:id", getUserData);
+router.get("/getuserdata/:id", getUserData);
 module.exports = router;
