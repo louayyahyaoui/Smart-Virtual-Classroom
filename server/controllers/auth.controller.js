@@ -656,6 +656,15 @@ exports.resetPasswordController = (req, res) => {
                     error: "Error resetting user password",
                   });
                 }
+                const dataUser = new UserData({
+                  idUser: result._id,
+                  formation: [],
+                  experiences: [],
+                  skills: [],
+                  langues: [],
+                  interets: [],
+                });
+                dataUser.save();
                 res.json({
                   message: `Great! Now you can login with your new password`,
                 });
