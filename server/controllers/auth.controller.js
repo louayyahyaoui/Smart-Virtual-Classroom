@@ -698,14 +698,7 @@ exports.googleController = (req, res) => {
           } else {
             let password = email + process.env.JWT_SECRET;
             user = new User({ name, email, password, picture });
-            const dataUser = new UserData({
-              idUser: user._id,
-              formation: [],
-              experiences: [],
-              skills: [],
-              langues: [],
-              interets: [],
-            });
+         
           
             user.save((err, data) => {
               if (err) {
@@ -714,6 +707,14 @@ exports.googleController = (req, res) => {
                   error: "User signup failed with google",
                 });
               }
+              const dataUser = new UserData({
+                idUser: data._id,
+                formation: [],
+                experiences: [],
+                skills: [],
+                langues: [],
+                interets: [],
+              });
               dataUser.save();
               const token = jwt.sign(
                 { _id: data._id },
