@@ -28,7 +28,7 @@ const ENDPOINT = `${process.env.REACT_APP_API_URL}`;
 function FormCourses(props) {
   const socket = io(ENDPOINT);
   const seances = useSelector((state) => state.seance.seance);
-  const { id } = useParams();
+
   const [titre, SetTitre] = useState("");
   const [description, SetDescription] = useState("");
 
