@@ -36,6 +36,15 @@ export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
   return data;
 });
 
+
+
+export const getUserDataById = createAsyncThunk("users/getuserdata", async (id) => {
+  const { data } = await axios.get(
+    "http://localhost:5000/api/getuserdata/" + id
+  );
+
+  return data;
+});
 export const ChangePassword = createAsyncThunk(
   "users/ChangePassword",
   async (object) => {
@@ -58,6 +67,7 @@ export const UserSlice = createSlice({
   initialState: {
     Resources: "",
     UserById: null,
+    UserDataById: null,
     statusChangePassword: null,
     userUpdated: false,
     resume: ""
@@ -74,12 +84,19 @@ export const UserSlice = createSlice({
       state.UserById = action.payload;
       state.Resources = state.UserById.picture;
     },
+    [getUserDataById.fulfilled]: (state, action) => {
+      state.UserDataById = action.payload;
+      //state.Resources = state.UserById.picture;
+    },
     [ChangePassword.fulfilled]: (state, action) => {
       state.statusChangePassword = "changed !";
     },
     [UpdateUserState.fulfilled]: (state, action) => {
       state.userUpdated = !state.userUpdated;
     },
+  
+
+   
   },
 });
 export default UserSlice.reducer;

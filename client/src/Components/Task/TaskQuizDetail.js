@@ -16,7 +16,7 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import { getDetailByTaskByStudent, rendreTask } from "../../redux/slices/Grade";
+import { getDetailByTaskByStudent } from "../../redux/slices/Grade";
 import CommentComponent from "../Comment/CommentComponent";
 
 export default function TaskQuizDetail() {

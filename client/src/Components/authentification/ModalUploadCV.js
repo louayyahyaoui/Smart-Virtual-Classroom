@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import Dropzone from "react-dropzone-uploader";
@@ -10,10 +11,12 @@ import {
   Loader,
   Segment,
 } from "semantic-ui-react";
-import { UpdateProfilePicture, UploadResume } from "../../redux/slices/User";
+import { isAuth, setLocalStorage } from "../../helpers/auth";
+import { getUserDataById, UpdateProfilePicture, UpdateUserState, UploadResume } from "../../redux/slices/User";
 
-function ModalUploadCV() {
+function ModalUploadCV(props) {
   const resume = useSelector((state) => state.user.resume);
+  const Resources = useSelector((state) => state.user.Resources);
   const [loader, SetLoader] = useState(false);
 
   const [open, setOpen] = React.useState(false);
@@ -21,14 +24,52 @@ function ModalUploadCV() {
   const dispatch = useDispatch();
 
   const uploadResume = () => {
+    
+  
+
     var formData = new FormData();
     SetLoader(true);
     formData.append("multiple_resources", cv);
 
     dispatch(UploadResume(formData)).then((response) => {
+
+     
       SetLoader(false);
       setOpen(false);
+
+      axios.put(
+        `http://localhost:5000/api/user/updateProfile/${
+          isAuth()._id
+        }`,
+        {
+          name: props.name,
+          bio: props.bio,
+          linkedInUrl: props.linkedIn,
+          GithubUrl: props.github,
+          picture: Resources,
+          sexe: props.sexe,
+          address: props.address,
+          cv: response.payload,
+          birthday: props.birthday,
+        }
+      )
+      .then((res) => {
+       
+       // SetLoader(false);
+        dispatch(UpdateUserState());
+        dispatch(getUserDataById(isAuth()._id));
+        setLocalStorage("user", res.data.result);
+        //setFormSuccessMessage("Your profile was updated successfully !");
+       // SetFormClassName("success");
+  
+      })
+      .catch((err) => {
+      //  setFormSuccessMessage("Something went wrong !!");
+       // SetFormClassName("warning");
+      });
+
     });
+ 
   };
   const handleChangeStatus = ({ meta, file }, status) => {
     if (status === "done") {
@@ -97,7 +138,7 @@ function ModalUploadCV() {
             content="Yep, Save"
             labelPosition="right"
             icon="checkmark"
-            onClick={uploadResume}
+            onClick={()=>uploadResume()}
             color="red"
           />
         </Modal.Actions>

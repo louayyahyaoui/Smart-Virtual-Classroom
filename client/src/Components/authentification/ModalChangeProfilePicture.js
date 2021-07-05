@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone-uploader";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +10,12 @@ import {
   Loader,
   Modal,
 } from "semantic-ui-react";
+import { isAuth, setLocalStorage } from "../../helpers/auth";
 
-import { UpdateProfilePicture } from "../../redux/slices/User";
+import { UpdateProfilePicture, UpdateUserState } from "../../redux/slices/User";
 
 function ModalChangeProfilePicture(props) {
+ 
   const Resources = useSelector((state) => state.user.Resources);
   const [loader, SetLoader] = useState(false);
 
@@ -24,9 +27,39 @@ function ModalChangeProfilePicture(props) {
     var formData = new FormData();
     SetLoader(true);
     formData.append("multiple_resources", picture);
-   
+
     dispatch(UpdateProfilePicture(formData)).then((response) => {
-     
+
+console.log(response);
+      axios.put(
+        `${process.env.REACT_APP_API_URL}/api/user/updateProfile/${
+          isAuth()._id
+        }`,
+        {
+          name: props.name,
+          bio: props.bio,
+          linkedInUrl: props.linkedIn,
+          GithubUrl: props.github,
+          picture: response.Resources,
+          sexe: props.sexe,
+          address: props.address,
+          cv: props.cv,
+          birthday: props.birthday,
+        }
+      )
+      .then((res) => {
+       
+       // SetLoader(false);
+        dispatch(UpdateUserState());
+        setLocalStorage("user", res.data.result);
+        //setFormSuccessMessage("Your profile was updated successfully !");
+       // SetFormClassName("success");
+  
+      })
+      .catch((err) => {
+      //  setFormSuccessMessage("Something went wrong !!");
+       // SetFormClassName("warning");
+      });
       SetLoader(false);
       setOpen(false);
     });
@@ -39,6 +72,8 @@ function ModalChangeProfilePicture(props) {
       console.log(status, meta, file);
     }
   };
+
+  console.log(props.name);
   return (
     <div>
       <Modal
@@ -47,13 +82,11 @@ function ModalChangeProfilePicture(props) {
         open={open}
         trigger={
           <Image
+            circular
             fluid
-            centered
-            style={{
-              margin: "10px",
-              height: "250px",
-              width: "250px",
-            }}
+            size="small"
+
+
             label={{
               as: "a",
               color: "red",
