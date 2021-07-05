@@ -116,7 +116,7 @@ module.exports = {
         element.forEach((e) => {
           e.experiences.forEach((exp) => {
             exp.dateDebut = new Date("01".concat("/", exp.dateDebut));
-            if (exp.dateFin !== undefined) {
+            if (exp.dateFin !== undefined && exp.dateFin !== null) {
               if (exp.dateFin.trim() === "Present") {
                 exp.dateFin = new Date();
               } else {
@@ -128,7 +128,7 @@ module.exports = {
           });
           e.formation.forEach((edu) => {
             edu.dateDebut = new Date("01".concat("/", edu.dateDebut));
-            if (edu.dateEnd !== undefined) {
+            if (edu.dateEnd !== undefined && edu.dateEnd !== null) {
               if (edu.dateEnd.trim() === "Present") {
                 edu.dateEnd = new Date();
               } else {
