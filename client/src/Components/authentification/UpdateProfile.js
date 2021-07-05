@@ -30,7 +30,7 @@ import { isAuth, setLocalStorage } from "../../helpers/auth";
 import { getUserById, getUserDataById, UpdateUserState } from "../../redux/slices/User";
 import { useParams } from "react-router";
 import ModalChangePassword from "./ModalChangePassword";
-import Dropzone from "react-dropzone-uploader";
+
 import ModalUploadCV from "./ModalUploadCV";
 import ViewCv from "./ViewCv"
 import Contact from "./Contact";
@@ -54,7 +54,7 @@ function UpdateProfile() {
   const [formSuccessMessage, setFormSuccessMessage] = useState("");
   const [formClassName, SetFormClassName] = useState("");
   const Resources = useSelector((state) => state.user.Resources);
-  const userById = useSelector((state) => state.user.UserById);
+
   const [loader, SetLoader] = useState(false);
   const [formation, setFormation] = useState([]);
   const [experience, setExperience] = useState([]);
@@ -115,12 +115,17 @@ function UpdateProfile() {
 
 
     });
+<<<<<<< HEAD
     console.log(resume);
     ;
+=======
+   
+;
+>>>>>>> 872125c504b9baa06d929e19040f8f79896a9bd3
     if (resume !== "") {
-      console.log("dkhaalna");
+    
       setUserCv(resume);
-      console.log(UserCV)
+     
     }
   }, [id]);
 

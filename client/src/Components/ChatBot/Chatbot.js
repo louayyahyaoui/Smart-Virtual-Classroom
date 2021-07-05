@@ -1,13 +1,19 @@
 import React, { Component } from "react";
+import { Header, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
 import CloserIcon from "../../assests/Closer-ico.ico";
 import { isAuth } from "../../helpers/auth";
 import axios from "axios";
+
 import { toast } from "react-toastify";
+import ComponentSkills from "./ComponentSkills";
+import ComponentLanguages from "./ComponentLanguages";
+import ComponentInterests from "./ComponentInterests";
+
 const theme = {
-  background: "#f5f8fb",
+  background: "#ffffff",
   fontFamily: "Helvetica Neue",
   headerBgColor: "#BF1337",
   headerFontColor: "#fff",
@@ -25,37 +31,137 @@ class Chatbot extends Component {
       name: "",
       email: "",
       password: "",
+      languages: [],
+      skills: [],
+      phoneNumber: "11",
+      address: "22",
+      interests: [],
     };
   }
 
   componentWillMount() {
     const { steps } = this.props;
-    const { name, email, password } = steps;
 
-    this.setState({ name, email, password });
+    const {
+      name,
+      email,
+      password,
+      languages,
+      skills,
+      phoneNumber,
+      address,
+      interests,
+    } = steps;
+
+    this.setState({
+      name,
+      email,
+      password,
+      languages,
+      skills,
+      phoneNumber,
+      address,
+      interests,
+    });
   }
 
   render() {
-    const { name, email, password } = this.state;
+    const {
+      name,
+      email,
+      password,
+      languages,
+      skills,
+      phoneNumber,
+      address,
+      interests,
+    } = this.state;
     return (
       <div style={{ width: "100%" }}>
         <h3>Summary</h3>
-        <table>
-          <tbody>
-            <tr>
-              <td>Name</td>
-              <td>{name.value}</td>
-            </tr>
-            <tr>
-              <td>email</td>
-              <td>{email.value}</td>
-            </tr>
-            <tr>
-              <td>password</td>
-              <td>{password.value}</td>
-            </tr>
-          </tbody>
-        </table>
+        {!isAuth() ? (
+          <table>
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>{name.value}</td>
+              </tr>
+              <tr>
+                <td>email</td>
+                <td>{email.value}</td>
+              </tr>
+              <tr>
+                <td>password</td>
+                <td>{password.value}</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <Table basic="very" celled collapsing>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Informations</Table.HeaderCell>
+                <Table.HeaderCell>Your Answers</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Header.Content>Phone Number</Header.Content>
+                  </Header>
+                </Table.Cell>
+                <Table.Cell>
+                  {this.props.steps.AnswerPhoneNumber.message}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Header.Content>Address</Header.Content>
+                  </Header>
+                </Table.Cell>
+                <Table.Cell>
+                  {this.props.steps.AnswerAddress.message}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Header.Content>Skills</Header.Content>
+                  </Header>
+                </Table.Cell>
+
+                {this.props.RendredValue.botskills.map((skill, index) => (
+                  <Table.Cell key={index}>{skill}</Table.Cell>
+                ))}
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Header.Content>Languages</Header.Content>
+                  </Header>
+                </Table.Cell>
+
+                {this.props.RendredValue.botlanguages.map((skill, index) => (
+                  <Table.Cell key={index}>{skill}</Table.Cell>
+                ))}
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Header.Content>Interests</Header.Content>
+                  </Header>
+                </Table.Cell>
+
+                {this.props.RendredValue.botinterest.map((skill, index) => (
+                  <Table.Cell key={index}>{skill}</Table.Cell>
+                ))}
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        )}
       </div>
     );
   }
@@ -73,39 +179,183 @@ class SimpleForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      namee: "aa",
+      namee: "",
       emaill: "",
       passwordd: "",
+      languagess: [],
+      skillss: [],
+      phoneNumberr: "",
+      addresss: "",
+      interestss: [],
       stepps: [],
+      botskills: [],
+      botlanguages: [],
+      botinterest: [],
     };
+    this.updateSkills = this.updateSkills.bind(this);
+    this.updateLanguages = this.updateLanguages.bind(this);
+    this.updateInterests = this.updateInterests.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
   }
+
   componentDidMount() {
     this.handleEnd = this.handleEnd.bind(this);
+    this.updateSkills = this.updateSkills.bind(this);
+    this.updateLanguages = this.updateLanguages.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateInterests = this.updateInterests.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.handleEnd = this.handleEnd.bind(this);
+    this.updateSkills = this.updateSkills.bind(this);
+    this.updateLanguages = this.updateLanguages.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateInterests = this.updateInterests.bind(this);
+  }
+  componentWillUnmount() {
+    this.handleEnd = this.handleEnd.bind(this);
+    this.updateSkills = this.updateSkills.bind(this);
+    this.updateLanguages = this.updateLanguages.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateInterests = this.updateInterests.bind(this);
+  }
+
+  updateLanguages(newLanguages) {
+    this.setState({
+      languagess: newLanguages,
+    });
+
+    newLanguages.forEach((element) => {
+      this.setState({
+        botlanguages: this.state.botlanguages.push(element),
+      });
+    });
+  }
+
+  updatePhone(newPhone) {
+    this.setState({
+      phoneNumberr: newPhone,
+    });
+  }
+
+  updateSkills(newSkills) {
+    this.setState({
+      skillss: newSkills,
+    });
+
+    for (let i = 0; i < newSkills.length; i++) {
+      this.setState({
+        botskills: this.state.botskills.push(newSkills[i]),
+      });
+    }
+  }
+
+  updateInterests(newInteests) {
+    this.setState({
+      interestss: newInteests,
+    });
+
+    newInteests.forEach((element) => {
+      this.setState({
+        botinterest: this.state.botinterest.push(element),
+      });
+    });
   }
 
   handleEnd({ steps, values }) {
     let name = this.state.namee;
     let email = this.state.emaill;
     let password = this.state.passwordd;
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/register`, {
-        name,
-        email,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-        toast.success("hey");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.response.data.errors);
-      });
+    let phone = this.state.phoneNumberr;
+    let address = this.state.addresss;
+    let skills = this.state.skillss;
+
+    let languages = this.state.languagess;
+    let interests = this.state.interestss;
+
+    if (!isAuth()) {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/api/register`, {
+          name,
+          email,
+          password,
+        })
+        .then((res) => {
+          toast.success(
+            "Registration Done ! Check your email for account activation"
+          );
+        })
+        .catch((err) => {
+          toast.error(err.response.data.errors);
+        });
+    } else {
+      axios
+        .put(
+          `${process.env.REACT_APP_API_URL}/api/user/updateProfile/${
+            isAuth()._id
+          }`,
+          {
+            name: isAuth().name,
+            email: isAuth().email,
+            bio: isAuth().bio,
+            linkedInUrl: isAuth().linkedInUrl,
+            GithubUrl: isAuth().GithubUrl,
+            sexe: isAuth().sexe,
+            address: address,
+            phone: phone,
+            birthday: isAuth().birthday,
+            cv: isAuth().cv,
+            picture: isAuth().picture,
+          }
+        )
+        .then((res) => {
+          axios
+            .put(
+              `${process.env.REACT_APP_API_URL}/api/user/updateUserDataSkills/${
+                isAuth()._id
+              }`,
+              {
+                skills: skills,
+              }
+            )
+            .then(() => {
+              axios
+                .put(
+                  `${
+                    process.env.REACT_APP_API_URL
+                  }/api/user/updateUserDataLanguages/${isAuth()._id}`,
+                  {
+                    languages: languages,
+                  }
+                )
+                .then(() => {
+                  axios
+                    .put(
+                      `${
+                        process.env.REACT_APP_API_URL
+                      }/api/user/updateUserDataInterestes/${isAuth()._id}`,
+                      {
+                        interes: interests,
+                      }
+                    )
+                    .then(() => {
+                      toast.success(
+                        "Your profile has been updated succefully ;)"
+                      );
+                    });
+                });
+            });
+
+          toast.success("Your profile has been updated succefully ;)");
+        })
+        .catch((err) => {
+          toast.error(err.response.data.errors);
+        });
+    }
   }
 
   render() {
-    let { n, emaill, passwordd } = this.state;
-
     return (
       <ThemeProvider theme={theme}>
         <ChatBot
@@ -115,7 +365,7 @@ class SimpleForm extends Component {
           userAvatar={isAuth() && isAuth().picture}
           recognitionEnable={true}
           recognitionLang="en"
-          speechSynthesis={{ enable: true, lang: "en" }}
+          speechSynthesis={{ enable: false, lang: "en" }}
           handleEnd={this.handleEnd}
           steps={
             !isAuth()
@@ -133,6 +383,7 @@ class SimpleForm extends Component {
                       if (!value) {
                         return "name required !";
                       }
+
                       this.setState({
                         namee: value,
                       });
@@ -148,7 +399,7 @@ class SimpleForm extends Component {
                     id: "email",
 
                     user: true,
-                    trigger: "5",
+
                     validator: (value) => {
                       if (!value) {
                         return "email required !";
@@ -157,11 +408,13 @@ class SimpleForm extends Component {
                       ) {
                         return "email invalid (exmp@exmp.exmp) ! ";
                       }
+
                       this.setState({
                         emaill: value,
                       });
                       return true;
                     },
+                    trigger: "5",
                   },
                   {
                     id: "5",
@@ -220,15 +473,15 @@ class SimpleForm extends Component {
                   },
                   {
                     id: "review",
+
                     component: (
                       <Chatbot
                         recognitionEnable={true}
                         recognitionLang="en"
-                        speechSynthesis={{ enable: true, lang: "en" }}
+                        speechSynthesis={{ enable: false, lang: "en" }}
                       />
                     ),
                     asMessage: true,
-                    trigger: "update",
                   },
                   {
                     id: "update",
@@ -287,13 +540,153 @@ class SimpleForm extends Component {
                     end: true,
                   },
                 ]
-              : ([
+              : [
                   {
-                    id: "end-message",
-                    message:
-                      "your question to collect data",
+                    id: "Hello-Message",
+                    message: "Welcome back Mr/Ms  " + isAuth().name,
+                    trigger: "Ask-About-Profile",
                   },
-                ])
+                  {
+                    id: "Ask-About-Profile",
+                    message:
+                      "Welcome to CLOSER , I'm Stephane and i will help you to upgrade your profile to have a great experience with us , so did you mind if i ask you some question ?",
+                    trigger: "Ask-questions",
+                  },
+                  {
+                    id: "Ask-questions",
+                    options: [
+                      { value: "yes", label: "Yes", trigger: "Ask-yes" },
+                      { value: "no", label: "No", trigger: "Ask-no" },
+                    ],
+                  },
+                  {
+                    id: "Ask-yes",
+                    message: "thank you ;)",
+                    trigger: "PhoneNumber",
+                  },
+                  {
+                    id: "Ask-no",
+                    message: "ok :)",
+                  },
+                  {
+                    id: "PhoneNumber",
+                    message: "what's your phone number ?",
+                    trigger: "AnswerPhoneNumber",
+                  },
+                  {
+                    id: "AnswerPhoneNumber",
+                    user: true,
+                    trigger: "Address",
+                    validator: (value) => {
+                      if (!/[0-9]/.test(value)) {
+                        return "Phone number must contain  numbers  ! ";
+                      } else if (!(value.toString().length === 8)) {
+                        return "Phone number length must be equal to 8 numbers  ! ";
+                      }
+
+                      this.updatePhone(value);
+
+                      return true;
+                    },
+                  },
+                  {
+                    id: "Address",
+                    message: "what's your Address ?",
+                    trigger: "AnswerAddress",
+                  },
+                  {
+                    id: "AnswerAddress",
+                    user: true,
+                    trigger: "Languages",
+                    validator: (value) => {
+                      if (!value) {
+                        return "Address is required !";
+                      }
+                      this.setState({ addresss: value });
+
+                      return true;
+                    },
+                  },
+                  {
+                    id: "Languages",
+                    message: "Which languages did you speak ?",
+                    trigger: "AnswerLanguages",
+                  },
+                  {
+                    id: "AnswerLanguages",
+                    component: (
+                      <ComponentLanguages
+                        refreshLanguages={this.updateLanguages}
+                      />
+                    ),
+                  },
+                  {
+                    id: "skillsAsk",
+                    message: "your main skills ?",
+                    trigger: "AnswerSkills",
+                  },
+                  {
+                    id: "AnswerSkills",
+                    component: (
+                      <ComponentSkills refreshSkills={this.updateSkills} />
+                    ),
+                  },
+                  {
+                    id: "interests-ask",
+                    message: "what are you interested In ?",
+                    trigger: "Answer-interests",
+                  },
+
+                  {
+                    id: "Answer-interests",
+                    component: (
+                      <ComponentInterests
+                        refreshInterests={this.updateInterests}
+                      />
+                    ),
+                  },
+                  {
+                    id: "Summary",
+                    message: "Great! Check out your summary",
+                    trigger: "review",
+                  },
+                  {
+                    id: "review",
+                    trigger: "askPermition",
+
+                    component: (
+                      <Chatbot
+                        RendredValue={this.state}
+                        recognitionEnable={true}
+                        recognitionLang="en"
+                        speechSynthesis={{ enable: true, lang: "en" }}
+                      />
+                    ),
+                  },
+                  {
+                    id: "askPermition",
+                    message: "Great Work! did you confirm your information ?",
+                    trigger: "Confirm",
+                  },
+                  {
+                    id: "Confirm",
+                    options: [
+                      { value: "yes", label: "Yes", trigger: "ConfirmYes" },
+                      { value: "no", label: "No", trigger: "ConfirmNo" },
+                    ],
+                  },
+                  {
+                    id: "ConfirmYes",
+                    message:
+                      "Thanks ! your information has been added succefully check your profile for any update",
+                    end: true,
+                  },
+                  {
+                    id: "ConfirmNo",
+                    message:
+                      "It is Okay then, check your profile for any update",
+                  },
+                ]
           }
         />
       </ThemeProvider>
