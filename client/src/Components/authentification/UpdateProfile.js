@@ -76,10 +76,11 @@ function UpdateProfile() {
     console.log(resume);
 ;
     if (resume !== "") {
-      console.log("dkhaalna");
+  
       setUserCv(resume);
-      console.log(UserCV)
+   
     }
+  
   }, [resume]);
 
   const handleSexeChange = (e, { value }) => {
@@ -108,7 +109,7 @@ function UpdateProfile() {
 
     axios
       .put(
-        `${process.env.REACT_APP_API_URL}/api/user/updateProfile/${
+        `http://localhost:5000/api/user/updateProfile/${
           isAuth()._id
         }`,
         {

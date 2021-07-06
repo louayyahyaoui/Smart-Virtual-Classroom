@@ -233,6 +233,7 @@ export default function MiniDrawer() {
   const trigger = <Avatar src={isAuth().picture} style={{float:"right"}}/>;
   return (
     <div className={classes.root}>
+      
       <CssBaseline />
       <AppBar
         position="fixed"
