@@ -24,6 +24,7 @@ export default function Contact(props) {
           email={props.email} 
            sexe={props.sexe} 
            address={props.address} 
+           phone={props.phone} 
             birthday={props.birthday}  
             linkedIn={props.linkedIn}  
             github={props.github} 
@@ -43,10 +44,12 @@ export default function Contact(props) {
                                         email={props.email} setEmail={email => props.setEmail(email)}
                                         sexe={props.sexe} setSexe={sexe => props.setSexe(sexe)}
                                         address={props.address} setAddress={address => props.setAddress(address)}
+                                        phone={props.phone} setPhone={phone => props.setPhone(phone)}
                                         birthday={props.birthday} setBirthday={birthday => props.setBirthday(birthday)}
                                         linkedIn={props.linkedIn} setLinkedIn={linkedIn => props.setLinkedIn(linkedIn)}
                                         github={props.github} setGithub={github => props.setGithub(github)}
                                         bio={props.bio}
+                                        cv={props.cv}
                                     />
                                 </Header.Subheader>
                             </Header>

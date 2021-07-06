@@ -48,6 +48,8 @@ function UpdateProfile() {
   const [address, setAddress] = useState("");
   const [birthday, setBirthday] = useState(Date.now());
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  
   const [bio, setBio] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [github, setGithub] = useState("");
@@ -107,6 +109,8 @@ function UpdateProfile() {
 
       setAddress(res.payload.address);
 
+      setPhone(res.payload.phone);
+
       setSexe(res.payload.sexe);
 
       setBirthday(res.payload.birthday);
@@ -115,13 +119,8 @@ function UpdateProfile() {
 
 
     });
-<<<<<<< HEAD
     console.log(resume);
     ;
-=======
-   
-;
->>>>>>> 872125c504b9baa06d929e19040f8f79896a9bd3
     if (resume !== "") {
     
       setUserCv(resume);
@@ -132,6 +131,11 @@ function UpdateProfile() {
 
   const handleSexeChange = (e, { value }) => {
     setSexe(value);
+
+  };
+
+  const handlePhoneChange = (e, { value }) => {
+    setPhone(value);
 
   };
   const handleNameChange = (e) => {
@@ -167,6 +171,7 @@ function UpdateProfile() {
           picture: Resources,
           sexe: sexe,
           address: address,
+          phone:phone,
           cv: resume,
           birthday: birthday,
         }
@@ -212,6 +217,7 @@ function UpdateProfile() {
               email={email} setEmail={email => setEmail(email)}
               sexe={sexe} setSexe={sexe => setSexe(sexe)}
               address={address} setAddress={address => setAddress(address)}
+              phone={phone} setPhone={phone => setPhone(phone)}
               birthday={birthday} setBirthday={birthday => setBirthday(birthday)}
               linkedIn={linkedIn} setLinkedIn={linkedIn => setLinkedIn(linkedIn)}
               github={github} setGithub={github => setGithub(github)}
@@ -226,8 +232,7 @@ function UpdateProfile() {
           <Grid.Column width={3}>
           </Grid.Column>
           <Grid.Column width={9} >
-            <ProfileStrength progress={( formation !== [] && experience !== [] && bio !== null) ? 4  :
-           0
+            <ProfileStrength progress={ 0
                                 }  />
           </Grid.Column>
         </Grid.Row>
@@ -245,8 +250,10 @@ function UpdateProfile() {
               sexe={sexe}
               address={address}
               birthday={birthday}
+              phone={phone}
               linkedIn={linkedIn}
               github={github}
+              cv={resume}
 
             />
           </Grid.Column>
@@ -320,6 +327,7 @@ function UpdateProfile() {
               sexe={sexe}
               address={address}
               birthday={birthday}
+              phone={phone}
               linkedIn={linkedIn}
               github={github}
               cv={resume}

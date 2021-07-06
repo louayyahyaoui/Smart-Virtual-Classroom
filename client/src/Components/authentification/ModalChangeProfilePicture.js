@@ -40,9 +40,10 @@ console.log(response);
           bio: props.bio,
           linkedInUrl: props.linkedIn,
           GithubUrl: props.github,
-          picture: response.Resources,
+          picture: response.payload,
           sexe: props.sexe,
           address: props.address,
+          phone:props.phone,
           cv: props.cv,
           birthday: props.birthday,
         }

@@ -23,7 +23,10 @@ export default function ModalCentresInteret(props) {
     )
       .then((res) => {
 
-        dispatch(getUserDataById(isAuth()._id));
+        dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+         
+          props.addInterets(res.payload.data.interets)
+        });
 
         // SetLoader(false);
         //dispatch(UpdateUserState());

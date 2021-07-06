@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -15,6 +15,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
+import { useDispatch } from 'react-redux';
+import { getUserById, getUserDataById } from '../../redux/slices/User';
+import { isAuth } from '../../helpers/auth';
 const QontoConnector = withStyles({
   alternativeLabel: {
     top: 10,
@@ -205,18 +208,49 @@ function getStepContent(step) {
 }
 
 export default function ProfileStrength(props) {
+
   const classes = useStyles();
   console.log(props.progress);
-  //const [activeStep, setActiveStep] = React.useState(props.progress);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [active, setActive] = React.useState(false);
   const steps = getSteps();
 
  
+ const dispatch = useDispatch();
+  useEffect(() => {
 
+    dispatch(getUserDataById(isAuth()._id)).then((res) => {
+
+      // console.log(res);
+      if (res.payload.data) {
+      
+         
+          
+          if(res.payload.data.formation && res.payload.data.experiences){
+            setActive(true);
+          setActiveStep(2) 
+          }
+
+        
+      }
+    });
+    dispatch(getUserById(isAuth()._id)).then((res) => {
+      
+      if(res.payload.bio && active)
+      setActiveStep(3)
+    
+
+
+    });
+    
+    
+   
+  }, []);
   return (
     <div className={classes.root}>
    
      
-      <Stepper alternativeLabel activeStep={props.progress} connector={<ColorlibConnector />}>
+      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>

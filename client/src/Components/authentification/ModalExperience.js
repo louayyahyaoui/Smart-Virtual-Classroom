@@ -42,8 +42,10 @@ export default function ModalExperience(props) {
         }
       )
         .then((res) => {
-          console.log(res);
-          dispatch(getUserDataById(id));
+          dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+            console.log(res);
+            props.addExperience(res.payload.data.experiences)
+          });
           /*  props.addFormation({
       
               id : id,
@@ -78,7 +80,10 @@ export default function ModalExperience(props) {
       )
         .then((res) => {
 
-          dispatch(getUserDataById(id));
+          dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+            console.log(res);
+            props.addExperience(res.payload.data.experiences)
+          });
           /*  props.addFormation({
       
               id : id,
@@ -116,8 +121,10 @@ export default function ModalExperience(props) {
         }
       )
         .then((res) => {
-          console.log(res);
-          dispatch(getUserDataById(id));
+          dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+            console.log(res);
+            props.addExperience(res.payload.data.experiences)
+          });
           /*  props.addFormation({
       
               id : id,

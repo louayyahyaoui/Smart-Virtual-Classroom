@@ -5,7 +5,7 @@ import { formatMs } from '@material-ui/core';
 import axios from 'axios';
 import { isAuth } from '../../helpers/auth';
 import { getUserDataById } from '../../redux/slices/User';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 export default function ModalFormation(props) {
 
   // const [formation,setFormation] = useState(props.formation)
@@ -28,7 +28,7 @@ export default function ModalFormation(props) {
     setDescription(e.target.value);
   };
   const dispatch = useDispatch();
- 
+  const data = useSelector((state) => state.user.UserDataById);
   const handleUpdateFormation = () => {
 
     if (props.info !== "edit") {
@@ -46,8 +46,11 @@ export default function ModalFormation(props) {
       )
         .then((res) => {
 
-          dispatch(getUserDataById(id));
-
+          dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+            console.log(res);
+            props.addFormation(res.payload.data.formation)
+          });
+        
           // SetLoader(false);
           //dispatch(UpdateUserState());
 
@@ -78,7 +81,10 @@ export default function ModalFormation(props) {
       )
         .then((res) => {
 
-          dispatch(getUserDataById(id));
+          dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+            console.log(res);
+            props.addFormation(res.payload.data.formation)
+          });
 
           // SetLoader(false);
           //dispatch(UpdateUserState());
@@ -109,8 +115,10 @@ export default function ModalFormation(props) {
       }
     )
       .then((res) => {
-
-        dispatch(getUserDataById(id));
+        dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+          console.log(res);
+          props.addFormation(res.payload.data.formation)
+        });
 
         // SetLoader(false);
         //dispatch(UpdateUserState());

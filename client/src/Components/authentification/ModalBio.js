@@ -33,8 +33,10 @@ export default function ModalBio(props) {
               picture: props.Resources,
               sexe: props.sexe,
               address: props.address,
+              phone : props.phone,
               picture: Resources,
               birthday: props.birthday,
+              cv: props.cv,
             }
           )
           .then((res) => {

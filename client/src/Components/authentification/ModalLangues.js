@@ -22,7 +22,10 @@ export default function ModalLangues(props) {
     )
       .then((res) => {
 
-        dispatch(getUserDataById(isAuth()._id));
+        dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+         
+          props.addLangues(res.payload.data.langues)
+        });
 
         // SetLoader(false);
         //dispatch(UpdateUserState());

@@ -22,6 +22,7 @@ export default function ModalProfile(props) {
   const [sexe, setSexe] = useState(props.sexe);
   const [bio, setBio] = useState(props.bio);
   const [address, setAddress] = useState(props.address);
+  const [phone, setPhone] = useState(props.phone);
   const [birthday, setBirthday] = useState(props.birthday);
   const [email, setEmail] = useState(props.email);
 
@@ -32,6 +33,9 @@ export default function ModalProfile(props) {
  
   const handleSexeChange = (e, { value }) => {
     setSexe(value);
+  };
+  const handlePhoneChange = (e, { value }) => {
+    setPhone(value);
   };
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -66,8 +70,10 @@ export default function ModalProfile(props) {
           picture: Resources,
           sexe: sexe,
           address: address,
+          phone: phone,
           picture: Resources,
           birthday: birthday,
+          cv: props.cv,
         }
       )
       .then((res) => {
@@ -75,6 +81,7 @@ export default function ModalProfile(props) {
         props.setEmail(email)
         props.setAddress(address)
         props.setBirthday(birthday)
+        props.setPhone(phone)
         props.setLinkedIn(linkedIn)
         props.setGithub(github)
         props.setSexe(sexe)
@@ -180,6 +187,18 @@ export default function ModalProfile(props) {
                 maxLength="40"
                 value={address}
                 onChange={handleAddressChange}
+              />
+                <Form.Input
+                label="Phone"
+                type="text"
+                icon="phone"
+                iconPosition="right"
+                placeholder={"Phone number ..."}
+                name="phone"
+                maxLength="8"
+                
+                value={phone}
+                onChange={handlePhoneChange}
               />
               <Grid>
                 <Grid.Row>

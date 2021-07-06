@@ -27,6 +27,7 @@ export default function DetailsContact(props) {
                      email={props.email} setEmail={email => props.setEmail(email)}
                      sexe={props.sexe} setSexe={sexe => props.setSexe(sexe)}
                      address={props.address} setAddress={address => props.setAddress(address)}
+                     phone={props.phone} setPhone={phone => props.setPhone(phone)}
                      birthday={props.birthday} setBirthday={birthday => props.setBirthday(birthday)}
                      linkedIn={props.linkedIn} setLinkedIn={linkedIn => props.setLinkedIn(linkedIn)}
                      github={props.github} setGithub={github => props.setGithub(github)}

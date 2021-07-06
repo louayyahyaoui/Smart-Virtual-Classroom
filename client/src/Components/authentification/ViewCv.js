@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import {
     Image,
     Item,
@@ -17,6 +18,7 @@ import {
   } from "semantic-ui-react";
   import ModalUploadCV from "./ModalUploadCV";
 export default function ViewCv(props) {
+ 
     return (
         <div>
                <Grid>
@@ -44,16 +46,17 @@ export default function ViewCv(props) {
 
 
 
-          {props.UserCV === "" && props.UserCV === null && props.resume ==="" ? (<></>):(
-             props.resume !== "" ? (
-              <div>
-              <a
+          {props.resume ==="" || props.resume ===null ? (<></>):(
+             
+              <>
+            
+              
+                  <Grid.Column width={3}>
+                  <a
                 href={props.resume}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div>
-                  <Grid.Column width={3}>
                     <img
                       src={
                         process.env.PUBLIC_URL +
@@ -68,6 +71,7 @@ export default function ViewCv(props) {
                       }}
                       alt=""
                     />
+                     </a>
                   </Grid.Column>
                   <Grid.Column width={3}>
                     <Grid.Row>
@@ -81,49 +85,10 @@ export default function ViewCv(props) {
                       </Header>
                     </Grid.Row>
                   </Grid.Column>
-                </div>
-              </a>
-            </div>
-             ):(
-              <div>
-              <a
-                href={props.UserCV}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div>
-                  <Grid.Column width={3}>
-                    <img
-                      src={
-                        process.env.PUBLIC_URL +
-                        "/files-type/" +
-                        "pdf" +
-                        ".png"
-                      }
-                      style={{
-                        margin: "10px",
-                        height: "100px",
-                        width: "100px",
-                      }}
-                      alt=""
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={3}>
-                    <Grid.Row>
-                      <Header as="h4" color="red">
-                        Your Resume
-                      </Header>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Header as="h4" color="grey">
-                        PDF File
-                      </Header>
-                    </Grid.Row>
-                  </Grid.Column>
-                </div>
-              </a>
-            </div>
-             )
+               
+             
+            </>
+             
           )}
        
         </Grid.Column>

@@ -29,7 +29,10 @@ export default function ModalSkills(props) {
     )
       .then((res) => {
 
-        dispatch(getUserDataById(isAuth()._id));
+        dispatch(getUserDataById(isAuth()._id)).then((res)=>{
+         
+          props.addSkills(res.payload.data.skills)
+        });
 
         // SetLoader(false);
         //dispatch(UpdateUserState());

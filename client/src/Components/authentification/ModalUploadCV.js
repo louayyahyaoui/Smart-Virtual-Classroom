@@ -49,6 +49,7 @@ function ModalUploadCV(props) {
           picture: Resources,
           sexe: props.sexe,
           address: props.address,
+          phone:props.phone,
           cv: response.payload,
           birthday: props.birthday,
         }

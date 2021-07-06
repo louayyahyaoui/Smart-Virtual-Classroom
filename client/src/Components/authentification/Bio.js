@@ -25,6 +25,7 @@ export default function Bio(props) {
                name={props.name}  
                email={props.email} 
                 sexe={props.sexe} 
+                phone={props.phone}
                 address={props.address}
                  birthday={props.birthday}  
                  linkedIn={props.linkedIn} 
