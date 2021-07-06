@@ -134,7 +134,7 @@ export default function FormTask({task}) {
       
           <br/>
                <Button type="submit" color="red" disabled={formik.values.title ==="" || formik.values.description=== "" || formik.values.endDate===null }
-               content="Update Task"  floated="right"  icon="checkmark" / >
+               content="Update Task"  floated="right"  icon="checkmark" />
         
            </Form>
        
