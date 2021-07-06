@@ -14,7 +14,7 @@ ReactDOM.render(
 
   <Provider store={store}>
     <Chatbot/>
-    <App />
+    <App/>
     
   </Provider>,
   document.getElementById("root")

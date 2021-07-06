@@ -13,6 +13,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import "./material.css";
 import Loader from "./Components/home/Loader";
+import dashboardComponent from "./Components/dashboard/dashboardComponent";
 
 
 
@@ -164,6 +165,8 @@ function App() {
             render={(props) => <Page_404 {...props} />}
           />
           <Route exact path="/meet" component={Main} />
+          <Route exact path="/dashboard" component={dashboardComponent} />
+
           <Route exact path="/MyPosts" component={Home} />
           <Route exact path="/Notifications" component={Home} />
           <Route exact path="/room/:roomId" component={Room} />

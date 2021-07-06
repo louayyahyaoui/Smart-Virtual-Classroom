@@ -183,4 +183,12 @@ export const CommentsApi = {
       return data;
     },
   };
+//userData
+export const UserDataApi = {
+  async getUserdata() {
+    const { data } = await api.get(`http://localhost:5000/api/getalluserdata/`);
+    return data;
+  },
+};
+
 export default api;
