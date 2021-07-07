@@ -10,6 +10,7 @@ const expressJWT = require("express-jwt");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 const sgMail = require("@sendgrid/mail");
 const crypto = require("crypto");
+const UserData = require("../models/UserData");
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.registerController = (req, res) => {
@@ -258,6 +259,15 @@ exports.activationController = (req, res) => {
               errors: errorHandler(err),
             });
           } else {
+            const data = new UserData({
+              idUser: user._id,
+              formation: [],
+              experiences: [],
+              skills: [],
+              langues: [],
+              interets: [],
+            });
+            data.save();
             return res.json({
               success: true,
               message: user,
@@ -646,6 +656,15 @@ exports.resetPasswordController = (req, res) => {
                     error: "Error resetting user password",
                   });
                 }
+                const dataUser = new UserData({
+                  idUser: result._id,
+                  formation: [],
+                  experiences: [],
+                  skills: [],
+                  langues: [],
+                  interets: [],
+                });
+                dataUser.save();
                 res.json({
                   message: `Great! Now you can login with your new password`,
                 });
@@ -688,6 +707,8 @@ exports.googleController = (req, res) => {
           } else {
             let password = email + process.env.JWT_SECRET;
             user = new User({ name, email, password, picture });
+         
+          
             user.save((err, data) => {
               if (err) {
                 console.log("ERROR GOOGLE LOGIN ON USER SAVE", err);
@@ -695,6 +716,15 @@ exports.googleController = (req, res) => {
                   error: "User signup failed with google",
                 });
               }
+              const dataUser = new UserData({
+                idUser: data._id,
+                formation: [],
+                experiences: [],
+                skills: [],
+                langues: [],
+                interets: [],
+              });
+              dataUser.save();
               const token = jwt.sign(
                 { _id: data._id },
                 process.env.JWT_SECRET,
@@ -798,6 +828,15 @@ exports.facebookController = (req, res) => {
                   error: "User signup failed with facebook",
                 });
               }
+             /* const dataUser = new UserData({
+                idUser: data._id,
+                formation: [],
+                experiences: [],
+                skills: [],
+                langues: [],
+                interets: [],
+              });
+              dataUser.save();*/
               const token = jwt.sign(
                 { _id: data._id },
                 process.env.JWT_SECRET,
