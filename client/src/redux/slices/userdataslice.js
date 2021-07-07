@@ -25,6 +25,7 @@ export const fetchuserdata = () => async (dispatch) => {
   });
 };
 export const selectuserdata = (state) => {
+  console.log(state.userdata);
     return [state.userdata.userdates.data, state.userdata.errors];
   };
 export const {

@@ -48,6 +48,8 @@ import GetAllClassComponent from "../Class/GetAllClassComponent";
 import GetAllArchivedClassComponent from "../Class/GetAllArchivedClassComponent";
 import CalendarComponent from "../Class/CalendarComponent";
 import TableSeance from "../coursesAndSeances/TableSeance";
+import ClassByLevel from "../dashboard/ClassByLevel";
+
 import ViewComfyIcon from "@material-ui/icons/ViewComfy";
 import TodayIcon from "@material-ui/icons/Today";
 
@@ -444,6 +446,11 @@ export default function MiniDrawer() {
           path="/stream"
           exact
           render={(props) => <TableCourses {...props} />}
+        />
+        <Route
+          path="/levelOne"
+          exact
+          render={(props) => <ClassByLevel {...props} />}
         />
         <PrivateRoute path="/FAQ" exact component={QuestionComponent} />
         <PrivateRoute path="/tags/:id/:tag" exact component={QuestionByTags} />

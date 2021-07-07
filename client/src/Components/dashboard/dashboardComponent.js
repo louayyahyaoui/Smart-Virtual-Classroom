@@ -22,7 +22,12 @@ import Chart from './Charts';
 import Dash from './Dash';
 import { mainListItems, secondaryListItems } from './listItems';
 import RadarChart from './RadarChart';
+import ClassByLevel from './ClassByLevel';
+import CoursesByClass from './CoursesByClass';
 
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import PrivateRoute from '../../Routes/PrivateRoute';
+import TableCourses from '../coursesAndSeances/TableCourses';
 
 function Copyright() {
   return (
@@ -190,8 +195,15 @@ export default function Dashboard() {
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
+              
               <Paper className={classes.paper}>
-                  <Dash/>
+             
+          
+           <Route path="/dashboard" exact component={Dash} />
+           <Route path="/level/:l" exact component={ClassByLevel} />
+           <Route path="/courses/:id" exact component={TableCourses} />
+        
+       
               </Paper>
             </Grid>
           </Grid>

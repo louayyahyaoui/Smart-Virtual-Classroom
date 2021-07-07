@@ -17,17 +17,18 @@ import ReactPlayer from "react-player/lazy";
 
 import { RetrieveCoursesByIdClass } from "../../redux/slices/Courses";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { isAuth } from "../../helpers/auth";
 
 function TableCourses() {
   const courses = useSelector((state) => state.courses.courses);
   const CurrentClass = JSON.parse(localStorage.getItem("idClass"));
-
+  const {id} = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(RetrieveCoursesByIdClass(CurrentClass._id));
+    
+    dispatch(RetrieveCoursesByIdClass( id));
   }, []);
 
   const [activeIndex, setActiveIndex] = useState(0);

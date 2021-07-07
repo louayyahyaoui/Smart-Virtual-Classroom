@@ -3,6 +3,7 @@ import { getclassApi, ClassInvitationApi } from "../../api/api";
 
 let initialState = {
   class: [],
+  classByLevel : [],
   active: [],
   archived: [],
   request: [],
@@ -52,6 +53,9 @@ const classlice = createSlice({
       const payload = action.payload;
       state.invitationclass.push(payload);
     },
+    getclassByLevelAdmin: (state, action) => {
+      state.classByLevel = action.payload;
+    },
     updateClasss: (state, action) => { 
       const payload = action.payload;
       const index = state.class.findIndex(
@@ -95,6 +99,13 @@ export const fetchInvitationclass = (email) => async (dispatch) => {
   const res = ClassInvitationApi.getClassInvitation(email);
   res.then((data) => {
     dispatch(getInvitationClass(data));
+   
+  });
+};
+export const fetchClassByLevel = (level) => async (dispatch) => {
+  const res = getclassApi.getclassByLevelAdmin(level);
+  res.then((data) => {
+    dispatch(fetchClassByLevel(data));
    
   });
 };
@@ -164,6 +175,7 @@ export const {
   getActive,
   geRequest,
   addInvitationClass,
+  getclassByLevelAdmin,
   updateClasss,
 } = classlice.actions;
 export default classlice.reducer;

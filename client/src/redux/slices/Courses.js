@@ -22,6 +22,18 @@ export const RetrieveCoursesByIdSeance = createAsyncThunk(
     return data;
   }
 );
+// level admin dashboard
+
+export const getClassByLevel = createAsyncThunk(
+  "Courses/getClassByLevel",
+  async (level) => {
+    const { data } = await axios.get(
+      "https://closer-server.herokuapp.com/class/getClassByLevel/" + level
+    );
+
+    return data;
+  }
+);
 
 export const RetrieveCoursesByIdClass = createAsyncThunk(
   "Courses/RetrieveCoursesByIdClass",
@@ -173,6 +185,7 @@ export const CoursesSlice = createSlice({
   name: "Courses",
   initialState: {
     courses: [],
+    class : [],
     status: null,
     statusUpdate: null,
     coursesById: [],
@@ -180,6 +193,12 @@ export const CoursesSlice = createSlice({
     Resources: [],
   },
   extraReducers: {
+
+    [getClassByLevel.fulfilled]: (state, { payload }) => {
+      state.class = payload;
+      state.status = "success";
+    },
+
     [RetrieveCourses.pending]: (state, action) => {
       state.status = "loading";
     },

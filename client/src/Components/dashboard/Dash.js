@@ -56,7 +56,7 @@ function Dash() {
   const [dataa] = useSelector(selectuserdata);
 
   const dispatch = useDispatch();
-  useEffect(() => {
+ /* useEffect(() => {
     dispatch(fetchuserdata());
   }, [dispatch]);
 
@@ -65,7 +65,7 @@ function Dash() {
     dataa?.map((userinfo) => array.push(userinfo.idUser));
     setdata(array);
   }, [dataa]);
-
+*/
 
   return (
     <div>
