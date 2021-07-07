@@ -27,7 +27,9 @@ function TableCourses() {
   const {id} = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    
+    if(CurrentClass!==null)
+    dispatch(RetrieveCoursesByIdClass( CurrentClass._id));
+    else
     dispatch(RetrieveCoursesByIdClass( id));
   }, []);
 
