@@ -194,11 +194,23 @@ exports.updateProfileController = (req, res) => {
                 interets: interests,
               });
               try {
-                data.save();
-                //  res.status(201).json(data);
-              } catch (error) {
-                res.status(400).json({ message: error.message });
-              }
+             
+                UserData.updateOne({ idUser: result._id }, {   formation: education,
+                  experiences: experience,
+                  skills: skills,
+                  langues: languages,
+                  interets: interests, }, function(
+                err,
+                result
+              ) {
+                if (err) {
+                  res.send(err);
+                } 
+              });
+              
+            } catch (error) {
+              return res.status(400).json({ status: 400, message: error.message });
+            }
             });
           res.json({
             success: true,

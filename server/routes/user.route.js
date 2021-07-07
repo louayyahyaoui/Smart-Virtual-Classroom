@@ -6,7 +6,7 @@ const {
   requireSignin,
   adminMiddleware,
 } = require("../controllers/auth.controller");
-const { getUserData } = require("../controllers/ResumeParse");
+const { getUserData, getAllUserData } = require("../controllers/ResumeParse");
 const {
   readController,
   updateController,
@@ -22,5 +22,8 @@ router.get("/getImage", GetPictureOfUser);
 router.put("/user/updateProfile/:id", updateProfileController);
 router.put("/admin/update", requireSignin, adminMiddleware, updateController);
 //USER Data
-router.get("/ /:id", getUserData);
+router.get("/getuserdata/:id", getUserData);
+router.get("/getalluserdata/", getAllUserData);
+
+
 module.exports = router;

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const morgan = require("morgan");
 require("./config/db");
 const fs = require('fs');
@@ -13,6 +14,7 @@ var questionRouter = require("./routes/question");
 var anwerRouter = require("./routes/answer");
 var CommentCourse = require("./routes/CommentCourse");
 var Notification = require("./routes/notification");
+var Recomanded = require("./routes/recomandation");
 
 //Hamza routes
 const ClassRouter = require("./routes/Class.js");
@@ -76,6 +78,7 @@ app.use("/question", questionRouter);
 app.use("/answer", anwerRouter);
 app.use("/coursesComment", CommentCourse);
 app.use("/notification", Notification);
+app.use("/recomandation", Recomanded);
 
 //Hamza routes:
 app.use("/class", ClassRouter);
@@ -196,6 +199,7 @@ io.on("connection", (socket) => {
   });
 });
 
-    
+
+  
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

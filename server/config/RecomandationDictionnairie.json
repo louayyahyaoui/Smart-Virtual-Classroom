@@ -1,0 +1,12 @@
+[{
+  "category": {
+      "skills":["js","javascript","symfony","php","html","css","nodjs","reactjs"],
+      "type":"Web Development"
+  }},
+  {
+  "category": {
+    "skills":["python","machine learning","deep learning","regression lineaire"],
+    "type":"Data Science"
+  }}
+]
+
