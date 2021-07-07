@@ -28,6 +28,7 @@ import CoursesByClass from './CoursesByClass';
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from '../../Routes/PrivateRoute';
 import TableCourses from '../coursesAndSeances/TableCourses';
+import DetailCourses from '../coursesAndSeances/DetailCourses';
 
 function Copyright() {
   return (
@@ -202,6 +203,7 @@ export default function Dashboard() {
            <Route path="/dashboard" exact component={Dash} />
            <Route path="/level/:l" exact component={ClassByLevel} />
            <Route path="/courses/:id" exact component={TableCourses} />
+           <Route path="/detailsCoursesAdmin/:id" exact component={DetailCourses} />
         
        
               </Paper>

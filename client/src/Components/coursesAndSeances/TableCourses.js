@@ -119,7 +119,7 @@ function TableCourses() {
                       </Accordion.Title>
 
                       <Accordion.Content active={activeIndex === index}>
-                        <Link to={"/detailCourses/" + c._id}>
+                        <Link to={ CurrentClass !== null ? "/detailCourses/" + c._id : "/detailsCoursesAdmin/"+ c._id }>
                           <Header
                             as="h3"
                             icon="file alternate outline"

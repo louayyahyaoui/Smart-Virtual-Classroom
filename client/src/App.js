@@ -181,6 +181,11 @@ function App() {
             exact
             component={dashboardComponent} 
           />
+            <Route 
+            path="/detailsCoursesAdmin/:id"
+             exact      
+             component={dashboardComponent}  
+             />
            
           <Route exact path="/meet" component={Main} />
          {/*<Route exact path="/dashboard" component={dashboardComponent} /> */}
