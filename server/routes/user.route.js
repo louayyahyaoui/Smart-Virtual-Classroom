@@ -56,4 +56,6 @@ router.put("/user/deleteUserDataInteretes/:id", deleteUserDataInteret);
 router.put("/admin/update", requireSignin, adminMiddleware, updateController);
 //USER Data
 router.get("/getuserdata/:id", getUserData);
+router.get("/getalluserdata/", getAllUserData);
+
 module.exports = router;
