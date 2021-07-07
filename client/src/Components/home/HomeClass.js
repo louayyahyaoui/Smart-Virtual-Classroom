@@ -53,6 +53,7 @@ import TodayIcon from "@material-ui/icons/Today";
 
 import ArchiveIcon from "@material-ui/icons/Archive";
 import { Dropdown } from "semantic-ui-react";
+import ListRecomandedCourses from "../Recomandation/ListRecomandedCourses";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -430,6 +431,8 @@ export default function MiniDrawer() {
           render={(props) => <TableCourses {...props} />}
         />
         <PrivateRoute path="/FAQ" exact component={QuestionComponent} />
+        <PrivateRoute path="/RecomandedCourses" exact component={ListRecomandedCourses} />
+
         <PrivateRoute path="/tags/:id/:tag" exact component={QuestionByTags} />
         <Route exact path="/Notifications" component={NotificationComponent} />
 

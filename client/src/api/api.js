@@ -190,5 +190,11 @@ export const UserDataApi = {
     return data;
   },
 };
-
+//userData
+export const RecomandationApi = {
+  async getRecomandationCourse(category) {
+    const { data } = await api.get(`http://localhost:5000/recomandation/recomandedcourse/${category}`);
+    return data;
+  },
+};
 export default api;

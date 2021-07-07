@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-
+import recomandation from "./slices/recomandationslice"; 
 import classs from "./slices/classsline"; 
 import seance from "./slices/Seance";
 import courses from "./slices/Courses";
@@ -17,6 +17,7 @@ const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,
 });
 const reducers = combineReducers({
+  recomandation,
   seance,
   courses,
   questions,

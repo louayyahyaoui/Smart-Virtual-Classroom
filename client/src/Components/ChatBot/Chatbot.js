@@ -16,11 +16,11 @@ const theme = {
   background: "#ffffff",
   fontFamily: "Helvetica Neue",
   headerBgColor: "#BF1337",
-  headerFontColor: "#fff",
+  headerFontColor: "#ffffff",
   headerFontSize: "15px",
   botBubbleColor: "#BF1337",
-  botFontColor: "#fff",
-  userBubbleColor: "#fff",
+  botFontColor: "#ffffff",
+  userBubbleColor: "#ffffff",
   userFontColor: "#4a4a4a",
 };
 class Chatbot extends Component {

@@ -14,6 +14,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./material.css";
 import Loader from "./Components/home/Loader";
 import dashboardComponent from "./Components/dashboard/dashboardComponent";
+import Recomandation from "./Components/Recomandation/Recomandation";
 
 
 
@@ -168,6 +169,8 @@ function App() {
           <Route exact path="/dashboard" component={dashboardComponent} />
 
           <Route exact path="/MyPosts" component={Home} />
+          <Route exact path="/RecomandedCourses" component={HomeClass} />
+
           <Route exact path="/Notifications" component={Home} />
           <Route exact path="/room/:roomId" component={Room} />
           <PrivateRoute path="/private" exact component={Private} />
