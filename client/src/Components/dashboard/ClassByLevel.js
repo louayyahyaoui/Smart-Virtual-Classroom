@@ -26,16 +26,17 @@ export default function ClassByLevel(props) {
               
 <Grid.Column width={5} >
 
-
+<Link to={"/courses/"+c._id}>
 <Card key={index}>
-  <Link to={"/courses/"+c._id}>
-<Card.Content header={c.className +" ( "+ c.classSection+" )" }  />
-</Link>
+
+<Card.Content as="h3" header={c.className +" ( "+ c.classSection+" )" }  />
+
 <Card.Content description={c.classDescription} />
 <Card.Content extra>
   <Icon name='user' />{c.classUsers.length} membres
 </Card.Content>
 </Card>
+</Link>
 </Grid.Column>
 
 
