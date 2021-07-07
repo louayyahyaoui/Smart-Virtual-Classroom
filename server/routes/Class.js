@@ -17,6 +17,7 @@ const {
   updateClassActive,
   updateClassArchive,
   getUsers,
+  getClassByLevel,
 } = require("../controllers/Class.js");
 router.get("/", getClass);
 router.get("/usersall/", getUsers);
@@ -33,6 +34,7 @@ router.put("/update/active/:id", updateClassArchive);
 router.get("/email/:email", getUserByEmail);
 router.get("/:_id", getClassById);
 router.get("/userid/:_id", getUserByid);
-router.get("/countactive/:id", CountActiveClass);
 
+router.get("/countactive/:id", CountActiveClass);
+router.get("/getClassByLevel/:level", getClassByLevel);
 module.exports = router;

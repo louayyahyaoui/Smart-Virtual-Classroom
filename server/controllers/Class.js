@@ -233,6 +233,7 @@ module.exports = {
       res.status(400).json({ statue: false, message: error.message });
     }
   },
+
   getUserByid: async (req, res) => {
     try {
       const dataFind = await StudentModel.findOne({ _id: req.params._id });
@@ -297,6 +298,14 @@ module.exports = {
         message: " Class Actived Succefully",
         result: data,
       });
+    } catch (error) {
+      res.status(400).json({ statue: false, message: error.message });
+    }
+  },
+  getClassByLevel: async (req, res) => {
+    try {
+      const dataFind = await ClassModel.find({  classLevel : req.params.level });
+      res.status(201).json(dataFind);
     } catch (error) {
       res.status(400).json({ statue: false, message: error.message });
     }
